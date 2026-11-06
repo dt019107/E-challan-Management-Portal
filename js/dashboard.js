@@ -41,7 +41,36 @@ function renderDashboardView(container, actions) {
   }
 
   // --------------------------------------------------------------------------
-  // 1. FIVE DYNAMIC KPI CARDS
+  // 1. EXECUTIVE WELCOME HERO BANNER (Framer/Linear Standard)
+  // --------------------------------------------------------------------------
+  const heroHTML = `
+    <div class="dashboard-hero-banner">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="live-pulse-dot"></span>
+          Parivahan MoRTH Gateway Connected &bull; Real-time API
+        </div>
+        <h1 class="hero-title">Fleet Compliance & Traffic Command</h1>
+        <p class="hero-subtitle">
+          Apex Fleet Private Limited &bull; NCR &amp; Western Freight Corridors &bull; 
+          <strong style="color: var(--color-primary);">${stats.openChallans} active infractions</strong> under continuous automated monitoring.
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn--primary btn--sm" onclick="navigateTo('challans', true, { status: 'unassigned' })">
+            Triage Unassigned Notices (${stats.unassignedChallans}) &rarr;
+          </button>
+          <button class="btn btn--outline btn--sm" onclick="navigateTo('vehicles')">
+            View Fleet Registry (${vehicles.length} Assets)
+          </button>
+        </div>
+      </div>
+      <div class="hero-asset-preview" style="background-image: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.6) 20%, rgba(255, 255, 255, 0) 100%), url('assets/images/fleet-hero.jpg');">
+      </div>
+    </div>
+  `;
+
+  // --------------------------------------------------------------------------
+  // 2. FIVE DYNAMIC KPI CARDS
   // --------------------------------------------------------------------------
   const kpisHTML = `
     <div class="kpi-grid">
@@ -54,19 +83,25 @@ function renderDashboardView(container, actions) {
           </div>
         </div>
         <div class="kpi-value">${stats.openChallans.toLocaleString("en-IN")}</div>
-        <div class="kpi-subtext">Across ${vehicles.length} registered commercial vehicles</div>
+        <div class="kpi-subtext">
+          <span class="badge badge--neutral" style="font-size: 10px; padding: 1px 6px;">100% Tracked</span>
+          Across ${vehicles.length} commercial vehicles
+        </div>
       </div>
 
       <!-- KPI 2: Outstanding Amount -->
       <div class="kpi-card" onclick="navigateTo('challans', true, { status: 'all' })" title="View outstanding challans">
         <div class="kpi-card-top">
           <span class="kpi-label">Outstanding Amount</span>
-          <div class="kpi-icon-wrapper" style="background: #FEF3F2; color: #C24141;">
+          <div class="kpi-icon-wrapper" style="background: #FFF0F0; color: #C24141;">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
           </div>
         </div>
-        <div class="kpi-value">${Utils.formatINR(stats.outstandingAmount)}</div>
-        <div class="kpi-subtext" style="color: var(--status-unassigned); font-weight: 500;">Direct liability payable</div>
+        <div class="kpi-value" style="color: var(--color-text-main);">${Utils.formatINR(stats.outstandingAmount)}</div>
+        <div class="kpi-subtext">
+          <span class="badge badge--unassigned" style="font-size: 10px; padding: 1px 6px;">Direct Liability</span>
+          Active Parivahan demand
+        </div>
       </div>
 
       <!-- KPI 3: Unassigned Challans -->
@@ -78,7 +113,10 @@ function renderDashboardView(container, actions) {
           </div>
         </div>
         <div class="kpi-value" style="color: var(--status-unassigned);">${stats.unassignedChallans}</div>
-        <div class="kpi-subtext">Requires immediate liability attribution</div>
+        <div class="kpi-subtext">
+          <span class="badge badge--unassigned" style="font-size: 10px; padding: 1px 6px;">Action Required</span>
+          Duty manifest triage pending
+        </div>
       </div>
 
       <!-- KPI 4: Due in 7 Days -->
@@ -90,7 +128,10 @@ function renderDashboardView(container, actions) {
           </div>
         </div>
         <div class="kpi-value" style="color: var(--status-pending);">${stats.dueIn7Days}</div>
-        <div class="kpi-subtext">Imminent statutory compounding deadline</div>
+        <div class="kpi-subtext">
+          <span class="badge badge--pending" style="font-size: 10px; padding: 1px 6px;">Compounding Risk</span>
+          Avoid 15% late compounding
+        </div>
       </div>
 
       <!-- KPI 5: Disputed Challans -->
@@ -102,7 +143,10 @@ function renderDashboardView(container, actions) {
           </div>
         </div>
         <div class="kpi-value" style="color: var(--status-disputed);">${stats.disputedChallans}</div>
-        <div class="kpi-subtext">Awaiting police or court order</div>
+        <div class="kpi-subtext">
+          <span class="badge badge--court" style="font-size: 10px; padding: 1px 6px;">Sub-Judice</span>
+          Awaiting police / court decree
+        </div>
       </div>
     </div>
   `;
@@ -392,7 +436,7 @@ function renderDashboardView(container, actions) {
     </div>
   `;
 
-  container.innerHTML = kpisHTML + chartsHTML + intelligenceHTML + queueHTML;
+  container.innerHTML = heroHTML + kpisHTML + chartsHTML + intelligenceHTML + queueHTML;
 
   // --------------------------------------------------------------------------
   // 5. ATTACH WORK QUEUE FILTER EVENT HANDLERS

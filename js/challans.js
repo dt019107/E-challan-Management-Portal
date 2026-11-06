@@ -781,7 +781,7 @@ function renderChallanDetailsView(container, actions, challanId) {
         <!-- Evidence Photographic Card with Telemetry HUD -->
         <div class="evidence-card">
           <div class="evidence-photo-wrapper">
-            <img src="${challan.evidenceImage || 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800&auto=format&fit=crop&q=60'}" alt="Traffic Infraction Evidence">
+            <img src="${challan.evidenceImage || 'assets/images/speed-camera-radar.jpg'}" alt="Traffic Infraction Evidence" onerror="this.src='assets/images/speed-camera-radar.jpg'">
             
             <!-- HUD Camera Telemetry Overlay -->
             <div class="evidence-telemetry-hud">

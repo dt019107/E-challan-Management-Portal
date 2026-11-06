@@ -282,10 +282,17 @@ function renderVehiclesTableAndPagination() {
                   <input type="checkbox" class="custom-checkbox" ${isChecked ? 'checked' : ''} onchange="toggleVehicleRowSelection('${v.id}', this.checked)">
                 </td>
                 <td>
-                  <a href="#vehicles?id=${v.id}" class="font-mono font-semibold" style="color: var(--color-primary); font-size: 13px;" title="View vehicle compliance profile">
-                    ${v.regNumber}
-                  </a>
-                  <div class="text-xs text-muted">${v.category || 'Commercial'}</div>
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 44px; height: 32px; border-radius: 4px; overflow: hidden; border: 1px solid var(--color-border); background: #FAFBFD; flex-shrink: 0;">
+                      <img src="${(v.makeModel || '').toLowerCase().includes('bolero') ? 'assets/images/bolero-maxx.jpg' : 'assets/images/tata-ace.jpg'}" alt="${v.makeModel}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none'">
+                    </div>
+                    <div>
+                      <a href="#vehicles?id=${v.id}" class="font-mono font-semibold" style="color: var(--color-primary); font-size: 13px;" title="View vehicle compliance profile">
+                        ${v.regNumber}
+                      </a>
+                      <div class="text-xs text-muted">${v.category || 'Commercial'}</div>
+                    </div>
+                  </div>
                 </td>
                 <td>
                   <strong style="color: var(--color-text-main); font-size: 13px;">${v.makeModel}</strong>
@@ -485,21 +492,26 @@ function renderVehicleDetailsView(container, actions, vehicleId) {
 
   container.innerHTML = `
     <!-- Vehicle Identification Banner -->
-    <div class="vehicle-profile-banner">
-      <div>
-        <div style="display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;">
-          <span class="vehicle-reg-tag">${vehicle.regNumber}</span>
-          <span class="badge badge--paid">${vehicle.syncStatus || 'Synced'}</span>
-          <span class="badge badge--neutral">${vehicle.category || 'Commercial Vehicle'}</span>
-          <span class="badge ${vehicle.fastagStatus === 'Active' ? 'badge--paid' : 'badge--unassigned'}">FASTag: ${vehicle.fastagStatus || 'Active'}</span>
+    <div class="vehicle-profile-banner" style="display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap;">
+      <div style="display: flex; align-items: center; gap: var(--space-4);">
+        <div style="width: 110px; height: 74px; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--color-border); background: var(--color-bg-app); flex-shrink: 0; box-shadow: var(--shadow-xs);">
+          <img src="${(vehicle.makeModel || '').toLowerCase().includes('bolero') ? 'assets/images/bolero-maxx.jpg' : 'assets/images/tata-ace.jpg'}" alt="${vehicle.makeModel}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none'">
         </div>
-        <h2 style="font-size: 20px; font-weight: 700; color: var(--color-text-main); margin-top: 8px;">
-          ${vehicle.makeModel} (${vehicle.year})
-        </h2>
-        <div class="text-xs text-muted" style="margin-top: 4px;">
-          Chassis No: <strong class="font-mono text-main">${vehicle.chassisNumber || 'MAT612034N9P12847'}</strong> • 
-          Engine No: <strong class="font-mono text-main">${vehicle.engineNumber || '475ID05KP9812'}</strong> •
-          Source: <strong class="text-main">${vehicle.source || 'Parivahan API'}</strong>
+        <div>
+          <div style="display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap;">
+            <span class="vehicle-reg-tag">${vehicle.regNumber}</span>
+            <span class="badge badge--paid">${vehicle.syncStatus || 'Synced'}</span>
+            <span class="badge badge--neutral">${vehicle.category || 'Commercial Vehicle'}</span>
+            <span class="badge ${vehicle.fastagStatus === 'Active' ? 'badge--paid' : 'badge--unassigned'}">FASTag: ${vehicle.fastagStatus || 'Active'}</span>
+          </div>
+          <h2 style="font-size: 20px; font-weight: 700; color: var(--color-text-main); margin-top: 6px; letter-spacing: var(--letter-spacing-tight);">
+            ${vehicle.makeModel} (${vehicle.year})
+          </h2>
+          <div class="text-xs text-muted" style="margin-top: 4px;">
+            Chassis: <strong class="font-mono text-main">${vehicle.chassisNumber || 'MAT612034N9P12847'}</strong> • 
+            Engine: <strong class="font-mono text-main">${vehicle.engineNumber || '475ID05KP9812'}</strong> •
+            Source: <strong class="text-main">${vehicle.source || 'Parivahan API'}</strong>
+          </div>
         </div>
       </div>
 

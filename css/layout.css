@@ -47,17 +47,17 @@
 }
 
 .brand-logo-mark {
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   border-radius: var(--radius-md);
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  background: linear-gradient(135deg, #385DF5 0%, #2442B5 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #FFFFFF;
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-md);
-  box-shadow: 0 2px 4px rgba(47, 75, 224, 0.25);
+  box-shadow: 0 2px 8px rgba(49, 85, 217, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.25);
   flex-shrink: 0;
 }
 
@@ -182,12 +182,12 @@
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  padding: 9px 12px;
+  padding: 8px 12px;
   border-radius: var(--radius-md);
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
-  transition: all var(--transition-fast);
+  transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
   position: relative;
   text-decoration: none;
   cursor: pointer;
@@ -197,12 +197,24 @@
 .nav-item:hover {
   background-color: var(--color-bg-app);
   color: var(--color-text-main);
+  transform: translateX(2px);
 }
 
 .nav-item.active {
   background-color: var(--color-primary-light);
   color: var(--color-primary);
   font-weight: var(--font-weight-semibold);
+}
+
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 3px;
+  background-color: var(--color-primary);
+  border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
 }
 
 .nav-item.active .nav-icon {
@@ -330,7 +342,9 @@
    -------------------------------------------------------------------------- */
 .app-topbar {
   height: var(--topbar-height);
-  background-color: var(--color-bg-surface);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--color-border);
   display: flex;
   align-items: center;
@@ -598,12 +612,36 @@
   overflow-y: auto;
   padding: var(--space-6);
   position: relative;
+  scroll-behavior: smooth;
+}
+
+@keyframes pageFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .content-inner {
   max-width: var(--content-max-width);
   margin: 0 auto;
   display: flex;
+  flex-direction: column;
+  animation: pageFadeInUp 0.24s var(--ease-out-quint) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
   flex-direction: column;
   gap: var(--space-6);
 }
