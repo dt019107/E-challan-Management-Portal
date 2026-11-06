@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChallanOS — Enterprise Fleet & Traffic Challan Management</title>
+  
+  <!-- Inter Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- ChallanOS Design System Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Mobile Backdrop Overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- Primary Application Shell -->
+  <div class="app-shell">
+
+    <!-- 1. Collapsible Left Sidebar -->
+    <aside class="app-sidebar" id="appSidebar">
+      <!-- Sidebar Brand Header -->
+      <div class="sidebar-header">
+        <a href="#dashboard" class="brand-wrapper">
+          <div class="brand-logo-mark">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <div class="brand-text-block">
+            <div class="brand-name">
+              ChallanOS
+              <span class="brand-tag">Fleet</span>
+            </div>
+            <div class="brand-subtext">Compliance & Recovery</div>
+          </div>
+        </a>
+      </div>
+
+      <!-- Workspace Selector -->
+      <div class="sidebar-workspace">
+        <button class="workspace-trigger" id="workspaceTrigger" type="button" title="Switch Workspace">
+          <div class="workspace-info">
+            <div class="workspace-icon">HQ</div>
+            <div class="workspace-details">
+              <span class="workspace-title" id="activeWorkspaceTitle">North India Logistics Fleet</span>
+              <span class="workspace-role" id="activeWorkspaceRole">Fleet Administrator</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor" color="var(--color-text-muted)">
+            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Navigation Links Container -->
+      <nav class="sidebar-nav-container">
+        <div class="nav-section-label">Operations</div>
+        
+        <a class="nav-item active" data-route="dashboard" href="#dashboard">
+          <div class="nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+          </div>
+          <span class="nav-label">Dashboard</span>
+        </a>
+
+        <a class="nav-item" data-route="vehicles" href="#vehicles">
+          <div class="nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+          </div>
+          <span class="nav-label">Vehicles</span>
+        </a>
+
+        <a class="nav-item" data-route="challans" href="#challans">
+          <div class="nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          </div>
+          <span class="nav-label">Challans</span>
+          <span class="nav-badge danger" id="unassignedNavBadge">2</span>
+        </a>
+
+        <a class="nav-item" data-route="drivers" href="#drivers">
+          <div class="nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          </div>
+          <span class="nav-label">Drivers</span>
+        </a>
+
+        <div class="nav-section-label" style="margin-top: var(--space-3);">Settlement & Audit</div>
+
+        <a class="nav-item" data-route="payments" href="#payments">
+          <div class="nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+          </div>
+          <span class="nav-label">Payments</span>
+        </a>
+
+        <a class="nav-item" data-route="disputes" href="#disputes">
+          <div class="nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          </div>
+          <span class="nav-label">Disputes & Court</span>
+        </a>
+
+        <a class="nav-item" data-route="reports" href="#reports">
+          <div class="nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          </div>
+          <span class="nav-label">Reports</span>
+        </a>
+
+        <a class="nav-item" data-route="settings" href="#settings">
+          <div class="nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          </div>
+          <span class="nav-label">Settings</span>
+        </a>
+
+        <!-- Design System Component Lab (Step 2.4 Preview) -->
+        <a class="nav-item" data-route="components" href="#components">
+          <div class="nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+          </div>
+          <span class="nav-label">Design System</span>
+          <span class="nav-badge" style="background: var(--color-primary-light); color: var(--color-primary);">Tokens</span>
+        </a>
+      </nav>
+
+      <!-- Sidebar Bottom Company & Workspace Information (Step 3.1) -->
+      <div class="sidebar-company-footer" style="padding: 10px 14px; border-top: 1px solid var(--color-border-subtle); display: flex; align-items: center; justify-content: space-between;">
+        <div style="overflow: hidden;">
+          <div style="font-size: 12px; font-weight: 600; color: var(--color-text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Apex Fleet Pvt Ltd</div>
+          <div style="font-size: 11px; color: var(--color-text-muted);">Workspace: APEX-HQ</div>
+        </div>
+        <span class="badge badge--paid" style="font-size: 10px; padding: 2px 6px;">Live</span>
+      </div>
+
+      <!-- Sidebar Footer (Collapse Toggle) -->
+      <div class="sidebar-footer">
+        <button class="sidebar-collapse-btn" id="sidebarCollapseBtn" type="button" title="Toggle Sidebar Width">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="11 17 6 12 11 7"></polyline>
+            <polyline points="18 17 13 12 18 7"></polyline>
+          </svg>
+          <span class="sidebar-collapse-text">Collapse Menu</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- 2. Main View Container -->
+    <main class="app-main">
+
+      <!-- Top Navigation Bar -->
+      <header class="app-topbar">
+        <div class="topbar-left">
+          <!-- Mobile Menu Trigger -->
+          <button class="mobile-menu-toggle" id="mobileMenuToggle" type="button" aria-label="Open Navigation">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+
+          <!-- Global Search with Keyboard Shortcut -->
+          <div class="global-search-container">
+            <svg class="search-icon-prefix" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
+            </svg>
+            <input type="text" class="global-search-input" id="globalSearchInput" placeholder="Search vehicle reg, challan no, driver..." autocomplete="off">
+            <span class="search-shortcut-badge">⌘K</span>
+            <!-- Live Search Results Dropdown -->
+            <div class="search-results-dropdown" id="globalSearchDropdown"></div>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <!-- Notifications Trigger & Flyout -->
+          <div style="position: relative;">
+            <button class="topbar-btn" id="notificationsBellBtn" type="button" title="Notifications">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+              <span class="topbar-notification-badge" id="unreadNotificationBadge">3</span>
+            </button>
+
+            <!-- Notifications Drawer -->
+            <div class="notification-flyout" id="notificationsFlyout">
+              <div class="flyout-header">
+                <strong style="font-size: 14px;">Compliance Notifications</strong>
+                <button class="btn btn--ghost btn--sm" id="markAllReadBtn" onclick="markAllNotificationsRead()" style="font-size: 11px; padding: 2px 6px;">Mark all read</button>
+              </div>
+              <div class="flyout-list" id="notificationsList"></div>
+              <div class="flyout-footer">
+                <a href="#challans" onclick="document.getElementById('notificationsFlyout').style.display = 'none';" style="font-size: 12px; font-weight: 600;">View All Compliance Alerts →</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- User Profile Trigger & Dropdown -->
+          <div style="position: relative;">
+            <div class="user-profile-btn" id="userProfileBtn">
+              <div class="user-avatar" id="currentUserAvatar">VM</div>
+              <div class="user-info">
+                <span class="user-name" id="currentUserName">Vikram Malhotra</span>
+                <span class="user-role" id="currentUserRole">Fleet Compliance Head</span>
+              </div>
+              <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor" color="var(--color-text-muted)">
+                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+
+            <!-- Profile Dropdown Menu -->
+            <div class="dropdown-menu" id="userProfileMenu">
+              <div style="padding: 10px 16px; border-bottom: 1px solid var(--color-border-subtle);">
+                <div style="font-size: 13px; font-weight: 600;">Signed in as</div>
+                <div style="font-size: 12px; color: var(--color-text-muted);">vikram.m@apexfleet.in</div>
+              </div>
+              <div class="dropdown-item" onclick="navigateTo('settings'); document.getElementById('userProfileMenu').style.display = 'none';">
+                <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/></svg>
+                Workspace Settings
+              </div>
+              <div class="dropdown-item" onclick="openResetDataConfirmationModal(); document.getElementById('userProfileMenu').style.display = 'none';">
+                <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor" color="var(--color-warning)"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/></svg>
+                Reset Demo Baseline
+              </div>
+              <div class="dropdown-divider"></div>
+              <div class="dropdown-item" style="color: var(--color-danger);" onclick="Utils.showToast('Demo Environment', 'Session active in local browser storage.', 'info'); document.getElementById('userProfileMenu').style.display = 'none';">
+                <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"/></svg>
+                Sign Out Simulation
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Contextual Breadcrumbs Bar -->
+      <nav class="app-breadcrumbs-bar" aria-label="Breadcrumb">
+        <div class="breadcrumb-list" id="breadcrumbContainer">
+          <div class="breadcrumb-item">
+            <span>ChallanOS</span>
+          </div>
+          <div class="breadcrumb-separator">/</div>
+          <div class="breadcrumb-item current">
+            <span>Dashboard</span>
+          </div>
+        </div>
+        <div style="font-size: 11px; color: var(--color-text-muted); display: flex; align-items: center; gap: 6px;">
+          <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: var(--status-paid);"></span>
+          Parivahan Gateway: <strong style="color: var(--color-text-main);">Connected</strong>
+        </div>
+      </nav>
+
+      <!-- Scrollable Main Viewport -->
+      <div class="app-content">
+        <div class="content-inner">
+          <!-- View Header (Title, Subtitle, Context Actions) -->
+          <div class="view-header">
+            <div class="view-header-title">
+              <h1 id="pageTitle">Operational Dashboard</h1>
+              <p id="pageSubtitle">Real-time compliance KPIs, triage queue & liability breakdown</p>
+            </div>
+            <div class="view-header-actions" id="viewHeaderActions"></div>
+          </div>
+
+          <!-- Dynamic View Container -->
+          <div id="moduleViewBody" class="module-view-body" style="display: flex; flex-direction: column; gap: var(--space-6);">
+            <!-- Dynamically populated by Module Router -->
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- =========================================================================
+       Global Interactive Modals
+       ========================================================================= -->
+
+  <!-- 1. Responsibility Assignment Modal -->
+  <div class="modal-backdrop" id="assignmentModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title" id="assignModalTitle">Assign Responsibility</h3>
+          <p class="text-xs text-muted" id="assignModalSubtitle">Allocate traffic fine liability with mandatory audit trail</p>
+        </div>
+        <button class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('assignmentModal')" title="Close">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+        </button>
+      </div>
+      <div class="modal-body" style="display: flex; flex-direction: column; gap: var(--space-4);">
+        <!-- Challan Brief Preview -->
+        <div style="background-color: var(--color-bg-app); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 12px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-weight: 600; font-size: 13px;" id="assignChallanNo">DL9823412026030114</div>
+            <div style="font-size: 12px; color: var(--color-text-muted);" id="assignChallanOffence">Overspeeding — Sec 183 MV Act</div>
+            <div style="font-size: 11px; color: var(--color-primary); font-weight: 600; margin-top: 2px;" id="assignChallanVehicle">DL-01-AB-1234</div>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-size: 18px; font-weight: 700; color: var(--color-text-main);" id="assignChallanAmount">₹2,000</div>
+            <div style="font-size: 11px; color: var(--color-text-muted);">Penalty Amount</div>
+          </div>
+        </div>
+
+        <!-- Conflict Alert Banner (Step 7.5 - Overlapping Custody / Contract Gaps) -->
+        <div id="assignConflictAlert" style="display: none; padding: 10px 12px; background: #FEF3F2; border: 1px solid #FECDCA; border-radius: var(--radius-md); color: var(--status-unassigned);">
+          <div style="display: flex; align-items: flex-start; gap: 8px;">
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor" style="flex-shrink: 0; margin-top: 1px;"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+            <div>
+              <strong style="font-size: 12px;" id="assignConflictTitle">Custody Conflict Detected</strong>
+              <div style="font-size: 11px; margin-top: 2px;" id="assignConflictDesc">Multiple overlapping responsibility records found. Auto-assignment halted.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Automated Rules Engine Suggestion -->
+        <div id="assignRecommendationBox" style="background-color: var(--color-primary-subtle); border: 1px solid var(--color-primary-light); border-radius: var(--radius-md); padding: 12px;">
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--color-primary); letter-spacing: 0.05em;">Automated Recommendation</span>
+            <span class="badge badge--assigned" id="assignRuleConfidence">94% Confidence</span>
+          </div>
+          <div style="font-size: 13px; font-weight: 600; color: var(--color-text-main); margin-top: 4px;" id="assignRuleParty">Suggested: Driver (Rajesh Kumar)</div>
+          <div style="font-size: 12px; color: var(--color-text-secondary); margin-top: 2px;" id="assignRuleReason">
+            Active driver trip log allocated to vehicle at offence timestamp. Offence is speed-dependent moving violation.
+          </div>
+        </div>
+
+        <!-- Party Type Selection -->
+        <div class="form-group">
+          <label class="form-label">Responsible Party Classification *</label>
+          <select class="form-select" id="assignPartyTypeSelect">
+            <option value="Driver">Driver</option>
+            <option value="Lessee">Lessee</option>
+            <option value="Fleet Operator">Fleet Operator (Self Absorbed)</option>
+            <option value="Vehicle Owner">Vehicle Owner</option>
+            <option value="Split">Split Liability (Driver & Lessee)</option>
+          </select>
+        </div>
+
+        <!-- Specific Entity Selector -->
+        <div class="form-group" id="assignEntityGroup">
+          <label class="form-label" id="assignEntityLabel">Select Specific Party Name *</label>
+          <select class="form-select" id="assignEntitySelect"></select>
+        </div>
+
+        <!-- Split Liability Percentage Controls (Step 7.4) -->
+        <div id="assignModalSplitBox" style="display: none; padding: 12px; background: var(--color-bg-app); border: 1px solid var(--color-border); border-radius: var(--radius-md);">
+          <div style="font-size: 12px; font-weight: 600; color: var(--color-text-main); margin-bottom: 8px;">
+            Proportional Split Allocation (Must equal exactly 100%)
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <span class="text-xs">Driver Share:</span>
+            <div style="display: flex; align-items: center; gap: 4px;">
+              <input type="number" class="form-input" id="assignModalSplitDriverPct" value="60" min="0" max="100" style="width: 70px; text-align: right;" oninput="validateModalSplitTotal()">
+              <span class="text-xs">%</span>
+            </div>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <span class="text-xs">Lessee / Fleet Share:</span>
+            <div style="display: flex; align-items: center; gap: 4px;">
+              <input type="number" class="form-input" id="assignModalSplitLesseePct" value="40" min="0" max="100" style="width: 70px; text-align: right;" oninput="validateModalSplitTotal()">
+              <span class="text-xs">%</span>
+            </div>
+          </div>
+          <div style="font-size: 11px; font-weight: 600; margin-top: 4px;" id="assignModalSplitFeedback" style="color: var(--status-paid);"></div>
+        </div>
+
+        <!-- Audit Reason (Mandatory) -->
+        <div class="form-group">
+          <label class="form-label">Mandatory Audit Reason / Notes *</label>
+          <textarea class="form-textarea" id="assignAuditNotes" rows="2" placeholder="State reason for assignment or rationale for manual override..."></textarea>
+        </div>
+
+        <!-- Notification Option -->
+        <label style="display: flex; align-items: center; gap: 8px; font-size: 12px; cursor: pointer; user-select: none;">
+          <input type="checkbox" class="custom-checkbox" id="assignNotifyCheckbox" checked>
+          <span>Send automated notification alert via SMS / Email to responsible party</span>
+        </label>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn--outline" type="button" onclick="Utils.closeModal('assignmentModal')">Cancel</button>
+        <button class="btn btn--primary" type="button" id="confirmAssignBtn">Assign & Notify</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Payment & Resolution Modal -->
+  <div class="modal-backdrop" id="paymentModal">
+    <div class="modal-dialog" style="max-width: 620px;">
+      <div class="modal-header">
+        <div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <h3 class="modal-title">Settle Traffic Challan</h3>
+            <span class="badge badge--neutral" style="font-size: 10px; text-transform: uppercase;">Simulated Gateway</span>
+          </div>
+          <p class="text-xs text-muted">Direct gateway settlement & recovery classification (Demo Rail)</p>
+        </div>
+        <button class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('paymentModal')" title="Close">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+        </button>
+      </div>
+
+      <div class="modal-body" style="display: flex; flex-direction: column; gap: var(--space-4); max-height: 78vh; overflow-y: auto;">
+        <input type="hidden" id="payModalChallanId">
+
+        <!-- Court Stay Lock Alert (Dynamically toggled) -->
+        <div id="payCourtLockAlert" style="display: none; padding: 12px 14px; background: #FEF3F2; border: 1px solid #FECDCA; border-radius: var(--radius-md); color: #B42318; font-size: 13px;">
+          <div style="font-weight: 700; display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            🔒 Direct Payment Locked: Judicial Court Stay
+          </div>
+          <div id="payCourtLockMessage">This challan has been referred to Virtual Traffic Court. Direct Parivahan payment is locked pending court compounding or judicial order.</div>
+        </div>
+
+        <!-- Payment Failure Alert (Dynamically toggled on simulated failure) -->
+        <div id="payFailureAlert" style="display: none; padding: 12px 14px; background: #FEF3F2; border: 1px solid #FECDCA; border-radius: var(--radius-md); color: #B42318; font-size: 13px;">
+          <div style="font-weight: 700; display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+            Payment Failed (Simulated)
+          </div>
+          <div id="payFailureMessage">The banking rail returned ERR_GATEWAY_TIMEOUT. Challan remains unpaid. You may retry or switch payment method.</div>
+        </div>
+
+        <!-- Payment Pending Confirmation Alert (Dynamically toggled on pending) -->
+        <div id="payPendingAlert" style="display: none; padding: 12px 14px; background: #FEF8E8; border: 1px solid #FCE4A6; border-radius: var(--radius-md); color: #B7791F; font-size: 13px;">
+          <div style="font-weight: 700; display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            Payment Pending Bank Confirmation
+          </div>
+          <div id="payPendingMessage">Transaction is in-flight. Bank authorization pending webhook confirmation. Challan is not yet marked Paid.</div>
+        </div>
+
+        <!-- Payment Stepper -->
+        <div class="stepper-nav">
+          <div class="step-node completed">
+            <div class="step-circle">✓</div>
+            <div class="step-title">Detected</div>
+          </div>
+          <div class="step-node completed">
+            <div class="step-circle">✓</div>
+            <div class="step-title">Assigned</div>
+          </div>
+          <div class="step-node active" id="payStepNodePayment">
+            <div class="step-circle">3</div>
+            <div class="step-title">Payment</div>
+          </div>
+          <div class="step-node" id="payStepNodeReceipt">
+            <div class="step-circle">4</div>
+            <div class="step-title">Receipt</div>
+          </div>
+          <div class="step-node" id="payStepNodeReconciled">
+            <div class="step-circle">5</div>
+            <div class="step-title">Reconciled</div>
+          </div>
+        </div>
+
+        <!-- Challan & Vehicle Info Card -->
+        <div style="background-color: var(--color-bg-app); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 12px;">
+          <div>
+            <span class="text-muted" style="display: block;">Challan Number:</span>
+            <strong id="payChallanNo" style="font-size: 13px; color: var(--color-primary);">DL-884120</strong>
+            <div class="text-xs text-muted" id="payAuthority">Delhi Traffic Police</div>
+          </div>
+          <div>
+            <span class="text-muted" style="display: block;">Vehicle Asset:</span>
+            <strong id="payVehicleReg" style="font-size: 13px;">DL-01-AB-1234</strong>
+            <div class="text-xs text-muted" id="payVehicleModel">Tata Ace Gold</div>
+          </div>
+          <div style="grid-column: 1 / -1;">
+            <span class="text-muted" style="display: block;">Infraction / Law Section:</span>
+            <strong id="payOffence">Overspeeding (Sec 183(1) Motor Vehicles Act 1988)</strong>
+          </div>
+        </div>
+
+        <!-- Amount Breakdown -->
+        <div style="background-color: var(--color-bg-app); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 14px;">
+          <div style="display: flex; justify-content: space-between; font-size: 13px;">
+            <span class="text-secondary">Statutory Base Penalty:</span>
+            <strong id="payBaseAmount">₹2,000</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 13px; margin-top: 6px;">
+            <span class="text-secondary">Accumulated Late Fee:</span>
+            <strong id="payLateFee">₹0</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 13px; margin-top: 6px;">
+            <span class="text-secondary">Gateway Convenience Fee:</span>
+            <strong id="payConvFee">₹25</strong>
+          </div>
+          <div style="height: 1px; background-color: var(--color-border); margin: 8px 0;"></div>
+          <div style="display: flex; justify-content: space-between; font-size: 15px;">
+            <strong class="text-main">Total Payable:</strong>
+            <strong style="color: var(--color-primary); font-size: 18px;" id="payTotalAmount">₹2,025</strong>
+          </div>
+        </div>
+
+        <!-- Financial Entity Separation (Payer vs Responsible Party vs Recovery Party) -->
+        <div style="border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 12px; background: #FFF;">
+          <div style="font-weight: 600; font-size: 12px; color: var(--color-text-main); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">
+            Financial Separation: Payer vs Recovery
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
+            <div class="form-group">
+              <label class="form-label">Upfront Payer (Settlement Entity) *</label>
+              <select class="form-select" id="payPayerSelect" onchange="handlePayPayerChange(this.value)">
+                <option value="Apex Fleet Pvt Ltd">Apex Fleet Pvt Ltd (Pre-funds Fine)</option>
+                <option value="Lessee Direct">Corporate Lessee Direct</option>
+                <option value="Driver Direct">Driver Direct</option>
+              </select>
+              <span class="text-xs text-muted">Entity providing immediate liquidity</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Responsible Party (Legally Liable)</label>
+              <input type="text" class="form-input" id="payResponsiblePartyDisplay" readonly style="background: var(--color-bg-app); font-weight: 600;">
+              <span class="text-xs text-muted">Determined by custody engine</span>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-top: 8px;">
+            <div class="form-group">
+              <label class="form-label">Recovery Party Target *</label>
+              <input type="text" class="form-input" id="payRecoveryPartyInput" required placeholder="Driver or Lessee Name">
+              <span class="text-xs text-muted">Whom to recover funds from</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Recovery Channel / Ledger *</label>
+              <select class="form-select" id="payRecoveryChannelSelect">
+                <option value="Payroll deduction">Payroll deduction (Driver salary hold)</option>
+                <option value="Invoice">Corporate Invoice (Lessee monthly billing)</option>
+                <option value="Write-off">Write-off (Fleet Operations absorbed)</option>
+              </select>
+              <span class="text-xs text-muted">Reconciliation mechanism</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment Rail Selector -->
+        <div class="form-group">
+          <label class="form-label">Simulated Payment Rail</label>
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-2);">
+            <button type="button" class="btn btn--outline btn--sm pay-method-btn active" data-method="UPI" onclick="selectPayRail('UPI')">UPI</button>
+            <button type="button" class="btn btn--outline btn--sm pay-method-btn" data-method="Net Banking" onclick="selectPayRail('Net Banking')">Net Banking</button>
+            <button type="button" class="btn btn--outline btn--sm pay-method-btn" data-method="Corporate Card" onclick="selectPayRail('Corporate Card')">Card</button>
+            <button type="button" class="btn btn--outline btn--sm pay-method-btn" data-method="Prepaid Fleet Credit" onclick="selectPayRail('Prepaid Fleet Credit')">Prepaid</button>
+          </div>
+          <input type="hidden" id="paySelectedMethod" value="UPI">
+
+          <!-- Method Details (Simulated) -->
+          <div id="payMethodDetailsContainer" style="margin-top: 8px; padding: 10px; background: var(--color-bg-app); border-radius: var(--radius-sm); font-size: 12px;">
+            <div id="payMethodUPI">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span>Virtual Payment Address: <strong>parivahan@sbi</strong></span>
+                <span class="badge badge--neutral">Instant VPA Settlement</span>
+              </div>
+            </div>
+            <div id="payMethodNetBanking" style="display: none;">
+              <label style="display: block; margin-bottom: 4px;">Select Corporate Banking Portal:</label>
+              <select class="form-select" id="payBankSelect" style="font-size: 12px; height: 32px;">
+                <option value="HDFC Corporate">HDFC Bank Corporate Banking</option>
+                <option value="SBI e-Pay">State Bank of India Corporate</option>
+                <option value="ICICI Corporate">ICICI Corporate Internet Banking</option>
+                <option value="Axis Corporate">Axis Bank Corporate Gateway</option>
+              </select>
+            </div>
+            <div id="payMethodCard" style="display: none;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span>Corporate Visa: <strong>•••• •••• •••• 4092</strong></span>
+                <span class="text-muted">Exp: 09/28 | CVV: •••</span>
+              </div>
+            </div>
+            <div id="payMethodPrepaid" style="display: none;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span>Apex Fleet FASTag & Challan Wallet:</span>
+                <strong style="color: var(--status-paid);">Balance: ₹54,200</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Simulation Outcome Control Panel -->
+        <div style="border: 1px dashed #3155D9; background: #EDF1FF; border-radius: var(--radius-md); padding: 12px;">
+          <div style="font-weight: 700; font-size: 11px; text-transform: uppercase; color: #2442B5; margin-bottom: 6px;">
+            🛠️ Simulation Control: Select Test Outcome
+          </div>
+          <div style="display: flex; gap: var(--space-4); font-size: 12px;">
+            <label style="display: flex; align-items: center; gap: 4px; cursor: pointer;">
+              <input type="radio" name="paySimOutcome" value="SUCCESS" checked>
+              <strong>🟢 Success</strong> (Paid & Receipt)
+            </label>
+            <label style="display: flex; align-items: center; gap: 4px; cursor: pointer;">
+              <input type="radio" name="paySimOutcome" value="FAILURE">
+              <strong>🔴 Failure</strong> (Remains Unpaid)
+            </label>
+            <label style="display: flex; align-items: center; gap: 4px; cursor: pointer;">
+              <input type="radio" name="paySimOutcome" value="PENDING">
+              <strong>🟡 Pending</strong> (Awaiting Webhook)
+            </label>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer" style="display: flex; justify-content: space-between;">
+        <button class="btn btn--outline" type="button" onclick="Utils.closeModal('paymentModal')">Cancel</button>
+        <div style="display: flex; gap: var(--space-2);">
+          <button class="btn btn--outline" type="button" id="payRetryBtn" style="display: none;" onclick="retryPaymentSimulation()">
+            🔄 Retry Payment
+          </button>
+          <button class="btn btn--outline" type="button" id="payReconcileBtn" style="display: none;" onclick="reconcilePaymentSimulation()">
+            ✓ Reconcile / Check Bank Status
+          </button>
+          <button class="btn btn--primary" type="button" id="confirmPayBtn" onclick="executePaymentSimulation()">
+            Authorize Payment Simulation →
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Add / Edit Vehicle Modal (Step 5.3) -->
+  <div class="modal-backdrop" id="addVehicleModal">
+    <div class="modal-dialog" style="max-width: 680px;">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title" id="addVehModalTitle">Add Vehicle to Fleet</h3>
+          <p class="text-xs text-muted" id="addVehModalSubtitle">Register a new commercial asset into Apex Fleet compliance roster</p>
+        </div>
+        <button class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('addVehicleModal')" title="Close">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+        </button>
+      </div>
+      <form id="addVehicleForm" onsubmit="event.preventDefault(); submitAddVehicleForm();">
+        <input type="hidden" id="addVehEditId">
+        <div class="modal-body" style="display: flex; flex-direction: column; gap: var(--space-4); max-height: 75vh; overflow-y: auto;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
+            <div class="form-group">
+              <label class="form-label">Registration Number *</label>
+              <input type="text" class="form-input font-mono" id="addVehReg" placeholder="e.g. DL-01-AB-1234" required style="text-transform: uppercase;">
+              <span class="text-xs text-muted">Standard Indian format (e.g. DL-01-AB-1234)</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Make & Model *</label>
+              <input type="text" class="form-input" id="addVehModel" placeholder="e.g. Tata Ace Gold Diesel" required>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-3);">
+            <div class="form-group">
+              <label class="form-label">Category *</label>
+              <select class="form-select" id="addVehCategory">
+                <option value="Light Commercial Vehicle (LCV)">LCV (Light Commercial)</option>
+                <option value="Medium Commercial Vehicle (MCV)">MCV (Medium Commercial)</option>
+                <option value="Heavy Commercial Vehicle (HCV)">HCV (Heavy Commercial)</option>
+                <option value="Mini Truck">Mini Truck / Sub-1 Ton</option>
+                <option value="Pickup Truck">Pickup Truck</option>
+                <option value="Delivery Van">Delivery Van</option>
+                <option value="Electric Vehicle (EV)">Electric Vehicle (EV)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Manufacturing Year *</label>
+              <input type="number" class="form-input" id="addVehYear" value="2023" min="2010" max="2027" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Owner Classification *</label>
+              <input type="text" class="form-input" id="addVehOwner" value="Apex Fleet Pvt Ltd" required>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
+            <div class="form-group">
+              <label class="form-label">Corporate Lessee (if leased)</label>
+              <select class="form-select" id="addVehLessee">
+                <option value="">None (Direct In-house Operations)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Assigned Driver</label>
+              <select class="form-select" id="addVehDriver">
+                <option value="">Unassigned (Duty Pool)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Contract Information Dates (Step 5.3) -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
+            <div class="form-group">
+              <label class="form-label">Contract Start Date</label>
+              <input type="date" class="form-input" id="addVehContractStart" value="2025-01-01">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Contract End Date</label>
+              <input type="date" class="form-input" id="addVehContractEnd" value="2027-12-31">
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-3);">
+            <div class="form-group">
+              <label class="form-label">RC Validity *</label>
+              <input type="date" class="form-input" id="addVehRC" value="2038-05-15" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Insurance Expiry *</label>
+              <input type="date" class="form-input" id="addVehInsurance" value="2027-01-30" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">PUC Expiry *</label>
+              <input type="date" class="form-input" id="addVehPUC" value="2026-12-15" required>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
+            <div class="form-group">
+              <label class="form-label">FASTag Status</label>
+              <select class="form-select" id="addVehFastagStatus">
+                <option value="Active">Active</option>
+                <option value="Low Balance">Low Balance</option>
+                <option value="Blacklisted">Blacklisted</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">FASTag Balance (INR)</label>
+              <input type="number" class="form-input" id="addVehFastagBalance" value="1500" min="0">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn--outline" type="button" onclick="Utils.closeModal('addVehicleModal')">Cancel</button>
+          <button class="btn btn--primary" id="addVehSubmitBtn" type="submit">Save & Register Vehicle</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 4. Excel / CSV 7-Step Import Wizard Modal (Step 5.4) -->
+  <div class="modal-backdrop" id="importVehiclesModal">
+    <div class="modal-dialog" style="max-width: 760px;">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title">Batch Vehicle Import Wizard</h3>
+          <p class="text-xs text-muted" id="importWizardStepSubtitle">Step 1 of 4: Select and parse CSV file</p>
+        </div>
+        <button class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('importVehiclesModal')" title="Close">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+        </button>
+      </div>
+
+      <!-- Import Stepper -->
+      <div style="padding: 12px 24px 0;">
+        <div class="stepper-nav" style="margin: 0;">
+          <div class="step-node active" id="importStepNode1">
+            <div class="step-circle">1</div>
+            <div class="step-title">Upload</div>
+          </div>
+          <div class="step-node" id="importStepNode2">
+            <div class="step-circle">2</div>
+            <div class="step-title">Mapping</div>
+          </div>
+          <div class="step-node" id="importStepNode3">
+            <div class="step-circle">3</div>
+            <div class="step-title">Validation</div>
+          </div>
+          <div class="step-node" id="importStepNode4">
+            <div class="step-circle">4</div>
+            <div class="step-title">Commit</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-body" id="importWizardBody" style="max-height: 60vh; overflow-y: auto;">
+        <!-- Step 1 Pane: Upload -->
+        <div id="importPaneStep1" class="import-step-pane">
+          <div class="upload-dropzone" id="csvDropzone" onclick="document.getElementById('csvFileInput').click()">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin: 0 auto var(--space-2); color: var(--color-primary);">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            <div style="font-weight: 600; font-size: 14px;">Click to select or drag & drop CSV fleet sheet</div>
+            <p class="text-xs text-muted" style="margin-top: 4px;">Supports standard CSV export from ERP, Telematics or Parivahan Vahan portal</p>
+            <input type="file" id="csvFileInput" accept=".csv,text/csv" style="display: none;" onchange="handleCSVFileSelect(event)">
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; background: var(--color-bg-app); padding: 12px; border-radius: var(--radius-md);">
+            <div>
+              <div style="font-size: 13px; font-weight: 600;">Download Standard Fleet CSV Template</div>
+              <div class="text-xs text-muted">Pre-formatted headers for seamless auto-mapping</div>
+            </div>
+            <button class="btn btn--outline btn--sm" type="button" onclick="downloadSampleVehicleCSV()">Download Template</button>
+          </div>
+        </div>
+
+        <!-- Step 2 Pane: Column Mapping -->
+        <div id="importPaneStep2" class="import-step-pane" style="display: none;">
+          <p class="text-xs text-muted">Confirm matched columns between your CSV file and ChallanOS fleet fields.</p>
+          <div class="column-mapping-grid" id="columnMappingGrid"></div>
+        </div>
+
+        <!-- Step 3 Pane: Validation & Preview -->
+        <div id="importPaneStep3" class="import-step-pane" style="display: none;">
+          <div id="importValidationSummary" style="display: flex; gap: var(--space-4); margin-bottom: var(--space-2);"></div>
+          <div class="table-wrapper" style="max-height: 240px; overflow-y: auto;">
+            <table class="data-table" id="importPreviewTable">
+              <thead>
+                <tr>
+                  <th>Row</th>
+                  <th>Registration</th>
+                  <th>Make & Model</th>
+                  <th>Owner</th>
+                  <th>Validation Status</th>
+                </tr>
+              </thead>
+              <tbody id="importPreviewTableBody"></tbody>
+            </table>
+          </div>
+          <div id="importErrorDownloadRow" style="display: none; justify-content: flex-end;">
+            <button class="btn btn--outline btn--sm" type="button" onclick="downloadImportErrorsCSV()">
+              Download Error CSV (Corrections)
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 4 Pane: Confirmation -->
+        <div id="importPaneStep4" class="import-step-pane" style="display: none; text-align: center; padding: 20px;">
+          <div style="width: 48px; height: 48px; border-radius: 50%; background-color: var(--status-paid-bg); color: var(--status-paid); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-3);">
+            <svg width="24" height="24" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          </div>
+          <h3 class="text-md font-semibold">Ready to Import Valid Assets</h3>
+          <p class="text-xs text-muted" id="importCommitSummaryText" style="margin-top: 6px;">
+            5 valid vehicles will be imported and persisted into your local database.
+          </p>
+        </div>
+      </div>
+
+      <div class="modal-footer" id="importWizardFooter">
+        <button class="btn btn--outline" type="button" onclick="Utils.closeModal('importVehiclesModal')">Cancel</button>
+        <button class="btn btn--primary" type="button" id="importWizardNextBtn" disabled onclick="advanceImportWizard()">Proceed to Mapping →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Add Custody Period Modal for Timeline (Step 5.5) -->
+  <div class="modal-backdrop" id="addCustodyPeriodModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title">Add Custody / Responsibility Period</h3>
+          <p class="text-xs text-muted">Record vehicle custody handover for compliance attribution</p>
+        </div>
+        <button class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('addCustodyPeriodModal')" title="Close">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+        </button>
+      </div>
+      <form id="addCustodyForm" onsubmit="event.preventDefault(); submitCustodyPeriodForm();">
+        <div class="modal-body" style="display: flex; flex-direction: column; gap: var(--space-4);">
+          <div class="form-group">
+            <label class="form-label">Party Classification *</label>
+            <select class="form-select" id="custodyPartyType" onchange="populateCustodyPartyOptions(this.value)">
+              <option value="Driver">Driver (Personal Custody)</option>
+              <option value="Lessee">Corporate Lessee</option>
+              <option value="Fleet Operator">Fleet Operator (In-House Yard / Depot)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Party Name / Designee *</label>
+            <select class="form-select" id="custodyPartyNameSelect"></select>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
+            <div class="form-group">
+              <label class="form-label">Handover Start Date *</label>
+              <input type="date" class="form-input" id="custodyStartDate" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Handover End Date *</label>
+              <input type="date" class="form-input" id="custodyEndDate" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Contract / Dispatch Roster Reference *</label>
+            <input type="text" class="form-input" id="custodyContractRef" placeholder="e.g. LSE-2026-DEL-88 or TRIP-9921" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn--outline" type="button" onclick="Utils.closeModal('addCustodyPeriodModal')">Cancel</button>
+          <button class="btn btn--primary" type="submit">Save Custody Period</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 6. Bulk Assignment Modal (Step 6.4) -->
+  <div class="modal-backdrop" id="bulkAssignModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title">Bulk Assign Responsibility</h3>
+          <p class="text-xs text-muted" id="bulkAssignSubtitle">Batch allocate liability for selected infractions</p>
+        </div>
+        <button class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('bulkAssignModal')" title="Close">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+        </button>
+      </div>
+      <div class="modal-body" style="display: flex; flex-direction: column; gap: var(--space-4);">
+        <div class="form-group">
+          <label class="form-label">Assign Selected To Party Type *</label>
+          <select class="form-select" id="bulkPartyTypeSelect" onchange="populateBulkPartyOptions(this.value)">
+            <option value="Driver">Driver (Matched by Trip Rosters)</option>
+            <option value="Lessee">Corporate Lessee</option>
+            <option value="Fleet Operator">Fleet Operator (Self Absorbed)</option>
+          </select>
+        </div>
+        <div class="form-group" id="bulkEntityGroup">
+          <label class="form-label">Specific Assignee</label>
+          <select class="form-select" id="bulkEntitySelect"></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mandatory Batch Audit Notes *</label>
+          <textarea class="form-textarea" id="bulkAssignAuditNotes" rows="2" placeholder="Reason for bulk allocation..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn--outline" type="button" onclick="Utils.closeModal('bulkAssignModal')">Cancel</button>
+        <button class="btn btn--primary" type="button" onclick="executeBulkAssignment()">Confirm Bulk Assignment</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. Bulk Dispute Modal (Step 6.4) -->
+  <div class="modal-backdrop" id="bulkDisputeModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title">Bulk Mark as Disputed</h3>
+          <p class="text-xs text-muted" id="bulkDisputeSubtitle">Initiate contestation for selected violations</p>
+        </div>
+        <button class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('bulkDisputeModal')" title="Close">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+        </button>
+      </div>
+      <div class="modal-body" style="display: flex; flex-direction: column; gap: var(--space-4);">
+        <div class="form-group">
+          <label class="form-label">Primary Contest Ground *</label>
+          <select class="form-select" id="bulkDisputeReasonSelect">
+            <option value="Cloned Registration Plate / Incorrect Vehicle">Cloned Registration Plate / Incorrect Vehicle</option>
+            <option value="Radar Speed Gun Calibration Fault">Radar Speed Gun Calibration Fault</option>
+            <option value="Giving Way to Emergency Siren Vehicle">Giving Way to Emergency Siren Vehicle</option>
+            <option value="Notice Already Compounded / Compounding Slip Available">Notice Already Compounded / Slip Available</option>
+            <option value="Traffic Light Timer Calibration Defect">Traffic Light Timer Calibration Defect</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Contest Evidence Summary *</label>
+          <textarea class="form-textarea" id="bulkDisputeNotes" rows="2" placeholder="Summary of supporting proof and telematics logs..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn--outline" type="button" onclick="Utils.closeModal('bulkDisputeModal')">Cancel</button>
+        <button class="btn btn--primary" type="button" onclick="executeBulkDispute()">Submit Bulk Dispute</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. Payment Settlement Receipt Voucher Modal (Printable / Downloadable) -->
+  <div class="modal-backdrop" id="receiptModal">
+    <div class="modal-dialog" style="max-width: 560px;">
+      <div class="modal-header" style="background: var(--color-primary-subtle); border-bottom: 1px solid var(--color-primary-light);">
+        <div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="badge badge--paid">Verified Statutory Settlement</span>
+            <span class="badge badge--neutral" style="font-size: 10px;">DEMO VOUCHER</span>
+          </div>
+          <h3 class="modal-title" style="color: var(--color-primary); margin-top: 4px;">e-Challan Payment Receipt</h3>
+          <p class="text-xs text-muted" id="receiptVoucherNo">RCPT-2026-884120</p>
+        </div>
+        <button class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('receiptModal')" title="Close">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+        </button>
+      </div>
+      <div class="modal-body" style="display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-6);">
+        <!-- Summary Banner -->
+        <div style="text-align: center; padding: 16px; background: var(--color-bg-app); border: 1px dashed var(--color-border); border-radius: var(--radius-md);">
+          <div class="text-xs text-muted">Total Statutory Amount Paid</div>
+          <div style="font-size: 28px; font-weight: 800; color: var(--status-paid); margin: 4px 0;" id="receiptTotalAmt">₹2,025</div>
+          <div class="text-xs" style="color: var(--color-text-secondary);">Settled via National Electronic Toll & Traffic Gateway (Parivahan)</div>
+        </div>
+
+        <!-- Receipt Details Matrix -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 12px; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); padding: 12px 0;">
+          <div>
+            <span class="text-muted" style="display: block;">Challan Number:</span>
+            <strong id="receiptChallanNo">DL-884120</strong>
+          </div>
+          <div>
+            <span class="text-muted" style="display: block;">Vehicle Registration:</span>
+            <strong id="receiptVehicleReg">DL-01-AB-1234</strong>
+          </div>
+          <div style="grid-column: 1 / -1;">
+            <span class="text-muted" style="display: block;">Infraction / Law Section:</span>
+            <strong id="receiptOffence">Overspeeding (Sec 183(1) MV Act)</strong>
+          </div>
+          <div>
+            <span class="text-muted" style="display: block;">Settled Timestamp:</span>
+            <span id="receiptPaymentDate">06 Nov 2026, 06:45 PM</span>
+          </div>
+          <div>
+            <span class="text-muted" style="display: block;">Settlement Method:</span>
+            <span id="receiptMethod">UPI (Gateway Ref: UPI-2940128)</span>
+          </div>
+          <div>
+            <span class="text-muted" style="display: block;">Transaction Reference:</span>
+            <strong class="font-mono" id="receiptTxnRef" style="color: var(--color-primary);">TXN-PARIVAHAN-2026-99218</strong>
+          </div>
+          <div>
+            <span class="text-muted" style="display: block;">Paid By (Payer):</span>
+            <strong id="receiptPayer">Apex Fleet Pvt Ltd</strong>
+          </div>
+          <div style="grid-column: 1 / -1;">
+            <span class="text-muted" style="display: block;">Recovery Allocation Target:</span>
+            <strong id="receiptRecoveryParty">Rahul Sharma (Driver - Payroll deduction)</strong>
+          </div>
+        </div>
+
+        <!-- Breakdown -->
+        <div style="font-size: 12px; display: flex; flex-direction: column; gap: 6px;">
+          <div style="display: flex; justify-content: space-between;">
+            <span class="text-muted">Statutory Penalty Amount:</span>
+            <span id="receiptBaseAmt">₹2,000</span>
+          </div>
+          <div style="display: flex; justify-content: space-between;">
+            <span class="text-muted">Accumulated Late Fee:</span>
+            <span id="receiptLateFee">₹0</span>
+          </div>
+          <div style="display: flex; justify-content: space-between;">
+            <span class="text-muted">Portal Convenience Fee:</span>
+            <span id="receiptConvFee">₹25</span>
+          </div>
+        </div>
+
+        <!-- Verification Seal -->
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; background: #F0FDF4; border-radius: var(--radius-sm); border: 1px solid #DCFCE7;">
+          <span class="text-xs" style="color: #15803D; font-weight: 600;">✓ Digitally Certified Reconciliation Seal</span>
+          <span class="text-xs font-mono" style="color: #15803D;">APEX-AUDIT-OK</span>
+        </div>
+      </div>
+      <div class="modal-footer" style="display: flex; justify-content: space-between;">
+        <button class="btn btn--outline" type="button" onclick="Utils.closeModal('receiptModal')">Close</button>
+        <div style="display: flex; gap: var(--space-2);">
+          <button class="btn btn--outline" type="button" onclick="downloadCurrentReceiptVoucher()">
+            <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+            Download Receipt
+          </button>
+          <button class="btn btn--primary" type="button" onclick="window.print()">
+            <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v3a2 2 0 002 2h1v2a2 2 0 002 2h6a2 2 0 002-2v-2h1a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z" clip-rule="evenodd"/></svg>
+            Print Voucher
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. File Dispute Modal -->
+  <div class="modal-backdrop" id="fileDisputeModal">
+    <div class="modal-dialog" style="max-width: 580px;">
+      <div class="modal-header">
+        <div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <h3 class="modal-title">Contest Traffic Challan</h3>
+            <span class="badge badge--disputed">Grievance Portal</span>
+          </div>
+          <p class="text-xs text-muted">File administrative contest on Parivahan grievance cell (Demo)</p>
+        </div>
+        <button class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('fileDisputeModal')" title="Close">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+        </button>
+      </div>
+      <div class="modal-body" style="display: flex; flex-direction: column; gap: var(--space-4);">
+        <input type="hidden" id="disputeModalChallanId">
+        <div style="background-color: var(--color-bg-app); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 12px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-weight: 600; font-size: 13px;" id="disputeModalChallanNo">DL-884120</div>
+            <div style="font-size: 12px; color: var(--color-text-muted);" id="disputeModalOffence">Overspeeding (Sec 183)</div>
+            <div style="font-size: 11px; color: var(--color-primary); font-weight: 600;" id="disputeModalVehicle">DL-01-AB-1234</div>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-size: 18px; font-weight: 700; color: var(--color-text-main);" id="disputeModalAmount">₹2,000</div>
+            <div class="text-xs text-muted" id="disputeDeadlineDisplay">Statutory window active</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Statutory Contest Ground *</label>
+          <select class="form-select" id="disputeGroundSelect">
+            <option value="Incorrect ANPR plate recognition / Cloned vehicle mismatch">Incorrect ANPR plate recognition / Cloned vehicle mismatch</option>
+            <option value="Speed radar calibration fault / Discrepancy with telematics GPS">Speed radar calibration fault / Discrepancy with telematics GPS</option>
+            <option value="Driver duty swap not reflected in Parivahan roster">Driver duty swap not reflected in Parivahan roster</option>
+            <option value="Vehicle yielded to emergency siren vehicle (Sec 194E)">Vehicle yielded to emergency siren vehicle (Sec 194E)</option>
+            <option value="Vehicle sold/leased prior to offence timestamp">Vehicle sold/leased prior to offence timestamp</option>
+            <option value="Traffic signal malfunction / Manual traffic cop direction">Traffic signal malfunction / Manual traffic cop direction</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Simulated Evidence Upload *</label>
+          <div style="border: 1px dashed var(--color-border); border-radius: var(--radius-md); padding: 14px; text-align: center; background: var(--color-bg-app); cursor: pointer;" onclick="simulateEvidenceUpload()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin: 0 auto 6px; color: var(--color-primary);"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+            <div style="font-weight: 600; font-size: 13px;" id="disputeEvidenceFilename">telematics-gps-speed-log.pdf</div>
+            <div class="text-xs text-muted">Click to attach telematics data log, dashcam still, or duty roster</div>
+          </div>
+          <input type="hidden" id="disputeEvidenceUploadedFile" value="telematics-gps-speed-log.pdf">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Justification & Telematics Evidence Summary *</label>
+          <textarea class="form-textarea" id="disputeNotesInput" rows="3" required placeholder="State operational telematics data, GPS velocity logs, or visual plate differences..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn--outline" type="button" onclick="Utils.closeModal('fileDisputeModal')">Cancel</button>
+        <button class="btn btn--primary" type="button" onclick="submitDisputeContest(document.getElementById('disputeModalChallanId').value, document.getElementById('disputeGroundSelect').value)">
+          Submit Contest to Authority →
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. Virtual Traffic Court Case & Compounding Modal -->
+  <div class="modal-backdrop" id="courtModal">
+    <div class="modal-dialog" style="max-width: 600px;">
+      <div class="modal-header" style="background: var(--status-court-bg); border-bottom: 1px solid #E6E9F0;">
+        <div>
+          <span class="badge badge--court" style="margin-bottom: 4px;">Virtual Traffic Court Proceedings</span>
+          <h3 class="modal-title" style="color: var(--status-court);">Judicial Docket & Compounding</h3>
+          <p class="text-xs text-muted" id="courtModalCaseRef">DLCT01-002931-2026</p>
+        </div>
+        <button class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('courtModal')" title="Close">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+        </button>
+      </div>
+
+      <div class="modal-body" style="display: flex; flex-direction: column; gap: var(--space-4);">
+        <input type="hidden" id="courtModalChallanId">
+
+        <!-- Court Stay Explanatory Banner -->
+        <div style="background: #FEF3F2; border: 1px solid #FECDCA; border-radius: var(--radius-md); padding: 12px; color: #B42318; font-size: 12px; line-height: 1.5;">
+          <strong>🔒 Sub-Judice Stay Notice:</strong> This infraction has been escalated to judicial proceedings. Online Parivahan settlement is locked to prevent contempt of court or double payment until a judicial decree or compounding order is entered below.
+        </div>
+
+        <!-- Case Overview Matrix -->
+        <div style="background-color: var(--color-bg-app); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 12px;">
+          <div>
+            <span class="text-muted" style="display: block;">Challan & Vehicle:</span>
+            <strong id="courtModalChallanDisplay" style="color: var(--color-primary);">DL-884120 (DL-01-AB-1234)</strong>
+          </div>
+          <div>
+            <span class="text-muted" style="display: block;">Statutory Fine at Stake:</span>
+            <strong id="courtModalOriginalFine" style="font-size: 14px; color: #B42318;">₹20,000</strong>
+          </div>
+          <div>
+            <span class="text-muted" style="display: block;">Court Jurisdiction / Bench:</span>
+            <strong id="courtModalBench">Virtual Traffic Court (Metropolitan Magistrate)</strong>
+          </div>
+          <div>
+            <span class="text-muted" style="display: block;">Hearing Date:</span>
+            <strong id="courtModalHearingDate">18 April 2026</strong>
+          </div>
+          <div style="grid-column: 1 / -1;">
+            <span class="text-muted" style="display: block;">Assigned Legal Counsel:</span>
+            <span id="courtModalCounsel">Adv. Meenakshi Sundaram (Chamber 402, High Court Bar)</span>
+          </div>
+        </div>
+
+        <!-- Judicial Action / Order Simulation Form -->
+        <div style="border: 1px dashed var(--color-border); border-radius: var(--radius-md); padding: 12px; background: #FFF;">
+          <div style="font-weight: 700; font-size: 12px; color: var(--color-text-main); margin-bottom: 8px;">
+            ⚖️ Record Court Decree / Compounding Order
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Judicial Order Type *</label>
+            <select class="form-select" id="courtOrderOutcomeSelect" onchange="handleCourtOutcomeChange(this.value)">
+              <option value="COMPOUNDED">Compounded (Fine Reduced by Court Order)</option>
+              <option value="DISMISSED">Acquitted / Case Dismissed (Fine Waived to ₹0)</option>
+              <option value="UPHELD">Upheld (Full Statutory Fine Confirmed Payable)</option>
+            </select>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);" id="courtCompoundedAmountContainer">
+            <div class="form-group">
+              <label class="form-label">Compounded Fine (INR) *</label>
+              <input type="number" class="form-input" id="courtCompoundedAmountInput" value="1000" min="0" step="100">
+              <span class="text-xs text-muted">Amount decreed by Magistrate</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Court Order Reference No *</label>
+              <input type="text" class="form-input font-mono" id="courtOrderRefInput" placeholder="e.g. ORDER-VC-2026-9912">
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top: 8px;">
+            <label class="form-label">Judicial Order Summary & Notes</label>
+            <textarea class="form-textarea" id="courtOrderNotesInput" rows="2" placeholder="Record judge remarks, advocate submission summary, or compounding receipt stamp..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer" style="display: flex; justify-content: space-between;">
+        <button class="btn btn--outline" type="button" onclick="Utils.closeModal('courtModal')">Close</button>
+        <button class="btn btn--primary" type="button" onclick="submitCourtOrderResolution()">
+          Confirm & Execute Judicial Order →
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. Edit Challan Information Modal -->
+  <div class="modal-backdrop" id="editChallanModal">
+    <div class="modal-dialog" style="max-width: 580px;">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title" id="editChallanModalTitle">Edit Challan Information</h3>
+          <p class="text-xs text-muted" id="editChallanModalSubtitle">Update location, due date, accumulated late fees, or internal notes</p>
+        </div>
+        <button class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('editChallanModal')" title="Close">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+        </button>
+      </div>
+      <form id="editChallanForm" onsubmit="event.preventDefault(); submitEditChallanForm();">
+        <input type="hidden" id="editChallanId">
+        <div class="modal-body" style="display: flex; flex-direction: column; gap: var(--space-4);">
+          <div style="background-color: var(--color-bg-app); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 12px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div style="font-weight: 600; font-size: 13px;" id="editChallanNumberDisplay">DL-884120</div>
+              <div style="font-size: 12px; color: var(--color-text-muted);" id="editChallanOffenceDisplay">Overspeeding (Sec 183)</div>
+              <div style="font-size: 11px; color: var(--color-primary); font-weight: 600;" id="editChallanVehicleDisplay">DL-01-AB-1234</div>
+            </div>
+            <div style="text-align: right;">
+              <div class="text-xs text-muted">Original Penalty</div>
+              <div style="font-size: 18px; font-weight: 700; color: var(--color-text-main);" id="editChallanOriginalAmount">₹2,000</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Infraction Location *</label>
+            <input type="text" class="form-input" id="editChallanLocation" required placeholder="e.g. Ring Road, Near Moolchand Underpass">
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
+            <div class="form-group">
+              <label class="form-label">Statutory Due Date *</label>
+              <input type="date" class="form-input" id="editChallanDueDate" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Dispute Window Deadline</label>
+              <input type="date" class="form-input" id="editChallanDisputeDeadline">
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
+            <div class="form-group">
+              <label class="form-label">Accumulated Late Fee (INR)</label>
+              <input type="number" class="form-input" id="editChallanLateFee" min="0" step="50" value="0">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Gateway Convenience Fee (INR)</label>
+              <input type="number" class="form-input" id="editChallanConvenienceFee" min="0" step="5" value="25">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Operational Notes & Justification</label>
+            <textarea class="form-textarea" id="editChallanNotes" rows="2" placeholder="Reason for updating challan metadata..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn--outline" type="button" onclick="Utils.closeModal('editChallanModal')">Cancel</button>
+          <button class="btn btn--primary" type="submit">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Global Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Core JavaScript Modules (Modular Architecture, Vanilla ES6) -->
+  <script src="js/data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/responsibility.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/vehicles.js"></script>
+  <script src="js/challans.js"></script>
+  <script src="js/payments.js"></script>
+  <script src="js/disputes.js"></script>
+  <script src="js/reports.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
+
