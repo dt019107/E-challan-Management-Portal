@@ -659,14 +659,15 @@
   color: var(--text-3);
 }
 
-/* 4. Due-in-7-days photo panel with warm monochrome truck photograph */
+/* 4. Due-in-7-days photo panel with calibrated high-contrast scrim */
 .calm-navy-photo-panel {
   background-color: #111214;
   background-image: 
-    linear-gradient(180deg, rgba(11, 12, 14, 0.82) 0%, rgba(11, 12, 14, 0.35) 55%, rgba(11, 12, 14, 0.70) 100%),
-    url('../assets/images/highway-toll-truck.jpg');
+    linear-gradient(90deg, rgba(11, 12, 14, 0.88) 0%, rgba(11, 12, 14, 0.65) 50%, rgba(11, 12, 14, 0.28) 100%),
+    linear-gradient(180deg, rgba(11, 12, 14, 0.75) 0%, rgba(14, 16, 20, 0.35) 55%, rgba(11, 12, 14, 0.88) 100%),
+    url('../assets/images/challan-illustration.jpg');
   background-size: cover;
-  background-position: center;
+  background-position: center 30%;
   border-radius: var(--radius-panel);
   border: 1px solid var(--line);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
@@ -688,33 +689,62 @@
 
 .calm-photo-label {
   font-size: 12px;
-  font-weight: 400;
-  color: var(--text-2);
+  font-weight: 500;
+  color: #ECE8DF;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95);
+  letter-spacing: 0.01em;
 }
 
 .calm-photo-sublabel {
   font-size: 11px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--accent);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95);
 }
 
 .calm-navy-number {
   font-family: var(--font-family-serif);
-  font-size: 42px;
+  font-size: 44px;
   font-weight: 400;
   letter-spacing: -0.02em;
-  color: var(--text);
+  color: #FFFFFF;
   line-height: 1.1;
   margin: 8px 0 6px;
   font-variant-numeric: tabular-nums;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95), 0 0 16px rgba(0, 0, 0, 0.8);
 }
 
 .calm-navy-desc {
   font-size: 13px;
-  color: var(--text-2);
+  color: #F0EDE6;
+  font-weight: 400;
   line-height: 1.5;
   margin-bottom: 16px;
-  max-width: 440px;
+  max-width: 420px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95), 0 2px 10px rgba(0, 0, 0, 0.85);
+}
+
+.calm-navy-photo-panel .calm-badge {
+  background: rgba(11, 12, 14, 0.85);
+  border: 1px solid rgba(224, 164, 88, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.calm-navy-photo-panel .calm-btn-secondary {
+  background: rgba(17, 18, 20, 0.85);
+  border: 1px solid rgba(236, 232, 223, 0.2);
+  color: #ECE8DF;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.calm-navy-photo-panel .calm-btn-secondary:hover {
+  background: rgba(28, 30, 34, 0.95);
+  border-color: rgba(236, 232, 223, 0.35);
+  color: #FFFFFF;
 }
 
 /* 5. Donut & Bar Charts Hairline Layouts */
