@@ -75,38 +75,50 @@ function renderDashboardView(container, actions) {
             </div>
 
             <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
-              <button class="calm-btn-navy" onclick="navigateTo('payments')" title="Settle notices in bulk via simulated payment">
-                Settle Fines
+              <button class="finexy-btn-lime" onclick="navigateTo('payments')" title="Settle notices in bulk via simulated payment">
+                ⇄ Settle Fines
               </button>
-              <button class="calm-btn-surface" onclick="navigateTo('challans', true, { status: 'unassigned' })" title="Adjudicate unassigned traffic notices">
-                Assign Responsibility
+              <button class="finexy-btn-soft" onclick="navigateTo('challans', true, { status: 'unassigned' })" title="Adjudicate unassigned traffic notices">
+                ⇆ Assign Responsibility
               </button>
             </div>
           </div>
 
-          <!-- Hairline Corridor Metrics -->
+          <!-- Finexy Wallet-style Corridor Metrics -->
           <div class="calm-corridor-row">
             <div class="calm-corridor-item">
-              <div class="calm-corridor-label">NCR Corridor</div>
+              <div class="calm-corridor-label">
+                <span>NCR Corridor</span>
+                <span style="font-size: 9px; background: rgba(24, 184, 90, 0.12); color: #16A34A; padding: 1.5px 6px; border-radius: 9999px; font-weight: 600;">Active</span>
+              </div>
               <div class="calm-corridor-val">${Utils.formatINR(corridorAmounts.ncr)}</div>
+              <div style="font-size: 11px; color: #94A3B8; margin-top: 2px;">Limit ₹50k/mo</div>
             </div>
             <div class="calm-corridor-item">
-              <div class="calm-corridor-label">Mumbai Western</div>
+              <div class="calm-corridor-label">
+                <span>Mumbai Western</span>
+                <span style="font-size: 9px; background: rgba(24, 184, 90, 0.12); color: #16A34A; padding: 1.5px 6px; border-radius: 9999px; font-weight: 600;">Active</span>
+              </div>
               <div class="calm-corridor-val">${Utils.formatINR(corridorAmounts.mumbai)}</div>
+              <div style="font-size: 11px; color: #94A3B8; margin-top: 2px;">Limit ₹35k/mo</div>
             </div>
             <div class="calm-corridor-item">
-              <div class="calm-corridor-label">Bengaluru Hub</div>
+              <div class="calm-corridor-label">
+                <span>Bengaluru Hub</span>
+                <span style="font-size: 9px; background: rgba(24, 184, 90, 0.12); color: #16A34A; padding: 1.5px 6px; border-radius: 9999px; font-weight: 600;">Active</span>
+              </div>
               <div class="calm-corridor-val">${Utils.formatINR(corridorAmounts.blr)}</div>
+              <div style="font-size: 11px; color: #94A3B8; margin-top: 2px;">Limit ₹25k/mo</div>
             </div>
           </div>
         </div>
 
-        <!-- COLUMN SPAN 5: THE NAVY HERO PHOTO PANEL (Exactly ONE dark tile per screen) -->
+        <!-- COLUMN SPAN 5: THE EMERALD HERO PHOTO PANEL -->
         <div class="calm-navy-photo-panel calm-span-5">
           <div>
             <div class="calm-label-caps">
               <span>Impending Deadline (7 Days)</span>
-              <span style="color: #43D8C5; font-size: 11px; font-weight: 600;">Toll &amp; Highway Radar</span>
+              <span style="color: #B6F533; font-size: 11px; font-weight: 600;">Toll &amp; Highway Radar</span>
             </div>
 
             <div class="calm-navy-number">
@@ -123,7 +135,7 @@ function renderDashboardView(container, actions) {
               <span class="dot"></span>
               <span>Court Referral Imminent</span>
             </div>
-            <button class="calm-btn-navy" style="background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.2);" onclick="navigateTo('challans', true, { filter: 'due7days' })">
+            <button class="calm-btn-navy" style="background: rgba(255, 255, 255, 0.14); border-color: rgba(255, 255, 255, 0.22); border-radius: 9999px; font-size: 12px; font-weight: 600; padding: 6px 16px;" onclick="navigateTo('challans', true, { filter: 'due7days' })">
               Review Notices →
             </button>
           </div>
@@ -143,11 +155,11 @@ function renderDashboardView(container, actions) {
             </div>
             <div class="calm-chart-legend">
               <div class="calm-chart-legend-item">
-                <span class="calm-chart-legend-dot" style="background: #A9CEF3;"></span>
+                <span class="calm-chart-legend-dot" style="background: #141821;"></span>
                 <span>Past Months</span>
               </div>
               <div class="calm-chart-legend-item">
-                <span class="calm-chart-legend-dot" style="background: #43D8C5;"></span>
+                <span class="calm-chart-legend-dot" style="background: #B6F533; border: 1px solid rgba(0,0,0,0.1);"></span>
                 <span>Current Month (Velocity)</span>
               </div>
             </div>
@@ -168,14 +180,14 @@ function renderDashboardView(container, actions) {
           </div>
 
           <div class="calm-donut-container">
-            <!-- SVG Donut with 10px stroke, round caps, 3px gap & serif central counter -->
+            <!-- SVG Donut with 10px stroke, round caps, 3px gap & modern counter -->
             ${renderLiabilityDonutChart(challans)}
 
             <!-- Hairline Category Breakdown List -->
             <div class="calm-donut-list">
               <div class="calm-donut-row">
                 <div class="calm-donut-name">
-                  <span style="width: 8px; height: 8px; border-radius: 50%; background: #0F2A47;"></span>
+                  <span style="width: 8px; height: 8px; border-radius: 50%; background: #141821;"></span>
                   <span>Driver Trips</span>
                 </div>
                 <div class="calm-donut-pct">42% (₹54,600)</div>
@@ -183,7 +195,7 @@ function renderDashboardView(container, actions) {
 
               <div class="calm-donut-row">
                 <div class="calm-donut-name">
-                  <span style="width: 8px; height: 8px; border-radius: 50%; background: #43D8C5;"></span>
+                  <span style="width: 8px; height: 8px; border-radius: 50%; background: #B6F533; border: 1px solid rgba(0,0,0,0.1);"></span>
                   <span>Lessee Contracts</span>
                 </div>
                 <div class="calm-donut-pct">38% (₹49,400)</div>
@@ -191,7 +203,7 @@ function renderDashboardView(container, actions) {
 
               <div class="calm-donut-row">
                 <div class="calm-donut-name">
-                  <span style="width: 8px; height: 8px; border-radius: 50%; background: #94A3B8;"></span>
+                  <span style="width: 8px; height: 8px; border-radius: 50%; background: #D0D5DD;"></span>
                   <span>Fleet Default</span>
                 </div>
                 <div class="calm-donut-pct">20% (₹26,010)</div>
@@ -376,10 +388,10 @@ function renderFinexyDualBarChart(challans) {
     const yPos = chartHeight - bHeight;
 
     if (m.isCurrent) {
-      // Hatched aqua bar
+      // Finexy Hatched spring lime bar
       barsHTML += `
-        <rect x="${xPos}" y="${yPos}" width="${barWidth}" height="${bHeight}" rx="7" fill="url(#calmHatchedAqua)" />
-        <text x="${xPos + barWidth / 2}" y="${chartHeight + 18}" text-anchor="middle" fill="#0F2A47" font-size="11" font-weight="700" font-family="'Inter Tight', sans-serif">${m.label}</text>
+        <rect x="${xPos}" y="${yPos}" width="${barWidth}" height="${bHeight}" rx="7" fill="url(#finexyHatchedLime)" />
+        <text x="${xPos + barWidth / 2}" y="${chartHeight + 18}" text-anchor="middle" fill="#141821" font-size="11" font-weight="700" font-family="'Inter Tight', sans-serif">${m.label}</text>
       `;
 
       // Floating dark tooltip with a small arrow on the highlighted bar
@@ -387,18 +399,18 @@ function renderFinexyDualBarChart(challans) {
       const ttY = yPos - 38;
       tooltipHTML = `
         <g class="calm-chart-tooltip" style="filter: drop-shadow(0 4px 10px rgba(0,0,0,0.18));">
-          <rect x="${ttX}" y="${ttY}" width="86" height="28" rx="6" fill="#16191F" />
-          <polygon points="${xPos + barWidth/2 - 4},${ttY + 28} ${xPos + barWidth/2 + 4},${ttY + 28} ${xPos + barWidth/2},${ttY + 33}" fill="#16191F" />
-          <text x="${ttX + 43}" y="${ttY + 18}" text-anchor="middle" fill="#43D8C5" font-size="11" font-weight="600" font-family="'Inter Tight', sans-serif">
+          <rect x="${ttX}" y="${ttY}" width="86" height="28" rx="6" fill="#141821" />
+          <polygon points="${xPos + barWidth/2 - 4},${ttY + 28} ${xPos + barWidth/2 + 4},${ttY + 28} ${xPos + barWidth/2},${ttY + 33}" fill="#141821" />
+          <text x="${ttX + 43}" y="${ttY + 18}" text-anchor="middle" fill="#B6F533" font-size="11" font-weight="700" font-family="'Inter Tight', sans-serif">
             ${m.amount} (${m.notices})
           </text>
         </g>
       `;
     } else {
-      // Light-blue past months bars
+      // Finexy dark charcoal past months bars
       barsHTML += `
-        <rect x="${xPos}" y="${yPos}" width="${barWidth}" height="${bHeight}" rx="7" fill="#A9CEF3" opacity="0.85" />
-        <text x="${xPos + barWidth / 2}" y="${chartHeight + 18}" text-anchor="middle" fill="#94A3B8" font-size="11" font-weight="500" font-family="'Inter Tight', sans-serif">${m.label}</text>
+        <rect x="${xPos}" y="${yPos}" width="${barWidth}" height="${bHeight}" rx="7" fill="#141821" opacity="0.85" />
+        <text x="${xPos + barWidth / 2}" y="${chartHeight + 18}" text-anchor="middle" fill="#98A2B3" font-size="11" font-weight="500" font-family="'Inter Tight', sans-serif">${m.label}</text>
       `;
     }
   });
@@ -406,10 +418,10 @@ function renderFinexyDualBarChart(challans) {
   return `
     <svg viewBox="0 0 ${chartWidth} ${chartHeight + 28}" style="width: 100%; height: auto; display: block; overflow: visible;">
       <defs>
-        <!-- Hatched Aqua Pattern (repeating-linear-gradient 135deg) -->
-        <pattern id="calmHatchedAqua" width="8" height="8" patternTransform="rotate(135 0 0)" patternUnits="userSpaceOnUse">
-          <rect width="8" height="8" fill="#43D8C5" />
-          <line x1="0" y1="0" x2="0" y2="8" stroke="#1BA894" stroke-width="3" />
+        <!-- Finexy Hatched Spring Lime Pattern -->
+        <pattern id="finexyHatchedLime" width="8" height="8" patternTransform="rotate(135 0 0)" patternUnits="userSpaceOnUse">
+          <rect width="8" height="8" fill="#B6F533" />
+          <line x1="0" y1="0" x2="0" y2="8" stroke="#8DCF15" stroke-width="3" />
         </pattern>
       </defs>
       ${gridLines}
@@ -421,7 +433,7 @@ function renderFinexyDualBarChart(challans) {
 
 /**
  * Signature Element: Donut Chart
- * 10px stroke, round caps, 3px gap between segments, total in centre in serif.
+ * 10px stroke, round caps, 3px gap between segments, total in centre in modern sans.
  */
 function renderLiabilityDonutChart(challans) {
   const size = 130;
@@ -444,27 +456,27 @@ function renderLiabilityDonutChart(challans) {
   return `
     <div style="position: relative; width: ${size}px; height: ${size}px; flex-shrink: 0;">
       <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" style="transform: rotate(-90deg); display: block;">
-        <!-- Segment 1: Driver Trips (Navy #0F2A47) -->
+        <!-- Segment 1: Driver Trips (Charcoal #141821) -->
         <circle cx="${size/2}" cy="${size/2}" r="${radius}" fill="none"
-          stroke="#0F2A47" stroke-width="${stroke}" stroke-linecap="round"
+          stroke="#141821" stroke-width="${stroke}" stroke-linecap="round"
           stroke-dasharray="${p1} ${circumference}"
           stroke-dashoffset="${off1}" />
 
-        <!-- Segment 2: Lessee Contracts (Aqua #43D8C5) -->
+        <!-- Segment 2: Lessee Contracts (Spring Lime #B6F533) -->
         <circle cx="${size/2}" cy="${size/2}" r="${radius}" fill="none"
-          stroke="#43D8C5" stroke-width="${stroke}" stroke-linecap="round"
+          stroke="#B6F533" stroke-width="${stroke}" stroke-linecap="round"
           stroke-dasharray="${p2} ${circumference}"
           stroke-dashoffset="${off2}" />
 
-        <!-- Segment 3: Fleet Default (Neutral #94A3B8) -->
+        <!-- Segment 3: Fleet Default (Neutral #D0D5DD) -->
         <circle cx="${size/2}" cy="${size/2}" r="${radius}" fill="none"
-          stroke="#CBD5E1" stroke-width="${stroke}" stroke-linecap="round"
+          stroke="#E2E8F0" stroke-width="${stroke}" stroke-linecap="round"
           stroke-dasharray="${p3} ${circumference}"
           stroke-dashoffset="${off3}" />
       </svg>
-      <!-- Center Counter in Serif -->
+      <!-- Center Counter in Modern Sans -->
       <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none;">
-        <span style="font-family: var(--font-family-serif); font-size: 32px; font-weight: 500; color: #0F2A47; line-height: 1;">32</span>
+        <span style="font-family: 'Inter Tight', sans-serif; font-size: 30px; font-weight: 700; color: #141821; line-height: 1; letter-spacing: -0.02em;">32</span>
         <span style="font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #94A3B8; margin-top: 2px;">NOTICES</span>
       </div>
     </div>

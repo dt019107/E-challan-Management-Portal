@@ -5,35 +5,39 @@
 
 :root {
   /* --------------------------------------------------------------------------
-     1. Brand & Core Color Palette (Calm Editorial Fintech Standard)
+     1. Brand & Core Color Palette (Finexy Award-Level Dribbble Standard)
      -------------------------------------------------------------------------- */
-  --color-primary: #0F2A47;
-  --color-primary-navy: #0F2A47;
-  --color-navy: #0F2A47;
-  --color-navy-dark: #0A1C30;
-  --color-aqua: #43D8C5;
-  --color-accent-aqua: #43D8C5;
-  --color-accent-aqua-light: #E8FAF8;
-  --color-dark-panel: #16191F;
+  --color-primary: #141821;
+  --color-primary-navy: #141821;
+  --color-navy: #141821;
+  --color-navy-dark: #0A0D12;
+  --color-lime: #B6F533;
+  --color-accent-lime: #B6F533;
+  --color-emerald: #18B85A;
+  --color-emerald-dark: #0A5A28;
+  --color-aqua: #B6F533;
+  --color-accent-aqua: #B6F533;
+  --color-accent-aqua-light: #F4FDE5;
+  --color-dark-panel: #141821;
 
-  /* Atmospheric Backgrounds & Neutrals (85% Neutral Discipline) */
-  --color-bg-app: #E9EEF4;
+  /* Atmospheric Backgrounds & Neutrals */
+  --color-bg-app: #F2F4F7;
   --color-bg-surface: #FFFFFF;
   --color-bg-surface-secondary: #F6F8FB;
   --color-bg-surface-subtle: #FAFCFE;
-  --color-bg-surface-hover: rgba(37, 99, 235, 0.035);
+  --color-bg-surface-hover: rgba(182, 245, 51, 0.06);
 
   /* Typography Colors */
   --color-text-main: #141821;
-  --color-text-secondary: #64748B;
-  --color-text-muted: #94A3B8;
-  --color-text-subtle: #CBD5E1;
+  --color-text-secondary: #717680;
+  --color-text-muted: #98A2B3;
+  --color-text-subtle: #D0D5DD;
   --color-text-inverse: #FFFFFF;
 
   /* Borders & Dividers */
-  --color-border: rgba(15, 30, 50, 0.06);
-  --color-border-subtle: rgba(15, 30, 50, 0.04);
-  --color-border-dark: #D6DCE5;
+  --color-border: rgba(15, 23, 42, 0.06);
+  --color-border-subtle: rgba(15, 23, 42, 0.04);
+  --color-border-dark: #E4E7EC;
 
   /* Radii Scale (Strict 3 Values: 24px panel, 14px inner, 10px control) */
   --radius-panel: 24px;
@@ -45,9 +49,9 @@
   --radius-xs: 4px;
   --radius-full: 9999px;
 
-  /* Strict Calm Fintech Shadows */
-  --calm-shadow: 0 1px 2px rgba(15, 30, 50, 0.04), 0 12px 32px -16px rgba(15, 30, 50, 0.12);
-  --calm-border: 1px solid rgba(15, 30, 50, 0.06);
+  /* Strict Finexy Soft Shadows */
+  --calm-shadow: 0 1px 2px rgba(15, 23, 42, 0.03), 0 8px 24px -4px rgba(15, 23, 42, 0.05);
+  --calm-border: 1px solid rgba(15, 23, 42, 0.06);
 
   /* Inline SVG Grain Filter */
   --bg-grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.025'/%3E%3C/svg%3E");
