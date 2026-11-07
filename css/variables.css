@@ -5,52 +5,58 @@
 
 :root {
   /* --------------------------------------------------------------------------
-     1. Brand & Core Color Palette (Art-Directed Fintech Logistics)
+     1. Brand & Core Color Palette (Calm Editorial Fintech Standard)
      -------------------------------------------------------------------------- */
-  /* Primary Blues */
-  --color-primary: #2586D8;
-  --color-primary-dark: #1766AD;
-  --color-primary-navy: #123B65;
-  --color-primary-light: #EBF4FC;
-  --color-primary-hover: #1F77C3;
-  --color-primary-subtle: #F3F8FD;
-  --color-primary-glow: rgba(37, 134, 216, 0.2);
-
-  /* Distinctive Accents from Dribbble Reference */
+  --color-primary: #0F2A47;
+  --color-primary-navy: #0F2A47;
+  --color-navy: #0F2A47;
+  --color-navy-dark: #0A1C30;
+  --color-aqua: #43D8C5;
   --color-accent-aqua: #43D8C5;
   --color-accent-aqua-light: #E8FAF8;
-  --color-accent-aqua-glow: rgba(67, 216, 197, 0.25);
-  --color-accent-blue-light: #A9CEF3;
-  --color-accent-lime: #B5EE40;
+  --color-dark-panel: #16191F;
 
-  /* Contrast Dark Charcoal Surfaces */
-  --color-charcoal: #242329;
-  --color-charcoal-dark: #1A191E;
-  --color-charcoal-surface: #2E2D35;
-  --color-charcoal-border: rgba(255, 255, 255, 0.1);
-
-  /* Atmospheric Backgrounds & Neutrals */
-  --color-bg-app: #EAF0F6;
-  --color-bg-app-secondary: #F3F6FA;
+  /* Atmospheric Backgrounds & Neutrals (85% Neutral Discipline) */
+  --color-bg-app: #E9EEF4;
   --color-bg-surface: #FFFFFF;
-  --color-bg-surface-secondary: #F8FAFC;
-  --color-bg-surface-subtle: #FAFBFD;
-  --color-bg-surface-hover: #F2F6FA;
-  --color-bg-muted: #F3F6FA;
+  --color-bg-surface-secondary: #F6F8FB;
+  --color-bg-surface-subtle: #FAFCFE;
+  --color-bg-surface-hover: rgba(37, 99, 235, 0.035);
 
   /* Typography Colors */
-  --color-text-main: #20212A;
-  --color-text-secondary: #777D88;
-  --color-text-muted: #A0A6B0;
-  --color-text-subtle: #B8BEC9;
+  --color-text-main: #141821;
+  --color-text-secondary: #64748B;
+  --color-text-muted: #94A3B8;
+  --color-text-subtle: #CBD5E1;
   --color-text-inverse: #FFFFFF;
 
   /* Borders & Dividers */
-  --color-border: #E7EBF0;
-  --color-border-subtle: #F0F3F7;
+  --color-border: rgba(15, 30, 50, 0.06);
+  --color-border-subtle: rgba(15, 30, 50, 0.04);
   --color-border-dark: #D6DCE5;
-  --color-border-focus: #2586D8;
-  --color-border-glass: rgba(231, 235, 240, 0.85);
+
+  /* Radii Scale (Strict 3 Values: 24px panel, 14px inner, 10px control) */
+  --radius-panel: 24px;
+  --radius-inner: 14px;
+  --radius-control: 10px;
+  --radius-lg: 24px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
+  --radius-xs: 4px;
+  --radius-full: 9999px;
+
+  /* Strict Calm Fintech Shadows */
+  --calm-shadow: 0 1px 2px rgba(15, 30, 50, 0.04), 0 12px 32px -16px rgba(15, 30, 50, 0.12);
+  --calm-border: 1px solid rgba(15, 30, 50, 0.06);
+
+  /* Inline SVG Grain Filter */
+  --bg-grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.025'/%3E%3C/svg%3E");
+
+  /* Typography Scale & Font Metrics */
+  --font-family-base: 'Inter Tight', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-family-serif: 'Instrument Serif', 'Newsreader', Georgia, serif;
+  --font-family-editorial: 'Instrument Serif', Georgia, serif;
+  --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
   /* Semantic Status Tokens */
   --status-unassigned: #C24141;

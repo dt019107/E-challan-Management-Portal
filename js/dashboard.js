@@ -1,17 +1,14 @@
 /**
  * ChallanOS - Operational Dashboard Module (js/dashboard.js)
  * 
- * Re-architected with Finexy Modern Fintech UI Design Language:
- * - Fluid high-contrast modern card architecture with 24px rounded corners
- * - Top Row (3 Columns):
- *   1. Total Liability Card with currency switcher, trend badge, lime/soft action pills, & corridor mini-wallets
- *   2. 2x2 Metric Block with vibrant green gradient Hero Card (Unassigned Notices) + 3 crisp white metric cards
- *   3. Total Infraction & Recovery Velocity Bar Chart (Dual/Stacked SVG bar chart across 8 months with Y-axis guidelines)
- * - Bottom Row (2 Columns):
- *   1. Left Stack: Monthly Settlement Limit progress tracker & Physical Fleet Cards (Matte Black Mastercard + Green FASTag card)
- *   2. Right Stack: Wide Recent Activities Table Card with live search pill, filter toggle, queue filter pills,
- *      colorful offence category icon badges, status dots, amounts, timestamps, and action triggers
- * - Fully preserving all central database queries, LocalStorage reactive updates, and navigation callbacks.
+ * Calm Editorial Fintech Architecture:
+ * - 12-Column Asymmetric Grid (5/7 and full spans, no rows of 4 equal boxes)
+ * - Hero Outstanding Tile with 62px Instrument Serif typography & hairline corridor metrics
+ * - Navy Hero Panel with Indian highway photograph under dot grid & navy overlay
+ * - Signature Bar Chart with 14px bars, rounded tops, hatched aqua bar & floating dark tooltip
+ * - Signature Donut Chart with 10px stroke, round caps, 3px segment gaps & serif central counter
+ * - Action Queue Table with strict 60px rows, no vertical lines, 11px uppercase muted headers,
+ *   monospace registration chip, and 24px status badges with 6px dots.
  */
 
 function renderDashboardView(container, actions) {
@@ -21,354 +18,245 @@ function renderDashboardView(container, actions) {
   const challans = StorageManager.getChallans();
   const vehicles = StorageManager.getVehicles();
 
-  // Clear redundant outside actions container since actions are integrated into the premium greeting header
+  // Clear redundant outside actions container
   if (actions) {
     actions.innerHTML = "";
   }
 
-  // Calculate corridor breakdown for mini-wallets in Card 1
+  // Calculate corridor breakdown
   const corridorAmounts = {
     ncr: Math.round(stats.outstandingAmount * 0.45),
     mumbai: Math.round(stats.outstandingAmount * 0.32),
     blr: Math.max(0, stats.outstandingAmount - Math.round(stats.outstandingAmount * 0.45) - Math.round(stats.outstandingAmount * 0.32))
   };
 
-  // Settled progress calculation
-  const settledAmount = challans.filter(c => c.status === 'paid').reduce((s, c) => s + (c.totalPayable || c.amount || 0), 0);
-  const totalDemand = stats.outstandingAmount + settledAmount;
-  const settledPct = totalDemand > 0 ? Math.min(100, Math.round((settledAmount / totalDemand) * 100)) : 35;
-
-  // Render the unified Finexy-inspired Dashboard container
   container.innerHTML = `
-    <div class="finexy-dashboard-container">
+    <div class="calm-dashboard-container">
       
-      <!-- 1. GREETING HEADER WITH INTEGRATED ACTIONS & GENEROUS BREATHING ROOM -->
-      <div class="finexy-header">
-        <div class="finexy-header-left">
-          <div class="finexy-greeting-pill">
-            <span class="finexy-sun-icon">☀</span>
-            <span>Fleet Operations Command</span>
+      <!-- 1. GREETING HEADER (34px Serif with muted 13px date line) -->
+      <div class="calm-dashboard-header">
+        <div class="calm-header-left">
+          <div class="calm-header-date">
+            <span class="dot"></span>
+            <span>SATURDAY, 7 NOVEMBER 2026 • MORTH PARIVAHAN GATEWAY ACTIVE</span>
           </div>
-          <h1 class="finexy-greeting-title">Good morning, Vikram</h1>
-          <p class="finexy-greeting-sub">Stay on top of your tasks, monitor progress, and track status.</p>
+          <h1 class="calm-header-greeting">Good morning, Vikram</h1>
         </div>
 
-        <div class="finexy-header-actions">
-          <span class="finexy-live-badge" title="Real-time Parivahan API active">
-            <span class="finexy-live-dot"></span>
-            MoRTH Gateway Connected
-          </span>
-          <button class="finexy-action-pill-btn" onclick="Utils.exportToCSV(StorageManager.getChallans(), 'apex-fleet-daily-summary.csv')">
+        <div class="calm-header-actions">
+          <button class="calm-btn-pill" onclick="Utils.exportToCSV(StorageManager.getChallans(), 'fleet-liability-audit.csv')">
             <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
             Download Summary
           </button>
-          <button class="finexy-action-pill-btn primary" onclick="Utils.showToast('Gateway Synchronized', 'Parivahan e-Challan gateway polled successfully. All records are up to date.', 'success')">
+          <button class="calm-btn-navy" onclick="Utils.showToast('Gateway Synchronized', 'Parivahan e-Challan gateway polled successfully. 32 active records refreshed.', 'success')">
             <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/></svg>
             Parivahan Sync
           </button>
         </div>
       </div>
 
-      <!-- 2. TOP ROW (3 COLUMNS) -->
-      <div class="finexy-top-grid">
+      <!-- 2. TOP ROW (12 COLUMNS: 7 / 5 ASYMMETRIC GRID) -->
+      <div class="calm-grid-12">
         
-        <!-- COLUMN 1: TOTAL LIABILITY CARD -->
-        <div class="finexy-balance-card">
+        <!-- COLUMN SPAN 7: THE HERO OUTSTANDING TILE (2x visual prominence, 62px Serif Number) -->
+        <div class="calm-panel calm-span-7">
           <div>
-            <div class="finexy-card-top-row">
-              <span class="finexy-label-muted">Total Liability</span>
-              <div class="finexy-currency-badge" title="Primary Fleet Currency">
-                <span>🇮🇳</span>
-                <span>INR</span>
-                <span style="font-size: 8px; opacity: 0.6;">▾</span>
-              </div>
+            <div class="calm-label-caps">
+              <span>Outstanding Fleet Liability</span>
+              <span style="color: #43D8C5; font-size: 11px; font-weight: 600;">↑ 5.2% vs last 30d</span>
             </div>
 
-            <div class="finexy-big-balance">
+            <div class="calm-hero-number" id="dashboardHeroNumber">
               ${Utils.formatINR(stats.outstandingAmount)}
             </div>
 
-            <div class="finexy-trend-tag">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
-              <span>↑ 5% than last month</span>
+            <div class="calm-subtext">
+              Across 32 active compliance notices across Delhi NCR, Mumbai Western Corridor, and Bengaluru Logistics Hubs.
             </div>
 
-            <div class="finexy-action-buttons">
-              <button class="finexy-btn-lime" onclick="navigateTo('payments')" title="Open simulated payment settlement terminal">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>
+            <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+              <button class="calm-btn-navy" onclick="navigateTo('payments')" title="Settle notices in bulk via simulated payment">
                 Settle Fines
               </button>
-              <button class="finexy-btn-soft" onclick="navigateTo('challans', true, { status: 'unassigned' })" title="Assign responsible drivers or lessees">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
-                Assign Party
+              <button class="calm-btn-surface" onclick="navigateTo('challans', true, { status: 'unassigned' })" title="Adjudicate unassigned traffic notices">
+                Assign Responsibility
               </button>
             </div>
           </div>
 
-          <!-- Bottom Corridor Hubs -->
-          <div class="finexy-subcards-section">
-            <div class="finexy-subcards-header">
-              <span>Fleet Corridors</span>
-              <span style="color: #98A2B3; font-weight: 500;">Total 3 Hubs</span>
+          <!-- Hairline Corridor Metrics -->
+          <div class="calm-corridor-row">
+            <div class="calm-corridor-item">
+              <div class="calm-corridor-label">NCR Corridor</div>
+              <div class="calm-corridor-val">${Utils.formatINR(corridorAmounts.ncr)}</div>
             </div>
-            <div class="finexy-subcards-row">
-              <div class="finexy-mini-wallet" onclick="navigateTo('challans', true, { search: 'NCR' })" title="NCR Hub Infractions">
-                <div class="finexy-mini-top">
-                  <span>🏢 NCR</span>
-                  <span style="color: #98A2B3; font-size: 10px;">⋮</span>
-                </div>
-                <div class="finexy-mini-amount">${Utils.formatINR(corridorAmounts.ncr)}</div>
-                <div class="finexy-mini-sub" style="color: #16845B;">Active</div>
-              </div>
-
-              <div class="finexy-mini-wallet" onclick="navigateTo('challans', true, { search: 'Mumbai' })" title="Mumbai Hub Infractions">
-                <div class="finexy-mini-top">
-                  <span>⚓ Mumbai</span>
-                  <span style="color: #98A2B3; font-size: 10px;">⋮</span>
-                </div>
-                <div class="finexy-mini-amount">${Utils.formatINR(corridorAmounts.mumbai)}</div>
-                <div class="finexy-mini-sub" style="color: #16845B;">Active</div>
-              </div>
-
-              <div class="finexy-mini-wallet" onclick="navigateTo('challans', true, { search: 'Bengaluru' })" title="Bengaluru Hub Infractions">
-                <div class="finexy-mini-top">
-                  <span>💻 BLR</span>
-                  <span style="color: #98A2B3; font-size: 10px;">⋮</span>
-                </div>
-                <div class="finexy-mini-amount">${Utils.formatINR(corridorAmounts.blr)}</div>
-                <div class="finexy-mini-sub" style="color: #667085;">Active</div>
-              </div>
+            <div class="calm-corridor-item">
+              <div class="calm-corridor-label">Mumbai Western</div>
+              <div class="calm-corridor-val">${Utils.formatINR(corridorAmounts.mumbai)}</div>
+            </div>
+            <div class="calm-corridor-item">
+              <div class="calm-corridor-label">Bengaluru Hub</div>
+              <div class="calm-corridor-val">${Utils.formatINR(corridorAmounts.blr)}</div>
             </div>
           </div>
         </div>
 
-        <!-- COLUMN 2: 2x2 METRICS BLOCK -->
-        <div class="finexy-metrics-block">
-          
-          <!-- Top Left Hero Green Card: Unassigned Notices -->
-          <div class="finexy-metric-card hero-green" onclick="navigateTo('challans', true, { status: 'unassigned' })" title="Triage unassigned notices">
-            <div class="finexy-metric-card-top">
-              <span class="finexy-card-label">Unassigned Notices</span>
-              <div class="finexy-metric-icon">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-              </div>
+        <!-- COLUMN SPAN 5: THE NAVY HERO PHOTO PANEL (Exactly ONE dark tile per screen) -->
+        <div class="calm-navy-photo-panel calm-span-5">
+          <div>
+            <div class="calm-label-caps">
+              <span>Impending Deadline (7 Days)</span>
+              <span style="color: #43D8C5; font-size: 11px; font-weight: 600;">Toll &amp; Highway Radar</span>
             </div>
-            <div>
-              <div class="finexy-big-val">${stats.unassignedChallans}</div>
-              <div class="finexy-subtext-trend">
-                <span>↑ 7% Needs Triage</span>
-              </div>
+
+            <div class="calm-navy-number">
+              ₹24,800
+            </div>
+
+            <div style="font-size: 13px; color: rgba(255, 255, 255, 0.85); line-height: 1.45; margin-bottom: 20px;">
+              14 commercial notices entering judicial compounding penalty within 7 business days if unadjudicated.
             </div>
           </div>
 
-          <!-- Top Right White Card: Due in 7 Days -->
-          <div class="finexy-metric-card hero-white" onclick="navigateTo('challans', true, { filter: 'due7days' })" title="View notices due soon">
-            <div class="finexy-metric-card-top">
-              <span class="finexy-card-label">Due in 7 Days</span>
-              <div class="finexy-metric-icon">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-              </div>
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+            <div class="calm-navy-badge">
+              <span class="dot"></span>
+              <span>Court Referral Imminent</span>
             </div>
-            <div>
-              <div class="finexy-big-val">${stats.dueIn7Days}</div>
-              <div class="finexy-subtext-trend" style="color: #C24141;">
-                <span>↓ 5% Impending Fee</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Bottom Left White Card: Open Challans -->
-          <div class="finexy-metric-card hero-white" onclick="navigateTo('challans', true, { status: 'all' })" title="View all open notices">
-            <div class="finexy-metric-card-top">
-              <span class="finexy-card-label">Open Challans</span>
-              <div class="finexy-metric-icon">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-              </div>
-            </div>
-            <div>
-              <div class="finexy-big-val">${stats.openChallans}</div>
-              <div class="finexy-subtext-trend" style="color: #16845B;">
-                <span>↑ 8% Across Fleet</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Bottom Right White Card: Disputed / Court -->
-          <div class="finexy-metric-card hero-white" onclick="navigateTo('disputes', true, { status: 'disputed' })" title="View contested & court matters">
-            <div class="finexy-metric-card-top">
-              <span class="finexy-card-label">Disputed / Court</span>
-              <div class="finexy-metric-icon">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-              </div>
-            </div>
-            <div>
-              <div class="finexy-big-val">${stats.disputedChallans}</div>
-              <div class="finexy-subtext-trend" style="color: #16845B;">
-                <span>↑ 4% Sub-Judice</span>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- COLUMN 3: TOTAL INFRACTIONS & RECOVERY VELOCITY CHART -->
-        <div class="finexy-chart-card">
-          <div class="finexy-chart-header">
-            <div>
-              <div class="finexy-chart-title">Total Infractions</div>
-              <div class="finexy-chart-sub">View notice frequency in a certain period of time</div>
-            </div>
-            <div class="finexy-chart-legend">
-              <div style="display: flex; align-items: center;">
-                <span class="finexy-legend-dot" style="background: #43D8C5;"></span>
-                <span>New Notices</span>
-              </div>
-              <div style="display: flex; align-items: center;">
-                <span class="finexy-legend-dot" style="background: #242329;"></span>
-                <span>Settled</span>
-              </div>
-            </div>
-          </div>
-
-          <div style="margin-top: 10px;">
-            ${renderFinexyDualBarChart(challans)}
+            <button class="calm-btn-navy" style="background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.2);" onclick="navigateTo('challans', true, { filter: 'due7days' })">
+              Review Notices →
+            </button>
           </div>
         </div>
 
       </div>
 
-      <!-- 3. BOTTOM ROW (2 COLUMNS) -->
-      <div class="finexy-bottom-grid">
+      <!-- 3. MIDDLE ROW (12 COLUMNS: 7 / 5 ASYMMETRIC GRID) -->
+      <div class="calm-grid-12">
         
-        <!-- LEFT COLUMN: SPENDING LIMIT & FLEET WALLET CARDS -->
-        <div class="finexy-left-stack">
-          
-          <!-- Monthly Spending Limit Progress Card -->
-          <div class="finexy-progress-card">
-            <div class="finexy-progress-title">Monthly Settlement Limit</div>
-            <div class="finexy-progress-track">
-              <div class="finexy-progress-fill" style="width: ${settledPct}%;"></div>
+        <!-- COLUMN SPAN 7: CUSTOM BAR CHART (14px Bars, Hatched Aqua, Floating Tooltip) -->
+        <div class="calm-panel calm-span-7">
+          <div class="calm-chart-header">
+            <div>
+              <div class="calm-chart-title">Notice &amp; Settlement Velocity</div>
+              <div class="calm-chart-sub">Monthly trend across national fleet operations</div>
             </div>
-            <div class="finexy-progress-labels">
-              <span><strong>${Utils.formatINR(settledAmount)}</strong> settled</span>
-              <span>Limit ${Utils.formatINR(totalDemand || 150000)}</span>
-            </div>
-          </div>
-
-          <!-- Fleet Cards & FASTags Box -->
-          <div class="finexy-cards-box">
-            <div class="finexy-cards-header">
-              <div class="finexy-cards-title">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
-                Fleet Cards
+            <div class="calm-chart-legend">
+              <div class="calm-chart-legend-item">
+                <span class="calm-chart-legend-dot" style="background: #A9CEF3;"></span>
+                <span>Past Months</span>
               </div>
-              <button class="finexy-filter-btn" style="padding: 4px 10px; font-size: 11px;" onclick="Utils.showToast('Fleet Wallets', 'FASTag and Corporate Fuel Cards auto-replenish via Virtual Escrow.', 'info')">
-                + Add new
-              </button>
-            </div>
-
-            <div class="finexy-cards-row">
-              <!-- Physical Card 1: Matte Black Mastercard -->
-              <div class="finexy-physical-card black-card" title="Primary Corporate Settlement Card">
-                <div class="finexy-card-top-status">
-                  <span style="font-size: 12px; opacity: 0.8;">)))</span>
-                  <span class="finexy-card-badge">Active</span>
-                </div>
-                <div style="display: flex; justify-content: flex-end; margin: 4px 0;">
-                  <div style="display: flex;">
-                    <div style="width: 14px; height: 14px; border-radius: 50%; background: #EB001B; opacity: 0.9;"></div>
-                    <div style="width: 14px; height: 14px; border-radius: 50%; background: #F79E1B; opacity: 0.9; margin-left: -5px;"></div>
-                  </div>
-                </div>
-                <div>
-                  <div class="finexy-card-num">•••• •••• 6782</div>
-                  <div class="finexy-card-bottom-info" style="margin-top: 6px;">
-                    <div>EXP 09/29</div>
-                    <div>CVV 611</div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Physical Card 2: Deep Green FASTag / Fleet Card -->
-              <div class="finexy-physical-card green-card" title="National Highway FASTag Auto-Debit">
-                <div class="finexy-card-top-status">
-                  <span style="font-size: 12px; opacity: 0.8;">)))</span>
-                  <span class="finexy-card-badge">Active</span>
-                </div>
-                <div style="display: flex; justify-content: flex-end; margin: 4px 0;">
-                  <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.05em; color: #B5EE40;">FASTAG</span>
-                </div>
-                <div>
-                  <div class="finexy-card-num">•••• •••• 4356</div>
-                  <div class="finexy-card-bottom-info" style="margin-top: 6px;">
-                    <div>HUB NORTH</div>
-                    <div>ICICI ESCROW</div>
-                  </div>
-                </div>
+              <div class="calm-chart-legend-item">
+                <span class="calm-chart-legend-dot" style="background: #43D8C5;"></span>
+                <span>Current Month (Velocity)</span>
               </div>
             </div>
           </div>
 
+          <div style="margin-top: 8px;">
+            ${renderFinexyDualBarChart(challans)}
+          </div>
         </div>
 
-        <!-- RIGHT COLUMN: RECENT ACTIVITIES TABLE CARD -->
-        <div class="finexy-activities-card">
-          <div class="finexy-activities-header">
-            <div class="finexy-activities-title">Recent Activities</div>
-            
-            <div class="finexy-activities-controls">
-              <!-- Search Pill -->
-              <div class="finexy-search-pill">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                <input type="text" id="dashboardTableSearchInput" class="finexy-search-input" placeholder="Search notices, offences...">
-              </div>
-
-              <!-- Filter Button -->
-              <button class="finexy-filter-btn" id="dashboardFilterToggleBtn" onclick="toggleQueuePillsVisibility()">
-                <span>Filter</span>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
-              </button>
+        <!-- COLUMN SPAN 5: LIABILITY ATTRIBUTION DONUT CHART -->
+        <div class="calm-panel calm-span-5">
+          <div class="calm-chart-header">
+            <div>
+              <div class="calm-chart-title">Liability Attribution</div>
+              <div class="calm-chart-sub">Adjudicated legal responsibility breakdown</div>
             </div>
           </div>
 
-          <!-- Queue Filter Pills -->
-          <div class="queue-nav-pills" id="dashboardQueuePills" style="margin-bottom: 16px;">
-            <button class="queue-pill-btn active" data-queue="all">
-              All Action Items <span class="queue-pill-badge">${challans.filter(c => c.status !== 'paid').length}</span>
-            </button>
-            <button class="queue-pill-btn" data-queue="unassigned">
-              Unassigned <span class="queue-pill-badge">${challans.filter(c => c.status === 'unassigned').length}</span>
-            </button>
-            <button class="queue-pill-btn" data-queue="overdue">
-              Overdue <span class="queue-pill-badge">${challans.filter(c => Utils.getDaysRemaining(c.dueDate) < 0 && c.status !== 'paid').length}</span>
-            </button>
-            <button class="queue-pill-btn" data-queue="dueSoon">
-              Due in 7 Days <span class="queue-pill-badge">${challans.filter(c => Utils.getDaysRemaining(c.dueDate) >= 0 && Utils.getDaysRemaining(c.dueDate) <= 7 && c.status !== 'paid').length}</span>
-            </button>
-            <button class="queue-pill-btn" data-queue="dispute">
-              Disputed / Court <span class="queue-pill-badge">${challans.filter(c => c.status === 'disputed' || c.status === 'court').length}</span>
-            </button>
+          <div class="calm-donut-container">
+            <!-- SVG Donut with 10px stroke, round caps, 3px gap & serif central counter -->
+            ${renderLiabilityDonutChart(challans)}
+
+            <!-- Hairline Category Breakdown List -->
+            <div class="calm-donut-list">
+              <div class="calm-donut-row">
+                <div class="calm-donut-name">
+                  <span style="width: 8px; height: 8px; border-radius: 50%; background: #0F2A47;"></span>
+                  <span>Driver Trips</span>
+                </div>
+                <div class="calm-donut-pct">42% (₹54,600)</div>
+              </div>
+
+              <div class="calm-donut-row">
+                <div class="calm-donut-name">
+                  <span style="width: 8px; height: 8px; border-radius: 50%; background: #43D8C5;"></span>
+                  <span>Lessee Contracts</span>
+                </div>
+                <div class="calm-donut-pct">38% (₹49,400)</div>
+              </div>
+
+              <div class="calm-donut-row">
+                <div class="calm-donut-name">
+                  <span style="width: 8px; height: 8px; border-radius: 50%; background: #94A3B8;"></span>
+                  <span>Fleet Default</span>
+                </div>
+                <div class="calm-donut-pct">20% (₹26,010)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 4. BOTTOM ROW (SPAN 12: ACTION QUEUE & RECENT INFRACTIONS) -->
+      <div class="calm-panel calm-span-12">
+        
+        <div class="calm-table-header">
+          <div>
+            <div class="calm-chart-title">Action Queue &amp; Recent Infractions</div>
+            <div class="calm-chart-sub">Live compliance triage requiring financial or legal adjudication</div>
           </div>
 
-          <!-- Recent Activities Table -->
-          <div class="finexy-table-wrapper" style="overflow-x: auto;">
-            <table class="finexy-table">
-              <thead>
-                <tr>
-                  <th style="width: 32px;"><input type="checkbox" id="selectAllAttentionCheckbox" title="Select all items"></th>
-                  <th>Order / Notice ID</th>
-                  <th>Activity / Violation</th>
-                  <th>Amount</th>
-                  <th>Status</th>
-                  <th>Date &amp; Time</th>
-                  <th style="text-align: right;">Action</th>
-                </tr>
-              </thead>
-              <tbody id="dashboardAttentionList">
-                ${renderAttentionItems(challans.filter(c => c.status !== 'paid'))}
-              </tbody>
-            </table>
+          <!-- Queue Filter Tabs & Search Control -->
+          <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+            <div class="calm-queue-tabs" id="dashboardQueuePills">
+              <button class="calm-tab-btn active" data-queue="all">
+                All Action Items <span class="calm-tab-badge">${challans.filter(c => c.status !== 'paid').length}</span>
+              </button>
+              <button class="calm-tab-btn" data-queue="unassigned">
+                Unassigned <span class="calm-tab-badge">${challans.filter(c => c.status === 'unassigned').length}</span>
+              </button>
+              <button class="calm-tab-btn" data-queue="overdue">
+                Overdue <span class="calm-tab-badge">${challans.filter(c => Utils.getDaysRemaining(c.dueDate) < 0 && c.status !== 'paid').length}</span>
+              </button>
+              <button class="calm-tab-btn" data-queue="dueSoon">
+                Due in 7 Days <span class="calm-tab-badge">${challans.filter(c => Utils.getDaysRemaining(c.dueDate) >= 0 && Utils.getDaysRemaining(c.dueDate) <= 7 && c.status !== 'paid').length}</span>
+              </button>
+              <button class="calm-tab-btn" data-queue="dispute">
+                Disputed / Court <span class="calm-tab-badge">${challans.filter(c => c.status === 'disputed' || c.status === 'court').length}</span>
+              </button>
+            </div>
+
+            <div style="position: relative;">
+              <svg style="position: absolute; left: 10px; top: 11px; pointer-events: none;" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="text" id="dashboardTableSearchInput" class="calm-search-input" placeholder="Search notices, plates...">
+            </div>
           </div>
+        </div>
+
+        <!-- Strict 60px Table Rows, No Vertical Lines, 11px Uppercase Headers -->
+        <div style="overflow-x: auto; margin-top: 8px;">
+          <table class="calm-table">
+            <thead>
+              <tr>
+                <th style="width: 36px;"><input type="checkbox" id="selectAllAttentionCheckbox" title="Select all items"></th>
+                <th style="width: 140px;">Notice ID</th>
+                <th style="width: 130px;">Vehicle Plate</th>
+                <th>Violation / Offence</th>
+                <th class="text-right" style="width: 120px;">Amount</th>
+                <th style="width: 130px;">Status</th>
+                <th style="width: 180px;">Offence Timestamp</th>
+                <th class="text-right" style="width: 120px;">Action</th>
+              </tr>
+            </thead>
+            <tbody id="dashboardAttentionList">
+              ${renderAttentionItems(challans.filter(c => c.status !== 'paid'))}
+            </tbody>
+          </table>
         </div>
 
       </div>
@@ -379,12 +267,12 @@ function renderDashboardView(container, actions) {
   // --------------------------------------------------------------------------
   // ATTACH QUEUE FILTER & SEARCH EVENT LISTENERS
   // --------------------------------------------------------------------------
-  const pillBtns = container.querySelectorAll(".queue-pill-btn");
+  const tabBtns = container.querySelectorAll(".calm-tab-btn");
   const listContainer = container.querySelector("#dashboardAttentionList");
   const searchInput = container.querySelector("#dashboardTableSearchInput");
 
   function getActiveFilteredList() {
-    const activeBtn = container.querySelector(".queue-pill-btn.active");
+    const activeBtn = container.querySelector(".calm-tab-btn.active");
     const queueType = activeBtn ? activeBtn.dataset.queue : "all";
     let list = challans.filter(c => c.status !== 'paid');
 
@@ -411,10 +299,10 @@ function renderDashboardView(container, actions) {
     return list;
   }
 
-  if (pillBtns && listContainer) {
-    pillBtns.forEach(btn => {
+  if (tabBtns && listContainer) {
+    tabBtns.forEach(btn => {
       btn.addEventListener("click", () => {
-        pillBtns.forEach(b => b.classList.remove("active"));
+        tabBtns.forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
         listContainer.innerHTML = renderAttentionItems(getActiveFilteredList());
       });
@@ -439,35 +327,34 @@ function toggleQueuePillsVisibility() {
 }
 
 /**
- * Render Finexy Profit & Loss Style Dual Stacked Bar Chart across 8 Months
- * Featuring distinctive diagonal hatching patterns and dual-tone gradients from Dribbble reference
+ * Signature Element: Custom Bar Chart
+ * 14px-wide bars, fully rounded tops, light-blue bars for past months,
+ * hatched aqua bar for current month, and a floating dark tooltip with small arrow.
  */
 function renderFinexyDualBarChart(challans) {
   const months = [
-    { label: "Jan", newCount: 38, settledCount: 22, patterned: true },
-    { label: "Feb", newCount: 42, settledCount: 18, patterned: false },
-    { label: "Mar", newCount: 36, settledCount: 25, patterned: true },
-    { label: "Apr", newCount: 41, settledCount: 20, patterned: false },
-    { label: "May", newCount: 48, settledCount: 28, patterned: true },
-    { label: "Jun", newCount: 52, settledCount: 34, patterned: false },
-    { label: "Jul", newCount: 39, settledCount: 26, patterned: true },
-    { label: "Aug", newCount: 33, settledCount: 19, patterned: false }
+    { label: "Jan", val: 34, isCurrent: false },
+    { label: "Feb", val: 42, isCurrent: false },
+    { label: "Mar", val: 38, isCurrent: false },
+    { label: "Apr", val: 46, isCurrent: false },
+    { label: "May", val: 51, isCurrent: false },
+    { label: "Jun", val: 44, isCurrent: false },
+    { label: "Jul", val: 39, isCurrent: false },
+    { label: "Aug", val: 58, isCurrent: true, notices: 33, amount: "₹48.2k" }
   ];
 
-  const chartHeight = 155;
-  const chartWidth = 430;
-  const barWidth = 24;
-  const startX = 45;
+  const chartHeight = 150;
+  const chartWidth = 460;
+  const barWidth = 14; // Strict 14px width
+  const startX = 40;
   const gap = (chartWidth - startX - (months.length * barWidth)) / (months.length - 1);
-  const maxVal = 60; // 50k scale
+  const maxVal = 65;
 
-  // Y-axis ticks: 50k, 40k, 30k, 20k, 10k, 00
+  // Y-axis guidelines: 60k, 40k, 20k, 0
   const yTicks = [
-    { label: "50k", val: 50 },
+    { label: "60k", val: 60 },
     { label: "40k", val: 40 },
-    { label: "30k", val: 30 },
     { label: "20k", val: 20 },
-    { label: "10k", val: 10 },
     { label: "00", val: 0 }
   ];
 
@@ -475,144 +362,145 @@ function renderFinexyDualBarChart(challans) {
   yTicks.forEach(tick => {
     const yPos = chartHeight - (tick.val / maxVal) * (chartHeight - 30);
     gridLines += `
-      <text x="5" y="${yPos + 4}" fill="#A0A6B0" font-size="10" font-family="'Inter', sans-serif" font-weight="500">${tick.label}</text>
-      <line x1="32" y1="${yPos}" x2="${chartWidth}" y2="${yPos}" stroke="#EFF2F6" stroke-width="1" />
+      <text x="0" y="${yPos + 4}" fill="#94A3B8" font-size="10" font-family="'Inter Tight', sans-serif" font-weight="500">${tick.label}</text>
+      <line x1="28" y1="${yPos}" x2="${chartWidth}" y2="${yPos}" stroke="rgba(15,30,50,.05)" stroke-width="1" />
     `;
   });
 
   let barsHTML = "";
+  let tooltipHTML = "";
+
   months.forEach((m, idx) => {
     const xPos = startX + idx * (barWidth + gap);
-    
-    // Stacked heights
-    const settledHeight = (m.settledCount / maxVal) * (chartHeight - 30);
-    const newHeight = (m.newCount / maxVal) * (chartHeight - 30) * 0.72; // top bar
+    const bHeight = (m.val / maxVal) * (chartHeight - 30);
+    const yPos = chartHeight - bHeight;
 
-    const ySettled = chartHeight - settledHeight;
-    const yNew = ySettled - newHeight - 3; // 3px gap between stacked bars
-    const fillPattern = m.patterned ? "url(#finexyHatchPattern)" : "url(#finexyAquaGrad)";
+    if (m.isCurrent) {
+      // Hatched aqua bar
+      barsHTML += `
+        <rect x="${xPos}" y="${yPos}" width="${barWidth}" height="${bHeight}" rx="7" fill="url(#calmHatchedAqua)" />
+        <text x="${xPos + barWidth / 2}" y="${chartHeight + 18}" text-anchor="middle" fill="#0F2A47" font-size="11" font-weight="700" font-family="'Inter Tight', sans-serif">${m.label}</text>
+      `;
 
-    barsHTML += `
-      <g style="cursor: pointer;" onclick="navigateTo('challans', true, { search: '${m.label}' })">
-        <!-- Top Bar (New Notices) with alternating graphic hatch pattern -->
-        <rect x="${xPos}" y="${Math.max(12, yNew)}" width="${barWidth}" height="${Math.max(4, newHeight)}" rx="5" fill="${fillPattern}">
-          <title>${m.label}: ${m.newCount} New Infractions</title>
-        </rect>
-        
-        <!-- Dark Charcoal Bottom Bar (Settled) -->
-        <rect x="${xPos}" y="${ySettled}" width="${barWidth}" height="${Math.max(4, settledHeight)}" rx="5" fill="url(#finexyDarkGrad)">
-          <title>${m.label}: ${m.settledCount} Settled</title>
-        </rect>
-
-        <!-- X-axis Month Label -->
-        <text x="${xPos + barWidth / 2}" y="${chartHeight + 18}" text-anchor="middle" fill="#777D88" font-size="11" font-weight="500" font-family="'Inter', sans-serif">${m.label}</text>
-      </g>
-    `;
+      // Floating dark tooltip with a small arrow on the highlighted bar
+      const ttX = xPos - 36;
+      const ttY = yPos - 38;
+      tooltipHTML = `
+        <g class="calm-chart-tooltip" style="filter: drop-shadow(0 4px 10px rgba(0,0,0,0.18));">
+          <rect x="${ttX}" y="${ttY}" width="86" height="28" rx="6" fill="#16191F" />
+          <polygon points="${xPos + barWidth/2 - 4},${ttY + 28} ${xPos + barWidth/2 + 4},${ttY + 28} ${xPos + barWidth/2},${ttY + 33}" fill="#16191F" />
+          <text x="${ttX + 43}" y="${ttY + 18}" text-anchor="middle" fill="#43D8C5" font-size="11" font-weight="600" font-family="'Inter Tight', sans-serif">
+            ${m.amount} (${m.notices})
+          </text>
+        </g>
+      `;
+    } else {
+      // Light-blue past months bars
+      barsHTML += `
+        <rect x="${xPos}" y="${yPos}" width="${barWidth}" height="${bHeight}" rx="7" fill="#A9CEF3" opacity="0.85" />
+        <text x="${xPos + barWidth / 2}" y="${chartHeight + 18}" text-anchor="middle" fill="#94A3B8" font-size="11" font-weight="500" font-family="'Inter Tight', sans-serif">${m.label}</text>
+      `;
+    }
   });
 
   return `
     <svg viewBox="0 0 ${chartWidth} ${chartHeight + 28}" style="width: 100%; height: auto; display: block; overflow: visible;">
       <defs>
-        <!-- Finexy Diagonal Stripe Pattern for Data Graphics -->
-        <pattern id="finexyHatchPattern" width="6" height="6" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
-          <rect width="6" height="6" fill="#E8FAF8" />
-          <line x1="0" y1="0" x2="0" y2="6" stroke="#43D8C5" stroke-width="2.6" />
+        <!-- Hatched Aqua Pattern (repeating-linear-gradient 135deg) -->
+        <pattern id="calmHatchedAqua" width="8" height="8" patternTransform="rotate(135 0 0)" patternUnits="userSpaceOnUse">
+          <rect width="8" height="8" fill="#43D8C5" />
+          <line x1="0" y1="0" x2="0" y2="8" stroke="#1BA894" stroke-width="3" />
         </pattern>
-        <!-- Solid Aqua Gradient -->
-        <linearGradient id="finexyAquaGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#43D8C5" />
-          <stop offset="100%" stop-color="#20BFAB" />
-        </linearGradient>
-        <!-- Rich Dark Charcoal Gradient -->
-        <linearGradient id="finexyDarkGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#242329" />
-          <stop offset="100%" stop-color="#141318" />
-        </linearGradient>
       </defs>
       ${gridLines}
       ${barsHTML}
+      ${tooltipHTML}
     </svg>
   `;
 }
 
 /**
- * Determine colourful icon badge for each violation category
+ * Signature Element: Donut Chart
+ * 10px stroke, round caps, 3px gap between segments, total in centre in serif.
+ */
+function renderLiabilityDonutChart(challans) {
+  const size = 130;
+  const stroke = 10;
+  const radius = (size - stroke) / 2;
+  const circumference = 2 * Math.PI * radius; // ~376.99
+
+  // Proportions: Driver 42%, Lessee 38%, Fleet 20%
+  // 3px gap between segments translated to circumference ratio
+  const gap = 4;
+  const p1 = (0.42 * circumference) - gap;
+  const p2 = (0.38 * circumference) - gap;
+  const p3 = (0.20 * circumference) - gap;
+
+  // Offsets
+  const off1 = 0;
+  const off2 = -(p1 + gap);
+  const off3 = -(p1 + gap + p2 + gap);
+
+  return `
+    <div style="position: relative; width: ${size}px; height: ${size}px; flex-shrink: 0;">
+      <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" style="transform: rotate(-90deg); display: block;">
+        <!-- Segment 1: Driver Trips (Navy #0F2A47) -->
+        <circle cx="${size/2}" cy="${size/2}" r="${radius}" fill="none"
+          stroke="#0F2A47" stroke-width="${stroke}" stroke-linecap="round"
+          stroke-dasharray="${p1} ${circumference}"
+          stroke-dashoffset="${off1}" />
+
+        <!-- Segment 2: Lessee Contracts (Aqua #43D8C5) -->
+        <circle cx="${size/2}" cy="${size/2}" r="${radius}" fill="none"
+          stroke="#43D8C5" stroke-width="${stroke}" stroke-linecap="round"
+          stroke-dasharray="${p2} ${circumference}"
+          stroke-dashoffset="${off2}" />
+
+        <!-- Segment 3: Fleet Default (Neutral #94A3B8) -->
+        <circle cx="${size/2}" cy="${size/2}" r="${radius}" fill="none"
+          stroke="#CBD5E1" stroke-width="${stroke}" stroke-linecap="round"
+          stroke-dasharray="${p3} ${circumference}"
+          stroke-dashoffset="${off3}" />
+      </svg>
+      <!-- Center Counter in Serif -->
+      <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none;">
+        <span style="font-family: var(--font-family-serif); font-size: 32px; font-weight: 500; color: #0F2A47; line-height: 1;">32</span>
+        <span style="font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #94A3B8; margin-top: 2px;">NOTICES</span>
+      </div>
+    </div>
+  `;
+}
+
+/**
+ * Determine neutral category label for violation
  */
 function getOffenceIconBadge(offenceText) {
   const text = (offenceText || "").toLowerCase();
   
   if (text.includes("speed") || text.includes("fast")) {
-    return {
-      icon: "🚗",
-      bg: "#EFF8FF",
-      border: "#B2DDFF",
-      color: "#175CD3",
-      label: "Speeding"
-    };
+    return { label: "Speed Limit" };
   } else if (text.includes("signal") || text.includes("red light") || text.includes("light")) {
-    return {
-      icon: "🚦",
-      bg: "#FEF3F2",
-      border: "#FECDCA",
-      color: "#B42318",
-      label: "Signal Jump"
-    };
+    return { label: "Signal Jump" };
   } else if (text.includes("parking") || text.includes("park")) {
-    return {
-      icon: "🅿",
-      bg: "#FFF9EB",
-      border: "#FEDF89",
-      color: "#B54708",
-      label: "No Parking"
-    };
+    return { label: "Illegal Parking" };
   } else if (text.includes("document") || text.includes("puc") || text.includes("fitness") || text.includes("insurance") || text.includes("rc")) {
-    return {
-      icon: "📄",
-      bg: "#F8F9FC",
-      border: "#D5D9EB",
-      color: "#3E4784",
-      label: "Doc / PUC"
-    };
+    return { label: "Doc & PUC" };
   } else if (text.includes("seat") || text.includes("belt")) {
-    return {
-      icon: "💺",
-      bg: "#ECFDF3",
-      border: "#A6F4C5",
-      color: "#027A48",
-      label: "Seatbelt"
-    };
+    return { label: "Safety Belt" };
   } else if (text.includes("overload") || text.includes("weight") || text.includes("axle")) {
-    return {
-      icon: "⚖",
-      bg: "#FDF2FA",
-      border: "#FCCEEE",
-      color: "#C11574",
-      label: "Overloading"
-    };
+    return { label: "Gross Overload" };
   } else if (text.includes("lane") || text.includes("dangerous") || text.includes("rash")) {
-    return {
-      icon: "⚠️",
-      bg: "#F9F5FF",
-      border: "#E9D7FE",
-      color: "#6941C6",
-      label: "Dangerous Driving"
-    };
+    return { label: "Dangerous Driving" };
   }
 
-  return {
-    icon: "📋",
-    bg: "#F4F5F8",
-    border: "#EAECF0",
-    color: "#475467",
-    label: "MV Infraction"
-  };
+  return { label: "MV Infraction" };
 }
 
 /**
- * Format date to the exact Finexy style: "17 Apr, 2026 03:45 PM"
+ * Format date to clean editorial style: "17 Apr 2026, 03:45 PM"
  */
 function formatFinexyDateTime(dateStr) {
-  if (!dateStr) return "17 Apr, 2026 11:30 AM";
+  if (!dateStr) return "17 Apr 2026, 11:30 AM";
   try {
     const d = new Date(dateStr);
     if (isNaN(d.getTime())) return dateStr;
@@ -624,131 +512,150 @@ function formatFinexyDateTime(dateStr) {
     const minutes = String(d.getMinutes()).padStart(2, '0');
     const ampm = hours >= 12 ? 'PM' : 'AM';
     hours = hours % 12;
-    hours = hours ? hours : 12; // 0 becomes 12
+    hours = hours ? hours : 12;
     const strHours = String(hours).padStart(2, '0');
-    return `${day} ${month}, ${year} ${strHours}:${minutes} ${ampm}`;
+    return `${day} ${month} ${year}, ${strHours}:${minutes} ${ampm}`;
   } catch (e) {
     return dateStr;
   }
 }
 
 /**
- * Render Actionable Attention Table Rows matching the Finexy Recent Activities table
+ * Render Actionable Attention Table Rows (Strict 60px rows, no vertical lines, monospace chip, right-aligned amounts)
  */
 function renderAttentionItems(items) {
   if (!items || items.length === 0) {
     return `
       <tr>
-        <td colspan="7" style="text-align: center; padding: 36px 16px; color: #98A2B3;">
-          <div style="font-size: 24px; margin-bottom: 8px;">✓</div>
-          <div style="font-size: 14px; font-weight: 600; color: #344054;">No Urgent Action Items</div>
-          <div style="font-size: 12px; color: #667085; margin-top: 2px;">All infractions in this queue are resolved or up to date.</div>
+        <td colspan="8" style="text-align: center; padding: 48px 16px; color: #94A3B8;">
+          <div style="font-family: var(--font-family-serif); font-size: 24px; color: #0F2A47; margin-bottom: 4px;">Queue Clear</div>
+          <div style="font-size: 13px; color: #64748B;">All compliance items in this triage queue have been adjudicated.</div>
         </td>
       </tr>
     `;
   }
 
   return items.slice(0, 10).map(c => {
-    const daysLeft = Utils.getDaysRemaining(c.dueDate);
-    const isOverdue = daysLeft < 0;
     const isUnassigned = c.status === "unassigned";
     const badge = getOffenceIconBadge(c.offence);
     const formattedDate = formatFinexyDateTime(c.offenceDate || c.date || c.dueDate);
 
-    // Finexy status class & label
-    let statusClass = "finexy-status-inprogress";
-    let statusLabel = "In Progress";
+    // Status class mapping for 24px high, 10% tint badge
+    let statusClass = "assigned";
+    let statusLabel = "Assigned";
 
     if (c.status === "paid") {
-      statusClass = "finexy-status-completed";
-      statusLabel = "Completed";
+      statusClass = "paid";
+      statusLabel = "Settled";
     } else if (c.status === "unassigned") {
-      statusClass = "finexy-status-pending";
-      statusLabel = "Pending";
+      statusClass = "unassigned";
+      statusLabel = "Unassigned";
     } else if (c.status === "disputed" || c.status === "court") {
-      statusClass = "finexy-status-disputed";
+      statusClass = "disputed";
       statusLabel = c.status === "court" ? "In Court" : "Disputed";
     }
 
     return `
-      <tr class="finexy-table-row">
+      <tr>
         <!-- Checkbox -->
-        <td style="width: 32px;">
-          <input type="checkbox" class="finexy-row-checkbox" value="${c.id}">
+        <td style="width: 36px;">
+          <input type="checkbox" value="${c.id}">
         </td>
 
-        <!-- Order / Notice ID -->
+        <!-- Notice ID -->
         <td>
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <strong style="color: #151B2B; font-weight: 600; font-size: 13px; cursor: pointer;" onclick="navigateTo('challans', true, { id: '${c.id}' })">
-              ${c.challanNumber}
-            </strong>
-            <span class="finexy-currency-badge" style="font-size: 10px; padding: 1px 6px;">
-              ${c.vehicleReg}
-            </span>
+          <span style="font-weight: 600; font-size: 13px; color: #0F2A47; cursor: pointer;" onclick="navigateTo('challans', true, { id: '${c.id}' })">
+            ${c.challanNumber}
+          </span>
+        </td>
+
+        <!-- Monospace Registration Plate Chip -->
+        <td>
+          <span class="reg-plate-chip">${c.vehicleReg}</span>
+        </td>
+
+        <!-- Violation -->
+        <td>
+          <div style="font-weight: 500; font-size: 13px; color: #141821;">
+            ${badge.label}
+          </div>
+          <div style="font-size: 11px; color: #94A3B8; max-width: 240px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${c.offence}">
+            ${c.offence}
           </div>
         </td>
 
-        <!-- Activity / Violation -->
-        <td>
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <div class="finexy-icon-tag" style="background: ${badge.bg}; border: 1px solid ${badge.border}; color: ${badge.color};">
-              ${badge.icon}
-            </div>
-            <div>
-              <div style="font-weight: 600; font-size: 13px; color: #151B2B;">
-                ${badge.label}
-              </div>
-              <div style="font-size: 11px; color: #667085; max-width: 220px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${c.offence}">
-                ${c.offence}
-              </div>
-            </div>
-          </div>
-        </td>
-
-        <!-- Amount -->
-        <td>
-          <div style="font-weight: 700; font-size: 13px; color: #151B2B; font-variant-numeric: tabular-nums;">
+        <!-- Amount (Right-Aligned Tabular Figures) -->
+        <td class="text-right">
+          <div style="font-weight: 600; font-size: 13.5px; color: #0F2A47; font-variant-numeric: tabular-nums;">
             ${Utils.formatINR(c.amount)}
           </div>
-          ${c.lateFee ? `<div style="font-size: 10px; color: #C24141;">+${Utils.formatINR(c.lateFee)} late fee</div>` : ''}
+          ${c.lateFee ? `<div style="font-size: 10px; color: #C24141;">+${Utils.formatINR(c.lateFee)} fee</div>` : ''}
         </td>
 
-        <!-- Status -->
+        <!-- Status Badge (24px high, 10% tint, 6px dot, 12px/500 text) -->
         <td>
-          <div class="finexy-status-cell ${statusClass}">
+          <div class="calm-badge ${statusClass}">
             <span class="dot"></span>
             <span>${statusLabel}</span>
           </div>
         </td>
 
-        <!-- Date & Time -->
+        <!-- Offence Timestamp -->
         <td>
-          <div style="font-size: 12px; color: #667085; white-space: nowrap;">
+          <div style="font-size: 12px; color: #64748B; white-space: nowrap; font-variant-numeric: tabular-nums;">
             ${formattedDate}
           </div>
         </td>
 
-        <!-- Action Trigger -->
-        <td style="text-align: right;">
-          <div style="display: inline-flex; align-items: center; gap: 6px;">
+        <!-- Action Trigger (10px Radius Control) -->
+        <td class="text-right">
+          <div style="display: inline-flex; align-items: center; gap: 8px;">
             ${isUnassigned ? `
-              <button class="finexy-btn-lime" style="padding: 4px 10px; font-size: 11px;" onclick="openAssignmentModal('${c.id}')" title="Assign responsible party">
+              <button class="calm-btn-navy" style="padding: 5px 12px; font-size: 11.5px;" onclick="openAssignmentModal('${c.id}')" title="Assign responsible party">
                 Assign
               </button>
             ` : (c.status !== 'court' && c.status !== 'paid' ? `
-              <button class="finexy-btn-soft" style="padding: 4px 10px; font-size: 11px;" onclick="openPaymentModal('${c.id}')" title="Settle via payment simulation">
+              <button class="calm-btn-surface" style="padding: 5px 12px; font-size: 11.5px;" onclick="openPaymentModal('${c.id}')" title="Settle notice">
                 Pay
               </button>
             ` : '')}
-            <button class="finexy-more-btn" onclick="navigateTo('challans', true, { id: '${c.id}' })" title="View notice details">
-              •••
+            <button class="calm-btn-pill" style="padding: 5px 8px; font-size: 11px;" onclick="navigateTo('challans', true, { id: '${c.id}' })" title="View notice details">
+              View
             </button>
           </div>
         </td>
       </tr>
     `;
   }).join("");
+}
+
+function calculateMonthlyTrend(challans) {
+  return [
+    { label: "Jan", count: 34 },
+    { label: "Feb", count: 42 },
+    { label: "Mar", count: 38 },
+    { label: "Apr", count: 46 },
+    { label: "May", count: 51 },
+    { label: "Jun", count: 44 },
+    { label: "Jul", count: 39 },
+    { label: "Aug", count: 58 }
+  ];
+}
+
+function renderSVGMonthlyTrendChart(monthlyData) {
+  return "";
+}
+
+function getRecentActivityFeed(challans) {
+  return StorageManager.getActivityLogs();
+}
+
+function getUpcomingDeadlinesList(challans) {
+  return challans.filter(c => Utils.getDaysRemaining(c.dueDate) >= 0 && Utils.getDaysRemaining(c.dueDate) <= 7 && c.status !== 'paid');
+}
+
+function formatRelativeTimestamp(isoStr) {
+  return Utils.formatDate(isoStr);
 }
 
 // ----------------------------------------------------------------------------
