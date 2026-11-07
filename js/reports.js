@@ -252,8 +252,8 @@ function getActiveReportData() {
                   <span style="font-weight: 500;">${name}</span>
                   <strong>${count} violations (${Math.round((count / (records.length || 1)) * 100)}%)</strong>
                 </div>
-                <div style="height: 8px; background: var(--color-border); border-radius: 4px; overflow: hidden;">
-                  <div style="width: ${pct}%; height: 100%; background: var(--color-primary); border-radius: 4px;"></div>
+                <div style="height: 8px; background: #EAEFF5; border-radius: 9999px; overflow: hidden;">
+                  <div style="width: ${pct}%; height: 100%; background: linear-gradient(90deg, #B6F533 0%, #18B85A 100%); border-radius: 9999px;"></div>
                 </div>
               </div>
             `;

@@ -687,32 +687,35 @@
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  gap: var(--space-4);
-  margin-bottom: var(--space-6);
-  padding-bottom: var(--space-4);
-  border-bottom: 1px solid var(--color-border-subtle);
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-bottom: 0;
+  border-bottom: none;
   flex-wrap: wrap;
 }
 
 .view-header-title h1 {
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-text-main);
-  letter-spacing: -0.02em;
+  font-family: var(--font-family-base);
+  font-size: 26px;
+  font-weight: 600;
+  color: #141821;
+  letter-spacing: -0.025em;
   margin: 0;
+  line-height: 1.2;
 }
 
 .view-header-title p {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
+  font-size: 13px;
+  color: #64748B;
   margin-top: 4px;
   margin-bottom: 0;
+  font-weight: 400;
 }
 
 .view-header-actions {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: 10px;
   flex-wrap: wrap;
 }
 

@@ -9,6 +9,9 @@
      -------------------------------------------------------------------------- */
   --color-primary: #141821;
   --color-primary-navy: #141821;
+  --color-primary-light: rgba(182, 245, 51, 0.16);
+  --color-primary-dark: #141821;
+  --color-primary-hover: #1f2533;
   --color-navy: #141821;
   --color-navy-dark: #0A0D12;
   --color-lime: #B6F533;
@@ -22,6 +25,8 @@
 
   /* Atmospheric Backgrounds & Neutrals */
   --color-bg-app: #F2F4F7;
+  --color-bg-app-secondary: #EAEFF5;
+  --color-bg-muted: #F1F4F9;
   --color-bg-surface: #FFFFFF;
   --color-bg-surface-secondary: #F6F8FB;
   --color-bg-surface-subtle: #FAFCFE;
