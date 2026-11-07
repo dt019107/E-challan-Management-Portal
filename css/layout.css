@@ -316,14 +316,14 @@
 }
 
 /* --------------------------------------------------------------------------
-   3. Top Navigation Bar (Calm Executive Surface)
+   3. Top Navigation Bar (Finexy Calm Executive Dark Standard)
    -------------------------------------------------------------------------- */
 .app-topbar {
   height: var(--topbar-height);
-  background: rgba(255, 255, 255, 0.82);
+  background: rgba(14, 17, 24, 0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(15, 30, 50, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -347,9 +347,9 @@
   align-items: center;
   justify-content: center;
   border-radius: 8px;
-  border: 1px solid rgba(15, 30, 50, 0.08);
-  color: #64748B;
-  background: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #94A3B8;
+  background: #141722;
 }
 
 .global-search-container {
@@ -362,24 +362,24 @@
   width: 100%;
   height: 34px;
   padding: 0 38px 0 34px;
-  background-color: #FFFFFF;
-  border: 1px solid rgba(15, 30, 50, 0.08);
+  background-color: #141722;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
-  box-shadow: 0 1px 2px rgba(15, 30, 50, 0.03);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
   font-size: 12.5px;
-  color: #141821;
+  color: #F3F4F6;
   transition: all 180ms ease;
 }
 
 .global-search-input:focus {
-  background-color: #FFFFFF;
-  border-color: #0F2A47;
-  box-shadow: 0 0 0 3px rgba(15, 42, 71, 0.08);
+  background-color: #1A1E2C;
+  border-color: #B6F533;
+  box-shadow: 0 0 0 3px rgba(182, 245, 51, 0.15);
   outline: none;
 }
 
 .global-search-input::placeholder {
-  color: #94A3B8;
+  color: #64748B;
   font-size: 12.5px;
 }
 
@@ -388,7 +388,7 @@
   left: 11px;
   top: 50%;
   transform: translateY(-50%);
-  color: #94A3B8;
+  color: #64748B;
   pointer-events: none;
   width: 15px;
   height: 15px;
@@ -402,11 +402,11 @@
   font-size: 10px;
   font-family: var(--font-family-mono);
   font-weight: 500;
-  background-color: #F1F4F9;
-  border: 1px solid rgba(15, 30, 50, 0.08);
+  background-color: #1E2332;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 4px;
   padding: 1.5px 5px;
-  color: #64748B;
+  color: #94A3B8;
   pointer-events: none;
 }
 
@@ -417,9 +417,9 @@
   left: 0;
   right: 0;
   background-color: var(--color-bg-surface);
-  border: 1px solid rgba(15, 30, 50, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
-  box-shadow: 0 12px 28px -4px rgba(15, 30, 50, 0.12), 0 4px 12px rgba(15, 30, 50, 0.04);
+  box-shadow: 0 16px 36px -4px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.4);
   max-height: 380px;
   overflow-y: auto;
   display: none;
@@ -468,19 +468,19 @@
   align-items: center;
   justify-content: center;
   border-radius: 8px;
-  color: #525E71;
-  border: 1px solid rgba(15, 30, 50, 0.08);
-  background-color: #FFFFFF;
-  box-shadow: 0 1px 2px rgba(15, 30, 50, 0.03);
+  color: #94A3B8;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: #141722;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
   transition: all 180ms ease;
   position: relative;
   cursor: pointer;
 }
 
 .topbar-btn:hover {
-  background-color: #F8FAFC;
-  color: #0F2A47;
-  border-color: rgba(15, 30, 50, 0.14);
+  background-color: #1E2332;
+  color: #F3F4F6;
+  border-color: rgba(255, 255, 255, 0.16);
 }
 
 .topbar-notification-badge {
@@ -489,15 +489,15 @@
   right: -3px;
   min-width: 16px;
   height: 16px;
-  background-color: #0F2A47;
-  color: #FFFFFF;
+  background-color: #B6F533;
+  color: #0B0E14;
   border-radius: 9999px;
   font-size: 9.5px;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1.5px solid #FFFFFF;
+  border: 1.5px solid #141722;
   padding: 0 3.5px;
   font-variant-numeric: tabular-nums;
 }
@@ -509,23 +509,23 @@
   padding: 2px 10px 2px 3px;
   height: 34px;
   border-radius: 9999px;
-  border: 1px solid rgba(15, 30, 50, 0.08);
-  background: #FFFFFF;
-  box-shadow: 0 1px 2px rgba(15, 30, 50, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #141722;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
   transition: all 180ms ease;
   cursor: pointer;
 }
 
 .user-profile-btn:hover {
-  background-color: #F8FAFC;
-  border-color: rgba(15, 30, 50, 0.14);
+  background-color: #1E2332;
+  border-color: rgba(255, 255, 255, 0.16);
 }
 
 .user-avatar {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #0F2A47 0%, #1A385C 100%);
+  background: linear-gradient(135deg, #18B85A 0%, #0A6632 100%);
   color: #FFFFFF;
   font-weight: 600;
   font-size: 11px;
@@ -533,7 +533,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
 .user-info {
@@ -545,7 +545,7 @@
 .user-name {
   font-size: 12px;
   font-weight: 600;
-  color: #141821;
+  color: #F3F4F6;
   line-height: 1.2;
   letter-spacing: -0.01em;
 }
@@ -564,9 +564,9 @@
   right: 0;
   width: 220px;
   background-color: var(--color-bg-surface);
-  border: 1px solid rgba(15, 30, 50, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
-  box-shadow: 0 12px 28px -4px rgba(15, 30, 50, 0.12), 0 4px 12px rgba(15, 30, 50, 0.04);
+  box-shadow: 0 16px 36px -4px rgba(0, 0, 0, 0.7), 0 4px 12px rgba(0, 0, 0, 0.5);
   padding: var(--space-2);
   display: none;
   z-index: var(--z-dropdown);
@@ -600,12 +600,12 @@
 }
 
 /* --------------------------------------------------------------------------
-   4. Breadcrumbs Bar (Subtle Transparent Hairline Ribbon)
+   4. Breadcrumbs Bar (Finexy Hairline Ribbon)
    -------------------------------------------------------------------------- */
 .app-breadcrumbs-bar {
   padding: 8px 32px;
   background-color: transparent;
-  border-bottom: 1px solid rgba(15, 30, 50, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -626,7 +626,7 @@
 }
 
 .breadcrumb-separator {
-  color: #CBD5E1;
+  color: #475569;
   font-size: 10.5px;
   font-weight: 400;
   margin: 0 1px;
@@ -639,11 +639,11 @@
 }
 
 .breadcrumb-link:hover {
-  color: #0F2A47;
+  color: #B6F533;
 }
 
 .breadcrumb-item.current {
-  color: #141821;
+  color: #F3F4F6;
   font-weight: 600;
 }
 
@@ -697,8 +697,8 @@
 .view-header-title h1 {
   font-family: var(--font-family-base);
   font-size: 26px;
-  font-weight: 600;
-  color: #141821;
+  font-weight: 700;
+  color: #F3F4F6;
   letter-spacing: -0.025em;
   margin: 0;
   line-height: 1.2;
@@ -706,7 +706,7 @@
 
 .view-header-title p {
   font-size: 13px;
-  color: #64748B;
+  color: #94A3B8;
   margin-top: 4px;
   margin-bottom: 0;
   font-weight: 400;

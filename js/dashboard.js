@@ -155,7 +155,7 @@ function renderDashboardView(container, actions) {
             </div>
             <div class="calm-chart-legend">
               <div class="calm-chart-legend-item">
-                <span class="calm-chart-legend-dot" style="background: #141821;"></span>
+                <span class="calm-chart-legend-dot" style="background: #2E384D;"></span>
                 <span>Past Months</span>
               </div>
               <div class="calm-chart-legend-item">
@@ -187,7 +187,7 @@ function renderDashboardView(container, actions) {
             <div class="calm-donut-list">
               <div class="calm-donut-row">
                 <div class="calm-donut-name">
-                  <span style="width: 8px; height: 8px; border-radius: 50%; background: #141821;"></span>
+                  <span style="width: 8px; height: 8px; border-radius: 50%; background: #3B82F6;"></span>
                   <span>Driver Trips</span>
                 </div>
                 <div class="calm-donut-pct">42% (₹54,600)</div>
@@ -203,7 +203,7 @@ function renderDashboardView(container, actions) {
 
               <div class="calm-donut-row">
                 <div class="calm-donut-name">
-                  <span style="width: 8px; height: 8px; border-radius: 50%; background: #D0D5DD;"></span>
+                  <span style="width: 8px; height: 8px; border-radius: 50%; background: #475569;"></span>
                   <span>Fleet Default</span>
                 </div>
                 <div class="calm-donut-pct">20% (₹26,010)</div>
@@ -375,7 +375,7 @@ function renderFinexyDualBarChart(challans) {
     const yPos = chartHeight - (tick.val / maxVal) * (chartHeight - 30);
     gridLines += `
       <text x="0" y="${yPos + 4}" fill="#94A3B8" font-size="10" font-family="'Inter Tight', sans-serif" font-weight="500">${tick.label}</text>
-      <line x1="28" y1="${yPos}" x2="${chartWidth}" y2="${yPos}" stroke="rgba(15,30,50,.05)" stroke-width="1" />
+      <line x1="28" y1="${yPos}" x2="${chartWidth}" y2="${yPos}" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1" />
     `;
   });
 
@@ -391,26 +391,26 @@ function renderFinexyDualBarChart(challans) {
       // Finexy Hatched spring lime bar
       barsHTML += `
         <rect x="${xPos}" y="${yPos}" width="${barWidth}" height="${bHeight}" rx="7" fill="url(#finexyHatchedLime)" />
-        <text x="${xPos + barWidth / 2}" y="${chartHeight + 18}" text-anchor="middle" fill="#141821" font-size="11" font-weight="700" font-family="'Inter Tight', sans-serif">${m.label}</text>
+        <text x="${xPos + barWidth / 2}" y="${chartHeight + 18}" text-anchor="middle" fill="#F3F4F6" font-size="11" font-weight="700" font-family="'Inter Tight', sans-serif">${m.label}</text>
       `;
 
       // Floating dark tooltip with a small arrow on the highlighted bar
       const ttX = xPos - 36;
       const ttY = yPos - 38;
       tooltipHTML = `
-        <g class="calm-chart-tooltip" style="filter: drop-shadow(0 4px 10px rgba(0,0,0,0.18));">
-          <rect x="${ttX}" y="${ttY}" width="86" height="28" rx="6" fill="#141821" />
-          <polygon points="${xPos + barWidth/2 - 4},${ttY + 28} ${xPos + barWidth/2 + 4},${ttY + 28} ${xPos + barWidth/2},${ttY + 33}" fill="#141821" />
+        <g class="calm-chart-tooltip" style="filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5));">
+          <rect x="${ttX}" y="${ttY}" width="86" height="28" rx="6" fill="#0B0E14" stroke="rgba(255, 255, 255, 0.16)" stroke-width="1" />
+          <polygon points="${xPos + barWidth/2 - 4},${ttY + 28} ${xPos + barWidth/2 + 4},${ttY + 28} ${xPos + barWidth/2},${ttY + 33}" fill="#0B0E14" />
           <text x="${ttX + 43}" y="${ttY + 18}" text-anchor="middle" fill="#B6F533" font-size="11" font-weight="700" font-family="'Inter Tight', sans-serif">
             ${m.amount} (${m.notices})
           </text>
         </g>
       `;
     } else {
-      // Finexy dark charcoal past months bars
+      // Finexy refined slate navy past months bars
       barsHTML += `
-        <rect x="${xPos}" y="${yPos}" width="${barWidth}" height="${bHeight}" rx="7" fill="#141821" opacity="0.85" />
-        <text x="${xPos + barWidth / 2}" y="${chartHeight + 18}" text-anchor="middle" fill="#98A2B3" font-size="11" font-weight="500" font-family="'Inter Tight', sans-serif">${m.label}</text>
+        <rect x="${xPos}" y="${yPos}" width="${barWidth}" height="${bHeight}" rx="7" fill="#2E384D" opacity="0.9" />
+        <text x="${xPos + barWidth / 2}" y="${chartHeight + 18}" text-anchor="middle" fill="#94A3B8" font-size="11" font-weight="500" font-family="'Inter Tight', sans-serif">${m.label}</text>
       `;
     }
   });
@@ -456,9 +456,9 @@ function renderLiabilityDonutChart(challans) {
   return `
     <div style="position: relative; width: ${size}px; height: ${size}px; flex-shrink: 0;">
       <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" style="transform: rotate(-90deg); display: block;">
-        <!-- Segment 1: Driver Trips (Charcoal #141821) -->
+        <!-- Segment 1: Driver Trips (Luminous Blue #3B82F6) -->
         <circle cx="${size/2}" cy="${size/2}" r="${radius}" fill="none"
-          stroke="#141821" stroke-width="${stroke}" stroke-linecap="round"
+          stroke="#3B82F6" stroke-width="${stroke}" stroke-linecap="round"
           stroke-dasharray="${p1} ${circumference}"
           stroke-dashoffset="${off1}" />
 
@@ -468,15 +468,15 @@ function renderLiabilityDonutChart(challans) {
           stroke-dasharray="${p2} ${circumference}"
           stroke-dashoffset="${off2}" />
 
-        <!-- Segment 3: Fleet Default (Neutral #D0D5DD) -->
+        <!-- Segment 3: Fleet Default (Slate #475569) -->
         <circle cx="${size/2}" cy="${size/2}" r="${radius}" fill="none"
-          stroke="#E2E8F0" stroke-width="${stroke}" stroke-linecap="round"
+          stroke="#475569" stroke-width="${stroke}" stroke-linecap="round"
           stroke-dasharray="${p3} ${circumference}"
           stroke-dashoffset="${off3}" />
       </svg>
       <!-- Center Counter in Modern Sans -->
       <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none;">
-        <span style="font-family: 'Inter Tight', sans-serif; font-size: 30px; font-weight: 700; color: #141821; line-height: 1; letter-spacing: -0.02em;">32</span>
+        <span style="font-family: 'Inter Tight', sans-serif; font-size: 30px; font-weight: 700; color: #F3F4F6; line-height: 1; letter-spacing: -0.02em;">32</span>
         <span style="font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #94A3B8; margin-top: 2px;">NOTICES</span>
       </div>
     </div>

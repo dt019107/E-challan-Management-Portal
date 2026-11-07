@@ -48,7 +48,7 @@ a {
 }
 
 a:hover {
-  color: var(--color-primary-dark);
+  color: var(--color-primary-hover);
 }
 
 button {
@@ -100,12 +100,12 @@ img, svg {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #D1D5DB;
+  background: rgba(255, 255, 255, 0.16);
   border-radius: var(--radius-full);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #9CA3AF;
+  background: rgba(255, 255, 255, 0.28);
 }
 
 /* Utilities */
