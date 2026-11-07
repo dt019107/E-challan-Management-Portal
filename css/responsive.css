@@ -74,6 +74,17 @@
     justify-content: flex-start;
   }
 
+  .finexy-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .finexy-header-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
   .kpi-grid {
     grid-template-columns: 1fr;
   }

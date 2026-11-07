@@ -1,0 +1,174 @@
+/* ==========================================================================
+   ChallanOS Premium Design Tokens (Linear, Stripe & Framer Standard)
+   Enterprise Fleet & Traffic Challan Management System
+   ========================================================================== */
+
+:root {
+  /* --------------------------------------------------------------------------
+     1. Brand & Core Color Palette (Refined Enterprise SaaS)
+     -------------------------------------------------------------------------- */
+  --color-primary: #3155D9;
+  --color-primary-dark: #2442B5;
+  --color-primary-light: #EEF2FF;
+  --color-primary-hover: #2949CA;
+  --color-primary-subtle: #F5F7FF;
+  --color-primary-glow: rgba(49, 85, 217, 0.16);
+
+  /* Neutrals & Surfaces */
+  --color-bg-app: #F7F8FC;
+  --color-bg-surface: #FFFFFF;
+  --color-bg-surface-secondary: #F1F3F8;
+  --color-bg-surface-subtle: #FAFBFD;
+  --color-bg-surface-hover: #F2F4F9;
+  --color-bg-muted: #F1F3F8;
+
+  /* Typography Colors */
+  --color-text-main: #151B2B;
+  --color-text-secondary: #667085;
+  --color-text-muted: #98A2B3;
+  --color-text-subtle: #A3ACB9;
+  --color-text-inverse: #FFFFFF;
+
+  /* Borders & Dividers */
+  --color-border: #E7EAF1;
+  --color-border-subtle: #EFF1F6;
+  --color-border-dark: #D4D8E3;
+  --color-border-focus: #3155D9;
+  --color-border-glass: rgba(231, 234, 241, 0.85);
+
+  /* Semantic Status Tokens (Refined Palette) */
+  --status-unassigned: #C24141;
+  --status-unassigned-bg: #FFF0F0;
+  --status-unassigned-border: #FECDCA;
+
+  --status-assigned: #3155D9;
+  --status-assigned-bg: #EEF2FF;
+  --status-assigned-border: #C8D3FB;
+
+  --status-pending: #B7791F;
+  --status-pending-bg: #FFF5E5;
+  --status-pending-border: #FDE68A;
+
+  --status-paid: #16845B;
+  --status-paid-bg: #E9F7F0;
+  --status-paid-border: #BBF7D0;
+
+  --status-disputed: #7452C8;
+  --status-disputed-bg: #F2EEFF;
+  --status-disputed-border: #DDD6FE;
+
+  --status-court: #2675B8;
+  --status-court-bg: #EAF4FF;
+  --status-court-border: #BAE6FD;
+
+  /* Functional Status Accents */
+  --color-success: #16845B;
+  --color-success-bg: #E9F7F0;
+  --color-warning: #B7791F;
+  --color-warning-bg: #FFF5E5;
+  --color-danger: #C24141;
+  --color-danger-bg: #FFF0F0;
+  --color-purple: #7452C8;
+  --color-purple-bg: #F2EEFF;
+  --color-info: #2675B8;
+  --color-info-bg: #EAF4FF;
+
+  /* --------------------------------------------------------------------------
+     2. Spacing Scale (4, 8, 12, 16, 20, 24, 32, 40, 48px)
+     -------------------------------------------------------------------------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  /* --------------------------------------------------------------------------
+     3. Typography Scale & Font Metrics
+     -------------------------------------------------------------------------- */
+  --font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+
+  --font-size-2xs: 0.6875rem; /* 11px */
+  --font-size-xs: 0.75rem;     /* 12px */
+  --font-size-sm: 0.8125rem;   /* 13px */
+  --font-size-base: 0.875rem;  /* 14px */
+  --font-size-md: 1rem;        /* 16px */
+  --font-size-lg: 1.125rem;    /* 18px */
+  --font-size-xl: 1.25rem;     /* 20px */
+  --font-size-2xl: 1.5rem;     /* 24px */
+  --font-size-3xl: 1.875rem;   /* 30px */
+  --font-size-4xl: 2.25rem;    /* 36px */
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-none: 1;
+  --line-height-tight: 1.25;
+  --line-height-snug: 1.375;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.625;
+
+  /* Negative tracking for headings & tabular nums for financials */
+  --letter-spacing-tight: -0.025em;
+  --letter-spacing-tighter: -0.035em;
+  --letter-spacing-caps: 0.06em;
+
+  /* --------------------------------------------------------------------------
+     4. Radii & Surface Elevation
+     -------------------------------------------------------------------------- */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-full: 9999px;
+
+  /* Multi-tier elevation (Stripe/Linear style layered soft ambient shadows) */
+  --shadow-xs: 0 1px 2px rgba(16, 24, 40, 0.04);
+  --shadow-sm: 0 1px 3px rgba(16, 24, 40, 0.06), 0 1px 2px rgba(16, 24, 40, 0.03);
+  --shadow-md: 0 4px 10px -2px rgba(16, 24, 40, 0.06), 0 2px 4px -2px rgba(16, 24, 40, 0.03);
+  --shadow-lg: 0 12px 20px -4px rgba(16, 24, 40, 0.08), 0 4px 8px -2px rgba(16, 24, 40, 0.03);
+  --shadow-xl: 0 20px 28px -4px rgba(16, 24, 40, 0.1), 0 8px 12px -4px rgba(16, 24, 40, 0.04);
+  --shadow-card-hover: 0 8px 24px -4px rgba(49, 85, 217, 0.08), 0 2px 6px -2px rgba(16, 24, 40, 0.04);
+  --shadow-focus: 0 0 0 3px rgba(49, 85, 217, 0.16);
+  --shadow-dropdown: 0 12px 30px -4px rgba(16, 24, 40, 0.12), 0 4px 10px -2px rgba(16, 24, 40, 0.04);
+  --shadow-modal: 0 24px 48px -12px rgba(16, 24, 40, 0.18), 0 8px 16px -4px rgba(16, 24, 40, 0.06);
+
+  /* --------------------------------------------------------------------------
+     5. Layout Dimensions
+     -------------------------------------------------------------------------- */
+  --sidebar-width: 260px;
+  --sidebar-collapsed-width: 72px;
+  --topbar-height: 64px;
+  --content-max-width: 1440px;
+
+  /* --------------------------------------------------------------------------
+     6. Framer-Grade Motion Timing Tokens
+     -------------------------------------------------------------------------- */
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.15);
+
+  --transition-fast: 150ms var(--ease-out-quint);
+  --transition-normal: 220ms var(--ease-out-quint);
+  --transition-slow: 350ms var(--ease-out-quint);
+
+  /* --------------------------------------------------------------------------
+     7. Z-Index Hierarchy
+     -------------------------------------------------------------------------- */
+  --z-base: 1;
+  --z-sticky: 50;
+  --z-sidebar: 100;
+  --z-topbar: 90;
+  --z-dropdown: 200;
+  --z-backdrop: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+}

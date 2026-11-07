@@ -36,33 +36,33 @@
 }
 
 .btn--primary {
-  background: linear-gradient(180deg, #375BF5 0%, #2442B5 100%);
+  background: linear-gradient(135deg, #2586D8 0%, #1766AD 100%);
   color: #FFFFFF;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.1), 0 2px 5px rgba(49, 85, 217, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 1px 2px rgba(20, 24, 33, 0.08), 0 3px 8px rgba(37, 134, 216, 0.28);
 }
 
 .btn--primary:hover {
-  background: linear-gradient(180deg, #4365FA 0%, #2949CA 100%);
-  box-shadow: 0 2px 8px rgba(49, 85, 217, 0.35), 0 1px 2px rgba(16, 24, 40, 0.1);
+  background: linear-gradient(135deg, #2D91E5 0%, #1B72C2 100%);
+  box-shadow: 0 4px 14px rgba(37, 134, 216, 0.38), 0 1px 2px rgba(20, 24, 33, 0.08);
   transform: translateY(-1px);
 }
 
 .btn--primary:active {
-  background: #2442B5;
+  background: #1766AD;
   transform: translateY(0) scale(0.985);
-  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.15);
+  box-shadow: 0 1px 3px rgba(20, 24, 33, 0.15);
 }
 
 .btn--secondary {
   background-color: var(--color-primary-light);
-  color: var(--color-primary);
-  border: 1px solid rgba(49, 85, 217, 0.18);
+  color: var(--color-primary-dark);
+  border: 1px solid rgba(37, 134, 216, 0.22);
 }
 
 .btn--secondary:hover {
-  background-color: #E2E8FF;
-  border-color: rgba(49, 85, 217, 0.3);
+  background-color: #E0EFFC;
+  border-color: rgba(37, 134, 216, 0.35);
   transform: translateY(-1px);
 }
 
@@ -201,16 +201,51 @@
 .card {
   background-color: var(--color-bg-surface);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-2xl);
   box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  transition: box-shadow var(--transition-normal), border-color var(--transition-normal);
+  transition: box-shadow var(--transition-normal), border-color var(--transition-normal), transform var(--transition-fast);
 }
 
 .card:hover {
-  border-color: #DDE2EE;
+  border-color: var(--color-border-dark);
+}
+
+/* Contrast Dark Charcoal Surface */
+.card--charcoal {
+  background: linear-gradient(135deg, #242329 0%, #1A191E 100%);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.card--charcoal .card-title {
+  color: #FFFFFF;
+}
+
+.card--charcoal .card-subtitle {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Atmospheric Blue Surface Card */
+.card--atmospheric {
+  background: linear-gradient(135deg, #1766AD 0%, #123B65 100%);
+  background-image: 
+    linear-gradient(135deg, #1766AD 0%, #123B65 100%),
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.04) 4px, transparent 4px, transparent 8px);
+  color: #FFFFFF;
+  border: 1px solid rgba(67, 216, 197, 0.3);
+  box-shadow: 0 10px 28px -4px rgba(23, 102, 173, 0.35);
+}
+
+.card--atmospheric .card-title {
+  color: #FFFFFF;
+}
+
+.card--atmospheric .card-subtitle {
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .card-header {
@@ -341,97 +376,870 @@
   gap: 6px;
 }
 
-/* Dashboard Executive Welcome Banner (Linear / Stripe Quality) */
-.dashboard-hero-banner {
-  background: #FFFFFF;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  display: flex;
-  justify-content: space-between;
-  align-items: stretch;
-  overflow: hidden;
-  position: relative;
-  box-shadow: var(--shadow-sm);
-  margin-bottom: var(--space-4);
-  background-image: linear-gradient(135deg, #FFFFFF 0%, #FAFBFE 100%);
-}
+/* ==========================================================================
+   Finexy Inspiration Dashboard UI Design Tokens & Styles
+   ========================================================================== */
 
-.hero-content {
-  padding: var(--space-5) var(--space-6);
-  flex: 1;
-  max-width: 680px;
-  z-index: 2;
+.finexy-dashboard-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  gap: 22px;
+  max-width: 1360px;
+  margin: 0 auto;
 }
 
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--color-primary-light);
-  color: var(--color-primary);
-  font-size: 11px;
-  font-weight: 600;
-  padding: 3px 10px;
-  border-radius: var(--radius-full);
-  margin-bottom: var(--space-2);
-  width: fit-content;
-  border: 1px solid rgba(49, 85, 217, 0.16);
-}
-
-.live-pulse-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: var(--radius-full);
-  background-color: var(--color-success);
-  box-shadow: 0 0 0 2px rgba(22, 132, 91, 0.25);
-  animation: pulseDot 2s infinite ease-in-out;
-}
-
-@keyframes pulseDot {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.3); opacity: 0.7; }
-}
-
-.hero-title {
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: var(--color-text-main);
-  letter-spacing: var(--letter-spacing-tight);
-  line-height: 1.25;
-  margin-bottom: 4px;
-}
-
-.hero-subtitle {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
-  line-height: 1.45;
-  margin-bottom: var(--space-3);
-}
-
-.hero-actions {
+/* 1. Header (Finexy Editorial Command Bar with Breathing Space) */
+.finexy-header {
   display: flex;
-  align-items: center;
-  gap: var(--space-3);
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 8px 0 24px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.7);
+  gap: 24px;
   flex-wrap: wrap;
 }
 
-.hero-asset-preview {
-  width: 360px;
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  flex-shrink: 0;
-  mask-image: linear-gradient(to right, transparent 0%, black 25%);
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 25%);
+.finexy-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.finexy-greeting-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-primary);
+  background: rgba(37, 134, 216, 0.08);
+  border: 1px solid rgba(37, 134, 216, 0.2);
+  padding: 3px 12px;
+  border-radius: 9999px;
+  width: fit-content;
+  letter-spacing: 0.02em;
+}
+
+.finexy-sun-icon {
+  font-size: 12px;
+  color: #E89E14;
+}
+
+.finexy-greeting-title {
+  font-family: var(--font-family-editorial), 'Inter', -apple-system, serif;
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--color-text-main);
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.finexy-greeting-sub {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  margin: 0;
+  line-height: 1.45;
+  font-weight: 400;
+}
+
+.finexy-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.finexy-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #16845B;
+  background: #EAF8F1;
+  border: 1px solid #A6E7C4;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  box-shadow: 0 1px 2px rgba(22, 132, 91, 0.06);
+}
+
+.finexy-live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #16845B;
+  box-shadow: 0 0 0 3px rgba(22, 132, 91, 0.22);
+}
+
+.finexy-action-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: #FFFFFF;
+  color: #1E293B;
+  border: 1px solid #E2E8F0;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+  transition: all 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.finexy-action-pill-btn:hover {
+  background: #F8FAFC;
+  border-color: #CBD5E1;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(15, 23, 42, 0.08);
+}
+
+.finexy-action-pill-btn.primary {
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.finexy-action-pill-btn.primary:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+}
+
+/* 2. Top 3-Column Grid */
+.finexy-top-grid {
+  display: grid;
+  grid-template-columns: 310px 1.05fr 1fr;
+  gap: 20px;
+  align-items: stretch;
+}
+
+@media (max-width: 1200px) {
+  .finexy-top-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .finexy-top-grid > :nth-child(3) {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 860px) {
+  .finexy-top-grid {
+    grid-template-columns: 1fr;
+  }
+  .finexy-top-grid > :nth-child(3) {
+    grid-column: span 1;
+  }
+}
+
+/* 3. Bottom 2-Column Grid */
+.finexy-bottom-grid {
+  display: grid;
+  grid-template-columns: 310px 1fr;
+  gap: 20px;
+  align-items: start;
 }
 
 @media (max-width: 1024px) {
-  .hero-asset-preview {
-    display: none;
+  .finexy-bottom-grid {
+    grid-template-columns: 1fr;
   }
+}
+
+/* Card Base */
+.finexy-card {
+  background: var(--color-bg-surface);
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--color-border);
+  padding: 22px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Card A: Balance / Total Liability Card */
+.finexy-balance-card {
+  background: #FFFFFF;
+  background-image: radial-gradient(circle at top right, rgba(37, 134, 216, 0.05) 0%, transparent 60%);
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--color-border);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.finexy-balance-card:hover {
+  box-shadow: var(--shadow-card-hover);
+}
+
+.finexy-card-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.finexy-label-muted {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.finexy-currency-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-main);
+  background: var(--color-bg-app-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: 9999px;
+  padding: 3px 8px;
+}
+
+.finexy-big-balance {
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--color-text-main);
+  letter-spacing: -0.035em;
+  margin: 10px 0 2px;
+  font-variant-numeric: tabular-nums;
+}
+
+.finexy-trend-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-success);
+  margin-bottom: 18px;
+}
+
+.finexy-trend-tag.danger {
+  color: var(--color-danger);
+}
+
+.finexy-action-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.finexy-btn-lime {
+  background: linear-gradient(135deg, #43D8C5 0%, #22BFA9 100%);
+  color: #123B65;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 9999px;
+  padding: 10px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  box-shadow: 0 4px 14px rgba(67, 216, 197, 0.35);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.finexy-btn-lime:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(67, 216, 197, 0.45);
+}
+
+.finexy-btn-soft {
+  background: var(--color-bg-app-secondary);
+  color: var(--color-text-main);
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 9999px;
+  padding: 10px 16px;
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all var(--transition-fast);
+}
+
+.finexy-btn-soft:hover {
+  background: #E8EFF7;
+  border-color: var(--color-border-dark);
+}
+
+.finexy-subcards-section {
+  border-top: 1px solid var(--color-border-subtle);
+  padding-top: 14px;
+}
+
+.finexy-subcards-header {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.finexy-subcards-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.finexy-mini-wallet {
+  background: var(--color-bg-surface-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  cursor: pointer;
+  transition: border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.finexy-mini-wallet:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-1px);
+}
+
+.finexy-mini-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-main);
+}
+
+.finexy-mini-amount {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-text-main);
+  margin-top: 3px;
+  font-variant-numeric: tabular-nums;
+}
+
+.finexy-mini-sub {
+  font-size: 9px;
+  color: var(--color-text-muted);
+}
+
+/* 4. Center 2x2 Metric Block */
+.finexy-metrics-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  height: 100%;
+}
+
+.finexy-metric-card {
+  border-radius: 20px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.finexy-metric-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Top-Left Atmospheric Blue Highlight Card */
+.finexy-metric-card.hero-green {
+  background: linear-gradient(145deg, #1766AD 0%, #123B65 100%);
+  background-image: 
+    linear-gradient(145deg, #1766AD 0%, #123B65 100%),
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.04) 4px, transparent 4px, transparent 8px);
+  color: #FFFFFF;
+  border: 1px solid rgba(67, 216, 197, 0.3);
+  box-shadow: 0 8px 24px -4px rgba(23, 102, 173, 0.35);
+  position: relative;
+  overflow: hidden;
+}
+
+.finexy-metric-card.hero-green .finexy-card-label {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.finexy-metric-card.hero-green .finexy-metric-icon {
+  background: rgba(67, 216, 197, 0.2);
+  color: #43D8C5;
+  border: 1px solid rgba(67, 216, 197, 0.4);
+}
+
+.finexy-metric-card.hero-green .finexy-big-val {
+  color: #FFFFFF;
+}
+
+.finexy-metric-card.hero-green .finexy-subtext-trend {
+  color: #43D8C5;
+  font-weight: 600;
+}
+
+/* White Metric Cards */
+.finexy-metric-card.hero-white {
+  background: #FFFFFF;
+  color: var(--color-text-main);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-xs);
+}
+
+.finexy-metric-card.hero-white .finexy-card-label {
+  color: var(--color-text-secondary);
+}
+
+.finexy-metric-card.hero-white .finexy-metric-icon {
+  background: var(--color-bg-app-secondary);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+}
+
+.finexy-metric-card.hero-white .finexy-big-val {
+  color: var(--color-text-main);
+}
+
+.finexy-metric-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.finexy-card-label {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.finexy-metric-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.finexy-big-val {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin: 12px 0 4px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.finexy-subtext-trend {
+  font-size: 11px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* 5. Chart Card (Total Income / Velocity Bar Chart) */
+.finexy-chart-card {
+  background: #FFFFFF;
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--color-border);
+  padding: 22px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.finexy-chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.finexy-chart-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-text-main);
+}
+
+.finexy-chart-sub {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  margin-top: 2px;
+}
+
+.finexy-chart-legend {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.finexy-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 4px;
+}
+
+/* 6. Spending Limit & Fleet Cards Column */
+.finexy-left-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.finexy-progress-card {
+  background: var(--color-bg-surface);
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--color-border);
+  padding: 20px 22px;
+  box-shadow: var(--shadow-sm);
+}
+
+.finexy-progress-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-main);
+  margin-bottom: 14px;
+}
+
+.finexy-progress-track {
+  height: 12px;
+  background: var(--color-bg-app-secondary);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 9999px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+}
+
+.finexy-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #242329 0%, #123B65 100%);
+  border-radius: 9999px;
+}
+
+.finexy-progress-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  margin-top: 8px;
+}
+
+.finexy-cards-box {
+  background: var(--color-bg-surface);
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--color-border);
+  padding: 20px 22px;
+  box-shadow: var(--shadow-sm);
+}
+
+.finexy-cards-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.finexy-cards-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-main);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.finexy-cards-row {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+/* Physical Card A: Matte Black Charcoal */
+.finexy-physical-card {
+  width: 170px;
+  height: 105px;
+  border-radius: 14px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.finexy-physical-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22);
+}
+
+.finexy-physical-card.black-card {
+  background: linear-gradient(135deg, #242329 0%, #17161B 100%);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.finexy-physical-card.green-card {
+  background: linear-gradient(135deg, #1766AD 0%, #123B65 100%);
+  background-image: 
+    linear-gradient(135deg, #1766AD 0%, #123B65 100%),
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.04) 4px, transparent 4px, transparent 8px);
+  color: #FFFFFF;
+  border: 1px solid rgba(67, 216, 197, 0.3);
+}
+
+.finexy-card-top-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.finexy-card-badge {
+  font-size: 9px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+  padding: 1px 6px;
+  color: #FFFFFF;
+}
+
+.finexy-card-num {
+  font-size: 11px;
+  font-family: var(--font-family-mono);
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.finexy-card-bottom-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 8px;
+  color: rgba(255, 255, 255, 0.6);
+  font-family: var(--font-family-mono);
+}
+
+/* 7. Recent Activities Table (Wide Card) */
+.finexy-activities-card {
+  background: var(--color-bg-surface);
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--color-border);
+  padding: 22px;
+  box-shadow: var(--shadow-sm);
+}
+
+.finexy-activities-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.finexy-activities-title {
+  font-family: var(--font-family-editorial), var(--font-family-base);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-text-main);
+  letter-spacing: -0.01em;
+}
+
+.finexy-activities-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.finexy-search-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 9999px;
+  padding: 7px 16px;
+  font-size: 12px;
+  color: var(--color-text-main);
+  width: 200px;
+  transition: all var(--transition-fast);
+}
+
+.finexy-search-pill:focus-within {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-focus);
+}
+
+.finexy-search-pill input {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 12px;
+  color: var(--color-text-main);
+  font-family: var(--font-family-base);
+  width: 100%;
+}
+
+.finexy-search-pill input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.finexy-filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 9999px;
+  padding: 7px 16px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-main);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.finexy-filter-btn:hover {
+  background: var(--color-bg-surface-hover);
+  border-color: var(--color-border-dark);
+}
+
+/* Finexy Table with Refined Editorial Rhythm */
+.finexy-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.finexy-table th {
+  padding: 12px 14px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.finexy-table td {
+  padding: 13px 14px;
+  border-bottom: 1px solid var(--color-border-subtle);
+  vertical-align: middle;
+  color: var(--color-text-main);
+}
+
+.finexy-table tbody tr:hover td {
+  background-color: #F8FAFD;
+}
+  vertical-align: middle;
+  color: #151B2B;
+}
+
+.finexy-table tbody tr:hover td {
+  background-color: #FAFBFD;
+}
+
+.finexy-icon-tag {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.finexy-status-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.finexy-status-cell .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.finexy-status-completed {
+  color: #16845B;
+  font-weight: 500;
+}
+.finexy-status-completed .dot {
+  background: #16845B;
+}
+
+.finexy-status-pending {
+  color: #DC2626;
+  font-weight: 500;
+}
+.finexy-status-pending .dot {
+  background: #DC2626;
+}
+
+.finexy-status-inprogress {
+  color: #D97706;
+  font-weight: 500;
+}
+.finexy-status-inprogress .dot {
+  background: #D97706;
+}
+
+.finexy-status-disputed {
+  color: #7C3AED;
+  font-weight: 500;
+}
+.finexy-status-disputed .dot {
+  background: #7C3AED;
+}
+
+.finexy-more-btn {
+  color: #98A2B3;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 6px;
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  transition: all var(--transition-fast);
+}
+
+.finexy-more-btn:hover {
+  color: #151B2B;
+  background: #F2F4F7;
 }
 
 /* --------------------------------------------------------------------------
@@ -1226,7 +2034,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border-subtle);
   padding-bottom: var(--space-3);
   margin-bottom: var(--space-4);
   overflow-x: auto;
@@ -1237,11 +2045,11 @@
   align-items: center;
   gap: 6px;
   padding: 6px 14px;
-  border-radius: var(--radius-full);
+  border-radius: 9999px;
   font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
+  font-weight: 500;
   color: var(--color-text-secondary);
-  background-color: var(--color-bg-app);
+  background-color: var(--color-bg-app-secondary);
   border: 1px solid var(--color-border);
   transition: all var(--transition-fast);
   white-space: nowrap;
@@ -1249,27 +2057,29 @@
 }
 
 .queue-pill-btn:hover {
-  background-color: var(--color-bg-surface-hover);
+  background-color: #E8EFF7;
   color: var(--color-text-main);
+  border-color: var(--color-border-dark);
 }
 
 .queue-pill-btn.active {
-  background-color: var(--color-primary-light);
-  color: var(--color-primary);
-  border-color: rgba(47, 75, 224, 0.3);
-  font-weight: var(--font-weight-semibold);
+  background-color: var(--color-charcoal);
+  color: #FFFFFF;
+  border-color: var(--color-charcoal);
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(36, 35, 41, 0.25);
 }
 
 .queue-pill-badge {
   font-size: 10px;
-  font-weight: var(--font-weight-bold);
+  font-weight: 700;
   padding: 1px 6px;
-  border-radius: var(--radius-full);
+  border-radius: 9999px;
   background-color: rgba(0, 0, 0, 0.08);
 }
 
 .queue-pill-btn.active .queue-pill-badge {
-  background-color: var(--color-primary);
+  background-color: rgba(255, 255, 255, 0.2);
   color: #FFFFFF;
 }
 
@@ -1369,13 +2179,22 @@
   overflow-x: auto;
 }
 
+.nav-tabs {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  border-bottom: 1px solid var(--color-border-subtle);
+  margin-bottom: var(--space-4);
+  overflow-x: auto;
+}
+
 .nav-tab {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 10px 4px;
+  gap: 8px;
+  padding: 10px 6px;
   font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
+  font-weight: 500;
   color: var(--color-text-secondary);
   border-bottom: 2px solid transparent;
   cursor: pointer;
@@ -1393,22 +2212,23 @@
 }
 
 .nav-tab.active {
-  color: var(--color-primary);
-  font-weight: var(--font-weight-semibold);
+  color: var(--color-charcoal);
+  font-weight: 700;
   border-bottom-color: var(--color-primary);
 }
 
 .nav-tab-badge {
   font-size: 11px;
-  padding: 1px 6px;
-  border-radius: var(--radius-full);
-  background-color: var(--color-bg-app);
-  color: var(--color-text-muted);
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 9999px;
+  background-color: var(--color-bg-app-secondary);
+  color: var(--color-text-secondary);
 }
 
 .nav-tab.active .nav-tab-badge {
   background-color: var(--color-primary-light);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
 }
 
 /* Filter Chips */

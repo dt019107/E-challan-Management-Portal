@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ChallanOS — Enterprise Fleet & Traffic Challan Management</title>
   
-  <!-- Inter Google Font -->
+  <!-- Fonts: Inter and Editorial Serif -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
   
   <!-- ChallanOS Design System Stylesheets -->
   <link rel="stylesheet" href="css/variables.css">
@@ -25,13 +25,13 @@
   <!-- Primary Application Shell -->
   <div class="app-shell">
 
-    <!-- 1. Collapsible Left Sidebar -->
+    <!-- 1. Collapsible Left Sidebar (Redesigned Luxury Dark Command Rail) -->
     <aside class="app-sidebar" id="appSidebar">
       <!-- Sidebar Brand Header -->
       <div class="sidebar-header">
         <a href="#dashboard" class="brand-wrapper">
           <div class="brand-logo-mark">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
             </svg>
           </div>
@@ -40,25 +40,9 @@
               ChallanOS
               <span class="brand-tag">Fleet</span>
             </div>
-            <div class="brand-subtext">Compliance & Recovery</div>
+            <div class="brand-subtext">Compliance &amp; Recovery</div>
           </div>
         </a>
-      </div>
-
-      <!-- Workspace Selector -->
-      <div class="sidebar-workspace">
-        <button class="workspace-trigger" id="workspaceTrigger" type="button" title="Switch Workspace">
-          <div class="workspace-info">
-            <div class="workspace-icon">HQ</div>
-            <div class="workspace-details">
-              <span class="workspace-title" id="activeWorkspaceTitle">North India Logistics Fleet</span>
-              <span class="workspace-role" id="activeWorkspaceRole">Fleet Administrator</span>
-            </div>
-          </div>
-          <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor" color="var(--color-text-muted)">
-            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
-          </svg>
-        </button>
       </div>
 
       <!-- Navigation Links Container -->
@@ -94,7 +78,7 @@
           <span class="nav-label">Drivers</span>
         </a>
 
-        <div class="nav-section-label" style="margin-top: var(--space-3);">Settlement & Audit</div>
+        <div class="nav-section-label" style="margin-top: 20px;">Settlement &amp; Audit</div>
 
         <a class="nav-item" data-route="payments" href="#payments">
           <div class="nav-icon">
@@ -107,7 +91,7 @@
           <div class="nav-icon">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
           </div>
-          <span class="nav-label">Disputes & Court</span>
+          <span class="nav-label">Disputes &amp; Court</span>
         </a>
 
         <a class="nav-item" data-route="reports" href="#reports">
@@ -123,25 +107,7 @@
           </div>
           <span class="nav-label">Settings</span>
         </a>
-
-        <!-- Design System Component Lab (Step 2.4 Preview) -->
-        <a class="nav-item" data-route="components" href="#components">
-          <div class="nav-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-          </div>
-          <span class="nav-label">Design System</span>
-          <span class="nav-badge" style="background: var(--color-primary-light); color: var(--color-primary);">Tokens</span>
-        </a>
       </nav>
-
-      <!-- Sidebar Bottom Company & Workspace Information (Step 3.1) -->
-      <div class="sidebar-company-footer" style="padding: 10px 14px; border-top: 1px solid var(--color-border-subtle); display: flex; align-items: center; justify-content: space-between;">
-        <div style="overflow: hidden;">
-          <div style="font-size: 12px; font-weight: 600; color: var(--color-text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Apex Fleet Pvt Ltd</div>
-          <div style="font-size: 11px; color: var(--color-text-muted);">Workspace: APEX-HQ</div>
-        </div>
-        <span class="badge badge--paid" style="font-size: 10px; padding: 2px 6px;">Live</span>
-      </div>
 
       <!-- Sidebar Footer (Collapse Toggle) -->
       <div class="sidebar-footer">
@@ -259,8 +225,8 @@
       <!-- Scrollable Main Viewport -->
       <div class="app-content">
         <div class="content-inner">
-          <!-- View Header (Title, Subtitle, Context Actions) -->
-          <div class="view-header">
+          <!-- View Header (Title, Subtitle, Context Actions - Hidden on Dashboard, Active on other modules) -->
+          <div class="view-header" style="display: none;">
             <div class="view-header-title">
               <h1 id="pageTitle">Operational Dashboard</h1>
               <p id="pageSubtitle">Real-time compliance KPIs, triage queue & liability breakdown</p>

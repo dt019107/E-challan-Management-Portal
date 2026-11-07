@@ -1,77 +1,98 @@
 /* ==========================================================================
-   ChallanOS Premium Design Tokens (Linear, Stripe & Framer Standard)
+   ChallanOS Premium Design Tokens (Dribbble Creative Director Standard)
    Enterprise Fleet & Traffic Challan Management System
    ========================================================================== */
 
 :root {
   /* --------------------------------------------------------------------------
-     1. Brand & Core Color Palette (Refined Enterprise SaaS)
+     1. Brand & Core Color Palette (Art-Directed Fintech Logistics)
      -------------------------------------------------------------------------- */
-  --color-primary: #3155D9;
-  --color-primary-dark: #2442B5;
-  --color-primary-light: #EEF2FF;
-  --color-primary-hover: #2949CA;
-  --color-primary-subtle: #F5F7FF;
-  --color-primary-glow: rgba(49, 85, 217, 0.16);
+  /* Primary Blues */
+  --color-primary: #2586D8;
+  --color-primary-dark: #1766AD;
+  --color-primary-navy: #123B65;
+  --color-primary-light: #EBF4FC;
+  --color-primary-hover: #1F77C3;
+  --color-primary-subtle: #F3F8FD;
+  --color-primary-glow: rgba(37, 134, 216, 0.2);
 
-  /* Neutrals & Surfaces */
-  --color-bg-app: #F7F8FC;
+  /* Distinctive Accents from Dribbble Reference */
+  --color-accent-aqua: #43D8C5;
+  --color-accent-aqua-light: #E8FAF8;
+  --color-accent-aqua-glow: rgba(67, 216, 197, 0.25);
+  --color-accent-blue-light: #A9CEF3;
+  --color-accent-lime: #B5EE40;
+
+  /* Contrast Dark Charcoal Surfaces */
+  --color-charcoal: #242329;
+  --color-charcoal-dark: #1A191E;
+  --color-charcoal-surface: #2E2D35;
+  --color-charcoal-border: rgba(255, 255, 255, 0.1);
+
+  /* Atmospheric Backgrounds & Neutrals */
+  --color-bg-app: #EAF0F6;
+  --color-bg-app-secondary: #F3F6FA;
   --color-bg-surface: #FFFFFF;
-  --color-bg-surface-secondary: #F1F3F8;
+  --color-bg-surface-secondary: #F8FAFC;
   --color-bg-surface-subtle: #FAFBFD;
-  --color-bg-surface-hover: #F2F4F9;
-  --color-bg-muted: #F1F3F8;
+  --color-bg-surface-hover: #F2F6FA;
+  --color-bg-muted: #F3F6FA;
 
   /* Typography Colors */
-  --color-text-main: #151B2B;
-  --color-text-secondary: #667085;
-  --color-text-muted: #98A2B3;
-  --color-text-subtle: #A3ACB9;
+  --color-text-main: #20212A;
+  --color-text-secondary: #777D88;
+  --color-text-muted: #A0A6B0;
+  --color-text-subtle: #B8BEC9;
   --color-text-inverse: #FFFFFF;
 
   /* Borders & Dividers */
-  --color-border: #E7EAF1;
-  --color-border-subtle: #EFF1F6;
-  --color-border-dark: #D4D8E3;
-  --color-border-focus: #3155D9;
-  --color-border-glass: rgba(231, 234, 241, 0.85);
+  --color-border: #E7EBF0;
+  --color-border-subtle: #F0F3F7;
+  --color-border-dark: #D6DCE5;
+  --color-border-focus: #2586D8;
+  --color-border-glass: rgba(231, 235, 240, 0.85);
 
-  /* Semantic Status Tokens (Refined Palette) */
+  /* Semantic Status Tokens */
   --status-unassigned: #C24141;
   --status-unassigned-bg: #FFF0F0;
   --status-unassigned-border: #FECDCA;
 
-  --status-assigned: #3155D9;
-  --status-assigned-bg: #EEF2FF;
-  --status-assigned-border: #C8D3FB;
+  --status-assigned: #2586D8;
+  --status-assigned-bg: #EBF4FC;
+  --status-assigned-border: #CBE3F9;
 
   --status-pending: #B7791F;
-  --status-pending-bg: #FFF5E5;
+  --status-pending-bg: #FFF8E6;
   --status-pending-border: #FDE68A;
 
   --status-paid: #16845B;
-  --status-paid-bg: #E9F7F0;
-  --status-paid-border: #BBF7D0;
+  --status-paid-bg: #EAF8F1;
+  --status-paid-border: #A6E7C4;
 
   --status-disputed: #7452C8;
-  --status-disputed-bg: #F2EEFF;
-  --status-disputed-border: #DDD6FE;
+  --status-disputed-bg: #F4F0FD;
+  --status-disputed-border: #DCD0F9;
 
-  --status-court: #2675B8;
-  --status-court-bg: #EAF4FF;
-  --status-court-border: #BAE6FD;
+  --status-court: #1766AD;
+  --status-court-bg: #EAF3FB;
+  --status-court-border: #BEDAF4;
 
   /* Functional Status Accents */
   --color-success: #16845B;
-  --color-success-bg: #E9F7F0;
+  --color-success-bg: #EAF8F1;
   --color-warning: #B7791F;
-  --color-warning-bg: #FFF5E5;
+  --color-warning-bg: #FFF8E6;
   --color-danger: #C24141;
   --color-danger-bg: #FFF0F0;
   --color-purple: #7452C8;
-  --color-purple-bg: #F2EEFF;
-  --color-info: #2675B8;
-  --color-info-bg: #EAF4FF;
+  --color-purple-bg: #F4F0FD;
+  --color-info: #2586D8;
+  --color-info-bg: #EBF4FC;
+
+  /* Patterns & Material Textures */
+  --pattern-stripes-blue: repeating-linear-gradient(45deg, rgba(37, 134, 216, 0.08), rgba(37, 134, 216, 0.08) 4px, transparent 4px, transparent 8px);
+  --pattern-stripes-aqua: repeating-linear-gradient(45deg, rgba(67, 216, 197, 0.12), rgba(67, 216, 197, 0.12) 4px, transparent 4px, transparent 8px);
+  --pattern-stripes-dark: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.04) 4px, transparent 4px, transparent 8px);
 
   /* --------------------------------------------------------------------------
      2. Spacing Scale (4, 8, 12, 16, 20, 24, 32, 40, 48px)
@@ -90,6 +111,7 @@
      3. Typography Scale & Font Metrics
      -------------------------------------------------------------------------- */
   --font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-family-editorial: 'Newsreader', 'Playfair Display', Georgia, Cambria, 'Times New Roman', serif;
   --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
 
   --font-size-2xs: 0.6875rem; /* 11px */
@@ -124,22 +146,22 @@
      -------------------------------------------------------------------------- */
   --radius-xs: 4px;
   --radius-sm: 6px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
-  --radius-2xl: 20px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-2xl: 24px;
   --radius-full: 9999px;
 
-  /* Multi-tier elevation (Stripe/Linear style layered soft ambient shadows) */
-  --shadow-xs: 0 1px 2px rgba(16, 24, 40, 0.04);
-  --shadow-sm: 0 1px 3px rgba(16, 24, 40, 0.06), 0 1px 2px rgba(16, 24, 40, 0.03);
-  --shadow-md: 0 4px 10px -2px rgba(16, 24, 40, 0.06), 0 2px 4px -2px rgba(16, 24, 40, 0.03);
-  --shadow-lg: 0 12px 20px -4px rgba(16, 24, 40, 0.08), 0 4px 8px -2px rgba(16, 24, 40, 0.03);
-  --shadow-xl: 0 20px 28px -4px rgba(16, 24, 40, 0.1), 0 8px 12px -4px rgba(16, 24, 40, 0.04);
-  --shadow-card-hover: 0 8px 24px -4px rgba(49, 85, 217, 0.08), 0 2px 6px -2px rgba(16, 24, 40, 0.04);
-  --shadow-focus: 0 0 0 3px rgba(49, 85, 217, 0.16);
-  --shadow-dropdown: 0 12px 30px -4px rgba(16, 24, 40, 0.12), 0 4px 10px -2px rgba(16, 24, 40, 0.04);
-  --shadow-modal: 0 24px 48px -12px rgba(16, 24, 40, 0.18), 0 8px 16px -4px rgba(16, 24, 40, 0.06);
+  /* Multi-tier elevation (Stripe/Dribbble style refined soft ambient shadows) */
+  --shadow-xs: 0 1px 2px rgba(20, 24, 33, 0.03);
+  --shadow-sm: 0 1px 3px rgba(20, 24, 33, 0.05), 0 1px 2px rgba(20, 24, 33, 0.02);
+  --shadow-md: 0 4px 12px -2px rgba(20, 24, 33, 0.05), 0 2px 4px -1px rgba(20, 24, 33, 0.02);
+  --shadow-lg: 0 12px 24px -4px rgba(20, 24, 33, 0.07), 0 4px 8px -2px rgba(20, 24, 33, 0.02);
+  --shadow-xl: 0 20px 32px -6px rgba(20, 24, 33, 0.09), 0 8px 16px -4px rgba(20, 24, 33, 0.03);
+  --shadow-card-hover: 0 10px 28px -4px rgba(37, 134, 216, 0.1), 0 2px 6px -2px rgba(20, 24, 33, 0.03);
+  --shadow-focus: 0 0 0 3px rgba(37, 134, 216, 0.2);
+  --shadow-dropdown: 0 14px 34px -4px rgba(20, 24, 33, 0.12), 0 4px 10px -2px rgba(20, 24, 33, 0.03);
+  --shadow-modal: 0 28px 56px -12px rgba(20, 24, 33, 0.18), 0 8px 20px -4px rgba(20, 24, 33, 0.05);
 
   /* --------------------------------------------------------------------------
      5. Layout Dimensions
@@ -150,15 +172,15 @@
   --content-max-width: 1440px;
 
   /* --------------------------------------------------------------------------
-     6. Framer-Grade Motion Timing Tokens
+     6. Motion & Spring Timing Tokens
      -------------------------------------------------------------------------- */
   --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out-smooth: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.15);
 
-  --transition-fast: 150ms var(--ease-out-quint);
-  --transition-normal: 220ms var(--ease-out-quint);
-  --transition-slow: 350ms var(--ease-out-quint);
+  --transition-fast: 160ms var(--ease-out-quint);
+  --transition-normal: 240ms var(--ease-out-quint);
+  --transition-slow: 360ms var(--ease-out-quint);
 
   /* --------------------------------------------------------------------------
      7. Z-Index Hierarchy

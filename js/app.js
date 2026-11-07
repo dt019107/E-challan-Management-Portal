@@ -433,6 +433,12 @@ function navigateTo(routeKey, updateHash = true, params = {}) {
   const breadcrumbEl = document.getElementById("breadcrumbContainer");
   const viewBody = document.getElementById("moduleViewBody");
   const viewActions = document.getElementById("viewHeaderActions");
+  const viewHeader = document.querySelector(".view-header");
+
+  // On the Dashboard route, the integrated Finexy greeting header takes priority
+  if (viewHeader) {
+    viewHeader.style.display = routeKey === "dashboard" ? "none" : "flex";
+  }
 
   if (titleEl) titleEl.textContent = route.title;
   if (subtitleEl) subtitleEl.textContent = route.subtitle;
