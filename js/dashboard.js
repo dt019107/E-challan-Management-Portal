@@ -1,14 +1,14 @@
 /**
  * ChallanOS - Operational Dashboard Module (js/dashboard.js)
  * 
- * Calm Editorial Fintech Architecture:
- * - 12-Column Asymmetric Grid (5/7 and full spans, no rows of 4 equal boxes)
- * - Hero Outstanding Tile with 62px Instrument Serif typography & hairline corridor metrics
- * - Navy Hero Panel with Indian highway photograph under dot grid & navy overlay
- * - Signature Bar Chart with 14px bars, rounded tops, hatched aqua bar & floating dark tooltip
- * - Signature Donut Chart with 10px stroke, round caps, 3px segment gaps & serif central counter
- * - Action Queue Table with strict 60px rows, no vertical lines, 11px uppercase muted headers,
- *   monospace registration chip, and 24px status badges with 6px dots.
+ * Calm Editorial Off-Black Hand-Art-Directed Architecture:
+ * - 12-Column Asymmetric Grid (7/5 and full spans)
+ * - Hero Outstanding Tile with 58px Instrument Serif typography & 3px brass corridor progress bars
+ * - Due-in-7-days photo card with real Indian highway truck photo under warm monochrome scrim
+ * - Signature Bar Chart with 12px bars, rounded tops, past months #2B2D32, current month brass #CDB98C
+ * - Signature Donut Chart with 9px stroke, round caps, 3px segment gaps, muted tones & serif central counter
+ * - Action Queue Table with strict 56px rows, no vertical lines, 11px uppercase tracked headers,
+ *   monospace registration chip, tabular numbers, and 22px status badges with 5px dots.
  */
 
 function renderDashboardView(container, actions) {
@@ -33,22 +33,22 @@ function renderDashboardView(container, actions) {
   container.innerHTML = `
     <div class="calm-dashboard-container">
       
-      <!-- 1. GREETING HEADER (34px Serif with muted 13px date line) -->
+      <!-- 1. GREETING HEADER (34px Serif with muted 12px date line) -->
       <div class="calm-dashboard-header">
         <div class="calm-header-left">
           <div class="calm-header-date">
             <span class="dot"></span>
-            <span>SATURDAY, 7 NOVEMBER 2026 • MORTH PARIVAHAN GATEWAY ACTIVE</span>
+            <span>Saturday, 7 November 2026 • MoRTH Parivahan Gateway Active</span>
           </div>
           <h1 class="calm-header-greeting">Good morning, Vikram</h1>
         </div>
 
         <div class="calm-header-actions">
-          <button class="calm-btn-pill" onclick="Utils.exportToCSV(StorageManager.getChallans(), 'fleet-liability-audit.csv')">
+          <button class="calm-btn-secondary" onclick="Utils.exportToCSV(StorageManager.getChallans(), 'fleet-liability-audit.csv')">
             <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
             Download Summary
           </button>
-          <button class="calm-btn-navy" onclick="Utils.showToast('Gateway Synchronized', 'Parivahan e-Challan gateway polled successfully. 32 active records refreshed.', 'success')">
+          <button class="calm-btn-secondary" onclick="Utils.showToast('Gateway Synchronized', 'Parivahan e-Challan gateway polled successfully. 32 active records refreshed.', 'success')">
             <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/></svg>
             Parivahan Sync
           </button>
@@ -58,12 +58,12 @@ function renderDashboardView(container, actions) {
       <!-- 2. TOP ROW (12 COLUMNS: 7 / 5 ASYMMETRIC GRID) -->
       <div class="calm-grid-12">
         
-        <!-- COLUMN SPAN 7: THE HERO OUTSTANDING TILE (2x visual prominence, 62px Serif Number) -->
+        <!-- COLUMN SPAN 7: THE HERO OUTSTANDING TILE (58px Instrument Serif Number, hairline divider, 3px brass progress bars) -->
         <div class="calm-panel calm-span-7">
           <div>
-            <div class="calm-label-caps">
-              <span>Outstanding Fleet Liability</span>
-              <span style="color: #43D8C5; font-size: 11px; font-weight: 600;">↑ 5.2% vs last 30d</span>
+            <div class="calm-hero-header-row">
+              <span class="calm-hero-label">Outstanding fleet liability</span>
+              <span class="calm-hero-trend">↑ 5.2% vs last 30d</span>
             </div>
 
             <div class="calm-hero-number" id="dashboardHeroNumber">
@@ -74,51 +74,57 @@ function renderDashboardView(container, actions) {
               Across 32 active compliance notices across Delhi NCR, Mumbai Western Corridor, and Bengaluru Logistics Hubs.
             </div>
 
-            <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
-              <button class="finexy-btn-lime" onclick="navigateTo('payments')" title="Settle notices in bulk via simulated payment">
-                ⇄ Settle Fines
+            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+              <button class="calm-btn-primary" onclick="navigateTo('payments')" title="Settle notices in bulk via simulated payment">
+                Settle Fines
               </button>
-              <button class="finexy-btn-soft" onclick="navigateTo('challans', true, { status: 'unassigned' })" title="Adjudicate unassigned traffic notices">
-                ⇆ Assign Responsibility
+              <button class="calm-btn-secondary" onclick="navigateTo('challans', true, { status: 'unassigned' })" title="Adjudicate unassigned traffic notices">
+                Assign Responsibility
               </button>
             </div>
           </div>
 
-          <!-- Finexy Wallet-style Corridor Metrics -->
+          <!-- Hairline divider and three plain columns with 3px progress bars -->
           <div class="calm-corridor-row">
-            <div class="calm-corridor-item">
-              <div class="calm-corridor-label">
-                <span>NCR Corridor</span>
-                <span style="font-size: 9px; background: rgba(24, 184, 90, 0.12); color: #16A34A; padding: 1.5px 6px; border-radius: 9999px; font-weight: 600;">Active</span>
+            <div class="calm-corridor-col">
+              <div class="calm-corridor-header">
+                <span class="calm-corridor-title">NCR Corridor</span>
+                <span class="calm-corridor-val">${Utils.formatINR(corridorAmounts.ncr)}</span>
               </div>
-              <div class="calm-corridor-val">${Utils.formatINR(corridorAmounts.ncr)}</div>
-              <div style="font-size: 11px; color: #94A3B8; margin-top: 2px;">Limit ₹50k/mo</div>
+              <div class="calm-progress-track">
+                <div class="calm-progress-fill" style="width: 60%;"></div>
+              </div>
+              <div class="calm-corridor-sub">Limit ₹50k/mo</div>
             </div>
-            <div class="calm-corridor-item">
-              <div class="calm-corridor-label">
-                <span>Mumbai Western</span>
-                <span style="font-size: 9px; background: rgba(24, 184, 90, 0.12); color: #16A34A; padding: 1.5px 6px; border-radius: 9999px; font-weight: 600;">Active</span>
+            <div class="calm-corridor-col">
+              <div class="calm-corridor-header">
+                <span class="calm-corridor-title">Mumbai Western</span>
+                <span class="calm-corridor-val">${Utils.formatINR(corridorAmounts.mumbai)}</span>
               </div>
-              <div class="calm-corridor-val">${Utils.formatINR(corridorAmounts.mumbai)}</div>
-              <div style="font-size: 11px; color: #94A3B8; margin-top: 2px;">Limit ₹35k/mo</div>
+              <div class="calm-progress-track">
+                <div class="calm-progress-fill" style="width: 61%;"></div>
+              </div>
+              <div class="calm-corridor-sub">Limit ₹35k/mo</div>
             </div>
-            <div class="calm-corridor-item">
-              <div class="calm-corridor-label">
-                <span>Bengaluru Hub</span>
-                <span style="font-size: 9px; background: rgba(24, 184, 90, 0.12); color: #16A34A; padding: 1.5px 6px; border-radius: 9999px; font-weight: 600;">Active</span>
+            <div class="calm-corridor-col">
+              <div class="calm-corridor-header">
+                <span class="calm-corridor-title">Bengaluru Hub</span>
+                <span class="calm-corridor-val">${Utils.formatINR(corridorAmounts.blr)}</span>
               </div>
-              <div class="calm-corridor-val">${Utils.formatINR(corridorAmounts.blr)}</div>
-              <div style="font-size: 11px; color: #94A3B8; margin-top: 2px;">Limit ₹25k/mo</div>
+              <div class="calm-progress-track">
+                <div class="calm-progress-fill" style="width: 62%;"></div>
+              </div>
+              <div class="calm-corridor-sub">Limit ₹25k/mo</div>
             </div>
           </div>
         </div>
 
-        <!-- COLUMN SPAN 5: THE EMERALD HERO PHOTO PANEL -->
+        <!-- COLUMN SPAN 5: THE DUE-IN-7-DAYS PHOTO PANEL (Real Indian highway truck photo under warm monochrome scrim) -->
         <div class="calm-navy-photo-panel calm-span-5">
           <div>
-            <div class="calm-label-caps">
-              <span>Impending Deadline (7 Days)</span>
-              <span style="color: #B6F533; font-size: 11px; font-weight: 600;">Toll &amp; Highway Radar</span>
+            <div class="calm-hero-header-row">
+              <span class="calm-photo-label">Impending deadline (7 days)</span>
+              <span class="calm-photo-sublabel">Toll &amp; Highway Radar</span>
             </div>
 
             <div class="calm-navy-number">
@@ -131,11 +137,11 @@ function renderDashboardView(container, actions) {
           </div>
 
           <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
-            <div class="calm-navy-badge">
+            <div class="calm-badge pending">
               <span class="dot"></span>
               <span>Court Referral Imminent</span>
             </div>
-            <button class="calm-btn-navy" style="background: rgba(255, 255, 255, 0.14); border-color: rgba(255, 255, 255, 0.22); border-radius: 9999px; font-size: 12px; font-weight: 600; padding: 6px 16px;" onclick="navigateTo('challans', true, { filter: 'due7days' })">
+            <button class="calm-btn-secondary" style="padding: 6px 14px; font-size: 12px;" onclick="navigateTo('challans', true, { filter: 'due7days' })">
               Review Notices →
             </button>
           </div>
@@ -146,7 +152,7 @@ function renderDashboardView(container, actions) {
       <!-- 3. MIDDLE ROW (12 COLUMNS: 7 / 5 ASYMMETRIC GRID) -->
       <div class="calm-grid-12">
         
-        <!-- COLUMN SPAN 7: CUSTOM BAR CHART (14px Bars, Hatched Aqua, Floating Tooltip) -->
+        <!-- COLUMN SPAN 7: CUSTOM BAR CHART (12px Bars, Rounded Tops, Brass Current Month, Floating Tooltip) -->
         <div class="calm-panel calm-span-7">
           <div class="calm-chart-header">
             <div>
@@ -155,12 +161,12 @@ function renderDashboardView(container, actions) {
             </div>
             <div class="calm-chart-legend">
               <div class="calm-chart-legend-item">
-                <span class="calm-chart-legend-dot" style="background: #2E384D;"></span>
+                <span class="calm-chart-legend-dot" style="background: #2B2D32;"></span>
                 <span>Past Months</span>
               </div>
               <div class="calm-chart-legend-item">
-                <span class="calm-chart-legend-dot" style="background: #B6F533; border: 1px solid rgba(0,0,0,0.1);"></span>
-                <span>Current Month (Velocity)</span>
+                <span class="calm-chart-legend-dot" style="background: var(--accent);"></span>
+                <span>Current Month</span>
               </div>
             </div>
           </div>
@@ -180,14 +186,14 @@ function renderDashboardView(container, actions) {
           </div>
 
           <div class="calm-donut-container">
-            <!-- SVG Donut with 10px stroke, round caps, 3px gap & modern counter -->
+            <!-- SVG Donut with 9px stroke, round caps, 3px gap & serif central counter -->
             ${renderLiabilityDonutChart(challans)}
 
             <!-- Hairline Category Breakdown List -->
             <div class="calm-donut-list">
               <div class="calm-donut-row">
                 <div class="calm-donut-name">
-                  <span style="width: 8px; height: 8px; border-radius: 50%; background: #3B82F6;"></span>
+                  <span style="width: 7px; height: 7px; border-radius: 50%; background: #CDB98C;"></span>
                   <span>Driver Trips</span>
                 </div>
                 <div class="calm-donut-pct">42% (₹54,600)</div>
@@ -195,7 +201,7 @@ function renderDashboardView(container, actions) {
 
               <div class="calm-donut-row">
                 <div class="calm-donut-name">
-                  <span style="width: 8px; height: 8px; border-radius: 50%; background: #B6F533; border: 1px solid rgba(0,0,0,0.1);"></span>
+                  <span style="width: 7px; height: 7px; border-radius: 50%; background: #8E8A7E;"></span>
                   <span>Lessee Contracts</span>
                 </div>
                 <div class="calm-donut-pct">38% (₹49,400)</div>
@@ -203,7 +209,7 @@ function renderDashboardView(container, actions) {
 
               <div class="calm-donut-row">
                 <div class="calm-donut-name">
-                  <span style="width: 8px; height: 8px; border-radius: 50%; background: #475569;"></span>
+                  <span style="width: 7px; height: 7px; border-radius: 50%; background: #55534E;"></span>
                   <span>Fleet Default</span>
                 </div>
                 <div class="calm-donut-pct">20% (₹26,010)</div>
@@ -224,7 +230,7 @@ function renderDashboardView(container, actions) {
           </div>
 
           <!-- Queue Filter Tabs & Search Control -->
-          <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
             <div class="calm-queue-tabs" id="dashboardQueuePills">
               <button class="calm-tab-btn active" data-queue="all">
                 All Action Items <span class="calm-tab-badge">${challans.filter(c => c.status !== 'paid').length}</span>
@@ -244,20 +250,20 @@ function renderDashboardView(container, actions) {
             </div>
 
             <div style="position: relative;">
-              <svg style="position: absolute; left: 10px; top: 11px; pointer-events: none;" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <svg style="position: absolute; left: 10px; top: 10px; pointer-events: none;" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
               <input type="text" id="dashboardTableSearchInput" class="calm-search-input" placeholder="Search notices, plates...">
             </div>
           </div>
         </div>
 
-        <!-- Strict 60px Table Rows, No Vertical Lines, 11px Uppercase Headers -->
+        <!-- Strict 56px Table Rows, No Vertical Lines, 11px Uppercase Tracked Headers -->
         <div style="overflow-x: auto; margin-top: 8px;">
           <table class="calm-table">
             <thead>
               <tr>
                 <th style="width: 36px;"><input type="checkbox" id="selectAllAttentionCheckbox" title="Select all items"></th>
-                <th style="width: 140px;">Notice ID</th>
-                <th style="width: 130px;">Vehicle Plate</th>
+                <th style="width: 150px;">Notice ID</th>
+                <th style="width: 140px;">Vehicle Plate</th>
                 <th>Violation / Offence</th>
                 <th class="text-right" style="width: 120px;">Amount</th>
                 <th style="width: 130px;">Status</th>
@@ -340,8 +346,8 @@ function toggleQueuePillsVisibility() {
 
 /**
  * Signature Element: Custom Bar Chart
- * 14px-wide bars, fully rounded tops, light-blue bars for past months,
- * hatched aqua bar for current month, and a floating dark tooltip with small arrow.
+ * 12px-wide bars, fully rounded tops, #2B2D32 for past months,
+ * brass #CDB98C for current month, and a floating dark tooltip with small arrow.
  */
 function renderFinexyDualBarChart(challans) {
   const months = [
@@ -357,7 +363,7 @@ function renderFinexyDualBarChart(challans) {
 
   const chartHeight = 150;
   const chartWidth = 460;
-  const barWidth = 14; // Strict 14px width
+  const barWidth = 12; // Strict 12px width
   const startX = 40;
   const gap = (chartWidth - startX - (months.length * barWidth)) / (months.length - 1);
   const maxVal = 65;
@@ -374,8 +380,8 @@ function renderFinexyDualBarChart(challans) {
   yTicks.forEach(tick => {
     const yPos = chartHeight - (tick.val / maxVal) * (chartHeight - 30);
     gridLines += `
-      <text x="0" y="${yPos + 4}" fill="#94A3B8" font-size="10" font-family="'Inter Tight', sans-serif" font-weight="500">${tick.label}</text>
-      <line x1="28" y1="${yPos}" x2="${chartWidth}" y2="${yPos}" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1" />
+      <text x="0" y="${yPos + 4}" fill="#85847F" font-size="11" font-family="'Geist', 'Inter Tight', sans-serif" font-weight="400">${tick.label}</text>
+      <line x1="28" y1="${yPos}" x2="${chartWidth}" y2="${yPos}" stroke="rgba(236, 232, 223, 0.06)" stroke-width="1" stroke-dasharray="3 3" />
     `;
   });
 
@@ -388,42 +394,35 @@ function renderFinexyDualBarChart(challans) {
     const yPos = chartHeight - bHeight;
 
     if (m.isCurrent) {
-      // Finexy Hatched spring lime bar
+      // Warm Brass current month bar
       barsHTML += `
-        <rect x="${xPos}" y="${yPos}" width="${barWidth}" height="${bHeight}" rx="7" fill="url(#finexyHatchedLime)" />
-        <text x="${xPos + barWidth / 2}" y="${chartHeight + 18}" text-anchor="middle" fill="#F3F4F6" font-size="11" font-weight="700" font-family="'Inter Tight', sans-serif">${m.label}</text>
+        <rect x="${xPos}" y="${yPos}" width="${barWidth}" height="${bHeight}" rx="6" fill="#CDB98C" />
+        <text x="${xPos + barWidth / 2}" y="${chartHeight + 18}" text-anchor="middle" fill="#ECE8DF" font-size="11" font-weight="600" font-family="'Geist', 'Inter Tight', sans-serif">${m.label}</text>
       `;
 
       // Floating dark tooltip with a small arrow on the highlighted bar
       const ttX = xPos - 36;
       const ttY = yPos - 38;
       tooltipHTML = `
-        <g class="calm-chart-tooltip" style="filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5));">
-          <rect x="${ttX}" y="${ttY}" width="86" height="28" rx="6" fill="#0B0E14" stroke="rgba(255, 255, 255, 0.16)" stroke-width="1" />
-          <polygon points="${xPos + barWidth/2 - 4},${ttY + 28} ${xPos + barWidth/2 + 4},${ttY + 28} ${xPos + barWidth/2},${ttY + 33}" fill="#0B0E14" />
-          <text x="${ttX + 43}" y="${ttY + 18}" text-anchor="middle" fill="#B6F533" font-size="11" font-weight="700" font-family="'Inter Tight', sans-serif">
+        <g class="calm-chart-tooltip">
+          <rect x="${ttX}" y="${ttY}" width="84" height="28" rx="6" fill="#1C1E22" stroke="rgba(236, 232, 223, 0.12)" stroke-width="1" />
+          <polygon points="${xPos + barWidth/2 - 4},${ttY + 28} ${xPos + barWidth/2 + 4},${ttY + 28} ${xPos + barWidth/2},${ttY + 33}" fill="#1C1E22" />
+          <text x="${ttX + 42}" y="${ttY + 18}" text-anchor="middle" fill="#CDB98C" font-size="11" font-weight="600" font-family="'Geist', 'Inter Tight', sans-serif">
             ${m.amount} (${m.notices})
           </text>
         </g>
       `;
     } else {
-      // Finexy refined slate navy past months bars
+      // Refined dark #2B2D32 past months bars
       barsHTML += `
-        <rect x="${xPos}" y="${yPos}" width="${barWidth}" height="${bHeight}" rx="7" fill="#2E384D" opacity="0.9" />
-        <text x="${xPos + barWidth / 2}" y="${chartHeight + 18}" text-anchor="middle" fill="#94A3B8" font-size="11" font-weight="500" font-family="'Inter Tight', sans-serif">${m.label}</text>
+        <rect x="${xPos}" y="${yPos}" width="${barWidth}" height="${bHeight}" rx="6" fill="#2B2D32" />
+        <text x="${xPos + barWidth / 2}" y="${chartHeight + 18}" text-anchor="middle" fill="#85847F" font-size="11" font-weight="400" font-family="'Geist', 'Inter Tight', sans-serif">${m.label}</text>
       `;
     }
   });
 
   return `
     <svg viewBox="0 0 ${chartWidth} ${chartHeight + 28}" style="width: 100%; height: auto; display: block; overflow: visible;">
-      <defs>
-        <!-- Finexy Hatched Spring Lime Pattern -->
-        <pattern id="finexyHatchedLime" width="8" height="8" patternTransform="rotate(135 0 0)" patternUnits="userSpaceOnUse">
-          <rect width="8" height="8" fill="#B6F533" />
-          <line x1="0" y1="0" x2="0" y2="8" stroke="#8DCF15" stroke-width="3" />
-        </pattern>
-      </defs>
       ${gridLines}
       ${barsHTML}
       ${tooltipHTML}
@@ -433,17 +432,18 @@ function renderFinexyDualBarChart(challans) {
 
 /**
  * Signature Element: Donut Chart
- * 10px stroke, round caps, 3px gap between segments, total in centre in modern sans.
+ * 9px stroke, round caps, 3px gap between segments, total in centre in Instrument Serif.
+ * Tones: #CDB98C, #8E8A7E, #55534E, #34363A.
  */
 function renderLiabilityDonutChart(challans) {
   const size = 130;
-  const stroke = 10;
+  const stroke = 9; // Strict 9px stroke
   const radius = (size - stroke) / 2;
-  const circumference = 2 * Math.PI * radius; // ~376.99
+  const circumference = 2 * Math.PI * radius;
 
   // Proportions: Driver 42%, Lessee 38%, Fleet 20%
-  // 3px gap between segments translated to circumference ratio
-  const gap = 4;
+  // 3px gap between segments
+  const gap = 3;
   const p1 = (0.42 * circumference) - gap;
   const p2 = (0.38 * circumference) - gap;
   const p3 = (0.20 * circumference) - gap;
@@ -456,28 +456,28 @@ function renderLiabilityDonutChart(challans) {
   return `
     <div style="position: relative; width: ${size}px; height: ${size}px; flex-shrink: 0;">
       <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" style="transform: rotate(-90deg); display: block;">
-        <!-- Segment 1: Driver Trips (Luminous Blue #3B82F6) -->
+        <!-- Segment 1: Driver Trips (#CDB98C Brass) -->
         <circle cx="${size/2}" cy="${size/2}" r="${radius}" fill="none"
-          stroke="#3B82F6" stroke-width="${stroke}" stroke-linecap="round"
+          stroke="#CDB98C" stroke-width="${stroke}" stroke-linecap="round"
           stroke-dasharray="${p1} ${circumference}"
           stroke-dashoffset="${off1}" />
 
-        <!-- Segment 2: Lessee Contracts (Spring Lime #B6F533) -->
+        <!-- Segment 2: Lessee Contracts (#8E8A7E Warm Grey) -->
         <circle cx="${size/2}" cy="${size/2}" r="${radius}" fill="none"
-          stroke="#B6F533" stroke-width="${stroke}" stroke-linecap="round"
+          stroke="#8E8A7E" stroke-width="${stroke}" stroke-linecap="round"
           stroke-dasharray="${p2} ${circumference}"
           stroke-dashoffset="${off2}" />
 
-        <!-- Segment 3: Fleet Default (Slate #475569) -->
+        <!-- Segment 3: Fleet Default (#55534E Deep Muted Stone) -->
         <circle cx="${size/2}" cy="${size/2}" r="${radius}" fill="none"
-          stroke="#475569" stroke-width="${stroke}" stroke-linecap="round"
+          stroke="#55534E" stroke-width="${stroke}" stroke-linecap="round"
           stroke-dasharray="${p3} ${circumference}"
           stroke-dashoffset="${off3}" />
       </svg>
-      <!-- Center Counter in Modern Sans -->
+      <!-- Center Counter in Instrument Serif -->
       <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none;">
-        <span style="font-family: 'Inter Tight', sans-serif; font-size: 30px; font-weight: 700; color: #F3F4F6; line-height: 1; letter-spacing: -0.02em;">32</span>
-        <span style="font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #94A3B8; margin-top: 2px;">NOTICES</span>
+        <span style="font-family: var(--font-family-serif); font-size: 32px; font-weight: 400; color: var(--text); line-height: 1; letter-spacing: -0.02em;">32</span>
+        <span style="font-size: 9px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-top: 3px;">NOTICES</span>
       </div>
     </div>
   `;
@@ -533,15 +533,15 @@ function formatFinexyDateTime(dateStr) {
 }
 
 /**
- * Render Actionable Attention Table Rows (Strict 60px rows, no vertical lines, monospace chip, right-aligned amounts)
+ * Render Actionable Attention Table Rows (Strict 56px rows, no vertical lines, monospace chip, right-aligned amounts)
  */
 function renderAttentionItems(items) {
   if (!items || items.length === 0) {
     return `
       <tr>
-        <td colspan="8" style="text-align: center; padding: 48px 16px; color: #94A3B8;">
-          <div style="font-family: var(--font-family-serif); font-size: 24px; color: #0F2A47; margin-bottom: 4px;">Queue Clear</div>
-          <div style="font-size: 13px; color: #64748B;">All compliance items in this triage queue have been adjudicated.</div>
+        <td colspan="8" style="text-align: center; padding: 48px 16px; color: var(--text-3);">
+          <div style="font-family: var(--font-family-serif); font-size: 24px; color: var(--text); margin-bottom: 4px;">Queue Clear</div>
+          <div style="font-size: 13px; color: var(--text-2);">All compliance items in this triage queue have been adjudicated.</div>
         </td>
       </tr>
     `;
@@ -552,7 +552,7 @@ function renderAttentionItems(items) {
     const badge = getOffenceIconBadge(c.offence);
     const formattedDate = formatFinexyDateTime(c.offenceDate || c.date || c.dueDate);
 
-    // Status class mapping for 24px high, 10% tint badge
+    // Status class mapping for 22px high, 12% tint badge
     let statusClass = "assigned";
     let statusLabel = "Assigned";
 
@@ -571,12 +571,12 @@ function renderAttentionItems(items) {
       <tr>
         <!-- Checkbox -->
         <td style="width: 36px;">
-          <input type="checkbox" value="${c.id}">
+          <input type="checkbox" value="${c.id}" class="custom-checkbox">
         </td>
 
         <!-- Notice ID -->
         <td>
-          <span style="font-family: var(--font-family-mono); font-weight: 600; font-size: 12px; color: #0F2A47; cursor: pointer; letter-spacing: -0.01em;" onclick="navigateTo('challans', true, { id: '${c.id}' })">
+          <span style="font-family: var(--font-family-mono); font-weight: 500; font-size: 12px; color: var(--text); cursor: pointer; letter-spacing: 0;" onclick="navigateTo('challans', true, { id: '${c.id}' })">
             ${c.challanNumber}
           </span>
         </td>
@@ -588,23 +588,23 @@ function renderAttentionItems(items) {
 
         <!-- Violation -->
         <td>
-          <div style="font-weight: 500; font-size: 13px; color: #141821;">
+          <div style="font-weight: 500; font-size: 13px; color: var(--text);">
             ${badge.label}
           </div>
-          <div style="font-size: 11px; color: #94A3B8; max-width: 240px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${c.offence}">
+          <div style="font-size: 11.5px; color: var(--text-3); max-width: 240px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${c.offence}">
             ${c.offence}
           </div>
         </td>
 
         <!-- Amount (Right-Aligned Tabular Figures) -->
         <td class="text-right">
-          <div style="font-weight: 600; font-size: 13.5px; color: #0F2A47; font-variant-numeric: tabular-nums;">
+          <div style="font-weight: 500; font-size: 13.5px; color: var(--text); font-variant-numeric: tabular-nums;">
             ${Utils.formatINR(c.amount)}
           </div>
-          ${c.lateFee ? `<div style="font-size: 10px; color: #C24141;">+${Utils.formatINR(c.lateFee)} fee</div>` : ''}
+          ${c.lateFee ? `<div style="font-size: 10px; color: var(--status-unassigned);">+${Utils.formatINR(c.lateFee)} fee</div>` : ''}
         </td>
 
-        <!-- Status Badge (24px high, 10% tint, 6px dot, 12px/500 text) -->
+        <!-- Status Badge (22px high, 12% tint, 5px dot, 11px text) -->
         <td>
           <div class="calm-badge ${statusClass}">
             <span class="dot"></span>
@@ -614,7 +614,7 @@ function renderAttentionItems(items) {
 
         <!-- Offence Timestamp -->
         <td>
-          <div style="font-size: 12px; color: #64748B; white-space: nowrap; font-variant-numeric: tabular-nums;">
+          <div style="font-size: 12px; color: var(--text-3); white-space: nowrap; font-variant-numeric: tabular-nums;">
             ${formattedDate}
           </div>
         </td>
@@ -623,15 +623,15 @@ function renderAttentionItems(items) {
         <td class="text-right">
           <div style="display: inline-flex; align-items: center; gap: 6px;">
             ${isUnassigned ? `
-              <button class="calm-btn-navy" style="padding: 4.5px 11px; font-size: 11px; font-weight: 600; border-radius: 6px;" onclick="openAssignmentModal('${c.id}')" title="Assign responsible party">
+              <button class="calm-btn-secondary" style="padding: 4px 10px; font-size: 11px; height: 28px; border-radius: 6px;" onclick="openAssignmentModal('${c.id}')" title="Assign responsible party">
                 Assign
               </button>
             ` : (c.status !== 'court' && c.status !== 'paid' ? `
-              <button class="calm-btn-surface" style="padding: 4.5px 11px; font-size: 11px; font-weight: 600; border-radius: 6px; background: #F0FDF4; color: #166534; border: 1px solid rgba(22, 163, 74, 0.2);" onclick="openPaymentModal('${c.id}')" title="Settle notice">
+              <button class="calm-btn-secondary" style="padding: 4px 10px; font-size: 11px; height: 28px; border-radius: 6px;" onclick="openPaymentModal('${c.id}')" title="Settle notice">
                 Pay
               </button>
             ` : '')}
-            <button class="calm-btn-pill" style="padding: 4.5px 9px; font-size: 11px; font-weight: 500; border-radius: 6px;" onclick="navigateTo('challans', true, { id: '${c.id}' })" title="View notice details">
+            <button class="calm-btn-secondary" style="padding: 4px 8px; font-size: 11px; height: 28px; border-radius: 6px;" onclick="navigateTo('challans', true, { id: '${c.id}' })" title="View notice details">
               View
             </button>
           </div>
@@ -652,106 +652,4 @@ function calculateMonthlyTrend(challans) {
     { label: "Jul", count: 39 },
     { label: "Aug", count: 58 }
   ];
-}
-
-function renderSVGMonthlyTrendChart(monthlyData) {
-  return "";
-}
-
-function getRecentActivityFeed(challans) {
-  return StorageManager.getActivityLogs();
-}
-
-function getUpcomingDeadlinesList(challans) {
-  return challans.filter(c => Utils.getDaysRemaining(c.dueDate) >= 0 && Utils.getDaysRemaining(c.dueDate) <= 7 && c.status !== 'paid');
-}
-
-function formatRelativeTimestamp(isoStr) {
-  return Utils.formatDate(isoStr);
-}
-
-// ----------------------------------------------------------------------------
-// LEGACY CHART & COMPATIBILITY HELPERS
-// (Kept intact so any external callers or tests continue to work flawlessly)
-// ----------------------------------------------------------------------------
-
-function calculateMonthlyTrend(challans) {
-  const months = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 2026"];
-  const counts = {
-    "Oct 2025": 3,
-    "Nov 2025": 4,
-    "Dec 2025": 6,
-    "Jan 2026": 7,
-    "Feb 2026": 5,
-    "Mar 2026": 7
-  };
-
-  challans.forEach(c => {
-    if (c.offenceDate) {
-      const d = new Date(c.offenceDate);
-      const mStr = d.toLocaleString('en-US', { month: 'short', year: 'numeric' });
-      if (counts[mStr] !== undefined) {
-        counts[mStr]++;
-      }
-    }
-  });
-
-  return months.map(m => ({
-    label: m.split(" ")[0],
-    fullMonth: m,
-    count: counts[m] || 2
-  }));
-}
-
-function renderSVGMonthlyTrendChart(monthlyData) {
-  return renderFinexyDualBarChart(StorageManager.getChallans());
-}
-
-function getRecentActivityFeed(challans) {
-  const activities = [];
-  challans.forEach(c => {
-    (c.activityLog || []).forEach(act => {
-      activities.push({
-        ...act,
-        challanId: c.id,
-        challanNumber: c.challanNumber,
-        vehicleReg: c.vehicleReg,
-        amount: c.amount,
-        status: c.status
-      });
-    });
-  });
-
-  return activities
-    .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
-    .slice(0, 6);
-}
-
-function getUpcomingDeadlinesList(challans) {
-  return challans
-    .filter(c => c.status !== 'paid' && c.dueDate)
-    .map(c => ({
-      ...c,
-      daysLeft: Utils.getDaysRemaining(c.dueDate)
-    }))
-    .sort((a, b) => a.daysLeft - b.daysLeft)
-    .slice(0, 4);
-}
-
-function formatRelativeTimestamp(isoStr) {
-  if (!isoStr) return "Just now";
-  try {
-    const diffMs = Date.now() - new Date(isoStr).getTime();
-    const diffMins = Math.floor(diffMs / 60000);
-    const diffHours = Math.floor(diffMins / 60);
-    const diffDays = Math.floor(diffHours / 24);
-
-    if (diffMins < 5) return "Just now";
-    if (diffMins < 60) return `${diffMins}m ago`;
-    if (diffHours < 24) return `${diffHours}h ago`;
-    if (diffDays === 1) return "Yesterday";
-    return `${diffDays}d ago`;
-  } catch (e) {
-    return "Recent";
-  }
 }

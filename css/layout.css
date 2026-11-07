@@ -13,15 +13,14 @@
 }
 
 /* --------------------------------------------------------------------------
-   1. Left Sidebar (Finexy Luxury Off-Black with Fine Hairline Border)
+   1. Left Sidebar (Deep Ink #08090B with Fine Hairline Border)
    -------------------------------------------------------------------------- */
 .app-sidebar {
   width: var(--sidebar-width);
   height: 100%;
-  background-color: #14161C;
-  background-image: linear-gradient(180deg, #171920 0%, #111317 100%);
-  border-right: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: 1px 0 0 rgba(0, 0, 0, 0.25), inset -1px 0 0 rgba(255, 255, 255, 0.02);
+  background-color: var(--bg-sunken);
+  border-right: 1px solid var(--line);
+  box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.02);
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
@@ -36,7 +35,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--line);
 }
 
 .brand-wrapper {
@@ -49,22 +48,21 @@
 }
 
 .brand-logo-mark {
-  width: 32px;
-  height: 32px;
-  border-radius: 9px;
-  background: linear-gradient(135deg, #18B85A 0%, #0A6632 100%);
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--surface-2);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #FFFFFF;
-  box-shadow: 0 4px 12px rgba(24, 184, 90, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25);
-  border: 1px solid rgba(182, 245, 51, 0.35);
+  color: var(--text);
+  border: 1px solid var(--line-strong);
   flex-shrink: 0;
   transition: transform var(--transition-fast);
 }
 
 .brand-wrapper:hover .brand-logo-mark {
-  transform: scale(1.04);
+  transform: scale(1.03);
 }
 
 .brand-text-block {
@@ -73,10 +71,10 @@
 }
 
 .brand-name {
-  font-size: 14px;
+  font-size: 13.5px;
   font-weight: 600;
-  color: #FFFFFF;
-  letter-spacing: -0.02em;
+  color: var(--text);
+  letter-spacing: -0.01em;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -86,24 +84,24 @@
 .brand-tag {
   font-size: 8.5px;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.06em;
-  color: #B6F533;
-  background: rgba(182, 245, 51, 0.14);
-  border: 1px solid rgba(182, 245, 51, 0.28);
-  padding: 1.5px 5.5px;
-  border-radius: 9999px;
+  color: var(--text-2);
+  background: var(--surface-3);
+  border: 1px solid var(--line);
+  padding: 1.5px 5px;
+  border-radius: var(--radius-pill);
 }
 
 .brand-subtext {
   font-size: 10.5px;
-  color: #8E96A4;
+  color: var(--text-3);
   font-weight: 400;
   margin-top: 1px;
   letter-spacing: 0.01em;
 }
 
-/* Sidebar Navigation Items with Luxury Spacing */
+/* Sidebar Navigation Items */
 .sidebar-nav-container {
   flex: 1;
   overflow-y: auto;
@@ -118,16 +116,16 @@
 }
 
 .sidebar-nav-container::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 9999px;
+  background: var(--line-strong);
+  border-radius: var(--radius-pill);
 }
 
 .nav-section-label {
-  font-size: 9.5px;
+  font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-weight: 600;
-  color: #4B5565;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+  color: var(--text-3);
   padding: 14px 10px 6px;
 }
 
@@ -136,11 +134,11 @@
   align-items: center;
   gap: 10px;
   padding: 8px 10px;
-  border-radius: 9px;
-  color: #7E8B9E;
+  border-radius: var(--radius-pill);
+  color: var(--text-2);
   font-size: 13px;
   font-weight: 500;
-  transition: all 160ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 160ms var(--ease-out-quint);
   position: relative;
   text-decoration: none;
   cursor: pointer;
@@ -150,51 +148,48 @@
 
 .nav-item:hover {
   background: rgba(255, 255, 255, 0.04);
-  color: #F1F5F9;
-  border-color: rgba(255, 255, 255, 0.04);
+  color: var(--text);
 }
 
 .nav-item:hover .nav-icon {
-  color: #CBD5E1;
+  color: var(--text);
 }
 
-/* Finexy Luxury Active State with Subtle Lime Glow and Micro-indicator */
+/* Pill-shaped active state in rgba(255,255,255,.08) with small brass dot */
 .nav-item.active {
-  background: linear-gradient(90deg, rgba(182, 245, 51, 0.12) 0%, rgba(255, 255, 255, 0.04) 100%);
-  border: 1px solid rgba(182, 245, 51, 0.22);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  border-radius: 9px;
-  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: var(--radius-pill);
+  color: var(--text);
   font-weight: 500;
-  padding-left: 24px;
+  padding-left: 22px;
 }
 
 .nav-item.active::before {
   content: '';
   position: absolute;
-  left: 10px;
+  left: 9px;
   top: 50%;
   transform: translateY(-50%);
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background-color: #B6F533;
-  box-shadow: 0 0 8px rgba(182, 245, 51, 0.85);
+  background-color: var(--accent);
 }
 
 .nav-item.active .nav-icon {
-  color: #B6F533;
+  color: var(--text);
 }
 
 .nav-icon {
-  width: 18px;
-  height: 18px;
+  width: 17px;
+  height: 17px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #64748B;
+  color: var(--text-3);
   flex-shrink: 0;
-  transition: color 160ms ease, transform 160ms ease;
+  transition: color 150ms ease;
 }
 
 .nav-label {
@@ -202,35 +197,33 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
 }
 
 .nav-badge {
-  font-size: 10px;
-  font-weight: 600;
-  padding: 1.5px 6.5px;
-  border-radius: 9999px;
-  background-color: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.7);
-  font-feature-settings: 'tnum';
+  font-size: 11px;
+  font-weight: 500;
+  padding: 0 4px;
+  background-color: transparent;
+  color: var(--text-3);
+  font-variant-numeric: tabular-nums;
 }
 
 .nav-item.active .nav-badge {
-  background-color: rgba(255, 255, 255, 0.15);
-  color: #FFFFFF;
+  color: var(--text-2);
 }
 
 .nav-badge.danger {
-  background-color: rgba(239, 68, 68, 0.16);
-  color: #F87171;
-  border: 1px solid rgba(239, 68, 68, 0.28);
-  box-shadow: 0 2px 6px rgba(239, 68, 68, 0.15);
+  background-color: transparent;
+  color: var(--text-3);
+  border: none;
+  box-shadow: none;
 }
 
 .nav-item.active .nav-badge.danger {
-  background-color: rgba(239, 68, 68, 0.25);
-  color: #FECACA;
-  border-color: rgba(239, 68, 68, 0.45);
+  background-color: transparent;
+  color: var(--text-2);
+  border: none;
 }
 
 /* Sidebar Footer (Collapse Toggle) */
@@ -316,14 +309,14 @@
 }
 
 /* --------------------------------------------------------------------------
-   3. Top Navigation Bar (Finexy Calm Executive Dark Standard)
+   3. Top Navigation Bar (Off-Black Minimalist Standard)
    -------------------------------------------------------------------------- */
 .app-topbar {
   height: var(--topbar-height);
-  background: rgba(14, 17, 24, 0.85);
+  background: rgba(11, 12, 14, 0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid var(--line);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -346,10 +339,10 @@
   height: 34px;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: #94A3B8;
-  background: #141722;
+  border-radius: var(--radius-control);
+  border: 1px solid var(--line);
+  color: var(--text-2);
+  background: var(--surface-2);
 }
 
 .global-search-container {
@@ -362,24 +355,24 @@
   width: 100%;
   height: 34px;
   padding: 0 38px 0 34px;
-  background-color: #141722;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  background-color: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  box-shadow: none;
   font-size: 12.5px;
-  color: #F3F4F6;
+  color: var(--text);
   transition: all 180ms ease;
 }
 
 .global-search-input:focus {
-  background-color: #1A1E2C;
-  border-color: #B6F533;
-  box-shadow: 0 0 0 3px rgba(182, 245, 51, 0.15);
+  background-color: var(--surface-2);
+  border-color: rgba(205, 185, 140, 0.5);
+  box-shadow: 0 0 0 1px rgba(205, 185, 140, 0.5);
   outline: none;
 }
 
 .global-search-input::placeholder {
-  color: #64748B;
+  color: var(--text-3);
   font-size: 12.5px;
 }
 
@@ -388,7 +381,7 @@
   left: 11px;
   top: 50%;
   transform: translateY(-50%);
-  color: #64748B;
+  color: var(--text-3);
   pointer-events: none;
   width: 15px;
   height: 15px;
@@ -402,11 +395,11 @@
   font-size: 10px;
   font-family: var(--font-family-mono);
   font-weight: 500;
-  background-color: #1E2332;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: var(--surface-3);
+  border: 1px solid var(--line-strong);
   border-radius: 4px;
   padding: 1.5px 5px;
-  color: #94A3B8;
+  color: var(--text-3);
   pointer-events: none;
 }
 
@@ -416,10 +409,10 @@
   top: calc(100% + 6px);
   left: 0;
   right: 0;
-  background-color: var(--color-bg-surface);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  box-shadow: 0 16px 36px -4px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.4);
+  background-color: var(--surface-1);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-dropdown);
   max-height: 380px;
   overflow-y: auto;
   display: none;
@@ -434,9 +427,9 @@
   padding: 8px 14px 4px;
   font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-text-muted);
+  letter-spacing: 0.06em;
+  font-weight: 500;
+  color: var(--text-3);
 }
 
 .search-result-item {
@@ -445,12 +438,12 @@
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
-  border-bottom: 1px solid var(--color-border-subtle);
+  border-bottom: 1px solid var(--line);
   transition: background-color var(--transition-fast);
 }
 
 .search-result-item:hover {
-  background-color: var(--color-bg-surface-hover);
+  background-color: var(--surface-2);
 }
 
 /* Topbar Right Actions */
@@ -467,38 +460,38 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
-  color: #94A3B8;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background-color: #141722;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  border-radius: var(--radius-control);
+  color: var(--text-2);
+  border: 1px solid var(--line);
+  background-color: var(--surface-2);
+  box-shadow: none;
   transition: all 180ms ease;
   position: relative;
   cursor: pointer;
 }
 
 .topbar-btn:hover {
-  background-color: #1E2332;
-  color: #F3F4F6;
-  border-color: rgba(255, 255, 255, 0.16);
+  background-color: var(--surface-3);
+  color: var(--text);
+  border-color: var(--line-strong);
 }
 
 .topbar-notification-badge {
   position: absolute;
   top: -3px;
   right: -3px;
-  min-width: 16px;
-  height: 16px;
-  background-color: #B6F533;
-  color: #0B0E14;
-  border-radius: 9999px;
+  min-width: 15px;
+  height: 15px;
+  background-color: var(--surface-3);
+  color: var(--text);
+  border-radius: var(--radius-pill);
   font-size: 9.5px;
-  font-weight: 700;
+  font-weight: 500;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1.5px solid #141722;
-  padding: 0 3.5px;
+  border: 1px solid var(--line-strong);
+  padding: 0 3px;
   font-variant-numeric: tabular-nums;
 }
 
@@ -508,32 +501,32 @@
   gap: 8px;
   padding: 2px 10px 2px 3px;
   height: 34px;
-  border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: #141722;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+  box-shadow: none;
   transition: all 180ms ease;
   cursor: pointer;
 }
 
 .user-profile-btn:hover {
-  background-color: #1E2332;
-  border-color: rgba(255, 255, 255, 0.16);
+  background-color: var(--surface-3);
+  border-color: var(--line-strong);
 }
 
 .user-avatar {
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #18B85A 0%, #0A6632 100%);
-  color: #FFFFFF;
-  font-weight: 600;
+  background: var(--surface-3);
+  color: var(--text);
+  font-weight: 500;
   font-size: 11px;
   letter-spacing: 0.02em;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  border: 1px solid var(--line-strong);
 }
 
 .user-info {
@@ -544,16 +537,16 @@
 
 .user-name {
   font-size: 12px;
-  font-weight: 600;
-  color: #F3F4F6;
+  font-weight: 500;
+  color: var(--text);
   line-height: 1.2;
   letter-spacing: -0.01em;
 }
 
 .user-role {
   font-size: 10px;
-  font-weight: 500;
-  color: #94A3B8;
+  font-weight: 400;
+  color: var(--text-3);
   margin-top: 1px;
 }
 
@@ -563,10 +556,10 @@
   top: calc(100% + 8px);
   right: 0;
   width: 220px;
-  background-color: var(--color-bg-surface);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  box-shadow: 0 16px 36px -4px rgba(0, 0, 0, 0.7), 0 4px 12px rgba(0, 0, 0, 0.5);
+  background-color: var(--surface-1);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-inner);
+  box-shadow: var(--shadow-dropdown);
   padding: var(--space-2);
   display: none;
   z-index: var(--z-dropdown);
@@ -578,14 +571,14 @@
 
 .user-menu-header {
   padding: 8px 12px;
-  border-bottom: 1px solid var(--color-border-subtle);
+  border-bottom: 1px solid var(--line);
   margin-bottom: 4px;
 }
 
 .user-menu-item {
   padding: 8px 12px;
   font-size: var(--font-size-xs);
-  color: var(--color-text-secondary);
+  color: var(--text-2);
   border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
@@ -595,17 +588,17 @@
 }
 
 .user-menu-item:hover {
-  background-color: var(--color-bg-surface-hover);
-  color: var(--color-text-main);
+  background-color: var(--surface-2);
+  color: var(--text);
 }
 
 /* --------------------------------------------------------------------------
-   4. Breadcrumbs Bar (Finexy Hairline Ribbon)
+   4. Breadcrumbs Bar (Hairline Ribbon)
    -------------------------------------------------------------------------- */
 .app-breadcrumbs-bar {
   padding: 8px 32px;
   background-color: transparent;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid var(--line);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -616,7 +609,7 @@
   align-items: center;
   gap: 6px;
   font-size: 11.5px;
-  color: #8E9CAE;
+  color: var(--text-3);
 }
 
 .breadcrumb-item {
@@ -626,30 +619,25 @@
 }
 
 .breadcrumb-separator {
-  color: #475569;
+  color: var(--text-3);
   font-size: 10.5px;
   font-weight: 400;
   margin: 0 1px;
 }
 
 .breadcrumb-link {
-  color: #8E9CAE;
+  color: var(--text-2);
   transition: color var(--transition-fast);
   cursor: pointer;
 }
 
 .breadcrumb-link:hover {
-  color: #B6F533;
+  color: var(--text);
 }
 
 .breadcrumb-item.current {
-  color: #F3F4F6;
-  font-weight: 600;
-}
-
-.breadcrumb-separator {
-  color: var(--color-text-subtle);
-  font-size: 11px;
+  color: var(--text);
+  font-weight: 500;
 }
 
 /* --------------------------------------------------------------------------
@@ -661,6 +649,7 @@
   padding: var(--space-6);
   position: relative;
   scroll-behavior: smooth;
+  opacity: 1 !important;
 }
 
 @keyframes pageFadeInUp {
@@ -680,6 +669,7 @@
   margin: 0 auto;
   box-sizing: border-box;
   animation: pageFadeInUp 280ms var(--ease-out-quint);
+  opacity: 1 !important;
 }
 
 /* Standard View Header for Sub-views (Vehicles, Challans, Payments, Reports, Settings) */
@@ -696,17 +686,17 @@
 
 .view-header-title h1 {
   font-family: var(--font-family-base);
-  font-size: 26px;
-  font-weight: 700;
-  color: #F3F4F6;
-  letter-spacing: -0.025em;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text) !important;
+  letter-spacing: -0.02em;
   margin: 0;
   line-height: 1.2;
 }
 
 .view-header-title p {
   font-size: 13px;
-  color: #94A3B8;
+  color: var(--text-2);
   margin-top: 4px;
   margin-bottom: 0;
   font-weight: 400;
@@ -733,31 +723,30 @@
    -------------------------------------------------------------------------- */
 .modal-backdrop {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(32, 33, 42, 0.65);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  inset: 0;
+  background: rgba(11, 12, 14, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   z-index: var(--z-backdrop);
-  display: none;
+  display: none !important;
   align-items: center;
   justify-content: center;
   padding: var(--space-4);
-  opacity: 0;
+  opacity: 0 !important;
+  pointer-events: none !important;
   transition: opacity var(--transition-normal);
 }
 
 .modal-backdrop.show {
-  display: flex;
-  opacity: 1;
+  display: flex !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
 }
 
 .modal-dialog {
-  background-color: var(--color-bg-surface);
-  border-radius: var(--radius-2xl);
-  border: 1px solid var(--color-border);
+  background-color: var(--surface-1);
+  border-radius: var(--radius-panel);
+  border: 1px solid var(--line-strong);
   box-shadow: var(--shadow-modal);
   width: 100%;
   max-width: 640px;

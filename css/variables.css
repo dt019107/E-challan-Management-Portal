@@ -1,133 +1,148 @@
 /* ==========================================================================
-   ChallanOS Premium Design Tokens (Dribbble Creative Director Standard)
+   ChallanOS Off-Black Hand-Art-Directed Design Tokens
    Enterprise Fleet & Traffic Challan Management System
    ========================================================================== */
 
 :root {
   /* --------------------------------------------------------------------------
-     1. Brand & Core Color Palette (Finexy Dark Theme Luxury Standard)
+     1. Strict Calibrated Color Tokens (Off-Black / Brass Standard)
+     No pure black (#000000) and no pure white (#FFFFFF) anywhere
      -------------------------------------------------------------------------- */
-  --color-primary: #B6F533;
-  --color-primary-navy: #141720;
-  --color-primary-light: rgba(182, 245, 51, 0.16);
-  --color-primary-dark: #0A0C10;
-  --color-primary-hover: #C6FA4B;
-  --color-navy: #0F1218;
-  --color-navy-dark: #080A0D;
-  --color-lime: #B6F533;
-  --color-accent-lime: #B6F533;
-  --color-emerald: #18B85A;
-  --color-emerald-dark: #0A5A28;
-  --color-aqua: #43D8C5;
-  --color-accent-aqua: #43D8C5;
-  --color-accent-aqua-light: rgba(67, 216, 197, 0.16);
-  --color-dark-panel: #161922;
+  --bg: #0B0C0E;
+  --bg-sunken: #08090B;        /* Sidebar & lowest background */
+  
+  --surface-1: #111214;         /* Primary panels & cards */
+  --surface-2: #16181B;         /* Inputs, hover states, nested tracks */
+  --surface-3: #1C1E22;         /* Raised chips, active tabs, buttons */
 
-  /* Atmospheric Backgrounds & Neutrals (Deep Luxury Matte Charcoal) */
-  --color-bg-app: #0B0E14;
-  --color-bg-app-secondary: #141722;
-  --color-bg-muted: #1A1E2B;
-  --color-bg-surface: #141721;
-  --color-bg-surface-secondary: #1A1E2B;
-  --color-bg-surface-subtle: #181B26;
-  --color-bg-surface-hover: rgba(255, 255, 255, 0.05);
+  --line: rgba(236, 232, 223, 0.07);
+  --line-strong: rgba(236, 232, 223, 0.12);
 
-  /* Typography Colors (High-Contrast & Calibrated Slate Hierarchy) */
-  --color-text-main: #F3F4F6;
-  --color-text-secondary: #94A3B8;
-  --color-text-muted: #64748B;
-  --color-text-subtle: #475569;
-  --color-text-inverse: #0B0E14;
+  --text: #ECE8DF;              /* Primary text (high contrast off-white) */
+  --text-2: #A5A49E;            /* Secondary text & labels */
+  --text-3: #85847F;            /* Muted text & timestamps (4.5:1 on surface-1) */
 
-  /* Borders & Dividers */
-  --color-border: rgba(255, 255, 255, 0.08);
-  --color-border-subtle: rgba(255, 255, 255, 0.05);
-  --color-border-dark: rgba(255, 255, 255, 0.14);
+  /* Brass Accent (strictly under 3% of pixels) */
+  --accent: #CDB98C;
+  --accent-muted: rgba(205, 185, 140, 0.14);
+  --accent-border: rgba(205, 185, 140, 0.28);
 
-  /* Radii Scale (Strict 3 Values: 24px panel, 14px inner, 10px control) */
-  --radius-panel: 24px;
-  --radius-inner: 14px;
-  --radius-control: 10px;
-  --radius-lg: 24px;
-  --radius-md: 14px;
-  --radius-sm: 10px;
-  --radius-xs: 4px;
-  --radius-full: 9999px;
+  /* Semantic Status Tokens (Muted: text colour on 12% tint of itself) */
+  --status-unassigned: #E5776B;
+  --status-unassigned-bg: rgba(229, 119, 107, 0.12);
+  --status-unassigned-border: rgba(229, 119, 107, 0.24);
 
-  /* Strict Finexy Soft Shadows (Diffused Dark Elevation) */
-  --calm-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 12px 32px -4px rgba(0, 0, 0, 0.5);
-  --calm-border: 1px solid rgba(255, 255, 255, 0.08);
+  --status-assigned: #7FA3E8;
+  --status-assigned-bg: rgba(127, 163, 232, 0.12);
+  --status-assigned-border: rgba(127, 163, 232, 0.24);
 
-  /* Inline SVG Grain Filter */
-  --bg-grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E");
+  --status-pending: #E0A458;
+  --status-pending-bg: rgba(224, 164, 88, 0.12);
+  --status-pending-border: rgba(224, 164, 88, 0.24);
 
-  /* Typography Scale & Font Metrics */
-  --font-family-base: 'Inter Tight', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-family-serif: 'Instrument Serif', 'Newsreader', Georgia, serif;
-  --font-family-editorial: 'Instrument Serif', Georgia, serif;
-  --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --status-paid: #6FBF9A;
+  --status-paid-bg: rgba(111, 191, 154, 0.12);
+  --status-paid-border: rgba(111, 191, 154, 0.24);
 
-  /* Semantic Status Tokens (Luminous On Dark) */
-  --status-unassigned: #F87171;
-  --status-unassigned-bg: rgba(239, 68, 68, 0.15);
-  --status-unassigned-border: rgba(239, 68, 68, 0.3);
+  --status-disputed: #A18BE0;
+  --status-disputed-bg: rgba(161, 139, 224, 0.12);
+  --status-disputed-border: rgba(161, 139, 224, 0.24);
 
-  --status-assigned: #60A5FA;
-  --status-assigned-bg: rgba(59, 130, 246, 0.15);
-  --status-assigned-border: rgba(59, 130, 246, 0.3);
+  --status-court: #6FB2D6;
+  --status-court-bg: rgba(111, 178, 214, 0.12);
+  --status-court-border: rgba(111, 178, 214, 0.24);
 
-  --status-pending: #FBBF24;
-  --status-pending-bg: rgba(245, 158, 11, 0.15);
-  --status-pending-border: rgba(245, 158, 11, 0.3);
+  /* Aliased Legacy Tokens for Backward Compatibility */
+  --color-primary: var(--text);
+  --color-primary-navy: var(--surface-1);
+  --color-primary-light: var(--accent-muted);
+  --color-primary-dark: var(--bg);
+  --color-primary-hover: #D8D4CB;
+  --color-navy: var(--surface-1);
+  --color-navy-dark: var(--bg-sunken);
+  --color-lime: var(--accent);
+  --color-accent-lime: var(--accent);
+  --color-emerald: #6FBF9A;
+  --color-emerald-dark: #1E3A2B;
+  --color-aqua: var(--accent);
+  --color-accent-aqua: var(--accent);
+  --color-accent-aqua-light: var(--accent-muted);
+  --color-dark-panel: var(--surface-1);
 
-  --status-paid: #34D399;
-  --status-paid-bg: rgba(16, 185, 129, 0.15);
-  --status-paid-border: rgba(16, 185, 129, 0.3);
+  --color-bg-app: var(--bg);
+  --color-bg-app-secondary: var(--bg-sunken);
+  --color-bg-muted: var(--surface-2);
+  --color-bg-surface: var(--surface-1);
+  --color-bg-surface-secondary: var(--surface-2);
+  --color-bg-surface-subtle: var(--surface-3);
+  --color-bg-surface-hover: var(--surface-2);
 
-  --status-disputed: #A78BFA;
-  --status-disputed-bg: rgba(139, 92, 246, 0.15);
-  --status-disputed-border: rgba(139, 92, 246, 0.3);
+  --color-text-main: var(--text);
+  --color-text-secondary: var(--text-2);
+  --color-text-muted: var(--text-3);
+  --color-text-subtle: var(--text-3);
+  --color-text-inverse: var(--bg);
 
-  --status-court: #38BDF8;
-  --status-court-bg: rgba(14, 165, 233, 0.15);
-  --status-court-border: rgba(14, 165, 233, 0.3);
+  --color-border: var(--line);
+  --color-border-subtle: var(--line);
+  --color-border-dark: var(--line-strong);
 
-  /* Functional Status Accents */
-  --color-success: #34D399;
-  --color-success-bg: rgba(16, 185, 129, 0.15);
-  --color-warning: #FBBF24;
-  --color-warning-bg: rgba(245, 158, 11, 0.15);
-  --color-danger: #F87171;
-  --color-danger-bg: rgba(239, 68, 68, 0.15);
-  --color-purple: #A78BFA;
-  --color-purple-bg: rgba(139, 92, 246, 0.15);
-  --color-info: #60A5FA;
-  --color-info-bg: rgba(59, 130, 246, 0.15);
-
-  /* Patterns & Material Textures */
-  --pattern-stripes-blue: repeating-linear-gradient(45deg, rgba(37, 134, 216, 0.08), rgba(37, 134, 216, 0.08) 4px, transparent 4px, transparent 8px);
-  --pattern-stripes-aqua: repeating-linear-gradient(45deg, rgba(67, 216, 197, 0.12), rgba(67, 216, 197, 0.12) 4px, transparent 4px, transparent 8px);
-  --pattern-stripes-dark: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.04) 4px, transparent 4px, transparent 8px);
+  /* Functional Accents */
+  --color-success: var(--status-paid);
+  --color-success-bg: var(--status-paid-bg);
+  --color-warning: var(--status-pending);
+  --color-warning-bg: var(--status-pending-bg);
+  --color-danger: var(--status-unassigned);
+  --color-danger-bg: var(--status-unassigned-bg);
+  --color-purple: var(--status-disputed);
+  --color-purple-bg: var(--status-disputed-bg);
+  --color-info: var(--status-assigned);
+  --color-info-bg: var(--status-assigned-bg);
 
   /* --------------------------------------------------------------------------
-     2. Spacing Scale (4, 8, 12, 16, 20, 24, 32, 40, 48px)
+     2. Radii & Surface Depth
+     Strict 3 layers: bg, surface-1 for panels, surface-2/3 for inputs and chips
+     Panel: radius 16px. Controls: radius 10px. Chips: 6px. Status pills: 9999px.
      -------------------------------------------------------------------------- */
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 20px;
-  --space-6: 24px;
-  --space-8: 32px;
-  --space-10: 40px;
-  --space-12: 48px;
+  --radius-panel: 16px;
+  --radius-inner: 10px;
+  --radius-control: 10px;
+  --radius-chip: 6px;
+  --radius-pill: 9999px;
+  --radius-lg: 16px;
+  --radius-md: 10px;
+  --radius-sm: 6px;
+  --radius-xs: 4px;
+  --radius-2xl: 16px;
+  --radius-full: 9999px;
+
+  /* Strict Clean Shadows: No glows, no coloured shadows, no blur halos */
+  --calm-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  --calm-border: 1px solid var(--line);
+  --shadow-xs: none;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --shadow-xl: 0 16px 36px rgba(0, 0, 0, 0.5);
+  --shadow-card-hover: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --shadow-focus: 0 0 0 1px rgba(205, 185, 140, 0.5);
+  --shadow-dropdown: 0 16px 36px -8px rgba(0, 0, 0, 0.65), 0 0 0 1px var(--line-strong);
+  --shadow-modal: 0 24px 48px -24px rgba(0, 0, 0, 0.6);
+
+  /* 3% opacity SVG feTurbulence overlay on the body */
+  --bg-grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
 
   /* --------------------------------------------------------------------------
      3. Typography Scale & Font Metrics
+     UI: Geist (Inter fallback), tabular numerals. Body 14px/1.5, letter-spacing 0.
+     Display: "Instrument Serif" ONLY for greeting & hero numbers (56-60px, -0.02em).
+     Labels: sentence case 12px in --text-2. Uppercase tracked (.06em, 11px) ONLY for th.
+     Mono: Geist Mono 11-12px ONLY for vehicle plates, in --surface-3 chip.
      -------------------------------------------------------------------------- */
-  --font-family-base: 'Inter Tight', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-family-editorial: 'Instrument Serif', 'Newsreader', Georgia, serif;
-  --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  --font-family-base: 'Geist', 'Inter Tight', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-family-serif: 'Instrument Serif', Georgia, serif;
+  --font-family-editorial: 'Instrument Serif', Georgia, serif;
+  --font-family-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
   --font-size-2xs: 0.6875rem; /* 11px */
   --font-size-xs: 0.75rem;     /* 12px */
@@ -151,51 +166,37 @@
   --line-height-normal: 1.5;
   --line-height-relaxed: 1.625;
 
-  /* Negative tracking for headings & tabular nums for financials */
-  --letter-spacing-tight: -0.025em;
-  --letter-spacing-tighter: -0.035em;
+  --letter-spacing-tight: -0.02em;
   --letter-spacing-caps: 0.06em;
 
   /* --------------------------------------------------------------------------
-     4. Radii & Surface Elevation (Refined Dark Theme Ambient Elevation)
+     4. Spacing Scale
      -------------------------------------------------------------------------- */
-  --radius-xs: 4px;
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-xl: 18px;
-  --radius-2xl: 24px;
-  --radius-full: 9999px;
-
-  /* Multi-tier elevation (Stripe/Dribbble style refined soft ambient shadows) */
-  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.45), 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 6px 16px -2px rgba(0, 0, 0, 0.5), 0 2px 6px -1px rgba(0, 0, 0, 0.35);
-  --shadow-lg: 0 14px 28px -4px rgba(0, 0, 0, 0.55), 0 4px 10px -2px rgba(0, 0, 0, 0.35);
-  --shadow-xl: 0 24px 38px -6px rgba(0, 0, 0, 0.6), 0 8px 18px -4px rgba(0, 0, 0, 0.4);
-  --shadow-card-hover: 0 12px 30px -4px rgba(0, 0, 0, 0.65), 0 2px 8px rgba(0, 0, 0, 0.4);
-  --shadow-focus: 0 0 0 3px rgba(182, 245, 51, 0.25);
-  --shadow-dropdown: 0 16px 36px -4px rgba(0, 0, 0, 0.7), 0 4px 12px rgba(0, 0, 0, 0.5);
-  --shadow-modal: 0 32px 64px -12px rgba(0, 0, 0, 0.8), 0 8px 24px rgba(0, 0, 0, 0.6);
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
 
   /* --------------------------------------------------------------------------
      5. Layout Dimensions
      -------------------------------------------------------------------------- */
   --sidebar-width: 220px;
   --sidebar-collapsed-width: 72px;
-  --topbar-height: 58px;
+  --topbar-height: 56px;
   --content-max-width: 1440px;
 
   /* --------------------------------------------------------------------------
      6. Motion & Spring Timing Tokens
      -------------------------------------------------------------------------- */
   --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-in-out-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.15);
-
-  --transition-fast: 160ms var(--ease-out-quint);
-  --transition-normal: 240ms var(--ease-out-quint);
-  --transition-slow: 360ms var(--ease-out-quint);
+  --transition-fast: 150ms var(--ease-out-quint);
+  --transition-normal: 200ms var(--ease-out-quint);
+  --transition-slow: 350ms var(--ease-out-quint);
 
   /* --------------------------------------------------------------------------
      7. Z-Index Hierarchy

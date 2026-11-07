@@ -20,15 +20,16 @@ body {
   font-family: var(--font-family-base);
   font-size: var(--font-size-base);
   line-height: var(--line-height-normal);
-  color: var(--color-text-main);
-  background-color: var(--color-bg-app);
+  color: var(--text);
+  background-color: var(--bg);
+  background-image: var(--bg-grain);
   height: 100%;
   overflow: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: var(--color-text-main);
-  font-weight: var(--font-weight-semibold);
+  color: var(--text);
+  font-weight: var(--font-weight-medium);
   line-height: var(--line-height-tight);
 }
 
@@ -38,17 +39,17 @@ h3 { font-size: var(--font-size-lg); }
 h4 { font-size: var(--font-size-md); }
 
 p {
-  color: var(--color-text-secondary);
+  color: var(--text-2);
 }
 
 a {
-  color: var(--color-primary);
+  color: var(--text);
   text-decoration: none;
   transition: color var(--transition-fast);
 }
 
 a:hover {
-  color: var(--color-primary-hover);
+  color: var(--accent);
 }
 
 button {
