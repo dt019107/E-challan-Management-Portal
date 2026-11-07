@@ -113,7 +113,7 @@ function renderDashboardView(container, actions) {
               ₹24,800
             </div>
 
-            <div style="font-size: 13px; color: rgba(255, 255, 255, 0.85); line-height: 1.45; margin-bottom: 20px;">
+            <div class="calm-navy-desc">
               14 commercial notices entering judicial compounding penalty within 7 business days if unadjudicated.
             </div>
           </div>

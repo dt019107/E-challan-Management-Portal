@@ -685,7 +685,7 @@
   background-image: 
     linear-gradient(180deg, rgba(15, 42, 71, 0.88) 0%, rgba(15, 42, 71, 0.62) 100%),
     radial-gradient(rgba(255, 255, 255, 0.25) 1px, transparent 1px),
-    url('../assets/images/fleet-hero.webp');
+    url('../assets/images/challan-hero.webp');
   background-size: cover, 24px 24px, cover;
   background-position: center;
   border-radius: 24px;
@@ -708,6 +708,15 @@
 
 .calm-navy-photo-panel .calm-label-caps {
   color: #A9CEF3;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.calm-navy-desc {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.92);
+  line-height: 1.45;
+  margin-bottom: 20px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
 }
 
 .calm-navy-number {
@@ -719,6 +728,7 @@
   line-height: 1.05;
   margin: 14px 0 6px;
   font-variant-numeric: tabular-nums;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
 }
 
 .calm-navy-badge {
