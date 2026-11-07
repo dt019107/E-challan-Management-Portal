@@ -834,95 +834,129 @@
   font-weight: 500;
 }
 
-/* 6. Action Queue Table & Badges (Strict: 60px rows, no vertical lines, 11px uppercase header) */
+/* 6. Action Queue Table & Badges (Executive Calm Editorial Standard) */
 .calm-table-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 20px;
+  padding-bottom: 16px;
   border-bottom: 1px solid rgba(15, 30, 50, 0.06);
   gap: 16px;
   flex-wrap: wrap;
 }
 
 .calm-queue-tabs {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 3px;
+  background: #F1F4F9;
+  padding: 3px;
+  border-radius: 9px;
+  border: 1px solid rgba(15, 30, 50, 0.05);
   overflow-x: auto;
 }
 
 .calm-tab-btn {
   background: transparent;
   border: 1px solid transparent;
-  padding: 6px 14px;
-  border-radius: 9999px;
-  font-size: 12.5px;
+  padding: 5px 12px;
+  border-radius: 7px;
+  font-size: 12px;
   font-weight: 500;
   color: #64748B;
   cursor: pointer;
-  transition: all 180ms ease;
+  transition: all 160ms cubic-bezier(0.16, 1, 0.3, 1);
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  white-space: nowrap;
+  user-select: none;
 }
 
 .calm-tab-btn:hover {
-  background: #F6F8FB;
+  background: rgba(255, 255, 255, 0.65);
   color: #141821;
 }
 
 .calm-tab-btn.active {
+  background: #FFFFFF;
+  color: #0F2A47;
+  font-weight: 600;
+  border-color: rgba(15, 30, 50, 0.04);
+  box-shadow: 0 1px 3px rgba(15, 30, 50, 0.08), 0 1px 1px rgba(15, 30, 50, 0.04);
+}
+
+.calm-tab-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 5.5px;
+  border-radius: 9999px;
+  background: rgba(15, 42, 71, 0.08);
+  color: #0F2A47;
+  font-variant-numeric: tabular-nums;
+  transition: all 160ms ease;
+}
+
+.calm-tab-btn.active .calm-tab-badge {
   background: #0F2A47;
   color: #FFFFFF;
 }
 
-.calm-tab-badge {
-  font-size: 11px;
-  padding: 1px 6px;
-  border-radius: 9999px;
-  background: rgba(15, 42, 71, 0.1);
-  color: #0F2A47;
-}
-
-.calm-tab-btn.active .calm-tab-badge {
-  background: rgba(255, 255, 255, 0.2);
-  color: #FFFFFF;
-}
-
 .calm-search-input {
-  width: 240px;
-  height: 36px;
-  padding: 0 14px 0 32px;
-  background: #F6F8FB;
+  width: 220px;
+  height: 32px;
+  padding: 0 12px 0 30px;
+  background: #FFFFFF;
   border: 1px solid rgba(15, 30, 50, 0.08);
-  border-radius: 10px;
-  font-size: 12.5px;
+  border-radius: 7px;
+  box-shadow: 0 1px 2px rgba(15, 30, 50, 0.03);
+  font-size: 12px;
   color: #141821;
-  transition: all 180ms ease;
+  transition: all 160ms ease;
 }
 
 .calm-search-input:focus {
   background: #FFFFFF;
   border-color: #0F2A47;
+  box-shadow: 0 0 0 3px rgba(15, 42, 71, 0.08);
   outline: none;
 }
 
-/* Strict 60px Table Rows */
+.calm-search-input::placeholder {
+  color: #94A3B8;
+  font-size: 12px;
+}
+
+/* Executive Data Table Structure & Tinted Header */
 .calm-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
 .calm-table thead th {
-  padding: 14px 16px;
-  font-size: 11px;
+  padding: 10px 14px;
+  font-size: 10.5px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #94A3B8;
+  color: #64748B;
   text-align: left;
+  background: #F8FAFD;
+  border-top: 1px solid rgba(15, 30, 50, 0.05);
   border-bottom: 1px solid rgba(15, 30, 50, 0.06);
+}
+
+.calm-table thead th:first-child {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  padding-left: 14px;
+}
+
+.calm-table thead th:last-child {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  padding-right: 14px;
 }
 
 .calm-table thead th.text-right {
@@ -930,89 +964,120 @@
 }
 
 .calm-table tbody tr {
-  height: 60px;
-  border-bottom: 1px solid rgba(15, 30, 50, 0.06);
-  transition: background-color 160ms ease;
+  height: 54px;
+  border-bottom: 1px solid rgba(15, 30, 50, 0.05);
+  transition: background-color 140ms ease;
 }
 
 .calm-table tbody tr:hover {
-  background-color: rgba(37, 99, 235, 0.035);
+  background-color: #F8FAFD;
 }
 
 .calm-table tbody td {
-  padding: 0 16px;
-  font-size: 13px;
+  padding: 8px 14px;
+  font-size: 12.5px;
   color: #141821;
+  border-bottom: 1px solid rgba(15, 30, 50, 0.05);
 }
 
 .calm-table tbody td.text-right {
   text-align: right;
 }
 
-/* Monospace Registration Chip */
-.reg-plate-chip {
-  font-family: var(--font-family-mono);
-  font-size: 11.5px;
-  font-weight: 600;
-  background: #F6F8FB;
-  border: 1px solid rgba(15, 30, 50, 0.1);
-  color: #1E293B;
-  padding: 3px 8px;
+.calm-table input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
   border-radius: 4px;
-  letter-spacing: 0.04em;
-  display: inline-block;
-  white-space: nowrap;
+  accent-color: #0F2A47;
+  cursor: pointer;
+  vertical-align: middle;
 }
 
-/* Status Badges (Strict: 24px high, 10% tint, 6px dot, 12px/500 text) */
+/* Authentic HSRP Monospace Registration Chip */
+.reg-plate-chip {
+  font-family: var(--font-family-mono);
+  font-size: 11px;
+  font-weight: 600;
+  background: #F1F4F9;
+  border: 1px solid rgba(15, 30, 50, 0.12);
+  color: #0F172A;
+  padding: 2.5px 7px;
+  border-radius: 5px;
+  letter-spacing: 0.05em;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  box-shadow: 0 1px 1px rgba(15, 30, 50, 0.03);
+}
+
+/* Status Badges (Refined: 22px high, 6px radius, calm contrast) */
 .calm-badge {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  height: 24px;
-  padding: 0 10px;
-  border-radius: 9999px;
-  font-size: 12px;
+  gap: 5px;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 6px;
+  font-size: 11px;
   font-weight: 500;
   width: fit-content;
+  letter-spacing: 0.01em;
 }
 
 .calm-badge .dot {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
 }
 
 .calm-badge.paid {
-  background: rgba(22, 132, 91, 0.1);
-  color: #16845B;
+  background: #F0FDF4;
+  color: #15803D;
+  border: 1px solid rgba(22, 163, 74, 0.2);
 }
 .calm-badge.paid .dot {
-  background-color: #16845B;
+  background-color: #16A34A;
+  box-shadow: 0 0 4px rgba(22, 163, 74, 0.5);
 }
 
 .calm-badge.unassigned {
-  background: rgba(194, 65, 65, 0.1);
-  color: #C24141;
+  background: #FEF2F2;
+  color: #991B1B;
+  border: 1px solid rgba(220, 38, 38, 0.2);
 }
 .calm-badge.unassigned .dot {
-  background-color: #C24141;
+  background-color: #DC2626;
+  box-shadow: 0 0 4px rgba(220, 38, 38, 0.5);
 }
 
 .calm-badge.assigned {
-  background: rgba(15, 42, 71, 0.1);
-  color: #0F2A47;
+  background: #F0F9FF;
+  color: #0369A1;
+  border: 1px solid rgba(2, 132, 199, 0.2);
 }
 .calm-badge.assigned .dot {
-  background-color: #0F2A47;
+  background-color: #0284C7;
+  box-shadow: 0 0 4px rgba(2, 132, 199, 0.5);
 }
 
 .calm-badge.disputed {
-  background: rgba(116, 82, 200, 0.1);
-  color: #7452C8;
+  background: #EFF6FF;
+  color: #1D4ED8;
+  border: 1px solid rgba(37, 99, 235, 0.2);
 }
 .calm-badge.disputed .dot {
-  background-color: #7452C8;
+  background-color: #2563EB;
+  box-shadow: 0 0 4px rgba(37, 99, 235, 0.5);
+}
+
+.calm-badge.court {
+  background: #FAF5FF;
+  color: #6B21A8;
+  border: 1px solid rgba(168, 85, 247, 0.2);
+}
+.calm-badge.court .dot {
+  background-color: #A855F7;
+  box-shadow: 0 0 4px rgba(168, 85, 247, 0.5);
 }
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }

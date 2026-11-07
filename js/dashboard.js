@@ -551,7 +551,7 @@ function renderAttentionItems(items) {
       statusClass = "unassigned";
       statusLabel = "Unassigned";
     } else if (c.status === "disputed" || c.status === "court") {
-      statusClass = "disputed";
+      statusClass = c.status === "court" ? "court" : "disputed";
       statusLabel = c.status === "court" ? "In Court" : "Disputed";
     }
 
@@ -564,7 +564,7 @@ function renderAttentionItems(items) {
 
         <!-- Notice ID -->
         <td>
-          <span style="font-weight: 600; font-size: 13px; color: #0F2A47; cursor: pointer;" onclick="navigateTo('challans', true, { id: '${c.id}' })">
+          <span style="font-family: var(--font-family-mono); font-weight: 600; font-size: 12px; color: #0F2A47; cursor: pointer; letter-spacing: -0.01em;" onclick="navigateTo('challans', true, { id: '${c.id}' })">
             ${c.challanNumber}
           </span>
         </td>
@@ -609,17 +609,17 @@ function renderAttentionItems(items) {
 
         <!-- Action Trigger (10px Radius Control) -->
         <td class="text-right">
-          <div style="display: inline-flex; align-items: center; gap: 8px;">
+          <div style="display: inline-flex; align-items: center; gap: 6px;">
             ${isUnassigned ? `
-              <button class="calm-btn-navy" style="padding: 5px 12px; font-size: 11.5px;" onclick="openAssignmentModal('${c.id}')" title="Assign responsible party">
+              <button class="calm-btn-navy" style="padding: 4.5px 11px; font-size: 11px; font-weight: 600; border-radius: 6px;" onclick="openAssignmentModal('${c.id}')" title="Assign responsible party">
                 Assign
               </button>
             ` : (c.status !== 'court' && c.status !== 'paid' ? `
-              <button class="calm-btn-surface" style="padding: 5px 12px; font-size: 11.5px;" onclick="openPaymentModal('${c.id}')" title="Settle notice">
+              <button class="calm-btn-surface" style="padding: 4.5px 11px; font-size: 11px; font-weight: 600; border-radius: 6px; background: #F0FDF4; color: #166534; border: 1px solid rgba(22, 163, 74, 0.2);" onclick="openPaymentModal('${c.id}')" title="Settle notice">
                 Pay
               </button>
             ` : '')}
-            <button class="calm-btn-pill" style="padding: 5px 8px; font-size: 11px;" onclick="navigateTo('challans', true, { id: '${c.id}' })" title="View notice details">
+            <button class="calm-btn-pill" style="padding: 4.5px 9px; font-size: 11px; font-weight: 500; border-radius: 6px;" onclick="navigateTo('challans', true, { id: '${c.id}' })" title="View notice details">
               View
             </button>
           </div>
