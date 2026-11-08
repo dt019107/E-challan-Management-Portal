@@ -1,87 +1,99 @@
 /* ==========================================================================
-   ChallanOS Off-Black Hand-Art-Directed Design Tokens
-   Enterprise Fleet & Traffic Challan Management System
+   ChallanOS Original Visual Identity Design Tokens
+   Warm Paper Canvas, Soft Generous Radii, Indigo Ink & Strict Urgency Amber
    ========================================================================== */
 
 :root {
   /* --------------------------------------------------------------------------
-     1. Strict Calibrated Color Tokens (Off-Black / Brass Standard)
-     No pure black (#000000) and no pure white (#FFFFFF) anywhere
+     1. Strict Calibrated Color Tokens
+     Warm paper canvas, soft surfaces, deep ink, indigo primary, signal amber
      -------------------------------------------------------------------------- */
-  --bg: #0B0C0E;
-  --bg-sunken: #08090B;        /* Sidebar & lowest background */
+  --canvas: #F3F2EE;           /* Warm paper canvas */
+  --surface: #FBFAF7;          /* Primary panels & card surface */
+  --surface-2: #ECEAE4;        /* Secondary surface, inputs, hover states */
+  --surface-3: #E2DFD7;        /* Raised chips & active controls */
   
-  --surface-1: #111214;         /* Primary panels & cards */
-  --surface-2: #16181B;         /* Inputs, hover states, nested tracks */
-  --surface-3: #1C1E22;         /* Raised chips, active tabs, buttons */
+  --ink: #16181D;              /* Deep ink text */
+  --text-2: #6F7280;           /* Secondary text & labels */
+  --text-3: #9A9CA6;           /* Muted text & timestamps */
 
-  --line: rgba(236, 232, 223, 0.07);
-  --line-strong: rgba(236, 232, 223, 0.12);
+  --line: rgba(22, 24, 29, 0.08);
+  --line-strong: rgba(22, 24, 29, 0.16);
 
-  --text: #ECE8DF;              /* Primary text (high contrast off-white) */
-  --text-2: #A5A49E;            /* Secondary text & labels */
-  --text-3: #85847F;            /* Muted text & timestamps (4.5:1 on surface-1) */
+  /* Primary Accent: Indigo ink for primary actions, selected states, and chart emphasis */
+  --accent: #2B3A67;
+  --accent-hover: #212D52;
+  --accent-muted: rgba(43, 58, 103, 0.10);
+  --accent-border: rgba(43, 58, 103, 0.25);
 
-  /* Brass Accent (strictly under 3% of pixels) */
-  --accent: #CDB98C;
-  --accent-muted: rgba(205, 185, 140, 0.14);
-  --accent-border: rgba(205, 185, 140, 0.28);
+  /* Urgency Signal: Amber, used ONLY for urgency (due soon, needs review) */
+  --signal: #E8A33D;
+  --signal-muted: rgba(232, 163, 61, 0.12);
+  --signal-border: rgba(232, 163, 61, 0.28);
 
-  /* Semantic Status Tokens (Muted: text colour on 12% tint of itself) */
-  --status-unassigned: #E5776B;
-  --status-unassigned-bg: rgba(229, 119, 107, 0.12);
-  --status-unassigned-border: rgba(229, 119, 107, 0.24);
+  /* Semantic Status Tokens (text on 12% tint of itself) */
+  --status-unassigned: #B42318;
+  --status-unassigned-bg: rgba(180, 35, 24, 0.12);
+  --status-unassigned-border: rgba(180, 35, 24, 0.20);
 
-  --status-assigned: #7FA3E8;
-  --status-assigned-bg: rgba(127, 163, 232, 0.12);
-  --status-assigned-border: rgba(127, 163, 232, 0.24);
+  --status-assigned: #1D4ED8;
+  --status-assigned-bg: rgba(29, 78, 216, 0.12);
+  --status-assigned-border: rgba(29, 78, 216, 0.20);
 
-  --status-pending: #E0A458;
-  --status-pending-bg: rgba(224, 164, 88, 0.12);
-  --status-pending-border: rgba(224, 164, 88, 0.24);
+  --status-pending: #B45309;
+  --status-pending-bg: rgba(180, 83, 9, 0.12);
+  --status-pending-border: rgba(180, 83, 9, 0.20);
 
-  --status-paid: #6FBF9A;
-  --status-paid-bg: rgba(111, 191, 154, 0.12);
-  --status-paid-border: rgba(111, 191, 154, 0.24);
+  --status-paid: #15803D;
+  --status-paid-bg: rgba(21, 128, 61, 0.12);
+  --status-paid-border: rgba(21, 128, 61, 0.20);
 
-  --status-disputed: #A18BE0;
-  --status-disputed-bg: rgba(161, 139, 224, 0.12);
-  --status-disputed-border: rgba(161, 139, 224, 0.24);
+  --status-disputed: #6D28D9;
+  --status-disputed-bg: rgba(109, 40, 217, 0.12);
+  --status-disputed-border: rgba(109, 40, 217, 0.20);
 
-  --status-court: #6FB2D6;
-  --status-court-bg: rgba(111, 178, 214, 0.12);
-  --status-court-border: rgba(111, 178, 214, 0.24);
+  --status-court: #0369A1;
+  --status-court-bg: rgba(3, 105, 161, 0.12);
+  --status-court-border: rgba(3, 105, 161, 0.20);
 
-  /* Aliased Legacy Tokens for Backward Compatibility */
-  --color-primary: var(--text);
-  --color-primary-navy: var(--surface-1);
+  /* Dark panel: #16181D, ONE per screen */
+  --dark-panel-bg: #16181D;
+
+  /* Aliased Core Tokens for Universal Compatibility */
+  --bg: var(--canvas);
+  --bg-sunken: var(--surface);
+  --surface-1: var(--surface);
+  --text: var(--ink);
+
+  --color-primary: var(--accent);
+  --color-primary-navy: var(--accent);
   --color-primary-light: var(--accent-muted);
-  --color-primary-dark: var(--bg);
-  --color-primary-hover: #D8D4CB;
-  --color-navy: var(--surface-1);
-  --color-navy-dark: var(--bg-sunken);
+  --color-primary-dark: var(--accent-hover);
+  --color-primary-hover: var(--accent-hover);
+  --color-navy: var(--dark-panel-bg);
+  --color-navy-dark: #0F1115;
   --color-lime: var(--accent);
   --color-accent-lime: var(--accent);
-  --color-emerald: #6FBF9A;
-  --color-emerald-dark: #1E3A2B;
+  --color-emerald: var(--status-paid);
+  --color-emerald-dark: #0D5728;
   --color-aqua: var(--accent);
   --color-accent-aqua: var(--accent);
   --color-accent-aqua-light: var(--accent-muted);
-  --color-dark-panel: var(--surface-1);
+  --color-dark-panel: var(--dark-panel-bg);
 
-  --color-bg-app: var(--bg);
-  --color-bg-app-secondary: var(--bg-sunken);
+  --color-bg-app: var(--canvas);
+  --color-bg-app-secondary: var(--surface);
   --color-bg-muted: var(--surface-2);
-  --color-bg-surface: var(--surface-1);
+  --color-bg-surface: var(--surface);
   --color-bg-surface-secondary: var(--surface-2);
   --color-bg-surface-subtle: var(--surface-3);
   --color-bg-surface-hover: var(--surface-2);
 
-  --color-text-main: var(--text);
+  --color-text-main: var(--ink);
   --color-text-secondary: var(--text-2);
   --color-text-muted: var(--text-3);
   --color-text-subtle: var(--text-3);
-  --color-text-inverse: var(--bg);
+  --color-text-inverse: var(--surface);
 
   --color-border: var(--line);
   --color-border-subtle: var(--line);
@@ -100,37 +112,36 @@
   --color-info-bg: var(--status-assigned-bg);
 
   /* --------------------------------------------------------------------------
-     2. Radii & Surface Depth
-     Strict 3 layers: bg, surface-1 for panels, surface-2/3 for inputs and chips
-     Panel: radius 16px. Controls: radius 10px. Chips: 6px. Status pills: 9999px.
+     2. Geometry & Depth Scale
+     Panels 20px, controls 10px, chips 6px. Pills ONLY for status badges.
      -------------------------------------------------------------------------- */
-  --radius-panel: 16px;
-  --radius-inner: 10px;
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 20px;
+  --radius-pill: 9999px; /* Strictly for status badges only */
+
+  --radius-panel: 20px;
   --radius-control: 10px;
   --radius-chip: 6px;
-  --radius-pill: 9999px;
-  --radius-lg: 16px;
-  --radius-md: 10px;
-  --radius-sm: 6px;
-  --radius-xs: 4px;
-  --radius-2xl: 16px;
-  --radius-full: 9999px;
 
-  /* Strict Clean Shadows: No glows, no coloured shadows, no blur halos */
-  --calm-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  /* Soft shadow level: 0 1px 2px rgba(22,24,29,.04), 0 10px 28px -16px rgba(22,24,29,.12) */
+  --shadow-soft: 0 1px 2px rgba(22, 24, 29, 0.04), 0 10px 28px -16px rgba(22, 24, 29, 0.12);
+  --calm-shadow: var(--shadow-soft);
   --calm-border: 1px solid var(--line);
-  --shadow-xs: none;
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.45);
-  --shadow-xl: 0 16px 36px rgba(0, 0, 0, 0.5);
-  --shadow-card-hover: inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  --shadow-focus: 0 0 0 1px rgba(205, 185, 140, 0.5);
-  --shadow-dropdown: 0 16px 36px -8px rgba(0, 0, 0, 0.65), 0 0 0 1px var(--line-strong);
-  --shadow-modal: 0 24px 48px -24px rgba(0, 0, 0, 0.6);
+  --shadow-xs: 0 1px 2px rgba(22, 24, 29, 0.03);
+  --shadow-sm: 0 1px 2px rgba(22, 24, 29, 0.04);
+  --shadow-md: var(--shadow-soft);
+  --shadow-lg: 0 12px 32px -16px rgba(22, 24, 29, 0.14);
+  --shadow-xl: 0 20px 40px -16px rgba(22, 24, 29, 0.18);
+  --shadow-card-hover: 0 2px 4px rgba(22, 24, 29, 0.05), 0 14px 32px -16px rgba(22, 24, 29, 0.15);
+  --shadow-focus: 0 0 0 2px rgba(43, 58, 103, 0.25);
+  --shadow-dropdown: 0 14px 32px -8px rgba(22, 24, 29, 0.16), 0 0 0 1px var(--line);
+  --shadow-modal: 0 24px 48px -16px rgba(22, 24, 29, 0.25);
 
-  /* 3% opacity SVG feTurbulence overlay on the body */
-  --bg-grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+  --bg-grain: none;
 
   /* --------------------------------------------------------------------------
      3. Typography Scale & Font Metrics

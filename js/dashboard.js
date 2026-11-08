@@ -30,15 +30,18 @@ function renderDashboardView(container, actions) {
     blr: Math.max(0, stats.outstandingAmount - Math.round(stats.outstandingAmount * 0.45) - Math.round(stats.outstandingAmount * 0.32))
   };
 
+  const today = new Date();
+  const formattedTodayDate = today.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+
   container.innerHTML = `
     <div class="calm-dashboard-container">
       
-      <!-- 1. GREETING HEADER (34px Serif with muted 12px date line) -->
+      <!-- 1. GREETING HEADER (44px Serif with dynamic date line) -->
       <div class="calm-dashboard-header">
         <div class="calm-header-left">
           <div class="calm-header-date">
             <span class="dot"></span>
-            <span>Saturday, 7 November 2026 • MoRTH Parivahan Gateway Active</span>
+            <span>${formattedTodayDate} • MoRTH Parivahan Gateway Active</span>
           </div>
           <h1 class="calm-header-greeting">Good morning, Vikram</h1>
         </div>
@@ -58,7 +61,7 @@ function renderDashboardView(container, actions) {
       <!-- 2. TOP ROW (12 COLUMNS: 7 / 5 ASYMMETRIC GRID) -->
       <div class="calm-grid-12">
         
-        <!-- COLUMN SPAN 7: THE HERO OUTSTANDING TILE (58px Instrument Serif Number, hairline divider, 3px brass progress bars) -->
+        <!-- COLUMN SPAN 7: THE HERO OUTSTANDING TILE (56px Instrument Serif Number, hairline divider, signature deadline rulers) -->
         <div class="calm-panel calm-span-7">
           <div>
             <div class="calm-hero-header-row">
@@ -84,42 +87,66 @@ function renderDashboardView(container, actions) {
             </div>
           </div>
 
-          <!-- Hairline divider and three plain columns with 3px progress bars -->
+          <!-- Hairline divider and three plain columns with Signature Deadline Rulers -->
           <div class="calm-corridor-row">
             <div class="calm-corridor-col">
               <div class="calm-corridor-header">
                 <span class="calm-corridor-title">NCR Corridor</span>
                 <span class="calm-corridor-val">${Utils.formatINR(corridorAmounts.ncr)}</span>
               </div>
-              <div class="calm-progress-track">
-                <div class="calm-progress-fill" style="width: 60%;"></div>
+              <div class="deadline-ruler" title="Adjudication timeline (7-day window)">
+                <div class="deadline-ruler-track">
+                  <span class="deadline-ruler-tick past"></span>
+                  <span class="deadline-ruler-tick past"></span>
+                  <span class="deadline-ruler-tick past"></span>
+                  <span class="deadline-ruler-tick due"></span>
+                  <span class="deadline-ruler-tick"></span>
+                  <span class="deadline-ruler-tick"></span>
+                  <span class="deadline-ruler-tick"></span>
+                </div>
               </div>
-              <div class="calm-corridor-sub">Limit ₹50k/mo</div>
+              <div class="calm-corridor-sub">Limit ₹50k/mo • 4d window</div>
             </div>
             <div class="calm-corridor-col">
               <div class="calm-corridor-header">
                 <span class="calm-corridor-title">Mumbai Western</span>
                 <span class="calm-corridor-val">${Utils.formatINR(corridorAmounts.mumbai)}</span>
               </div>
-              <div class="calm-progress-track">
-                <div class="calm-progress-fill" style="width: 61%;"></div>
+              <div class="deadline-ruler" title="Adjudication timeline (7-day window)">
+                <div class="deadline-ruler-track">
+                  <span class="deadline-ruler-tick past"></span>
+                  <span class="deadline-ruler-tick past"></span>
+                  <span class="deadline-ruler-tick due"></span>
+                  <span class="deadline-ruler-tick"></span>
+                  <span class="deadline-ruler-tick"></span>
+                  <span class="deadline-ruler-tick"></span>
+                  <span class="deadline-ruler-tick"></span>
+                </div>
               </div>
-              <div class="calm-corridor-sub">Limit ₹35k/mo</div>
+              <div class="calm-corridor-sub">Limit ₹35k/mo • 5d window</div>
             </div>
             <div class="calm-corridor-col">
               <div class="calm-corridor-header">
                 <span class="calm-corridor-title">Bengaluru Hub</span>
                 <span class="calm-corridor-val">${Utils.formatINR(corridorAmounts.blr)}</span>
               </div>
-              <div class="calm-progress-track">
-                <div class="calm-progress-fill" style="width: 62%;"></div>
+              <div class="deadline-ruler" title="Adjudication timeline (7-day window)">
+                <div class="deadline-ruler-track">
+                  <span class="deadline-ruler-tick past"></span>
+                  <span class="deadline-ruler-tick due"></span>
+                  <span class="deadline-ruler-tick"></span>
+                  <span class="deadline-ruler-tick"></span>
+                  <span class="deadline-ruler-tick"></span>
+                  <span class="deadline-ruler-tick"></span>
+                  <span class="deadline-ruler-tick"></span>
+                </div>
               </div>
-              <div class="calm-corridor-sub">Limit ₹25k/mo</div>
+              <div class="calm-corridor-sub">Limit ₹25k/mo • 6d window</div>
             </div>
           </div>
         </div>
 
-        <!-- COLUMN SPAN 5: THE DUE-IN-7-DAYS PHOTO PANEL (Real Indian highway truck photo under warm monochrome scrim) -->
+        <!-- COLUMN SPAN 5: THE DUE-IN-7-DAYS DARK PHOTO PANEL (Real Indian highway truck photo under warm monochrome scrim) -->
         <div class="calm-navy-photo-panel calm-span-5">
           <div>
             <div class="calm-hero-header-row">
@@ -152,7 +179,7 @@ function renderDashboardView(container, actions) {
       <!-- 3. MIDDLE ROW (12 COLUMNS: 7 / 5 ASYMMETRIC GRID) -->
       <div class="calm-grid-12">
         
-        <!-- COLUMN SPAN 7: CUSTOM BAR CHART (12px Bars, Rounded Tops, Brass Current Month, Floating Tooltip) -->
+        <!-- COLUMN SPAN 7: CUSTOM BAR CHART (14px Bars, 6px Radius Tops, Indigo Current Month, Floating Tooltip) -->
         <div class="calm-panel calm-span-7">
           <div class="calm-chart-header">
             <div>
@@ -161,12 +188,12 @@ function renderDashboardView(container, actions) {
             </div>
             <div class="calm-chart-legend">
               <div class="calm-chart-legend-item">
-                <span class="calm-chart-legend-dot" style="background: #2B2D32;"></span>
+                <span class="calm-chart-legend-dot" style="background: var(--surface-2); border: 1px solid var(--line-strong);"></span>
                 <span>Past Months</span>
               </div>
               <div class="calm-chart-legend-item">
                 <span class="calm-chart-legend-dot" style="background: var(--accent);"></span>
-                <span>Current Month</span>
+                <span style="color: var(--ink); font-weight: 500;">Current Month</span>
               </div>
             </div>
           </div>
@@ -186,14 +213,14 @@ function renderDashboardView(container, actions) {
           </div>
 
           <div class="calm-donut-container">
-            <!-- SVG Donut with 9px stroke, round caps, 3px gap & serif central counter -->
+            <!-- SVG Donut with 10px stroke, butt caps, 2px gap & serif central counter -->
             ${renderLiabilityDonutChart(challans)}
 
             <!-- Hairline Category Breakdown List -->
             <div class="calm-donut-list">
               <div class="calm-donut-row">
                 <div class="calm-donut-name">
-                  <span style="width: 7px; height: 7px; border-radius: 50%; background: #CDB98C;"></span>
+                  <span style="width: 8px; height: 8px; border-radius: 2px; background: #2B3A67;"></span>
                   <span>Driver Trips</span>
                 </div>
                 <div class="calm-donut-pct">42% (₹54,600)</div>
@@ -201,7 +228,7 @@ function renderDashboardView(container, actions) {
 
               <div class="calm-donut-row">
                 <div class="calm-donut-name">
-                  <span style="width: 7px; height: 7px; border-radius: 50%; background: #8E8A7E;"></span>
+                  <span style="width: 8px; height: 8px; border-radius: 2px; background: #6B77A3;"></span>
                   <span>Lessee Contracts</span>
                 </div>
                 <div class="calm-donut-pct">38% (₹49,400)</div>
@@ -209,7 +236,7 @@ function renderDashboardView(container, actions) {
 
               <div class="calm-donut-row">
                 <div class="calm-donut-name">
-                  <span style="width: 7px; height: 7px; border-radius: 50%; background: #55534E;"></span>
+                  <span style="width: 8px; height: 8px; border-radius: 2px; background: #A9B0C9;"></span>
                   <span>Fleet Default</span>
                 </div>
                 <div class="calm-donut-pct">20% (₹26,010)</div>
@@ -345,25 +372,34 @@ function toggleQueuePillsVisibility() {
 }
 
 /**
- * Signature Element: Custom Bar Chart
- * 12px-wide bars, fully rounded tops, #2B2D32 for past months,
- * brass #CDB98C for current month, and a floating dark tooltip with small arrow.
+ * Signature Element: Custom Bar Chart (Not pills!)
+ * 14px-wide bars, 6px radius tops, --surface-2 (#ECEAE4) for past months,
+ * --accent (#2B3A67) for current month, thin hairline gridlines, 11px axis labels.
+ * Current month dynamically computed from new Date().
  */
 function renderFinexyDualBarChart(challans) {
-  const months = [
-    { label: "Jan", val: 34, isCurrent: false },
-    { label: "Feb", val: 42, isCurrent: false },
-    { label: "Mar", val: 38, isCurrent: false },
-    { label: "Apr", val: 46, isCurrent: false },
-    { label: "May", val: 51, isCurrent: false },
-    { label: "Jun", val: 44, isCurrent: false },
-    { label: "Jul", val: 39, isCurrent: false },
-    { label: "Aug", val: 58, isCurrent: true, notices: 33, amount: "₹48.2k" }
-  ];
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const now = new Date();
+  const curMonthIndex = now.getMonth();
+  
+  // Generate 8 months ending on the current month from new Date()
+  const basePastValues = [34, 42, 38, 46, 51, 44, 39];
+  const months = [];
+  for (let i = 7; i >= 0; i--) {
+    const d = new Date(now.getFullYear(), curMonthIndex - i, 1);
+    const isCurrent = (i === 0);
+    months.push({
+      label: monthNames[d.getMonth()],
+      val: isCurrent ? 58 : basePastValues[7 - i],
+      isCurrent: isCurrent,
+      notices: isCurrent ? 33 : undefined,
+      amount: isCurrent ? "₹48.2k" : undefined
+    });
+  }
 
   const chartHeight = 150;
   const chartWidth = 460;
-  const barWidth = 12; // Strict 12px width
+  const barWidth = 14; // Strict 14px width (not pills!)
   const startX = 40;
   const gap = (chartWidth - startX - (months.length * barWidth)) / (months.length - 1);
   const maxVal = 65;
@@ -380,8 +416,8 @@ function renderFinexyDualBarChart(challans) {
   yTicks.forEach(tick => {
     const yPos = chartHeight - (tick.val / maxVal) * (chartHeight - 30);
     gridLines += `
-      <text x="0" y="${yPos + 4}" fill="#85847F" font-size="11" font-family="'Geist', 'Inter Tight', sans-serif" font-weight="400">${tick.label}</text>
-      <line x1="28" y1="${yPos}" x2="${chartWidth}" y2="${yPos}" stroke="rgba(236, 232, 223, 0.06)" stroke-width="1" stroke-dasharray="3 3" />
+      <text x="0" y="${yPos + 4}" fill="#9A9CA6" font-size="11" font-family="'Geist', 'Inter Tight', sans-serif" font-weight="400">${tick.label}</text>
+      <line x1="28" y1="${yPos}" x2="${chartWidth}" y2="${yPos}" stroke="rgba(22, 24, 29, 0.08)" stroke-width="1" stroke-dasharray="3 3" />
     `;
   });
 
@@ -394,29 +430,29 @@ function renderFinexyDualBarChart(challans) {
     const yPos = chartHeight - bHeight;
 
     if (m.isCurrent) {
-      // Warm Brass current month bar
+      // Indigo Ink current month bar with 6px top radius
       barsHTML += `
-        <rect x="${xPos}" y="${yPos}" width="${barWidth}" height="${bHeight}" rx="6" fill="#CDB98C" />
-        <text x="${xPos + barWidth / 2}" y="${chartHeight + 18}" text-anchor="middle" fill="#ECE8DF" font-size="11" font-weight="600" font-family="'Geist', 'Inter Tight', sans-serif">${m.label}</text>
+        <rect x="${xPos}" y="${yPos}" width="${barWidth}" height="${bHeight}" rx="6" ry="6" fill="#2B3A67" />
+        <text x="${xPos + barWidth / 2}" y="${chartHeight + 18}" text-anchor="middle" fill="#16181D" font-size="11" font-weight="600" font-family="'Geist', 'Inter Tight', sans-serif">${m.label}</text>
       `;
 
-      // Floating dark tooltip with a small arrow on the highlighted bar
+      // Floating tooltip on --surface with 1px border and soft shadow
       const ttX = xPos - 36;
       const ttY = yPos - 38;
       tooltipHTML = `
-        <g class="calm-chart-tooltip">
-          <rect x="${ttX}" y="${ttY}" width="84" height="28" rx="6" fill="#1C1E22" stroke="rgba(236, 232, 223, 0.12)" stroke-width="1" />
-          <polygon points="${xPos + barWidth/2 - 4},${ttY + 28} ${xPos + barWidth/2 + 4},${ttY + 28} ${xPos + barWidth/2},${ttY + 33}" fill="#1C1E22" />
-          <text x="${ttX + 42}" y="${ttY + 18}" text-anchor="middle" fill="#CDB98C" font-size="11" font-weight="600" font-family="'Geist', 'Inter Tight', sans-serif">
+        <g class="calm-chart-tooltip" filter="drop-shadow(0 2px 6px rgba(22, 24, 29, 0.08))">
+          <rect x="${ttX}" y="${ttY}" width="86" height="28" rx="6" fill="#FBFAF7" stroke="rgba(22, 24, 29, 0.12)" stroke-width="1" />
+          <polygon points="${xPos + barWidth/2 - 4},${ttY + 28} ${xPos + barWidth/2 + 4},${ttY + 28} ${xPos + barWidth/2},${ttY + 33}" fill="#FBFAF7" />
+          <text x="${ttX + 43}" y="${ttY + 18}" text-anchor="middle" fill="#16181D" font-size="11" font-weight="600" font-family="'Geist', 'Inter Tight', sans-serif">
             ${m.amount} (${m.notices})
           </text>
         </g>
       `;
     } else {
-      // Refined dark #2B2D32 past months bars
+      // Warm grey --surface-2 past months bars with 6px top radius
       barsHTML += `
-        <rect x="${xPos}" y="${yPos}" width="${barWidth}" height="${bHeight}" rx="6" fill="#2B2D32" />
-        <text x="${xPos + barWidth / 2}" y="${chartHeight + 18}" text-anchor="middle" fill="#85847F" font-size="11" font-weight="400" font-family="'Geist', 'Inter Tight', sans-serif">${m.label}</text>
+        <rect x="${xPos}" y="${yPos}" width="${barWidth}" height="${bHeight}" rx="6" ry="6" fill="#ECEAE4" />
+        <text x="${xPos + barWidth / 2}" y="${chartHeight + 18}" text-anchor="middle" fill="#9A9CA6" font-size="11" font-weight="400" font-family="'Geist', 'Inter Tight', sans-serif">${m.label}</text>
       `;
     }
   });
@@ -432,18 +468,18 @@ function renderFinexyDualBarChart(challans) {
 
 /**
  * Signature Element: Donut Chart
- * 9px stroke, round caps, 3px gap between segments, total in centre in Instrument Serif.
- * Tones: #CDB98C, #8E8A7E, #55534E, #34363A.
+ * 10px stroke, butt caps, 2px gap between segments, total in centre in Instrument Serif.
+ * Tones: --accent (#2B3A67), #6B77A3, #A9B0C9, --surface-2 (#ECEAE4).
  */
 function renderLiabilityDonutChart(challans) {
   const size = 130;
-  const stroke = 9; // Strict 9px stroke
+  const stroke = 10; // Strict 10px stroke
   const radius = (size - stroke) / 2;
   const circumference = 2 * Math.PI * radius;
 
   // Proportions: Driver 42%, Lessee 38%, Fleet 20%
-  // 3px gap between segments
-  const gap = 3;
+  // 2px gap between segments
+  const gap = 2;
   const p1 = (0.42 * circumference) - gap;
   const p2 = (0.38 * circumference) - gap;
   const p3 = (0.20 * circumference) - gap;
@@ -456,28 +492,32 @@ function renderLiabilityDonutChart(challans) {
   return `
     <div style="position: relative; width: ${size}px; height: ${size}px; flex-shrink: 0;">
       <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" style="transform: rotate(-90deg); display: block;">
-        <!-- Segment 1: Driver Trips (#CDB98C Brass) -->
+        <!-- Track Background -->
         <circle cx="${size/2}" cy="${size/2}" r="${radius}" fill="none"
-          stroke="#CDB98C" stroke-width="${stroke}" stroke-linecap="round"
+          stroke="#ECEAE4" stroke-width="${stroke}" />
+
+        <!-- Segment 1: Driver Trips (--accent #2B3A67 Indigo) -->
+        <circle cx="${size/2}" cy="${size/2}" r="${radius}" fill="none"
+          stroke="#2B3A67" stroke-width="${stroke}" stroke-linecap="butt"
           stroke-dasharray="${p1} ${circumference}"
           stroke-dashoffset="${off1}" />
 
-        <!-- Segment 2: Lessee Contracts (#8E8A7E Warm Grey) -->
+        <!-- Segment 2: Lessee Contracts (#6B77A3 Slate Indigo) -->
         <circle cx="${size/2}" cy="${size/2}" r="${radius}" fill="none"
-          stroke="#8E8A7E" stroke-width="${stroke}" stroke-linecap="round"
+          stroke="#6B77A3" stroke-width="${stroke}" stroke-linecap="butt"
           stroke-dasharray="${p2} ${circumference}"
           stroke-dashoffset="${off2}" />
 
-        <!-- Segment 3: Fleet Default (#55534E Deep Muted Stone) -->
+        <!-- Segment 3: Fleet Default (#A9B0C9 Muted Lavender Grey) -->
         <circle cx="${size/2}" cy="${size/2}" r="${radius}" fill="none"
-          stroke="#55534E" stroke-width="${stroke}" stroke-linecap="round"
+          stroke="#A9B0C9" stroke-width="${stroke}" stroke-linecap="butt"
           stroke-dasharray="${p3} ${circumference}"
           stroke-dashoffset="${off3}" />
       </svg>
       <!-- Center Counter in Instrument Serif -->
       <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none;">
-        <span style="font-family: var(--font-family-serif); font-size: 32px; font-weight: 400; color: var(--text); line-height: 1; letter-spacing: -0.02em;">32</span>
-        <span style="font-size: 9px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-top: 3px;">NOTICES</span>
+        <span style="font-family: var(--font-family-serif); font-size: 36px; font-weight: 400; color: var(--ink); line-height: 1; letter-spacing: -0.02em;">32</span>
+        <span style="font-size: 9.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-top: 3px;">NOTICES</span>
       </div>
     </div>
   `;
