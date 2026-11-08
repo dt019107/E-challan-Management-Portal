@@ -240,20 +240,20 @@ function getActiveReportData() {
 
     const chartHTML = `
       <div class="card" style="padding: 16px 20px;">
-        <div style="font-weight: 700; font-size: 13px; color: var(--color-text-main); margin-bottom: 12px;">
-          📊 Top Infraction Categories Distribution (Filtered Set)
+        <div style="font-weight: 600; font-size: 14px; color: var(--ink); margin-bottom: 14px;">
+          Top Infraction Categories Distribution (Filtered Set)
         </div>
-        <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div style="display: flex; flex-direction: column; gap: 12px;">
           ${sortedOffences.map(([name, count]) => {
             const pct = Math.round((count / maxOffCount) * 100);
             return `
               <div>
-                <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 3px;">
-                  <span style="font-weight: 500;">${name}</span>
-                  <strong>${count} violations (${Math.round((count / (records.length || 1)) * 100)}%)</strong>
+                <div style="display: flex; justify-content: space-between; font-size: 12.5px; margin-bottom: 5px;">
+                  <span style="font-weight: 500; color: var(--ink);">${name}</span>
+                  <span style="font-size: 12px; color: var(--text-2);"><strong style="color: var(--ink);">${count}</strong> violations (${Math.round((count / (records.length || 1)) * 100)}%)</span>
                 </div>
-                <div style="height: 8px; background: #EAEFF5; border-radius: 9999px; overflow: hidden;">
-                  <div style="width: ${pct}%; height: 100%; background: linear-gradient(90deg, #B6F533 0%, #18B85A 100%); border-radius: 9999px;"></div>
+                <div style="height: 6px; background: var(--surface-2); border-radius: 3px; overflow: hidden;">
+                  <div style="width: ${pct}%; height: 100%; background: var(--accent); border-radius: 3px;"></div>
                 </div>
               </div>
             `;
@@ -290,8 +290,8 @@ function getActiveReportData() {
       exportFilename: "challan-summary-report.csv",
       rowsHTML: records.map(c => `
         <tr>
-          <td><strong style="color: var(--color-primary);">${c.challanNumber}</strong></td>
-          <td><strong>${c.vehicleReg}</strong></td>
+          <td><strong style="color: var(--ink); font-family: var(--font-family-mono); font-size: 12.5px;">${c.challanNumber}</strong></td>
+          <td><span class="plate-chip plate-chip--commercial">${c.vehicleReg}</span></td>
           <td>${c.offence}</td>
           <td class="font-mono text-xs">${c.mvActSection || 'Sec 183'}</td>
           <td>${Utils.formatDate(c.offenceDate)}</td>

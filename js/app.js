@@ -548,9 +548,9 @@ function renderDriversView(container, actions) {
                   <td>${d.phone}</td>
                   <td style="font-family: var(--font-family-mono); font-size: 12px;">${d.dlNumber}</td>
                   <td>
-                    <strong style="color: var(--color-primary); cursor: pointer;" onclick="navigateTo('vehicles', true, { search: '${d.assignedVehicleReg}' })">
+                    <span class="plate-chip plate-chip--commercial" style="cursor: pointer;" onclick="navigateTo('vehicles', true, { search: '${d.assignedVehicleReg}' })">
                       ${d.assignedVehicleReg}
-                    </strong>
+                    </span>
                   </td>
                   <td style="color: ${d.pendingRecovery > 0 ? 'var(--status-unassigned)' : 'inherit'}; font-weight: 600;">
                     ${Utils.formatINR(d.pendingRecovery)}

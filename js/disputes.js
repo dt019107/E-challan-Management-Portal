@@ -193,16 +193,18 @@ function renderDisputeTableRows(records) {
     return `
       <tr>
         <td>
-          <strong style="color: var(--color-primary); cursor: pointer;" onclick="navigateTo('challans', true, { id: '${c.id}' })">
+          <a href="#challans?id=${c.id}" class="text-primary font-mono" style="font-weight: 600; text-decoration: none; font-size: 13px;">
             ${c.challanNumber}
-          </strong>
-          <div style="font-family: var(--font-family-mono); font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">
+          </a>
+          <div style="font-family: var(--font-family-mono); font-size: 10.5px; color: var(--text-3); margin-top: 2px;">
             ${caseRef}
           </div>
         </td>
-        <td>
-          <strong style="color: var(--color-primary);">${c.vehicleReg}</strong>
-          <div class="text-xs text-muted">${c.offence}</div>
+        <td style="white-space: nowrap;">
+          <div style="margin-bottom: 4px;">
+            <span class="plate-chip plate-chip--commercial">${c.vehicleReg}</span>
+          </div>
+          <div class="text-xs text-muted" style="max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${c.offence}</div>
         </td>
         <td>
           <div style="font-size: 13px; font-weight: 500;">${ground}</div>

@@ -441,6 +441,31 @@ const ResponsibilityEngine = {
   },
 
   /**
+   * Render Signature Responsibility Chain (Driver → Lessee → Fleet → Owner)
+   */
+  renderChainHTML(activeParty, hasConflict = false) {
+    const nodes = ["Driver", "Lessee", "Fleet", "Owner"];
+    const normalizedActive = (activeParty || "").toLowerCase();
+    
+    return `
+      <div class="responsibility-chain ${hasConflict ? 'has-conflict' : ''}" title="Attribution Hierarchy: Driver → Lessee → Fleet → Owner">
+        ${nodes.map(node => {
+          const isMatched = normalizedActive.includes(node.toLowerCase()) || 
+            (node === "Fleet" && (normalizedActive.includes("operator") || normalizedActive.includes("apex")));
+          const isNodeConflict = isMatched && hasConflict;
+          
+          return `
+            <div class="chain-node ${isNodeConflict ? 'conflict' : (isMatched ? 'active' : '')}">
+              <div class="chain-node-circle"></div>
+              <span class="chain-node-label">${node}</span>
+            </div>
+          `;
+        }).join("")}
+      </div>
+    `;
+  },
+
+  /**
    * Render Explainable Suggestion Banner HTML
    */
   renderSuggestionBannerHTML(suggestion) {
@@ -450,14 +475,14 @@ const ResponsibilityEngine = {
 
     return `
       ${isConflict ? `
-        <div class="alert alert--danger" style="border-left: 4px solid var(--status-unassigned); background: #FEF3F2; padding: 12px 14px; border-radius: var(--radius-md); margin-bottom: var(--space-4);">
+        <div class="alert alert--danger" style="border-left: 4px solid var(--status-unassigned); background: rgba(180, 35, 24, 0.08); padding: 12px 14px; border-radius: 12px; margin-bottom: var(--space-4); border: 1px solid rgba(180, 35, 24, 0.2);">
           <div style="display: flex; gap: 10px; align-items: flex-start;">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" style="color: var(--status-unassigned); flex-shrink: 0; margin-top: 2px;">
               <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
             </svg>
             <div>
               <strong style="color: var(--status-unassigned); font-size: 13px;">${suggestion.conflictType || 'Custody / Contract Conflict Detected'}</strong>
-              <p style="font-size: 12px; color: var(--color-text-main); margin-top: 3px; line-height: 1.4;">
+              <p style="font-size: 12px; color: var(--ink); margin-top: 3px; line-height: 1.4;">
                 ${suggestion.conflictMessage || suggestion.reason}
               </p>
               <span class="text-xs text-muted" style="display: block; margin-top: 4px;">
@@ -471,7 +496,7 @@ const ResponsibilityEngine = {
       <div class="suggestion-banner">
         <div class="suggestion-badge-row">
           <div style="display: flex; align-items: center; gap: 8px;">
-            <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--color-primary); letter-spacing: 0.05em;">
+            <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--accent); letter-spacing: 0.05em;">
               Suggested responsibility (${suggestion.rule || 'Auto Engine'})
             </span>
             <span class="badge ${confClass}">
@@ -486,17 +511,20 @@ const ResponsibilityEngine = {
           </div>
         </div>
 
-        <div style="font-size: 16px; font-weight: 700; color: var(--color-text-main); margin-top: 4px;">
-          ${suggestion.partyName || 'Unassigned'} <span style="font-size: 13px; font-weight: 500; color: var(--color-text-muted);">(${suggestion.partyType})</span>
+        <!-- Signature Responsibility Chain: Driver → Lessee → Fleet → Owner -->
+        ${this.renderChainHTML(suggestion.partyType, isConflict)}
+
+        <div style="font-size: 16px; font-weight: 700; color: var(--ink); margin-top: 4px;">
+          ${suggestion.partyName || 'Unassigned'} <span style="font-size: 13px; font-weight: 500; color: var(--text-2);">(${suggestion.partyType})</span>
         </div>
 
         <div class="suggestion-rationale-box">
           <strong>Why this suggestion?</strong><br>
           ${suggestion.reason}
           ${suggestion.evidenceUsed && suggestion.evidenceUsed.length > 0 ? `
-            <div style="margin-top: 8px; border-top: 1px dashed var(--color-border); padding-top: 6px;">
+            <div style="margin-top: 8px; border-top: 1px dashed var(--line); padding-top: 6px;">
               <span class="text-xs font-semibold text-muted" style="text-transform: uppercase;">Evidence Considered:</span>
-              <ul style="margin: 4px 0 0 16px; padding: 0; font-size: 11px; color: var(--color-text-secondary); line-height: 1.5;">
+              <ul style="margin: 4px 0 0 16px; padding: 0; font-size: 11px; color: var(--text-2); line-height: 1.5;">
                 ${suggestion.evidenceUsed.map(ev => `<li>${ev}</li>`).join("")}
               </ul>
             </div>

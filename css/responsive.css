@@ -106,3 +106,27 @@
   }
 }
 
+/* Mobile Typography & Spacing Optimization (<= 640px) */
+@media (max-width: 640px) {
+  .calm-header-greeting,
+  .calm-greeting h1,
+  .view-header-title h1,
+  #pageTitle {
+    font-size: 28px !important;
+    line-height: 1.2 !important;
+  }
+  .calm-hero-number {
+    font-size: 34px !important;
+  }
+  .calm-corridor-row {
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+  .kpi-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .specs-meta-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+

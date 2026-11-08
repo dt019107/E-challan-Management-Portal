@@ -207,7 +207,7 @@ function renderSettlementsTabHTML(paidChallans) {
                     <div class="text-xs text-muted">${c.offence}</div>
                   </td>
                   <td>
-                    <strong style="color: var(--color-primary);">${c.vehicleReg}</strong>
+                    <span class="plate-chip plate-chip--commercial">${c.vehicleReg}</span>
                   </td>
                   <td>
                     <strong style="font-size: 14px;">${Utils.formatINR(c.totalPayable || c.amount)}</strong>
@@ -336,7 +336,9 @@ function renderRecoveryLedgerTabHTML(recoveries) {
                   </td>
                   <td>
                     <strong>${r.challanNumber}</strong>
-                    <div class="text-xs text-muted font-mono">${r.vehicleReg}</div>
+                    <div style="margin-top: 3px;">
+                      <span class="plate-chip plate-chip--commercial">${r.vehicleReg}</span>
+                    </div>
                   </td>
                   <td>
                     <div style="font-size: 12px; font-weight: 600;">${r.payer || 'Apex Fleet Pvt Ltd'}</div>
@@ -437,7 +439,7 @@ function renderPendingConfirmationTabHTML(pendingChallans) {
                   <div class="text-xs text-muted">${c.offence}</div>
                 </td>
                 <td>
-                  <strong style="color: var(--color-primary);">${c.vehicleReg}</strong>
+                  <span class="plate-chip plate-chip--commercial">${c.vehicleReg}</span>
                 </td>
                 <td>
                   <strong>${Utils.formatINR(c.totalPayable || c.amount)}</strong>

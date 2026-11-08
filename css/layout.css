@@ -678,21 +678,23 @@
 }
 
 .view-header-title h1 {
-  font-family: var(--font-family-base);
-  font-size: 24px;
-  font-weight: 600;
-  color: var(--text) !important;
-  letter-spacing: -0.02em;
+  font-family: var(--font-family-serif, 'Instrument Serif', Georgia, serif);
+  font-size: 40px;
+  font-weight: 400;
+  color: var(--ink) !important;
+  letter-spacing: -0.015em;
   margin: 0;
-  line-height: 1.2;
+  line-height: 1.15;
 }
 
 .view-header-title p {
-  font-size: 13px;
+  font-size: 13.5px;
   color: var(--text-2);
-  margin-top: 4px;
+  margin-top: 6px;
   margin-bottom: 0;
   font-weight: 400;
+  line-height: 1.45;
+  max-width: 680px;
 }
 
 .view-header-actions {
