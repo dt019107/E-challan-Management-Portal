@@ -141,10 +141,10 @@ function renderDisputesView(container, actions) {
               <th>Vehicle Asset</th>
               <th>Contestation Ground / Court Bench</th>
               <th>Penalty Amount</th>
-              <th>Evidence Attached</th>
-              <th>Deadline / Hearing Date</th>
+              <th class="col-nice">Evidence Attached</th>
+              <th class="col-should">Deadline / Hearing Date</th>
               <th>Status</th>
-              <th>Payment Gate</th>
+              <th class="col-nice">Payment Gate</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -207,19 +207,19 @@ function renderDisputeTableRows(records) {
           <div class="text-xs text-muted" style="max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${c.offence}</div>
         </td>
         <td>
-          <div style="font-size: 13px; font-weight: 500;">${ground}</div>
+          <div class="cell-truncate" style="font-size: 13px; font-weight: 500;" title="${ground}">${ground}</div>
           <div class="text-xs text-muted" style="margin-top: 2px;">Authority: ${c.issuingAuthority}</div>
         </td>
         <td>
-          <strong style="font-size: 14px;">${Utils.formatINR(c.amount)}</strong>
+          <strong class="amount-cell" style="font-size: 14px; white-space: nowrap;">${Utils.formatINR(c.amount)}</strong>
         </td>
-        <td>
+        <td class="col-nice">
           <div style="display: flex; align-items: center; gap: 4px;">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--color-primary);"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
             <span class="text-xs font-mono" style="color: var(--color-primary);">${evidenceFile}</span>
           </div>
         </td>
-        <td>
+        <td class="col-should">
           <div><strong>${Utils.formatDate(deadlineStr)}</strong></div>
           <span class="text-xs" style="color: ${daysLeft < 3 ? 'var(--status-unassigned)' : 'var(--color-primary)'}; font-weight: 600;">
             ${daysLeft < 0 ? 'Hearing Overdue' : `${daysLeft} days remaining`}
@@ -228,7 +228,7 @@ function renderDisputeTableRows(records) {
         <td>
           ${Utils.getStatusBadgeHTML(c.status)}
         </td>
-        <td>
+        <td class="col-nice">
           ${isCourt ? `
             <span class="badge badge--unassigned" title="Direct settlement locked pending court compounding decree" style="cursor: help;">
               🔒 Locked: Court Stay

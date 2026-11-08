@@ -138,6 +138,21 @@ function initSidebar() {
     });
   }
 
+  // Global Escape key listener: closes mobile drawer and active modals
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      if (sidebar && sidebar.classList.contains("mobile-open")) {
+        sidebar.classList.remove("mobile-open");
+        if (sidebarOverlay) sidebarOverlay.classList.remove("active");
+      }
+      const openModal = document.querySelector(".modal.show");
+      if (openModal) {
+        openModal.classList.remove("show");
+        if (document.body && document.body.style) document.body.style.overflow = "";
+      }
+    }
+  });
+
   updateSidebarBadges();
   window.addEventListener("state:updated", updateSidebarBadges);
 }
@@ -396,6 +411,9 @@ function handleHashChange() {
 
   const targetRoute = ROUTES[routePath] ? routePath : "dashboard";
   navigateTo(targetRoute, false, params);
+  if (params.modal && typeof Utils !== "undefined" && Utils.openModal) {
+    setTimeout(() => Utils.openModal(params.modal), 150);
+  }
 }
 
 function navigateTo(routeKey, updateHash = true, params = {}) {

@@ -81,6 +81,27 @@ const StorageManager = {
       };
     }
 
+    // Ensure edge case benchmark records exist in state
+    if (this.data.drivers && !this.data.drivers.some(d => d.name.includes("Venkata Satyanarayana"))) {
+      const edgeDriver = INITIAL_MOCK_DATA.drivers.find(d => d.name.includes("Venkata Satyanarayana"));
+      if (edgeDriver) this.data.drivers.unshift(edgeDriver);
+    }
+    if (this.data.lessees && !this.data.lessees.some(l => l.name.includes("Delhivery Supply Chain Private Limited"))) {
+      const edgeLessee = INITIAL_MOCK_DATA.lessees.find(l => l.name.includes("Delhivery Supply Chain Private Limited"));
+      if (edgeLessee) this.data.lessees.unshift(edgeLessee);
+    }
+    if (this.data.vehicles && !this.data.vehicles.some(v => v.regNumber === "AP-28-BX-9012")) {
+      const edgeVehicle = INITIAL_MOCK_DATA.vehicles.find(v => v.regNumber === "AP-28-BX-9012");
+      if (edgeVehicle) this.data.vehicles.unshift(edgeVehicle);
+    }
+    if (this.data.challans && !this.data.challans.some(c => c.amount === 124500000)) {
+      const edgeChallan = INITIAL_MOCK_DATA.challans.find(c => c.amount === 124500000);
+      if (edgeChallan) {
+        this.data.challans.unshift(edgeChallan);
+        this.persist();
+      }
+    }
+
     // Populate operational stores from challans if empty
     this._syncOperationalStores();
     return this.data;

@@ -250,12 +250,12 @@ function renderVehiclesTableAndPagination() {
             <th onclick="sortVehiclesBy('makeModel')" style="cursor: pointer;">
               Make & Model ${getSortIcon('makeModel')}
             </th>
-            <th onclick="sortVehiclesBy('year')" style="cursor: pointer;">
+            <th class="col-nice" onclick="sortVehiclesBy('year')" style="cursor: pointer;">
               Year ${getSortIcon('year')}
             </th>
-            <th>Owner</th>
-            <th>Lessee</th>
-            <th>Assigned Driver</th>
+            <th class="col-nice">Owner</th>
+            <th class="col-nice">Lessee</th>
+            <th class="col-should">Assigned Driver</th>
             <th onclick="sortVehiclesBy('openChallans')" style="cursor: pointer;">
               Open Challans ${getSortIcon('openChallans')}
             </th>
@@ -295,20 +295,20 @@ function renderVehiclesTableAndPagination() {
                   </div>
                 </td>
                 <td>
-                  <strong style="color: var(--color-text-main); font-size: 13px;">${v.makeModel}</strong>
-                  <div class="text-xs text-muted font-mono">Chassis: ${v.chassisNumber ? v.chassisNumber.slice(-8) : '—'}</div>
+                  <strong class="cell-truncate" title="${v.makeModel}" style="color: var(--color-text-main); font-size: 13px;">${v.makeModel}</strong>
+                  <div class="text-xs text-muted font-mono col-nice">Chassis: ${v.chassisNumber ? v.chassisNumber.slice(-8) : '—'}</div>
                 </td>
-                <td>
+                <td class="col-nice">
                   <span class="font-medium">${v.year || 2023}</span>
                 </td>
-                <td>
-                  <div style="font-weight: 500;">${v.ownerName || 'Apex Fleet Pvt Ltd'}</div>
+                <td class="col-nice">
+                  <div class="cell-truncate" title="${v.ownerName || 'Apex Fleet Pvt Ltd'}" style="font-weight: 500;">${v.ownerName || 'Apex Fleet Pvt Ltd'}</div>
                 </td>
-                <td>
-                  ${lessee ? `<span class="text-xs font-semibold" style="color: var(--color-purple, #7452C8);">${lessee.name}</span>` : '<span class="text-xs text-muted">—</span>'}
+                <td class="col-nice">
+                  ${lessee ? `<div class="cell-truncate text-xs font-semibold" title="${lessee.name}" style="color: var(--color-purple, #7452C8);">${lessee.name}</div>` : '<span class="text-xs text-muted">—</span>'}
                 </td>
-                <td>
-                  ${driver ? `<span class="text-xs font-medium">${driver.name}</span>` : '<span class="text-xs text-muted">Unassigned</span>'}
+                <td class="col-should">
+                  ${driver ? `<div class="cell-truncate text-xs font-medium" title="${driver.name}">${driver.name}</div>` : '<span class="text-xs text-muted">Unassigned</span>'}
                 </td>
                 <td>
                   ${(v.openChallans || 0) > 0 ? `
@@ -318,7 +318,7 @@ function renderVehiclesTableAndPagination() {
                   `}
                 </td>
                 <td>
-                  <strong style="color: ${(v.outstandingAmount || 0) > 0 ? 'var(--color-text-main)' : 'var(--color-text-muted)'};">
+                  <strong class="amount-cell" style="color: ${(v.outstandingAmount || 0) > 0 ? 'var(--color-text-main)' : 'var(--color-text-muted)'}; white-space: nowrap;">
                     ${Utils.formatINR(v.outstandingAmount || 0)}
                   </strong>
                 </td>

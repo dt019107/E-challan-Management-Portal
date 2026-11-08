@@ -294,7 +294,7 @@ function renderDashboardView(container, actions) {
                 <th>Violation / Offence</th>
                 <th class="text-right" style="width: 120px;">Amount</th>
                 <th style="width: 130px;">Status</th>
-                <th style="width: 180px;">Offence Timestamp</th>
+                <th class="col-nice" style="width: 180px;">Offence Timestamp</th>
                 <th class="text-right" style="width: 120px;">Action</th>
               </tr>
             </thead>
@@ -653,7 +653,7 @@ function renderAttentionItems(items) {
         </td>
 
         <!-- Offence Timestamp -->
-        <td>
+        <td class="col-nice">
           <div style="font-size: 12px; color: var(--text-3); white-space: nowrap; font-variant-numeric: tabular-nums;">
             ${formattedDate}
           </div>

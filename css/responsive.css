@@ -1,30 +1,228 @@
 /* ==========================================================================
-   ChallanOS Responsive Layout Rules
+   ChallanOS Responsive Layout Architecture
+   
+   BREAKPOINT SPECIFICATIONS:
+   - Mobile:        < 600px
+   - Tablet:        600px - 840px
+   - Small laptop:  840px - 1200px
+   - Desktop:       1200px - 1536px
+   - Large:         1536px+
    ========================================================================== */
 
-/* Mobile Sidebar Backdrop */
-.sidebar-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background-color: rgba(17, 24, 39, 0.4);
-  backdrop-filter: blur(2px);
-  z-index: calc(var(--z-sidebar) - 1);
+/* --------------------------------------------------------------------------
+   1. DENSITY TOKENS & RESPONSIVE SCALING
+   -------------------------------------------------------------------------- */
+:root {
+  --space-page: 32px;
+  --space-gap: 24px;
+  --font-h1: 44px;
+  --font-body: 16px;
+  --sidebar-width: 280px;
+  --sidebar-rail-width: 72px;
+  --content-max-width: 1440px;
 }
 
-/* Tablet & Mobile Screens (<= 1024px) */
-@media (max-width: 1024px) {
+/* Compact Density below 1366px */
+@media (max-width: 1366px) {
+  :root {
+    --space-page: 16px;
+    --space-gap: 16px;
+    --font-h1: clamp(1.5rem, 2vw + 1rem, 2.25rem);
+    --font-body: 14px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   2. LARGE SCREENS & CONTAINER MAX-WIDTH (1536px+)
+   -------------------------------------------------------------------------- */
+.app-content {
+  padding: var(--space-page);
+  font-size: var(--font-body);
+}
+
+.content-inner,
+.calm-dashboard-container,
+.calm-table-panel,
+.calm-panel,
+.calm-grid-12,
+.calm-grid-8-4 {
+  max-width: var(--content-max-width);
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+.content-inner,
+.calm-dashboard-container {
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Prevent indefinitely wide lines of text */
+p,
+.card-desc,
+.calm-navy-desc,
+.calm-hero-desc,
+.empty-state-text,
+.view-header-title p {
+  max-width: 65ch;
+}
+
+.calm-header-greeting,
+.view-header-title h1 {
+  font-size: var(--font-h1);
+  letter-spacing: -0.015em;
+}
+
+/* --------------------------------------------------------------------------
+   3. SIDEBAR RESPONSIVE BEHAVIOR
+   - >= 1200px: Full 280px sidebar. Manual collapse overrides to 72px.
+   - 840px - 1200px: Default 72px icon rail. Labels hidden, tooltips on hover, flex-shrink: 0.
+   - < 840px: Off-canvas drawer (fixed, translateX(-100%)), opened by hamburger, with backdrop & Escape-to-close.
+   - Transition width: 200ms cubic-bezier(0.22, 1, 0.36, 1).
+   -------------------------------------------------------------------------- */
+.app-sidebar {
+  transition: width 200ms cubic-bezier(0.22, 1, 0.36, 1), transform 200ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+/* Desktop (>= 1200px): Full 280px sidebar */
+@media (min-width: 1200px) {
   .app-sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    transform: translateX(-100%);
+    width: 280px;
+    flex-shrink: 0;
+  }
+
+  .app-sidebar.collapsed {
+    width: 72px;
+  }
+
+  .app-sidebar.collapsed .brand-text-block,
+  .app-sidebar.collapsed .nav-label,
+  .app-sidebar.collapsed .nav-badge,
+  .app-sidebar.collapsed .nav-section-label,
+  .app-sidebar.collapsed .sidebar-collapse-text {
+    display: none !important;
+  }
+
+  .app-sidebar.collapsed .sidebar-header {
+    justify-content: center;
+    padding: 16px 0;
+  }
+
+  .app-sidebar.collapsed .nav-item {
+    justify-content: center;
+    padding: 10px 0;
+  }
+
+  .app-sidebar.collapsed .nav-item.active {
+    padding-left: 0 !important;
+  }
+
+  .app-sidebar.collapsed .sidebar-collapse-btn {
+    justify-content: center;
+    padding: 8px 0;
+  }
+
+  .mobile-menu-toggle {
+    display: none !important;
+  }
+
+  .sidebar-overlay {
+    display: none !important;
+  }
+}
+
+/* Small Laptop (840px - 1199px): Default 72px Icon Rail */
+@media (min-width: 840px) and (max-width: 1199px) {
+  .app-sidebar {
+    width: 72px;
+    flex-shrink: 0;
+  }
+
+  .app-sidebar:not(.expanded) .brand-text-block,
+  .app-sidebar:not(.expanded) .nav-label,
+  .app-sidebar:not(.expanded) .nav-badge,
+  .app-sidebar:not(.expanded) .nav-section-label,
+  .app-sidebar:not(.expanded) .sidebar-collapse-text {
+    display: none !important;
+  }
+
+  .app-sidebar:not(.expanded) .sidebar-header {
+    justify-content: center;
+    padding: 16px 0;
+  }
+
+  .app-sidebar:not(.expanded) .nav-item {
+    justify-content: center;
+    padding: 10px 0;
+    border-left: none !important;
+    position: relative;
+  }
+
+  .app-sidebar:not(.expanded) .nav-item.active {
+    background: var(--surface-2);
+    border-radius: 8px;
+    margin: 0 6px;
+    padding-left: 0 !important;
+  }
+
+  /* Tooltip on hover in icon rail mode */
+  .app-sidebar:not(.expanded) .nav-item:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: calc(100% + 12px);
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--ink);
+    color: var(--surface);
+    font-size: 11.5px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .app-sidebar:not(.expanded) .sidebar-collapse-btn {
+    justify-content: center;
+    padding: 8px 0;
+  }
+
+  .mobile-menu-toggle {
+    display: none !important;
+  }
+
+  .sidebar-overlay {
+    display: none !important;
+  }
+}
+
+/* Tablet & Mobile (< 840px): Off-Canvas Drawer */
+@media (max-width: 839px) {
+  .app-sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    width: 280px !important;
+    transform: translateX(-100%) !important;
     box-shadow: var(--shadow-xl);
+    z-index: var(--z-sidebar) !important;
   }
 
   .app-sidebar.mobile-open {
-    transform: translateX(0);
+    transform: translateX(0) !important;
+  }
+
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(22, 24, 29, 0.45);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: calc(var(--z-sidebar) - 1);
   }
 
   .sidebar-overlay.active {
@@ -32,66 +230,546 @@
   }
 
   .mobile-menu-toggle {
-    display: flex;
+    display: flex !important;
   }
 
-  .app-topbar {
-    padding: 0 var(--space-4);
+  .calm-dashboard-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
   }
 
-  .app-breadcrumbs-bar {
-    padding: 8px var(--space-4);
-  }
-
-  .app-content {
-    padding: var(--space-4);
-  }
-
-  .kpi-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .calm-header-actions {
+    width: 100% !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
   }
 }
 
-/* Mobile Screens (<= 640px) */
-@media (max-width: 640px) {
-  .user-info,
-  .search-shortcut-badge,
-  .workspace-role {
+/* --------------------------------------------------------------------------
+   4. TOPBAR RESPONSIVENESS (< 1200px)
+   - Collapses search into an icon button that expands on focus or click
+   - Keyboard shortcut ⌘K still focuses and expands search
+   - Notifications and Profile NEVER wrap
+   -------------------------------------------------------------------------- */
+.topbar-right {
+  flex-shrink: 0 !important;
+  white-space: nowrap !important;
+  flex-wrap: nowrap !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+@media (max-width: 1199px) {
+  .global-search-container {
+    width: 36px;
+    max-width: 36px;
+    height: 36px;
+    transition: width 220ms cubic-bezier(0.16, 1, 0.3, 1), max-width 220ms cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-control);
+  }
+
+  .global-search-container .search-shortcut-badge {
     display: none !important;
   }
 
-  .global-search-container {
-    max-width: 200px;
+  .global-search-container .search-icon-prefix {
+    left: 10px;
+    pointer-events: none;
+  }
+
+  .global-search-input {
+    width: 36px;
+    padding-left: 34px;
+    padding-right: 8px;
+    cursor: pointer;
+  }
+
+  .global-search-container:focus-within,
+  .global-search-container.active {
+    width: 280px !important;
+    max-width: 280px !important;
+    z-index: var(--z-dropdown);
+    overflow: visible;
+  }
+
+  .global-search-container:focus-within .global-search-input,
+  .global-search-container.active .global-search-input {
+    width: 100% !important;
+    cursor: text;
+    background-color: var(--surface);
+    border-color: var(--accent);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   5. CARD GRIDS & SPLIT STACKING (< 1200px)
+   - repeat(auto-fit, minmax(280px, 1fr)) for KPI and quick-link cards
+   - Hero 7/5 and chart 8/4 splits stack vertically below 1200px
+   -------------------------------------------------------------------------- */
+.kpi-grid,
+.quick-links-grid,
+.stats-grid,
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-gap);
+}
+
+.calm-dashboard-container {
+  gap: var(--space-gap);
+}
+
+@media (max-width: 1199px) {
+  .calm-grid-12 {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: var(--space-gap) !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .calm-panel,
+  .calm-span-7,
+  .calm-span-5,
+  .calm-span-8,
+  .calm-span-4 {
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .calm-grid-8-4 {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: var(--space-gap) !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .calm-corridor-row {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 16px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .calm-corridor-col {
+    flex: 1 1 200px !important;
+    min-width: 0 !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   6. DATA TABLES RESPONSIVENESS & STICKY COLUMN 1
+   - Plates, notice IDs, and amounts: white-space: nowrap
+   - Name, offence, lessee: single line, ellipsis, max-width ~200px, title attr
+   - Pinned Column 1: position: sticky, left: 0, z-index: 2
+   - Horizontal scrolling: table container only, page never scrolls horizontally
+   - Column hiding: .col-nice (< 1200px), .col-should (< 840px)
+   -------------------------------------------------------------------------- */
+/* Never allow horizontal page scrolling */
+.app-shell,
+.app-main,
+.app-topbar,
+.app-breadcrumbs-bar,
+.app-content,
+body,
+html {
+  max-width: 100vw !important;
+  overflow-x: hidden !important;
+  box-sizing: border-box !important;
+}
+
+.calm-queue-tabs {
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  white-space: nowrap !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+.calm-table-panel {
+  max-width: 100% !important;
+  overflow: hidden !important;
+}
+
+.calm-table-panel div:has(table),
+.table-responsive-wrapper,
+.card:has(.data-table),
+.card-body:has(.data-table),
+#challansTableBodyContainer,
+#vehiclesTableBodyContainer,
+#disputesTableContainer,
+#paymentsTableContainer,
+#reportsTableContainer {
+  overflow-x: auto !important;
+  max-width: 100% !important;
+  width: 100% !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Pinned Column 1 (Checkbox / Index) */
+.data-table th:first-child,
+.calm-table th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 3;
+  background-color: var(--surface-2);
+}
+
+.data-table td:first-child,
+.calm-table td:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background-color: var(--surface);
+}
+
+.data-table tbody tr:hover td:first-child,
+.calm-table tbody tr:hover td:first-child {
+  background-color: var(--surface-2);
+}
+
+/* Plates, IDs and Amounts: white-space: nowrap */
+.data-table td .plate-chip,
+.data-table td .plate-chip--commercial,
+.data-table td a[href*="#vehicles?id="],
+.data-table td a[href*="#challans?id="],
+.data-table td .challan-id,
+.data-table td .challan-no-link,
+.data-table td .amount-cell,
+.data-table td strong,
+.calm-table td .reg-plate-chip,
+.calm-table td .amount-cell {
+  white-space: nowrap !important;
+}
+
+/* Single line ellipsis with max-width ~200px */
+.data-table td .cell-truncate,
+.data-table td .offence-title,
+.data-table td .driver-name,
+.data-table td .lessee-name,
+.data-table td .violation-desc,
+.calm-table td .cell-truncate {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+/* Hide Nice-to-have columns below 1200px */
+@media (max-width: 1199px) {
+  .col-nice {
+    display: none !important;
+  }
+}
+
+/* Hide Should-have columns below 840px */
+@media (max-width: 839px) {
+  .col-should {
+    display: none !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   7. FORMS AND MODALS
+   - Labels above inputs
+   - Form container max-width 600px
+   - Single column below 1200px
+   - Intent-based widths
+   -------------------------------------------------------------------------- */
+.form-group label,
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+.form-container,
+.form-card,
+.modal-dialog,
+.modal-content {
+  max-width: 600px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Intent-based input widths */
+.input-reg-number,
+input[id*="regNumber"],
+input[id*="vehicleReg"] {
+  max-width: 180px;
+  font-family: var(--font-family-mono);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.input-year,
+.input-pincode,
+input[id*="year"],
+input[id*="pincode"],
+input[id*="pin"] {
+  max-width: 120px;
+}
+
+.input-full-width,
+textarea,
+input[id*="address"],
+input[id*="notes"],
+input[id*="description"] {
+  width: 100%;
+}
+
+@media (max-width: 1199px) {
+  .form-row,
+  .form-grid-2,
+  .form-grid-3,
+  .grid-2-col,
+  .grid-3-col {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+}
+
+/* Modals sizing and overlay */
+.modal-overlay,
+.modal {
+  padding: 16px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal.show {
+  display: flex !important;
+}
+
+.modal-dialog {
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: var(--radius-panel);
+}
+
+/* --------------------------------------------------------------------------
+   8. 1280x600 COMPACT VIEWPORT OPTIMIZATION
+   - At a 1280x600 usable viewport:
+   - Dashboard heading, KPI row, and top of the action queue are all visible
+     without scrolling.
+   -------------------------------------------------------------------------- */
+@media (max-height: 680px) and (min-width: 840px) {
+  .app-content {
+    padding: 8px var(--space-page) !important;
+  }
+
+  .calm-dashboard-header {
+    padding: 0 0 6px !important;
+  }
+
+  .calm-header-greeting {
+    font-size: 24px !important;
+    line-height: 1.1 !important;
+  }
+
+  .calm-dashboard-container {
+    gap: 10px !important;
+  }
+
+  /* Compact KPI row */
+  .calm-hero-card,
+  .calm-span-7.calm-panel {
+    padding: 12px 16px !important;
+  }
+
+  .calm-hero-number {
+    font-size: 32px !important;
+    margin: 2px 0 !important;
+  }
+
+  .calm-subtext {
+    margin: 2px 0 6px !important;
+    font-size: 11.5px !important;
+  }
+
+  .calm-corridor-row {
+    padding-top: 6px !important;
+    margin-top: 6px !important;
+  }
+
+  .calm-navy-photo-panel {
+    min-height: 150px !important;
+    padding: 12px 16px !important;
+  }
+
+  .calm-navy-number {
+    font-size: 30px !important;
+    margin: 2px 0 !important;
+  }
+
+  .calm-navy-desc {
+    font-size: 11.5px !important;
+    margin-bottom: 6px !important;
+  }
+
+  /* On short viewports (< 680px height), hide the middle trend charts so the Action Queue is visible */
+  .calm-grid-12.framer-animate-charts {
+    display: none !important;
+  }
+
+  .calm-table-panel.framer-animate-table {
+    margin-top: 0 !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   9. MOBILE BREAKPOINT (< 600px)
+   -------------------------------------------------------------------------- */
+
+
+}
+
+@media (max-width: 599px) {
+  .app-shell,
+  .app-main,
+  .app-topbar,
+  .app-breadcrumbs-bar,
+  .app-content {
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .app-topbar {
+    padding: 0 12px !important;
+  }
+
+  .topbar-left {
+    flex: none !important;
+    gap: 8px !important;
+  }
+
+  .topbar-right {
+    gap: 8px !important;
+  }
+
+  .user-info,
+  .user-role,
+  .user-profile-btn > svg {
+    display: none !important;
+  }
+
+  .user-profile-btn {
+    padding: 2px !important;
+    border-radius: 50% !important;
+    height: 32px !important;
+    width: 32px !important;
+    justify-content: center !important;
+  }
+
+  .app-breadcrumbs-bar {
+    padding: 6px 12px !important;
+  }
+
+  .app-content {
+    padding: 12px 10px !important;
+  }
+
+  .calm-dashboard-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+
+  .calm-header-greeting {
+    font-size: 24px !important;
+  }
+
+  .calm-header-actions {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  .calm-header-actions .calm-btn,
+  .calm-header-actions .calm-btn-secondary {
+    width: 100% !important;
+    font-size: 11.5px !important;
+    padding: 8px 12px !important;
+    justify-content: center !important;
+  }
+
+  .calm-panel,
+  .calm-hero-card {
+    padding: 16px 14px !important;
+  }
+
+  .calm-hero-header-row {
+    flex-wrap: wrap !important;
+    gap: 4px !important;
+  }
+
+  .calm-hero-number {
+    font-size: 26px !important;
+    line-height: 1.15 !important;
+  }
+
+  .calm-corridor-row {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    width: 100% !important;
+  }
+
+  .calm-corridor-col {
+    width: 100% !important;
+  }
+
+  .calm-corridor-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
+    gap: 8px !important;
+  }
+
+  .calm-corridor-val {
+    font-size: 13px !important;
+    white-space: nowrap !important;
   }
 
   .view-header {
     flex-direction: column;
     align-items: flex-start;
+    gap: 12px;
   }
 
   .view-header-actions {
     width: 100%;
     justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 8px;
   }
 
-  .finexy-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-  }
-
-  .finexy-header-actions {
-    width: 100%;
-    justify-content: flex-start;
-  }
-
-  .kpi-grid {
-    grid-template-columns: 1fr;
+  .nav-tabs {
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
   }
 
   .filter-toolbar {
     flex-direction: column;
     align-items: stretch;
+    gap: 12px;
   }
 
   .filter-group {
@@ -101,32 +779,58 @@
 
   .table-pagination {
     flex-direction: column;
-    gap: var(--space-2);
+    gap: 8px;
     align-items: flex-start;
   }
 }
 
-/* Mobile Typography & Spacing Optimization (<= 640px) */
-@media (max-width: 640px) {
-  .calm-header-greeting,
-  .calm-greeting h1,
-  .view-header-title h1,
-  #pageTitle {
-    font-size: 28px !important;
-    line-height: 1.2 !important;
+/* Exact 390px viewport constraint for mobile devices & headless verification */
+@media (max-width: 500px) {
+  .app-shell,
+  .app-main,
+  .app-topbar,
+  .app-breadcrumbs-bar,
+  .app-content {
+    max-width: 390px !important;
+    width: 390px !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
   }
+
+  .user-info,
+  .user-role,
+  .user-profile-btn > svg {
+    display: none !important;
+  }
+
+  .user-profile-btn {
+    padding: 2px !important;
+    border-radius: 50% !important;
+    height: 32px !important;
+    width: 32px !important;
+    min-width: 32px !important;
+    justify-content: center !important;
+  }
+
   .calm-hero-number {
-    font-size: 34px !important;
+    font-size: 21px !important;
+    letter-spacing: -0.02em !important;
+    word-break: break-all;
   }
+
+  .topbar-right {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
   .calm-corridor-row {
+    display: flex !important;
     flex-direction: column !important;
-    gap: 16px !important;
+    width: 100% !important;
   }
-  .kpi-grid {
-    grid-template-columns: 1fr !important;
-  }
-  .specs-meta-grid {
-    grid-template-columns: 1fr !important;
+
+  .calm-corridor-col {
+    width: 100% !important;
   }
 }
-

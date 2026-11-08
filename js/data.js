@@ -680,10 +680,72 @@ const INITIAL_MOCK_DATA = {
       responsibilityPeriods: [
         { startDate: "2024-11-01", endDate: "2026-10-31", partyType: "Driver", partyName: "Rahul Sharma", contractRef: "EMP-DEL-EVACE" }
       ]
+    },
+    {
+      id: "veh-edge-1",
+      regNumber: "AP-28-BX-9012",
+      makeModel: "Ashok Leyland 4220 HG Multi-Axle",
+      category: "Heavy Commercial Vehicle (HCV)",
+      year: 2024,
+      chassisNumber: "MB1A4220HG891244",
+      engineNumber: "AL-H6-DI-9011",
+      ownerName: "Apex Fleet Pvt Ltd",
+      currentLesseeId: "les-edge-1",
+      currentDriverId: "drv-edge-1",
+      defaultResponsibleParty: "Lessee",
+      openChallans: 1,
+      outstandingAmount: 124500000,
+      syncStatus: "Synced",
+      source: "Parivahan API",
+      rcValidity: "2039-05-18",
+      insuranceExpiry: "2027-04-20",
+      pucExpiry: "2026-12-05",
+      fastagStatus: "Active",
+      fastagBalance: 12500,
+      contractStart: "2025-01-01",
+      contractEnd: "2028-12-31",
+      responsibilityPeriods: [
+        { startDate: "2025-01-01", endDate: "2028-12-31", partyType: "Lessee", partyName: "Delhivery Supply Chain Private Limited", contractRef: "DEL-AP-4220-EXP" },
+        { startDate: "2025-01-01", endDate: "2028-12-31", partyType: "Driver", partyName: "Venkata Satyanarayana Lakshmi Prasad", contractRef: "TRIP-EXP-9012" }
+      ]
     }
   ],
 
   challans: [
+    {
+      id: "chl-edge-1",
+      challanNumber: "AP-902184029102",
+      vehicleReg: "AP-28-BX-9012",
+      vehicleId: "veh-edge-1",
+      offence: "Gross Commercial Overweight & Multi-Axle Overload Penalty (Sec 194)",
+      mvActSection: "Sec 194(1) Motor Vehicles Act 1988",
+      offenceDate: getRelativeDateTimeStr(-2, 11, 15),
+      location: "Vijayawada NH-16 Commercial Weighbridge, Andhra Pradesh",
+      issuingAuthority: "Andhra Pradesh Transport Dept",
+      amount: 124500000,
+      lateFee: 0,
+      convenienceFee: 500,
+      totalPayable: 124500500,
+      dueDate: getRelativeDateStr(5),
+      disputeDeadline: getRelativeDateStr(12),
+      status: "unassigned",
+      responsibleParty: "Unassigned",
+      responsiblePartyName: null,
+      responsiblePartyId: null,
+      suggestedParty: "Lessee",
+      suggestedPartyName: "Delhivery Supply Chain Private Limited",
+      confidenceLevel: 96,
+      suggestionReason: "Commercial weighbridge gross overload ticket during active long-term lease contract window.",
+      source: "Parivahan API",
+      evidenceImage: "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800&auto=format&fit=crop&q=60",
+      paymentStatus: null,
+      payerType: null,
+      recoveryParty: null,
+      recoveryMethod: null,
+      activityLog: [
+        { timestamp: getRelativeDateTimeStr(-2, 11, 20), user: "Parivahan Sync Bot", action: "Detected", notes: "Challan fetched automatically via Parivahan e-Challan API" }
+      ]
+    },
     {
       id: "chl-101",
       challanNumber: "DL-884120", // Matches end-to-end user scenario
@@ -1781,6 +1843,19 @@ const INITIAL_MOCK_DATA = {
 
   drivers: [
     {
+      id: "drv-edge-1",
+      name: "Venkata Satyanarayana Lakshmi Prasad",
+      phone: "+91 98451 99201",
+      dlNumber: "AP-0920150089201",
+      dlExpiry: "2035-08-22",
+      assignedVehicleReg: "AP-28-BX-9012",
+      employeeId: "EMP-DRV-089",
+      status: "Active",
+      totalChallansIncurred: 1,
+      settledAmount: 0,
+      pendingRecovery: 0
+    },
+    {
       id: "drv-1",
       name: "Rahul Sharma", // Central case study test persona
       phone: "+91 98112 45890",
@@ -1914,8 +1989,19 @@ const INITIAL_MOCK_DATA = {
 
   lessees: [
     {
+      id: "les-edge-1",
+      name: "Delhivery Supply Chain Private Limited",
+      contactPerson: "Manish Agarwal (National Fleet Operations Lead)",
+      email: "corporate.ops@delhivery.com",
+      phone: "+91 124 492 8800",
+      gstin: "07AAACD9988F1Z9",
+      activeContractsCount: 3,
+      liabilityTerms: "Master Operating Lease specifies 100% Lessee indemnity for regional weighbridge and freight telemetry penalties.",
+      pendingChallanAmount: 124500000
+    },
+    {
       id: "les-1",
-      name: "Delhivery Supply Chain Ltd",
+      name: "Delhivery Supply Chain Private Limited",
       contactPerson: "Manish Agarwal (Fleet Ops Lead)",
       email: "manish.a@delhivery.com",
       phone: "+91 124 6719000",

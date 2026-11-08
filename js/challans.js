@@ -428,21 +428,21 @@ function renderChallansTableAndPagination() {
               Vehicle ${getChallanSortIcon('vehicleReg')}
             </th>
             <th>Offence Description & Section</th>
-            <th onclick="sortChallansBy('offenceDate')" style="cursor: pointer;">
+            <th class="col-nice" onclick="sortChallansBy('offenceDate')" style="cursor: pointer;">
               Offence Date ${getChallanSortIcon('offenceDate')}
             </th>
             <th onclick="sortChallansBy('amount')" style="cursor: pointer;">
               Amount ${getChallanSortIcon('amount')}
             </th>
-            <th onclick="sortChallansBy('lateFee')" style="cursor: pointer;">
+            <th class="col-nice" onclick="sortChallansBy('lateFee')" style="cursor: pointer;">
               Late Fee ${getChallanSortIcon('lateFee')}
             </th>
-            <th onclick="sortChallansBy('dueDate')" style="cursor: pointer;">
+            <th class="col-should" onclick="sortChallansBy('dueDate')" style="cursor: pointer;">
               Due Date ${getChallanSortIcon('dueDate')}
             </th>
             <th>Status</th>
-            <th>Responsible Party</th>
-            <th>Source</th>
+            <th class="col-should">Responsible Party</th>
+            <th class="col-nice">Source</th>
             <th style="text-align: right;">Action</th>
           </tr>
         </thead>
@@ -468,33 +468,33 @@ function renderChallansTableAndPagination() {
                   </a>
                 </td>
                 <td>
-                  <div style="font-size: 13px; font-weight: 500;">${c.offence}</div>
+                  <div class="cell-truncate" style="font-size: 13px; font-weight: 500;" title="${c.offence}">${c.offence}</div>
                   <div class="text-xs text-muted">${c.mvActSection}</div>
                 </td>
-                <td>
+                <td class="col-nice">
                   <div class="text-xs">${Utils.formatDate(c.offenceDate, true)}</div>
                   <div class="text-xs text-muted" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px;">${c.location || '—'}</div>
                 </td>
                 <td>
-                  <strong style="font-size: 13px;">${Utils.formatINR(c.amount)}</strong>
+                  <strong class="amount-cell" style="font-size: 13px; white-space: nowrap;">${Utils.formatINR(c.amount)}</strong>
                 </td>
-                <td>
+                <td class="col-nice">
                   <span style="font-size: 12px; font-weight: 600; color: ${(c.lateFee || 0) > 0 ? 'var(--status-unassigned)' : 'var(--color-text-muted)'};">
                     ${Utils.formatINR(c.lateFee || 0)}
                   </span>
                 </td>
-                <td>
+                <td class="col-should">
                   <div class="text-xs">${Utils.formatDate(c.dueDate)}</div>
                   <div class="text-xs" style="font-weight: 600; color: ${isOverdue ? 'var(--status-unassigned)' : 'var(--color-text-muted)'};">
                     ${isOverdue ? `Overdue by ${Math.abs(daysLeft)}d` : `${daysLeft} days left`}
                   </div>
                 </td>
                 <td>${Utils.getStatusBadgeHTML(c.status)}</td>
-                <td>
-                  <div><strong>${c.responsiblePartyName || c.responsibleParty}</strong></div>
+                <td class="col-should">
+                  <div><strong class="cell-truncate" title="${c.responsiblePartyName || c.responsibleParty}">${c.responsiblePartyName || c.responsibleParty}</strong></div>
                   <div class="text-xs text-muted">${c.responsibleParty}</div>
                 </td>
-                <td>
+                <td class="col-nice">
                   <span class="badge badge--neutral" style="font-size: 10px;">${c.source}</span>
                 </td>
                 <td style="text-align: right;">

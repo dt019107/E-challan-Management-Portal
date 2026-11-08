@@ -173,10 +173,10 @@ function renderSettlementsTabHTML(paidChallans) {
               <th>Challan No</th>
               <th>Vehicle Asset</th>
               <th>Settled Amount</th>
-              <th>Payment Rail</th>
-              <th>Transaction Ref</th>
-              <th>Payer Entity</th>
-              <th>Recovery Target</th>
+              <th class="col-nice">Payment Rail</th>
+              <th class="col-nice">Transaction Ref</th>
+              <th class="col-should">Payer Entity</th>
+              <th class="col-should">Recovery Target</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>
@@ -210,21 +210,21 @@ function renderSettlementsTabHTML(paidChallans) {
                     <span class="plate-chip plate-chip--commercial">${c.vehicleReg}</span>
                   </td>
                   <td>
-                    <strong style="font-size: 14px;">${Utils.formatINR(c.totalPayable || c.amount)}</strong>
+                    <strong class="amount-cell" style="font-size: 14px; white-space: nowrap;">${Utils.formatINR(c.totalPayable || c.amount)}</strong>
                     <div class="text-xs text-muted">Incl. ₹${c.convenienceFee || 25} fee</div>
                   </td>
-                  <td>
+                  <td class="col-nice">
                     <span class="badge badge--neutral">${c.paymentMethod || 'UPI'}</span>
                   </td>
-                  <td>
+                  <td class="col-nice">
                     <span class="font-mono text-xs text-muted">${txnRef}</span>
                   </td>
-                  <td>
-                    <div style="font-size: 12px; font-weight: 600;">${c.payerType || 'Apex Fleet Pvt Ltd'}</div>
+                  <td class="col-should">
+                    <div class="cell-truncate" style="font-size: 12px; font-weight: 600;" title="${c.payerType || 'Apex Fleet Pvt Ltd'}">${c.payerType || 'Apex Fleet Pvt Ltd'}</div>
                     <div class="text-xs text-muted">Direct Settlement</div>
                   </td>
-                  <td>
-                    <div style="font-size: 12px; font-weight: 600;">${c.recoveryParty || c.responsiblePartyName || 'Rahul Sharma'}</div>
+                  <td class="col-should">
+                    <div class="cell-truncate" style="font-size: 12px; font-weight: 600;" title="${c.recoveryParty || c.responsiblePartyName || 'Rahul Sharma'}">${c.recoveryParty || c.responsiblePartyName || 'Rahul Sharma'}</div>
                     <span class="badge ${c.responsibleParty === 'Driver' ? 'badge--assigned' : 'badge--pending'}">
                       ${c.recoveryMethod || (c.responsibleParty === 'Driver' ? 'Payroll deduction' : 'Invoice')}
                     </span>

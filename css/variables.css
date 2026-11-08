@@ -181,8 +181,19 @@
   --letter-spacing-caps: 0.06em;
 
   /* --------------------------------------------------------------------------
-     4. Spacing Scale
+     4. Responsive Density Tokens & Breakpoint Metrics
+     Breakpoints:
+     - Mobile:        < 600px
+     - Tablet:        600px - 840px
+     - Small laptop:  840px - 1200px
+     - Desktop:       1200px - 1536px
+     - Large:         1536px+
      -------------------------------------------------------------------------- */
+  --space-page: 32px;
+  --space-gap: 24px;
+  --font-h1: 44px;
+  --font-body: 16px;
+
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -195,8 +206,11 @@
 
   /* --------------------------------------------------------------------------
      5. Layout Dimensions
+     - >= 1200px: 280px full sidebar
+     - 840px - 1200px: 72px icon rail
+     - < 840px: 280px off-canvas drawer (fixed)
      -------------------------------------------------------------------------- */
-  --sidebar-width: 220px;
+  --sidebar-width: 280px;
   --sidebar-collapsed-width: 72px;
   --topbar-height: 56px;
   --content-max-width: 1440px;
