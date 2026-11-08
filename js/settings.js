@@ -96,7 +96,7 @@ function renderActiveSettingsTab(company, currentUser, currentRole) {
         <div class="card-header" style="padding: 0 0 var(--space-4) 0; margin-bottom: var(--space-4); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
           <div style="display: flex; align-items: center; gap: 14px;">
             <div style="width: 48px; height: 48px; border-radius: 12px; background: #FFFFFF; padding: 4px; border: 1px solid rgba(22, 24, 29, 0.08); box-shadow: 0 1px 3px rgba(22, 24, 29, 0.06); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-              <img src="assets/images/challanos-logo.png" alt="ChallanOS Logo" style="width: 100%; height: 100%; object-fit: contain;">
+              <img src="assets/images/challanos-logo.png" alt="Hisaab Logo" style="width: 100%; height: 100%; object-fit: contain;">
             </div>
             <div>
               <h3 class="card-title">Corporate Workspace Settings</h3>
@@ -240,7 +240,7 @@ function renderActiveSettingsTab(company, currentUser, currentRole) {
         <div class="card-header" style="padding: 0 0 var(--space-4) 0; margin-bottom: var(--space-4);">
           <div>
             <h3 class="card-title">User Roles & Permission Simulation</h3>
-            <p class="card-subtitle">Test and experience role-based authorization constraints across ChallanOS workflows</p>
+            <p class="card-subtitle">Test and experience role-based authorization constraints across Hisaab workflows</p>
           </div>
         </div>
 

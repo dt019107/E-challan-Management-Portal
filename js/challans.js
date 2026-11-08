@@ -720,7 +720,7 @@ function renderChallanDetailsView(container, actions, challanId) {
   }
 
   // Update Breadcrumbs
-  updateBreadcrumbs(["ChallanOS", "Challans", challan.challanNumber]);
+  updateBreadcrumbs(["Hisaab", "Challans", challan.challanNumber]);
 
   const vehicle = StorageManager.getVehicleById(challan.vehicleId) || { regNumber: challan.vehicleReg, makeModel: "Commercial Fleet Vehicle" };
   const drivers = StorageManager.getDrivers();

@@ -21,55 +21,55 @@ const ROUTES = {
   dashboard: {
     title: "Operational Dashboard",
     subtitle: "Real-time compliance KPIs, triage queue & liability breakdown",
-    breadcrumb: ["ChallanOS", "Dashboard"],
+    breadcrumb: ["Hisaab", "Dashboard"],
     render: renderDashboardView
   },
   vehicles: {
     title: "Commercial Fleet Directory",
     subtitle: "Vehicle asset inventory, ownership contracts & timeline telemetry",
-    breadcrumb: ["ChallanOS", "Vehicles"],
+    breadcrumb: ["Hisaab", "Vehicles"],
     render: renderVehiclesView
   },
   challans: {
     title: "Traffic Infraction Management",
     subtitle: "Multi-jurisdiction e-challan decision ledger & automated attribution",
-    breadcrumb: ["ChallanOS", "Challans"],
+    breadcrumb: ["Hisaab", "Challans"],
     render: renderChallansView
   },
   drivers: {
     title: "Driver Directory & Recoveries",
     subtitle: "Driver license validity, allocated vehicles & payroll deductions",
-    breadcrumb: ["ChallanOS", "Drivers"],
+    breadcrumb: ["Hisaab", "Drivers"],
     render: renderDriversView
   },
   payments: {
     title: "Payments & Reconciliation",
     subtitle: "Settlement rails, recovery ledgers & verified transaction vouchers",
-    breadcrumb: ["ChallanOS", "Payments"],
+    breadcrumb: ["Hisaab", "Payments"],
     render: renderPaymentsView
   },
   disputes: {
     title: "Disputes & Virtual Court Matters",
     subtitle: "Administrative grievances, virtual court compounding & legal stay dockets",
-    breadcrumb: ["ChallanOS", "Disputes & Court"],
+    breadcrumb: ["Hisaab", "Disputes & Court"],
     render: renderDisputesView
   },
   reports: {
     title: "Compliance & Audit Reports",
     subtitle: "Executive financial exposure, fleet risk scoring & payroll schedules",
-    breadcrumb: ["ChallanOS", "Reports"],
+    breadcrumb: ["Hisaab", "Reports"],
     render: renderReportsView
   },
   settings: {
     title: "System Settings & Policies",
     subtitle: "Responsibility rules, maker-checker limits & role simulation",
-    breadcrumb: ["ChallanOS", "Settings"],
+    breadcrumb: ["Hisaab", "Settings"],
     render: renderSettingsView
   },
   components: {
     title: "Design System & Component Showcase",
     subtitle: "Atomic UI tokens, badges, buttons, cards & inputs preview",
-    breadcrumb: ["ChallanOS", "Design System"],
+    breadcrumb: ["Hisaab", "Design System"],
     render: renderComponentPreviewView
   }
 };

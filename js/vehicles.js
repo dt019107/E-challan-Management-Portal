@@ -459,7 +459,7 @@ function renderVehicleDetailsView(container, actions, vehicleId) {
   }
 
   // Update Breadcrumbs
-  updateBreadcrumbs(["ChallanOS", "Vehicles", vehicle.regNumber]);
+  updateBreadcrumbs(["Hisaab", "Vehicles", vehicle.regNumber]);
 
   const drivers = StorageManager.getDrivers();
   const lessees = StorageManager.getLessees();
@@ -1269,7 +1269,7 @@ function showImportWizardStep(step) {
       nextBtn.textContent = "Proceed to Mapping →";
     }
   } else if (step === 2) {
-    if (subtitle) subtitle.textContent = "Step 2 of 4: Map CSV columns to ChallanOS fields";
+    if (subtitle) subtitle.textContent = "Step 2 of 4: Map CSV columns to Hisaab fields";
     if (nextBtn) {
       nextBtn.disabled = false;
       nextBtn.textContent = "Validate Data Rows →";

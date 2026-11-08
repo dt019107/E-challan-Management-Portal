@@ -80,10 +80,10 @@
 }
 
 .brand-name {
-  font-size: 13.5px;
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 700;
   color: var(--ink);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -103,11 +103,12 @@
 }
 
 .brand-subtext {
-  font-size: 10.5px;
-  color: var(--text-3);
-  font-weight: 400;
+  font-size: 11px;
+  color: var(--text-2);
+  font-weight: 450;
   margin-top: 1px;
-  letter-spacing: 0.01em;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
 }
 
 /* Sidebar Navigation Items */
