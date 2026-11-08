@@ -48,21 +48,30 @@
 }
 
 .brand-logo-mark {
-  width: 30px;
-  height: 30px;
-  border-radius: var(--radius-chip);
-  background: var(--surface-2);
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--accent);
-  border: 1px solid var(--line);
+  padding: 3px;
+  border: 1px solid rgba(22, 24, 29, 0.08);
+  box-shadow: 0 1px 3px rgba(22, 24, 29, 0.06);
   flex-shrink: 0;
-  transition: transform var(--transition-fast);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.brand-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 
 .brand-wrapper:hover .brand-logo-mark {
-  transform: scale(1.03);
+  transform: scale(1.05);
+  box-shadow: 0 3px 8px rgba(22, 24, 29, 0.1);
 }
 
 .brand-text-block {

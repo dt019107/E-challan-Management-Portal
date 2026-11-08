@@ -268,15 +268,15 @@ function renderVehiclesTableAndPagination() {
         </thead>
         <tbody>
           ${paginatedRows.map(v => {
-            const isChecked = vehicleTableState.selectedVehicleIds.has(v.id);
-            const lessee = lessees.find(l => l.id === v.currentLesseeId);
-            const driver = drivers.find(d => d.id === v.currentDriverId);
+      const isChecked = vehicleTableState.selectedVehicleIds.has(v.id);
+      const lessee = lessees.find(l => l.id === v.currentLesseeId);
+      const driver = drivers.find(d => d.id === v.currentDriverId);
 
-            let syncBadge = `<span class="badge badge--paid">Synced</span>`;
-            if (v.syncStatus === "Failed") syncBadge = `<span class="badge badge--unassigned">Failed</span>`;
-            else if (v.syncStatus === "Partial") syncBadge = `<span class="badge badge--pending">Partial</span>`;
+      let syncBadge = `<span class="badge badge--paid">Synced</span>`;
+      if (v.syncStatus === "Failed") syncBadge = `<span class="badge badge--unassigned">Failed</span>`;
+      else if (v.syncStatus === "Partial") syncBadge = `<span class="badge badge--pending">Partial</span>`;
 
-            return `
+      return `
               <tr class="${isChecked ? 'row-selected' : ''}">
                 <td style="text-align: center;">
                   <input type="checkbox" class="custom-checkbox" ${isChecked ? 'checked' : ''} onchange="toggleVehicleRowSelection('${v.id}', this.checked)">
@@ -338,7 +338,7 @@ function renderVehiclesTableAndPagination() {
                 </td>
               </tr>
             `;
-          }).join("")}
+    }).join("")}
         </tbody>
       </table>
     `;
@@ -696,13 +696,13 @@ function renderResponsibilityTimelineTab(vehicle, challans) {
       <!-- Visual Timeline Track with Bands & Challan Pinpoint Markers -->
       <div class="timeline-visual-track">
         ${periods.map((p, idx) => {
-          let partyClass = "party-fleet";
-          if (p.partyType === "Driver") partyClass = "party-driver";
-          else if (p.partyType === "Lessee") partyClass = "party-lessee";
+    let partyClass = "party-fleet";
+    if (p.partyType === "Driver") partyClass = "party-driver";
+    else if (p.partyType === "Lessee") partyClass = "party-lessee";
 
-          const widthPercent = Math.max(25, Math.floor(100 / (periods.length || 1)));
+    const widthPercent = Math.max(25, Math.floor(100 / (periods.length || 1)));
 
-          return `
+    return `
             <div class="timeline-period-band ${partyClass} ${hasOverlapConflict && idx > 0 ? 'conflict-overlap' : ''}" style="width: ${widthPercent}%;"
               title="${p.partyType}: ${p.partyName} (${p.startDate} to ${p.endDate})">
               <span>${p.partyType}</span>
@@ -710,13 +710,13 @@ function renderResponsibilityTimelineTab(vehicle, challans) {
               <span style="font-size: 9px; opacity: 0.75;">${p.startDate} to ${p.endDate}</span>
             </div>
           `;
-        }).join("")}
+  }).join("")}
 
         <!-- Challan Offence Markers on Timeline -->
         ${challans.map((c, idx) => {
-          // Calculate arbitrary marker position along track
-          const offsetPercent = Math.min(90, Math.max(10, 20 + idx * 30));
-          return `
+    // Calculate arbitrary marker position along track
+    const offsetPercent = Math.min(90, Math.max(10, 20 + idx * 30));
+    return `
             <div class="timeline-challan-marker" style="left: ${offsetPercent}%;" onclick="openAssignmentModal('${c.id}')">
               !
               <div class="timeline-challan-tooltip">
@@ -726,7 +726,7 @@ function renderResponsibilityTimelineTab(vehicle, challans) {
               </div>
             </div>
           `;
-        }).join("")}
+  }).join("")}
       </div>
 
       <!-- Timeline Legend -->
@@ -1319,7 +1319,7 @@ function handleCSVFileSelect(event) {
   if (!file) return;
 
   const reader = new FileReader();
-  reader.onload = function(e) {
+  reader.onload = function (e) {
     importWizardState.rawFileText = e.target.result;
     parseCSVText(importWizardState.rawFileText);
     const nextBtn = document.getElementById("importWizardNextBtn");
