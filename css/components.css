@@ -2174,25 +2174,148 @@ td a[href*="#challans?id="]:hover,
 }
 
 /* --------------------------------------------------------------------------
-   6. Dropdowns & Menus
+   6. Dropdowns & Menus (Calm Warm Paper Design Identity)
    -------------------------------------------------------------------------- */
 .dropdown-menu {
   position: absolute;
-  top: calc(100% + 6px);
+  top: calc(100% + 8px);
   right: 0;
-  min-width: 200px;
+  min-width: 260px;
   background-color: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  box-shadow: 0 16px 36px -4px rgba(22, 24, 29, 0.15);
-  padding: 6px;
+  border: 1px solid var(--line-strong);
+  border-radius: 16px;
+  box-shadow: 0 16px 40px -8px rgba(22, 24, 29, 0.16), 0 2px 6px rgba(22, 24, 29, 0.04);
+  padding: 8px;
   z-index: var(--z-dropdown);
   display: none;
-  animation: dropdownIn 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: dropdownIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .dropdown-menu.show {
-  display: block;
+  display: block !important;
+}
+
+.profile-dropdown-menu {
+  width: 280px;
+}
+
+.profile-menu-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background-color: var(--surface-2);
+}
+
+.profile-menu-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #FBFAF7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 5px rgba(43, 58, 103, 0.25);
+}
+
+.profile-menu-meta {
+  min-width: 0;
+  flex: 1;
+}
+
+.profile-menu-name {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.3;
+}
+
+.profile-menu-role {
+  font-size: 11.5px;
+  color: var(--text-2);
+  line-height: 1.3;
+}
+
+.profile-menu-email {
+  font-size: 11px;
+  color: var(--text-3);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-menu-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px 6px;
+  font-size: 11px;
+  color: var(--text-2);
+}
+
+.status-indicator-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #10B981;
+  display: inline-block;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+}
+
+.dropdown-divider {
+  height: 1px;
+  background-color: var(--line);
+  margin: 6px 0;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  border-radius: 10px;
+  transition: all 0.15s ease;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  text-align: left;
+}
+
+.dropdown-item svg {
+  color: var(--text-2);
+  flex-shrink: 0;
+  transition: color 0.15s ease;
+}
+
+.dropdown-item:hover {
+  background-color: var(--surface-2);
+  color: var(--accent);
+}
+
+.dropdown-item:hover svg {
+  color: var(--accent);
+}
+
+.dropdown-item.danger {
+  color: var(--status-unassigned);
+}
+
+.dropdown-item.danger svg {
+  color: var(--status-unassigned);
+}
+
+.dropdown-item.danger:hover {
+  background-color: rgba(180, 35, 24, 0.08);
+  color: var(--status-unassigned);
 }
 
 @keyframes dropdownIn {
@@ -2204,30 +2327,6 @@ td a[href*="#challans?id="]:hover,
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-.dropdown-item {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  width: 100%;
-  padding: 8px 12px;
-  font-size: 13px;
-  color: #F3F4F6;
-  border-radius: 10px;
-  transition: all 0.15s ease;
-  cursor: pointer;
-}
-
-.dropdown-item:hover {
-  background-color: rgba(255, 255, 255, 0.06);
-  color: #FFFFFF;
-}
-
-.dropdown-divider {
-  height: 1px;
-  background-color: var(--color-border-subtle);
-  margin: var(--space-1) 0;
 }
 
 /* --------------------------------------------------------------------------
@@ -2386,67 +2485,166 @@ td a[href*="#challans?id="]:hover,
 }
 
 /* --------------------------------------------------------------------------
-   9. Notification Flyout Drawer
+   9. Notification Flyout Drawer (Redesigned)
    -------------------------------------------------------------------------- */
 .notification-flyout {
   position: absolute;
   top: calc(100% + 8px);
   right: 0;
   width: 380px;
-  max-width: 90vw;
-  background-color: var(--color-bg-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-dropdown);
+  max-width: calc(100vw - 24px);
+  background-color: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: 16px;
+  box-shadow: 0 20px 48px -12px rgba(22, 24, 29, 0.18), 0 2px 6px rgba(22, 24, 29, 0.04);
   z-index: var(--z-dropdown);
   display: none;
   flex-direction: column;
   overflow: hidden;
-  animation: dropdownIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: dropdownIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .notification-flyout.show {
-  display: flex;
+  display: flex !important;
 }
 
 .flyout-header {
-  padding: var(--space-3) var(--space-4);
-  border-bottom: 1px solid var(--color-border-subtle);
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--line);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background-color: var(--surface);
+}
+
+.notification-count-pill {
+  font-size: 11px;
+  font-weight: 600;
+  background-color: rgba(43, 58, 103, 0.1);
+  color: var(--accent);
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.flyout-mark-read-btn {
+  background: none;
+  border: none;
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--text-2);
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+}
+
+.flyout-mark-read-btn:hover {
+  color: var(--accent);
+  background-color: var(--surface-2);
 }
 
 .flyout-list {
-  max-height: 360px;
+  max-height: 380px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
 }
 
-.flyout-item {
-  padding: var(--space-3) var(--space-4);
-  border-bottom: 1px solid var(--color-border-subtle);
+.notification-item {
   display: flex;
-  gap: var(--space-3);
   align-items: flex-start;
-  transition: background-color var(--transition-fast);
+  gap: 12px;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--line);
   cursor: pointer;
+  transition: background-color 0.15s ease;
+  position: relative;
 }
 
-.flyout-item:hover {
-  background-color: var(--color-bg-surface-hover);
+.notification-item:hover {
+  background-color: var(--surface-2);
 }
 
-.flyout-item.unread {
-  background-color: var(--color-primary-subtle);
+.notification-item.unread {
+  background-color: rgba(43, 58, 103, 0.025);
+}
+
+.notification-item.unread::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10px;
+  bottom: 10px;
+  width: 3px;
+  border-radius: 0 2px 2px 0;
+  background-color: var(--accent);
+}
+
+.notification-indicator {
+  padding-top: 5px;
+  flex-shrink: 0;
+}
+
+.notification-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: block;
+}
+
+.notification-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.notification-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 3px;
+}
+
+.notification-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.3;
+}
+
+.notification-time {
+  font-size: 11px;
+  color: var(--text-3);
+  white-space: nowrap;
+}
+
+.notification-desc {
+  font-size: 12px;
+  color: var(--text-2);
+  line-height: 1.45;
 }
 
 .flyout-footer {
-  padding: var(--space-2) var(--space-4);
-  border-top: 1px solid var(--color-border-subtle);
-  background-color: var(--color-bg-surface-subtle);
+  padding: 10px 18px;
+  border-top: 1px solid var(--line);
+  background-color: var(--surface-2);
   text-align: center;
+}
+
+.flyout-footer-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.flyout-footer-link:hover {
+  opacity: 0.85;
 }
 
 /* --------------------------------------------------------------------------

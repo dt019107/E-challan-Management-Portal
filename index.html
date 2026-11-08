@@ -158,22 +158,28 @@
             <!-- Notifications Drawer -->
             <div class="notification-flyout" id="notificationsFlyout">
               <div class="flyout-header">
-                <strong style="font-size: 14px;">Compliance Notifications</strong>
-                <button class="btn btn--ghost btn--sm" id="markAllReadBtn" onclick="markAllNotificationsRead()" style="font-size: 11px; padding: 2px 6px;">Mark all read</button>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <strong style="font-size: 13.5px; font-weight: 600; color: var(--ink);">Notifications</strong>
+                  <span class="notification-count-pill" id="flyoutUnreadPill">3 new</span>
+                </div>
+                <button class="flyout-mark-read-btn" id="markAllReadBtn" onclick="markAllNotificationsRead()">Mark all read</button>
               </div>
               <div class="flyout-list" id="notificationsList"></div>
               <div class="flyout-footer">
-                <a href="#challans" onclick="document.getElementById('notificationsFlyout').style.display = 'none';" style="font-size: 12px; font-weight: 600;">View All Compliance Alerts →</a>
+                <a href="#challans" onclick="document.getElementById('notificationsFlyout').style.display = 'none'; document.getElementById('notificationsFlyout').classList.remove('show');" class="flyout-footer-link">
+                  <span>View All Compliance Alerts</span>
+                  <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                </a>
               </div>
             </div>
           </div>
 
           <!-- User Profile Trigger & Dropdown -->
           <div style="position: relative;">
-            <div class="user-profile-btn" id="userProfileBtn">
-              <div class="user-avatar" id="currentUserAvatar">VM</div>
+            <div class="user-profile-btn" id="userProfileBtn" title="Account & Preferences">
+              <div class="user-avatar" id="currentUserAvatar">DT</div>
               <div class="user-info">
-                <span class="user-name" id="currentUserName">Vikram Malhotra</span>
+                <span class="user-name" id="currentUserName">Deepak Tiwari</span>
                 <span class="user-role" id="currentUserRole">Fleet Compliance Head</span>
               </div>
               <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor" color="var(--color-text-muted)">
@@ -182,23 +188,32 @@
             </div>
 
             <!-- Profile Dropdown Menu -->
-            <div class="dropdown-menu" id="userProfileMenu">
-              <div style="padding: 10px 16px; border-bottom: 1px solid var(--color-border-subtle);">
-                <div style="font-size: 13px; font-weight: 600;">Signed in as</div>
-                <div style="font-size: 12px; color: var(--color-text-muted);">vikram.m@apexfleet.in</div>
+            <div class="dropdown-menu profile-dropdown-menu" id="userProfileMenu">
+              <div class="profile-menu-header">
+                <div class="profile-menu-avatar">DT</div>
+                <div class="profile-menu-meta">
+                  <div class="profile-menu-name">Deepak Tiwari</div>
+                  <div class="profile-menu-role">Fleet Compliance Head</div>
+                  <div class="profile-menu-email">deepak.t@apexfleet.in</div>
+                </div>
               </div>
-              <div class="dropdown-item" onclick="navigateTo('settings'); document.getElementById('userProfileMenu').style.display = 'none';">
-                <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/></svg>
-                Workspace Settings
-              </div>
-              <div class="dropdown-item" onclick="openResetDataConfirmationModal(); document.getElementById('userProfileMenu').style.display = 'none';">
-                <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor" color="var(--color-warning)"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/></svg>
-                Reset Demo Baseline
+              <div class="profile-menu-status">
+                <span class="status-indicator-dot online"></span>
+                <span>MoRTH Gateway Session Active</span>
               </div>
               <div class="dropdown-divider"></div>
-              <div class="dropdown-item" style="color: var(--color-danger);" onclick="Utils.showToast('Demo Environment', 'Session active in local browser storage.', 'info'); document.getElementById('userProfileMenu').style.display = 'none';">
-                <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"/></svg>
-                Sign Out Simulation
+              <div class="dropdown-item" onclick="navigateTo('settings'); document.getElementById('userProfileMenu').style.display = 'none'; document.getElementById('userProfileMenu').classList.remove('show');">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                <span>Workspace Settings</span>
+              </div>
+              <div class="dropdown-item" onclick="openResetDataConfirmationModal(); document.getElementById('userProfileMenu').style.display = 'none'; document.getElementById('userProfileMenu').classList.remove('show');">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><polyline points="23 20 23 14 17 14"></polyline><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path></svg>
+                <span>Reset Demo Baseline</span>
+              </div>
+              <div class="dropdown-divider"></div>
+              <div class="dropdown-item danger" onclick="Utils.showToast('Demo Environment', 'Session active for Deepak Tiwari.', 'info'); document.getElementById('userProfileMenu').style.display = 'none'; document.getElementById('userProfileMenu').classList.remove('show');">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                <span>Sign Out Simulation</span>
               </div>
             </div>
           </div>

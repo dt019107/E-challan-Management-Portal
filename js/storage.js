@@ -32,6 +32,21 @@ const StorageManager = {
     if (!this.data.recoveries) this.data.recoveries = [];
     if (!this.data.disputes) this.data.disputes = [];
     if (!this.data.courtCases) this.data.courtCases = [];
+    if (!this.data.notifications || this.data.notifications.length === 0) {
+      this.data.notifications = JSON.parse(JSON.stringify(INITIAL_MOCK_DATA.notifications || []));
+    }
+
+    // Ensure currentUser is Deepak Tiwari
+    if (!this.data.currentUser || this.data.currentUser.name === "Vikram Malhotra") {
+      this.data.currentUser = {
+        name: "Deepak Tiwari",
+        email: "deepak.t@apexfleet.in",
+        role: "Fleet Compliance Head",
+        avatar: "DT",
+        workspaceId: "ws-1"
+      };
+      this.persist();
+    }
 
     // Ensure company and workspace settings
     if (!this.data.company) {
@@ -647,7 +662,7 @@ const StorageManager = {
     }
 
     const timestamp = new Date().toISOString();
-    const currentUser = (this.data.currentUser && this.data.currentUser.name) ? this.data.currentUser.name : "Vikram Malhotra";
+    const currentUser = (this.data.currentUser && this.data.currentUser.name) ? this.data.currentUser.name : "Deepak Tiwari";
 
     // 2. Track structured responsibility history on challan
     if (!challan.responsibilityHistory) challan.responsibilityHistory = [];
@@ -724,7 +739,7 @@ const StorageManager = {
     const payerType = paymentDetails.payerType || "Apex Fleet Pvt Ltd";
     const recoveryParty = paymentDetails.recoveryParty || challan.responsiblePartyName || "Rahul Sharma";
     const recoveryMethod = paymentDetails.recoveryMethod || (challan.responsibleParty === "Driver" ? "Payroll deduction" : (challan.responsibleParty === "Lessee" ? "Invoice" : "Write-off"));
-    const userName = (this.data.currentUser && this.data.currentUser.name) ? this.data.currentUser.name : "Vikram Malhotra";
+    const userName = (this.data.currentUser && this.data.currentUser.name) ? this.data.currentUser.name : "Deepak Tiwari";
     const nowISO = new Date().toISOString();
 
     if (!challan.activityLog) challan.activityLog = [];
@@ -943,7 +958,7 @@ const StorageManager = {
     if (!challan.activityLog) challan.activityLog = [];
     challan.activityLog.push({
       timestamp: nowISO,
-      user: (this.data.currentUser && this.data.currentUser.name) || "Vikram Malhotra",
+      user: (this.data.currentUser && this.data.currentUser.name) || "Deepak Tiwari",
       action: "Dispute Raised",
       notes: `Administrative dispute filed with Parivahan (Docket: ${docketNo}). Reason: ${reason}. Evidence: ${challan.disputeDetails.evidenceFile}`
     });
@@ -1060,7 +1075,7 @@ const StorageManager = {
     if (!challan.activityLog) challan.activityLog = [];
     challan.activityLog.push({
       timestamp: nowISO,
-      user: (this.data.currentUser && this.data.currentUser.name) || "Vikram Malhotra",
+      user: (this.data.currentUser && this.data.currentUser.name) || "Deepak Tiwari",
       action: "Escalated to Court",
       notes: `Referred to Virtual Court (${courtName}). Case No: ${caseNo}. Hearing scheduled: ${hearingDate}. Direct payment locked.`
     });

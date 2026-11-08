@@ -1571,7 +1571,7 @@ function submitEditChallanForm() {
   if (!challan.activityLog) challan.activityLog = [];
   challan.activityLog.push({
     timestamp: new Date().toISOString(),
-    user: "Vikram Malhotra (Fleet Compliance Head)",
+    user: "Deepak Tiwari (Fleet Compliance Head)",
     action: "Challan Details Updated",
     notes: notes || `Updated location to "${newLocation}", due date to ${newDueDate}, late fee to ₹${newLateFee}.`
   });

@@ -34,10 +34,10 @@ const INITIAL_MOCK_DATA = {
   ],
 
   currentUser: {
-    name: "Vikram Malhotra",
-    email: "vikram.m@apexfleet.in",
+    name: "Deepak Tiwari",
+    email: "deepak.t@apexfleet.in",
     role: "Fleet Compliance Head",
-    avatar: "VM",
+    avatar: "DT",
     workspaceId: "ws-1"
   },
 
@@ -812,7 +812,7 @@ const INITIAL_MOCK_DATA = {
       recoveryMethod: "Payroll Deduction",
       activityLog: [
         { timestamp: "2026-03-02T12:00:00", user: "Parivahan Sync Bot", action: "Detected", notes: "Challan fetched via API" },
-        { timestamp: "2026-03-02T15:30:00", user: "Vikram Malhotra", action: "Assigned", notes: "Confirmed responsibility to Rahul Sharma." }
+        { timestamp: "2026-03-02T15:30:00", user: "Deepak Tiwari", action: "Assigned", notes: "Confirmed responsibility to Rahul Sharma." }
       ]
     },
     {
@@ -886,7 +886,7 @@ const INITIAL_MOCK_DATA = {
       recoveryMethod: "Operational Expense",
       activityLog: [
         { timestamp: "2026-02-16T10:00:00", user: "Parivahan Sync Bot", action: "Detected", notes: "Challan imported" },
-        { timestamp: "2026-03-05T17:00:00", user: "Vikram Malhotra", action: "Payment Started", notes: "HDFC Net Banking initiated" }
+        { timestamp: "2026-03-05T17:00:00", user: "Deepak Tiwari", action: "Payment Started", notes: "HDFC Net Banking initiated" }
       ]
     },
     {
@@ -964,7 +964,7 @@ const INITIAL_MOCK_DATA = {
       transactionReference: "UPI-4048992019482-OKHDFC",
       activityLog: [
         { timestamp: "2026-02-11T09:00:00", user: "Manual Entry", action: "Detected", notes: "Physical notice" },
-        { timestamp: "2026-02-18T16:22:10", user: "Vikram Malhotra", action: "Paid", notes: "Paid via UPI. Added to Blinkit monthly invoice." }
+        { timestamp: "2026-02-18T16:22:10", user: "Deepak Tiwari", action: "Paid", notes: "Paid via UPI. Added to Blinkit monthly invoice." }
       ]
     },
     {
@@ -1138,9 +1138,9 @@ const INITIAL_MOCK_DATA = {
       responsiblePartyName: "Rahul Sharma",
       responsiblePartyId: "drv-1",
       isManualOverride: true,
-      manualOverrideReason: "Adjudicated by Vikram Malhotra: Driver admitted unauthorized trip route diversion",
-      overrideReason: "Adjudicated by Vikram Malhotra: Driver admitted unauthorized trip route diversion",
-      assignedBy: "Vikram Malhotra (Fleet Compliance Head)",
+      manualOverrideReason: "Adjudicated by Deepak Tiwari: Driver admitted unauthorized trip route diversion",
+      overrideReason: "Adjudicated by Deepak Tiwari: Driver admitted unauthorized trip route diversion",
+      assignedBy: "Deepak Tiwari (Fleet Compliance Head)",
       assignedAt: "2026-02-14T11:00:00",
       suggestedParty: "Driver",
       suggestedPartyName: "Rahul Sharma",
@@ -1150,7 +1150,7 @@ const INITIAL_MOCK_DATA = {
       evidenceImage: "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800&auto=format&fit=crop&q=60",
       activityLog: [
         { timestamp: "2026-02-13T09:00:00", user: "Parivahan Sync Bot", action: "Detected", notes: "Speed camera log" },
-        { timestamp: "2026-02-14T11:00:00", user: "Vikram Malhotra", action: "Responsibility Assigned (Manual Override)", notes: "Manual override: Driver admitted unauthorized trip route diversion." }
+        { timestamp: "2026-02-14T11:00:00", user: "Deepak Tiwari", action: "Responsibility Assigned (Manual Override)", notes: "Manual override: Driver admitted unauthorized trip route diversion." }
       ]
     },
     {
@@ -1181,7 +1181,7 @@ const INITIAL_MOCK_DATA = {
       evidenceImage: "https://images.unsplash.com/photo-1508974239320-0a029497e820?w=800&auto=format&fit=crop&q=60",
       activityLog: [
         { timestamp: "2026-02-20T10:00:00", user: "Parivahan Sync Bot", action: "Detected", notes: "CCTV snapshot" },
-        { timestamp: "2026-02-21T14:30:00", user: "Vikram Malhotra", action: "Assigned", notes: "Assigned to Suresh Yadav." }
+        { timestamp: "2026-02-21T14:30:00", user: "Deepak Tiwari", action: "Assigned", notes: "Assigned to Suresh Yadav." }
       ]
     },
     {
@@ -1489,7 +1489,7 @@ const INITIAL_MOCK_DATA = {
       },
       activityLog: [
         { timestamp: "2026-02-11T09:00:00", user: "Parivahan Sync Bot", action: "Detected", notes: "Radar sync" },
-        { timestamp: "2026-02-25T14:00:00", user: "Vikram Malhotra", action: "Dispute Raised", notes: "Speed governor audit submitted" }
+        { timestamp: "2026-02-25T14:00:00", user: "Deepak Tiwari", action: "Dispute Raised", notes: "Speed governor audit submitted" }
       ]
     },
     {
@@ -1564,7 +1564,7 @@ const INITIAL_MOCK_DATA = {
       },
       activityLog: [
         { timestamp: "2026-02-19T08:00:00", user: "Parivahan Sync Bot", action: "Detected", notes: "Automated camera notice" },
-        { timestamp: "2026-02-22T11:00:00", user: "Vikram Malhotra", action: "Dispute Raised", notes: "EV exemption citation filed" }
+        { timestamp: "2026-02-22T11:00:00", user: "Deepak Tiwari", action: "Dispute Raised", notes: "EV exemption citation filed" }
       ]
     },
     {
@@ -1719,7 +1719,7 @@ const INITIAL_MOCK_DATA = {
       transactionReference: "HDFC-NETB-991204881",
       activityLog: [
         { timestamp: "2026-01-06T09:00:00", user: "Parivahan Sync Bot", action: "Detected", notes: "Camera alert" },
-        { timestamp: "2026-01-18T14:10:00", user: "Vikram Malhotra", action: "Paid", notes: "Settled via Net Banking. Recovered from Jan payroll." }
+        { timestamp: "2026-01-18T14:10:00", user: "Deepak Tiwari", action: "Paid", notes: "Settled via Net Banking. Recovered from Jan payroll." }
       ]
     },
     {
@@ -1797,7 +1797,7 @@ const INITIAL_MOCK_DATA = {
       transactionReference: "NETB-HDFC-001928341",
       activityLog: [
         { timestamp: "2026-01-09T08:00:00", user: "Parivahan Sync Bot", action: "Detected", notes: "Radar poll" },
-        { timestamp: "2026-01-20T16:30:00", user: "Vikram Malhotra", action: "Paid", notes: "Paid by fleet. Added to Blinkit invoice." }
+        { timestamp: "2026-01-20T16:30:00", user: "Deepak Tiwari", action: "Paid", notes: "Paid by fleet. Added to Blinkit invoice." }
       ]
     },
     {
@@ -1836,7 +1836,7 @@ const INITIAL_MOCK_DATA = {
       transactionReference: "UPI-40991823901-OKSBI",
       activityLog: [
         { timestamp: "2026-01-19T09:00:00", user: "Parivahan Sync Bot", action: "Detected", notes: "ANPR poll" },
-        { timestamp: "2026-01-30T10:15:00", user: "Vikram Malhotra", action: "Paid", notes: "Settled via UPI. Payroll recovery scheduled." }
+        { timestamp: "2026-01-30T10:15:00", user: "Deepak Tiwari", action: "Paid", notes: "Settled via UPI. Payroll recovery scheduled." }
       ]
     }
   ],

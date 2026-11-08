@@ -43,7 +43,7 @@ function renderDashboardView(container, actions) {
             <span class="dot framer-live-dot"></span>
             <span>${formattedTodayDate} • MoRTH Parivahan Gateway Active</span>
           </div>
-          <h1 class="calm-header-greeting">Good morning, Vikram</h1>
+          <h1 class="calm-header-greeting">Good morning, Deepak</h1>
         </div>
 
         <div class="calm-header-actions">
@@ -161,16 +161,6 @@ function renderDashboardView(container, actions) {
             <div class="calm-navy-desc">
               14 commercial notices entering judicial compounding penalty within 7 business days if unadjudicated.
             </div>
-          </div>
-
-          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
-            <div class="calm-badge pending">
-              <span class="dot"></span>
-              <span>Court Referral Imminent</span>
-            </div>
-            <button class="calm-btn-secondary" style="padding: 6px 14px; font-size: 12px;" onclick="navigateTo('challans', true, { filter: 'due7days' })">
-              Review Notices →
-            </button>
           </div>
         </div>
 

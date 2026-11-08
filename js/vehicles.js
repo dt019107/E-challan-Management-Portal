@@ -919,7 +919,7 @@ function renderVehicleActivityTab(vehicle) {
           <div>
             <div class="text-xs font-semibold text-main">Driver Responsibility Assigned</div>
             <div class="text-xs text-secondary">Assigned operational duty to Rahul Sharma under trip roster TRIP-REG-991.</div>
-            <div class="text-xs text-muted" style="margin-top: 2px;">02 Mar 2026, 03:30 PM • Vikram Malhotra</div>
+            <div class="text-xs text-muted" style="margin-top: 2px;">02 Mar 2026, 03:30 PM • Deepak Tiwari</div>
           </div>
         </div>
         <div style="display: flex; gap: var(--space-3); border-left: 2px solid var(--color-border); padding-left: var(--space-4);">

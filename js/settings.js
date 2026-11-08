@@ -252,7 +252,7 @@ function renderActiveSettingsTab(company, currentUser, currentRole) {
             `).join("")}
           </div>
           <div style="font-size: 12px; color: var(--color-text-secondary); margin-top: 10px;">
-            Currently acting as: <strong>${currentUser.name || 'Vikram Malhotra'}</strong> • Active Role: <strong style="color: var(--color-primary);">${currentRole}</strong>
+            Currently acting as: <strong>${currentUser.name || 'Deepak Tiwari'}</strong> • Active Role: <strong style="color: var(--color-primary);">${currentRole}</strong>
           </div>
         </div>
 

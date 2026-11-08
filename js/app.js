@@ -325,14 +325,32 @@ function initNotifications() {
       badge.textContent = unreadCount;
       badge.style.display = unreadCount > 0 ? "inline-flex" : "none";
     }
+    const unreadPill = document.getElementById("flyoutUnreadPill");
+    if (unreadPill) {
+      unreadPill.textContent = unreadCount > 0 ? `${unreadCount} new` : "All read";
+    }
+
+    if (notifs.length === 0) {
+      list.innerHTML = `
+        <div style="padding: 32px 16px; text-align: center; color: var(--text-3); font-size: 13px;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin: 0 auto 8px; opacity: 0.6;"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          No notifications. All fleet compliance notices clear!
+        </div>
+      `;
+      return;
+    }
 
     list.innerHTML = notifs.map(n => `
       <div class="notification-item ${n.read ? '' : 'unread'}" onclick="handleNotificationClick('${n.id}')">
-        <div class="notification-dot" style="background-color: ${n.type === 'danger' ? 'var(--status-unassigned)' : 'var(--color-primary)'};"></div>
+        <div class="notification-indicator">
+          <span class="notification-dot" style="background-color: ${n.type === 'danger' ? 'var(--status-unassigned)' : (n.type === 'warning' ? '#E8A33D' : 'var(--accent)')};"></span>
+        </div>
         <div class="notification-content">
-          <div class="notification-title">${n.title}</div>
-          <div class="notification-desc">${n.desc}</div>
-          <div class="notification-time">${n.time}</div>
+          <div class="notification-title-row">
+            <span class="notification-title">${n.title}</span>
+            <span class="notification-time">${n.timestamp || n.time || ''}</span>
+          </div>
+          <div class="notification-desc">${n.message || n.desc || ''}</div>
         </div>
       </div>
     `).join("");
@@ -340,25 +358,45 @@ function initNotifications() {
 
   bellBtn.addEventListener("click", (e) => {
     e.stopPropagation();
-    const isOpen = panel.style.display === "block";
-    panel.style.display = isOpen ? "none" : "block";
-    if (!isOpen) renderNotifs();
+    const profileMenu = document.getElementById("userProfileMenu");
+    if (profileMenu) {
+      profileMenu.style.display = "none";
+      profileMenu.classList.remove("show");
+    }
+
+    const isVisible = panel.classList.contains("show") || panel.style.display === "flex";
+    if (isVisible) {
+      panel.style.display = "none";
+      panel.classList.remove("show");
+    } else {
+      panel.style.display = "flex";
+      panel.classList.add("show");
+      renderNotifs();
+    }
   });
 
   document.addEventListener("click", (e) => {
     if (!panel.contains(e.target) && !bellBtn.contains(e.target)) {
       panel.style.display = "none";
+      panel.classList.remove("show");
     }
   });
 
   renderNotifs();
   window.addEventListener("state:updated", renderNotifs);
+
+  if (window.location.hash.includes("open=notifications")) {
+    setTimeout(() => bellBtn.click(), 250);
+  }
 }
 
 function handleNotificationClick(notifId) {
   StorageManager.markNotificationRead(notifId);
   const panel = document.getElementById("notificationsFlyout");
-  if (panel) panel.style.display = "none";
+  if (panel) {
+    panel.style.display = "none";
+    panel.classList.remove("show");
+  }
   navigateTo("challans", true, { status: "unassigned" });
 }
 
@@ -366,6 +404,31 @@ function markAllNotificationsRead() {
   const notifs = StorageManager.getNotifications();
   notifs.forEach(n => StorageManager.markNotificationRead(n.id));
   Utils.showToast("Notifications Read", "All alert notifications marked as read.", "info");
+  const panel = document.getElementById("notificationsFlyout");
+  if (panel && (panel.classList.contains("show") || panel.style.display === "flex")) {
+    const list = document.getElementById("notificationsList");
+    const unreadPill = document.getElementById("flyoutUnreadPill");
+    const badge = document.getElementById("unreadNotificationBadge");
+    if (badge) badge.style.display = "none";
+    if (unreadPill) unreadPill.textContent = "All read";
+    if (list) {
+      const notifsUpdated = StorageManager.getNotifications();
+      list.innerHTML = notifsUpdated.map(n => `
+        <div class="notification-item" onclick="handleNotificationClick('${n.id}')">
+          <div class="notification-indicator">
+            <span class="notification-dot" style="background-color: ${n.type === 'danger' ? 'var(--status-unassigned)' : (n.type === 'warning' ? '#E8A33D' : 'var(--accent)')};"></span>
+          </div>
+          <div class="notification-content">
+            <div class="notification-title-row">
+              <span class="notification-title">${n.title}</span>
+              <span class="notification-time">${n.timestamp || n.time || ''}</span>
+            </div>
+            <div class="notification-desc">${n.message || n.desc || ''}</div>
+          </div>
+        </div>
+      `).join("");
+    }
+  }
 }
 
 // --------------------------------------------------------------------------
@@ -379,15 +442,32 @@ function initUserProfile() {
 
   profileBtn.addEventListener("click", (e) => {
     e.stopPropagation();
-    const isOpen = profileMenu.style.display === "block";
-    profileMenu.style.display = isOpen ? "none" : "block";
+    const notifPanel = document.getElementById("notificationsFlyout");
+    if (notifPanel) {
+      notifPanel.style.display = "none";
+      notifPanel.classList.remove("show");
+    }
+
+    const isVisible = profileMenu.classList.contains("show") || profileMenu.style.display === "block";
+    if (isVisible) {
+      profileMenu.style.display = "none";
+      profileMenu.classList.remove("show");
+    } else {
+      profileMenu.style.display = "block";
+      profileMenu.classList.add("show");
+    }
   });
 
   document.addEventListener("click", (e) => {
     if (!profileMenu.contains(e.target) && !profileBtn.contains(e.target)) {
       profileMenu.style.display = "none";
+      profileMenu.classList.remove("show");
     }
   });
+
+  if (window.location.hash.includes("open=profile")) {
+    setTimeout(() => profileBtn.click(), 250);
+  }
 }
 
 // --------------------------------------------------------------------------

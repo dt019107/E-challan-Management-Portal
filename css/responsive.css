@@ -384,7 +384,6 @@ p,
 /* Never allow horizontal page scrolling */
 .app-shell,
 .app-main,
-.app-topbar,
 .app-breadcrumbs-bar,
 .app-content,
 body,
@@ -392,6 +391,13 @@ html {
   max-width: 100vw !important;
   overflow-x: hidden !important;
   box-sizing: border-box !important;
+}
+
+/* Allow topbar dropdown flyouts to be fully visible and overlap content */
+.app-topbar {
+  overflow: visible !important;
+  position: relative;
+  z-index: var(--z-topbar);
 }
 
 .calm-queue-tabs {
