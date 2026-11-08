@@ -359,8 +359,8 @@
 
 .global-search-input:focus {
   background-color: var(--surface-2);
-  border-color: rgba(205, 185, 140, 0.5);
-  box-shadow: 0 0 0 1px rgba(205, 185, 140, 0.5);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-muted);
   outline: none;
 }
 

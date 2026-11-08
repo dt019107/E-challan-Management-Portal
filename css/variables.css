@@ -13,48 +13,48 @@
   --surface-2: #ECEAE4;        /* Secondary surface, inputs, hover states */
   --surface-3: #E2DFD7;        /* Raised chips & active controls */
   
-  --ink: #16181D;              /* Deep ink text */
-  --text-2: #6F7280;           /* Secondary text & labels */
-  --text-3: #9A9CA6;           /* Muted text & timestamps */
+  --ink: #16181D;              /* Deep ink text (WCAG AAA 15:1 contrast) */
+  --text-2: #4A4D59;           /* Secondary text, metadata & labels (WCAG AAA 7.5:1 contrast) */
+  --text-3: #606370;           /* Tertiary text, captions & headers (WCAG AA 5.5:1 contrast) */
 
-  --line: rgba(22, 24, 29, 0.08);
-  --line-strong: rgba(22, 24, 29, 0.16);
+  --line: rgba(22, 24, 29, 0.09);
+  --line-strong: rgba(22, 24, 29, 0.18);
 
   /* Primary Accent: Indigo ink for primary actions, selected states, and chart emphasis */
-  --accent: #2B3A67;
-  --accent-hover: #212D52;
-  --accent-muted: rgba(43, 58, 103, 0.10);
-  --accent-border: rgba(43, 58, 103, 0.25);
+  --accent: #243360;
+  --accent-hover: #192344;
+  --accent-muted: rgba(36, 51, 96, 0.10);
+  --accent-border: rgba(36, 51, 96, 0.28);
 
   /* Urgency Signal: Amber, used ONLY for urgency (due soon, needs review) */
-  --signal: #E8A33D;
-  --signal-muted: rgba(232, 163, 61, 0.12);
-  --signal-border: rgba(232, 163, 61, 0.28);
+  --signal: #D97706;
+  --signal-muted: rgba(217, 119, 6, 0.12);
+  --signal-border: rgba(217, 119, 6, 0.30);
 
-  /* Semantic Status Tokens (text on 12% tint of itself) */
-  --status-unassigned: #B42318;
-  --status-unassigned-bg: rgba(180, 35, 24, 0.12);
-  --status-unassigned-border: rgba(180, 35, 24, 0.20);
+  /* Semantic Status Tokens (Calibrated high-contrast text on 12% tint of itself) */
+  --status-unassigned: #9E1B10;
+  --status-unassigned-bg: rgba(158, 27, 16, 0.10);
+  --status-unassigned-border: rgba(158, 27, 16, 0.24);
 
-  --status-assigned: #1D4ED8;
-  --status-assigned-bg: rgba(29, 78, 216, 0.12);
-  --status-assigned-border: rgba(29, 78, 216, 0.20);
+  --status-assigned: #1541B8;
+  --status-assigned-bg: rgba(21, 65, 184, 0.10);
+  --status-assigned-border: rgba(21, 65, 184, 0.24);
 
-  --status-pending: #B45309;
-  --status-pending-bg: rgba(180, 83, 9, 0.12);
-  --status-pending-border: rgba(180, 83, 9, 0.20);
+  --status-pending: #9A4204;
+  --status-pending-bg: rgba(154, 66, 4, 0.10);
+  --status-pending-border: rgba(154, 66, 4, 0.24);
 
-  --status-paid: #15803D;
-  --status-paid-bg: rgba(21, 128, 61, 0.12);
-  --status-paid-border: rgba(21, 128, 61, 0.20);
+  --status-paid: #106830;
+  --status-paid-bg: rgba(16, 104, 48, 0.10);
+  --status-paid-border: rgba(16, 104, 48, 0.24);
 
-  --status-disputed: #6D28D9;
-  --status-disputed-bg: rgba(109, 40, 217, 0.12);
-  --status-disputed-border: rgba(109, 40, 217, 0.20);
+  --status-disputed: #5B21B6;
+  --status-disputed-bg: rgba(91, 33, 182, 0.10);
+  --status-disputed-border: rgba(91, 33, 182, 0.24);
 
-  --status-court: #0369A1;
-  --status-court-bg: rgba(3, 105, 161, 0.12);
-  --status-court-border: rgba(3, 105, 161, 0.20);
+  --status-court: #035480;
+  --status-court-bg: rgba(3, 84, 128, 0.10);
+  --status-court-border: rgba(3, 84, 128, 0.24);
 
   /* Dark panel: #16181D, ONE per screen */
   --dark-panel-bg: #16181D;

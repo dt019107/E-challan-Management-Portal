@@ -37,10 +37,10 @@ function renderDashboardView(container, actions) {
     <div class="calm-dashboard-container">
       
       <!-- 1. GREETING HEADER (44px Serif with dynamic date line) -->
-      <div class="calm-dashboard-header">
+      <div class="calm-dashboard-header framer-animate-header">
         <div class="calm-header-left">
           <div class="calm-header-date">
-            <span class="dot"></span>
+            <span class="dot framer-live-dot"></span>
             <span>${formattedTodayDate} • MoRTH Parivahan Gateway Active</span>
           </div>
           <h1 class="calm-header-greeting">Good morning, Vikram</h1>
@@ -59,7 +59,7 @@ function renderDashboardView(container, actions) {
       </div>
 
       <!-- 2. TOP ROW (12 COLUMNS: 7 / 5 ASYMMETRIC GRID) -->
-      <div class="calm-grid-12">
+      <div class="calm-grid-12 framer-animate-hero">
         
         <!-- COLUMN SPAN 7: THE HERO OUTSTANDING TILE (56px Instrument Serif Number, hairline divider, signature deadline rulers) -->
         <div class="calm-panel calm-span-7">
@@ -177,7 +177,7 @@ function renderDashboardView(container, actions) {
       </div>
 
       <!-- 3. MIDDLE ROW (12 COLUMNS: 7 / 5 ASYMMETRIC GRID) -->
-      <div class="calm-grid-12">
+      <div class="calm-grid-12 framer-animate-charts">
         
         <!-- COLUMN SPAN 7: CUSTOM BAR CHART (14px Bars, 6px Radius Tops, Indigo Current Month, Floating Tooltip) -->
         <div class="calm-panel calm-span-7">
@@ -248,7 +248,7 @@ function renderDashboardView(container, actions) {
       </div>
 
       <!-- 4. BOTTOM ROW (SPAN 12: ACTION QUEUE & RECENT INFRACTIONS) -->
-      <div class="calm-panel calm-span-12">
+      <div class="calm-panel calm-span-12 framer-animate-table">
         
         <div class="calm-table-header">
           <div>
@@ -430,29 +430,29 @@ function renderFinexyDualBarChart(challans) {
     const yPos = chartHeight - bHeight;
 
     if (m.isCurrent) {
-      // Indigo Ink current month bar with 6px top radius
+      // Indigo Ink current month bar with 6px top radius and Framer spring animation
       barsHTML += `
-        <rect x="${xPos}" y="${yPos}" width="${barWidth}" height="${bHeight}" rx="6" ry="6" fill="#2B3A67" />
-        <text x="${xPos + barWidth / 2}" y="${chartHeight + 18}" text-anchor="middle" fill="#16181D" font-size="11" font-weight="600" font-family="'Geist', 'Inter Tight', sans-serif">${m.label}</text>
+        <rect class="framer-bar-rect" style="--bar-delay: ${idx * 0.045}s;" x="${xPos}" y="${yPos}" width="${barWidth}" height="${bHeight}" rx="6" ry="6" fill="#243360" />
+        <text x="${xPos + barWidth / 2}" y="${chartHeight + 18}" text-anchor="middle" fill="#16181D" font-size="11.5" font-weight="700" font-family="'Geist', 'Inter Tight', sans-serif">${m.label}</text>
       `;
 
       // Floating tooltip on --surface with 1px border and soft shadow
       const ttX = xPos - 36;
       const ttY = yPos - 38;
       tooltipHTML = `
-        <g class="calm-chart-tooltip" filter="drop-shadow(0 2px 6px rgba(22, 24, 29, 0.08))">
-          <rect x="${ttX}" y="${ttY}" width="86" height="28" rx="6" fill="#FBFAF7" stroke="rgba(22, 24, 29, 0.12)" stroke-width="1" />
+        <g class="calm-chart-tooltip" filter="drop-shadow(0 2px 8px rgba(22, 24, 29, 0.12))">
+          <rect x="${ttX}" y="${ttY}" width="86" height="28" rx="6" fill="#FBFAF7" stroke="rgba(22, 24, 29, 0.18)" stroke-width="1" />
           <polygon points="${xPos + barWidth/2 - 4},${ttY + 28} ${xPos + barWidth/2 + 4},${ttY + 28} ${xPos + barWidth/2},${ttY + 33}" fill="#FBFAF7" />
-          <text x="${ttX + 43}" y="${ttY + 18}" text-anchor="middle" fill="#16181D" font-size="11" font-weight="600" font-family="'Geist', 'Inter Tight', sans-serif">
+          <text x="${ttX + 43}" y="${ttY + 18}" text-anchor="middle" fill="#16181D" font-size="11.5" font-weight="700" font-family="'Geist', 'Inter Tight', sans-serif">
             ${m.amount} (${m.notices})
           </text>
         </g>
       `;
     } else {
-      // Warm grey --surface-2 past months bars with 6px top radius
+      // Warm grey --surface-2 past months bars with 6px top radius and Framer spring animation
       barsHTML += `
-        <rect x="${xPos}" y="${yPos}" width="${barWidth}" height="${bHeight}" rx="6" ry="6" fill="#ECEAE4" />
-        <text x="${xPos + barWidth / 2}" y="${chartHeight + 18}" text-anchor="middle" fill="#9A9CA6" font-size="11" font-weight="400" font-family="'Geist', 'Inter Tight', sans-serif">${m.label}</text>
+        <rect class="framer-bar-rect" style="--bar-delay: ${idx * 0.045}s;" x="${xPos}" y="${yPos}" width="${barWidth}" height="${bHeight}" rx="6" ry="6" fill="#E2DFD7" />
+        <text x="${xPos + barWidth / 2}" y="${chartHeight + 18}" text-anchor="middle" fill="#606370" font-size="11" font-weight="500" font-family="'Geist', 'Inter Tight', sans-serif">${m.label}</text>
       `;
     }
   });
@@ -496,20 +496,20 @@ function renderLiabilityDonutChart(challans) {
         <circle cx="${size/2}" cy="${size/2}" r="${radius}" fill="none"
           stroke="#ECEAE4" stroke-width="${stroke}" />
 
-        <!-- Segment 1: Driver Trips (--accent #2B3A67 Indigo) -->
-        <circle cx="${size/2}" cy="${size/2}" r="${radius}" fill="none"
-          stroke="#2B3A67" stroke-width="${stroke}" stroke-linecap="butt"
+        <!-- Segment 1: Driver Trips (--accent #243360 Indigo) -->
+        <circle class="framer-donut-segment" style="--donut-delay: 0.2s;" cx="${size/2}" cy="${size/2}" r="${radius}" fill="none"
+          stroke="#243360" stroke-width="${stroke}" stroke-linecap="butt"
           stroke-dasharray="${p1} ${circumference}"
           stroke-dashoffset="${off1}" />
 
         <!-- Segment 2: Lessee Contracts (#6B77A3 Slate Indigo) -->
-        <circle cx="${size/2}" cy="${size/2}" r="${radius}" fill="none"
+        <circle class="framer-donut-segment" style="--donut-delay: 0.35s;" cx="${size/2}" cy="${size/2}" r="${radius}" fill="none"
           stroke="#6B77A3" stroke-width="${stroke}" stroke-linecap="butt"
           stroke-dasharray="${p2} ${circumference}"
           stroke-dashoffset="${off2}" />
 
         <!-- Segment 3: Fleet Default (#A9B0C9 Muted Lavender Grey) -->
-        <circle cx="${size/2}" cy="${size/2}" r="${radius}" fill="none"
+        <circle class="framer-donut-segment" style="--donut-delay: 0.5s;" cx="${size/2}" cy="${size/2}" r="${radius}" fill="none"
           stroke="#A9B0C9" stroke-width="${stroke}" stroke-linecap="butt"
           stroke-dasharray="${p3} ${circumference}"
           stroke-dashoffset="${off3}" />
