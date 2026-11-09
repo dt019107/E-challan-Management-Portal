@@ -17,7 +17,7 @@
   --space-gap: 24px;
   --font-h1: 44px;
   --font-body: 16px;
-  --sidebar-width: 280px;
+  --sidebar-width: 240px;
   --sidebar-rail-width: 72px;
   --content-max-width: 1440px;
 }
@@ -84,10 +84,10 @@ p,
   transition: width 200ms cubic-bezier(0.22, 1, 0.36, 1), transform 200ms cubic-bezier(0.22, 1, 0.36, 1) !important;
 }
 
-/* Desktop (>= 1200px): Full 280px sidebar */
+/* Desktop (>= 1200px): Full 240px sidebar */
 @media (min-width: 1200px) {
   .app-sidebar {
-    width: 280px;
+    width: var(--sidebar-width);
     flex-shrink: 0;
   }
 
@@ -205,7 +205,7 @@ p,
     top: 0 !important;
     left: 0 !important;
     bottom: 0 !important;
-    width: 280px !important;
+    width: var(--sidebar-width) !important;
     transform: translateX(-100%) !important;
     box-shadow: var(--shadow-xl);
     z-index: var(--z-sidebar) !important;

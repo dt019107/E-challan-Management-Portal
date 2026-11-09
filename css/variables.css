@@ -206,11 +206,11 @@
 
   /* --------------------------------------------------------------------------
      5. Layout Dimensions
-     - >= 1200px: 280px full sidebar
+     - >= 1200px: 240px full sidebar
      - 840px - 1200px: 72px icon rail
-     - < 840px: 280px off-canvas drawer (fixed)
+     - < 840px: 240px off-canvas drawer (fixed)
      -------------------------------------------------------------------------- */
-  --sidebar-width: 280px;
+  --sidebar-width: 240px;
   --sidebar-collapsed-width: 72px;
   --topbar-height: 56px;
   --content-max-width: 1440px;
