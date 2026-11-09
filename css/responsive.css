@@ -702,11 +702,6 @@ input[id*="description"] {
     margin-bottom: 6px !important;
   }
 
-  /* On short viewports (< 680px height), hide the middle trend charts so the Action Queue is visible */
-  .calm-grid-12.framer-animate-charts {
-    display: none !important;
-  }
-
   .calm-table-panel.framer-animate-table {
     margin-top: 0 !important;
   }

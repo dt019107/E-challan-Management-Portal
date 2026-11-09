@@ -387,10 +387,10 @@ function renderFinexyDualBarChart(challans) {
     });
   }
 
-  const chartHeight = 150;
+  const chartHeight = 84;
   const chartWidth = 460;
-  const barWidth = 14; // Strict 14px width (not pills!)
-  const startX = 40;
+  const barWidth = 12; // Refined compact bar width
+  const startX = 34;
   const gap = (chartWidth - startX - (months.length * barWidth)) / (months.length - 1);
   const maxVal = 65;
 
@@ -404,10 +404,10 @@ function renderFinexyDualBarChart(challans) {
 
   let gridLines = "";
   yTicks.forEach(tick => {
-    const yPos = chartHeight - (tick.val / maxVal) * (chartHeight - 30);
+    const yPos = chartHeight - (tick.val / maxVal) * (chartHeight - 20);
     gridLines += `
-      <text x="0" y="${yPos + 4}" fill="#9A9CA6" font-size="11" font-family="'Geist', 'Inter Tight', sans-serif" font-weight="400">${tick.label}</text>
-      <line x1="28" y1="${yPos}" x2="${chartWidth}" y2="${yPos}" stroke="rgba(22, 24, 29, 0.08)" stroke-width="1" stroke-dasharray="3 3" />
+      <text x="0" y="${yPos + 3}" fill="#9A9CA6" font-size="9" font-family="'Geist', 'Inter Tight', sans-serif" font-weight="400">${tick.label}</text>
+      <line x1="24" y1="${yPos}" x2="${chartWidth}" y2="${yPos}" stroke="rgba(22, 24, 29, 0.06)" stroke-width="1" stroke-dasharray="3 3" />
     `;
   });
 
@@ -416,39 +416,39 @@ function renderFinexyDualBarChart(challans) {
 
   months.forEach((m, idx) => {
     const xPos = startX + idx * (barWidth + gap);
-    const bHeight = (m.val / maxVal) * (chartHeight - 30);
+    const bHeight = (m.val / maxVal) * (chartHeight - 20);
     const yPos = chartHeight - bHeight;
 
     if (m.isCurrent) {
-      // Indigo Ink current month bar with 6px top radius and Framer spring animation
+      // Indigo Ink current month bar with 4px top radius and Framer spring animation
       barsHTML += `
-        <rect class="framer-bar-rect" style="--bar-delay: ${idx * 0.045}s;" x="${xPos}" y="${yPos}" width="${barWidth}" height="${bHeight}" rx="6" ry="6" fill="#243360" />
-        <text x="${xPos + barWidth / 2}" y="${chartHeight + 18}" text-anchor="middle" fill="#16181D" font-size="11.5" font-weight="700" font-family="'Geist', 'Inter Tight', sans-serif">${m.label}</text>
+        <rect class="framer-bar-rect" style="--bar-delay: ${idx * 0.045}s;" x="${xPos}" y="${yPos}" width="${barWidth}" height="${bHeight}" rx="4" ry="4" fill="#243360" />
+        <text x="${xPos + barWidth / 2}" y="${chartHeight + 14}" text-anchor="middle" fill="#16181D" font-size="9.5" font-weight="700" font-family="'Geist', 'Inter Tight', sans-serif">${m.label}</text>
       `;
 
       // Floating tooltip on --surface with 1px border and soft shadow
       const ttX = xPos - 36;
-      const ttY = yPos - 38;
+      const ttY = yPos - 30;
       tooltipHTML = `
-        <g class="calm-chart-tooltip" filter="drop-shadow(0 2px 8px rgba(22, 24, 29, 0.12))">
-          <rect x="${ttX}" y="${ttY}" width="86" height="28" rx="6" fill="#FBFAF7" stroke="rgba(22, 24, 29, 0.18)" stroke-width="1" />
-          <polygon points="${xPos + barWidth/2 - 4},${ttY + 28} ${xPos + barWidth/2 + 4},${ttY + 28} ${xPos + barWidth/2},${ttY + 33}" fill="#FBFAF7" />
-          <text x="${ttX + 43}" y="${ttY + 18}" text-anchor="middle" fill="#16181D" font-size="11.5" font-weight="700" font-family="'Geist', 'Inter Tight', sans-serif">
+        <g class="calm-chart-tooltip" filter="drop-shadow(0 2px 8px rgba(22, 24, 29, 0.10))">
+          <rect x="${ttX}" y="${ttY}" width="78" height="22" rx="4" fill="#FBFAF7" stroke="rgba(22, 24, 29, 0.16)" stroke-width="1" />
+          <polygon points="${xPos + barWidth/2 - 3},${ttY + 22} ${xPos + barWidth/2 + 3},${ttY + 22} ${xPos + barWidth/2},${ttY + 26}" fill="#FBFAF7" />
+          <text x="${ttX + 39}" y="${ttY + 15}" text-anchor="middle" fill="#16181D" font-size="9.5" font-weight="700" font-family="'Geist', 'Inter Tight', sans-serif">
             ${m.amount} (${m.notices})
           </text>
         </g>
       `;
     } else {
-      // Warm grey --surface-2 past months bars with 6px top radius and Framer spring animation
+      // Warm grey --surface-2 past months bars with 4px top radius and Framer spring animation
       barsHTML += `
-        <rect class="framer-bar-rect" style="--bar-delay: ${idx * 0.045}s;" x="${xPos}" y="${yPos}" width="${barWidth}" height="${bHeight}" rx="6" ry="6" fill="#E2DFD7" />
-        <text x="${xPos + barWidth / 2}" y="${chartHeight + 18}" text-anchor="middle" fill="#606370" font-size="11" font-weight="500" font-family="'Geist', 'Inter Tight', sans-serif">${m.label}</text>
+        <rect class="framer-bar-rect" style="--bar-delay: ${idx * 0.045}s;" x="${xPos}" y="${yPos}" width="${barWidth}" height="${bHeight}" rx="4" ry="4" fill="#E2DFD7" />
+        <text x="${xPos + barWidth / 2}" y="${chartHeight + 14}" text-anchor="middle" fill="#606370" font-size="9.5" font-weight="500" font-family="'Geist', 'Inter Tight', sans-serif">${m.label}</text>
       `;
     }
   });
 
   return `
-    <svg viewBox="0 0 ${chartWidth} ${chartHeight + 28}" style="width: 100%; height: auto; display: block; overflow: visible;">
+    <svg viewBox="0 0 ${chartWidth} ${chartHeight + 18}" style="width: 100%; height: auto; display: block; overflow: visible;">
       ${gridLines}
       ${barsHTML}
       ${tooltipHTML}
@@ -462,8 +462,8 @@ function renderFinexyDualBarChart(challans) {
  * Tones: --accent (#2B3A67), #6B77A3, #A9B0C9, --surface-2 (#ECEAE4).
  */
 function renderLiabilityDonutChart(challans) {
-  const size = 130;
-  const stroke = 10; // Strict 10px stroke
+  const size = 92;
+  const stroke = 7; // Ultra-crisp 7px stroke for compact balance
   const radius = (size - stroke) / 2;
   const circumference = 2 * Math.PI * radius;
 
@@ -506,8 +506,8 @@ function renderLiabilityDonutChart(challans) {
       </svg>
       <!-- Center Counter in Instrument Serif -->
       <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none;">
-        <span style="font-family: var(--font-family-serif); font-size: 36px; font-weight: 400; color: var(--ink); line-height: 1; letter-spacing: -0.02em;">32</span>
-        <span style="font-size: 9.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-top: 3px;">NOTICES</span>
+        <span style="font-family: var(--font-family-serif); font-size: 23px; font-weight: 400; color: var(--ink); line-height: 1; letter-spacing: -0.02em;">32</span>
+        <span style="font-size: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-top: 2px;">NOTICES</span>
       </div>
     </div>
   `;
