@@ -24,6 +24,7 @@ let challanTableState = {
   filterSource: "",
   filterParty: "",
   filterDate: "",
+  filterVehicleType: "",
   savedView: "all"
 };
 
@@ -37,11 +38,14 @@ function renderChallansView(container, actions, params = {}) {
   // Pre-populate filter states if passed from Dashboard or Global Search
   if (params.status) {
     challanTableState.activeStatusTab = params.status;
+    challanTableState.savedView = "all";
   }
   if (params.filter === "due7days") {
     challanTableState.savedView = "due7days";
+    challanTableState.activeStatusTab = "all";
   } else if (params.filter === "overdue") {
     challanTableState.savedView = "overdue";
+    challanTableState.activeStatusTab = "all";
   }
   if (params.responsibleParty) {
     challanTableState.filterParty = params.responsibleParty;
@@ -87,23 +91,30 @@ function renderChallansView(container, actions, params = {}) {
       `).join("")}
     </div>
 
-    <!-- Saved Views Quick Filter Chips -->
-    <div class="filter-chips-row" style="margin-bottom: var(--space-4);">
-      <span class="text-xs font-semibold text-muted" style="text-transform: uppercase;">Saved Views:</span>
-      <span class="filter-chip ${challanTableState.savedView === 'all' ? 'active' : ''}" onclick="applyChallanSavedView('all')">All Violations</span>
-      <span class="filter-chip ${challanTableState.savedView === 'overdue' ? 'active' : ''}" onclick="applyChallanSavedView('overdue')">Overdue Only</span>
-      <span class="filter-chip ${challanTableState.savedView === 'due7days' ? 'active' : ''}" onclick="applyChallanSavedView('due7days')">Due in 7 Days</span>
-      <span class="filter-chip ${challanTableState.savedView === 'highValue' ? 'active' : ''}" onclick="applyChallanSavedView('highValue')">High Value (&gt; ₹2,000)</span>
-      <span class="filter-chip ${challanTableState.savedView === 'unassignedTriage' ? 'active' : ''}" onclick="applyChallanSavedView('unassignedTriage')">Unassigned Triage</span>
-      ${hasActiveChallanFilters() ? `
-        <button class="btn btn--ghost btn--sm" style="font-size: 11px; padding: 2px 6px;" onclick="resetChallanFilters()">Reset All Filters</button>
-      ` : ''}
+    <!-- Hick's Law: 1-Click Operational Preset Triage Pills -->
+    <div class="preset-triage-bar">
+      <span style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-3); margin-right: 4px;">Quick Triage:</span>
+      <button class="preset-triage-pill ${challanTableState.savedView === 'all' && challanTableState.activeStatusTab === 'all' ? 'active' : ''}" onclick="applyChallanPresetView('all')">
+        All Notices
+      </button>
+      <button class="preset-triage-pill ${challanTableState.activeStatusTab === 'unassigned' ? 'active urgent-active' : ''}" onclick="applyChallanPresetView('unassigned')">
+        🚨 Needs Assignment <span class="preset-triage-count">2</span>
+      </button>
+      <button class="preset-triage-pill ${challanTableState.savedView === 'due7days' ? 'active' : ''}" onclick="applyChallanPresetView('due7days')">
+        ⏳ Due in 7 Days
+      </button>
+      <button class="preset-triage-pill ${challanTableState.savedView === 'overdue' ? 'active urgent-active' : ''}" onclick="applyChallanPresetView('overdue')">
+        ⚠️ Overdue
+      </button>
+      <button class="preset-triage-pill ${challanTableState.savedView === 'highValue' ? 'active' : ''}" onclick="applyChallanPresetView('highValue')">
+        💰 High Value (&gt;₹2k)
+      </button>
     </div>
 
-    <!-- Multi-Criteria Filter & Search Toolbar -->
-    <div class="filter-toolbar" style="margin-bottom: var(--space-4);">
-      <div class="filter-group">
-        <div style="position: relative; width: 280px;">
+    <!-- Unified Executive Command Toolbar -->
+    <div class="filter-toolbar" style="margin-top: var(--space-3); margin-bottom: var(--space-4); display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); flex-wrap: wrap;">
+      <div class="filter-group" style="display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;">
+        <div style="position: relative; width: 300px;">
           <svg class="search-icon-prefix" viewBox="0 0 20 20" fill="currentColor" style="left: 10px;">
             <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
           </svg>
@@ -111,8 +122,19 @@ function renderChallansView(container, actions, params = {}) {
             placeholder="Search challan no, vehicle, driver, location..." value="${challanTableState.searchQuery}">
         </div>
 
+        <!-- Vehicle Class Filter -->
+        <select class="form-select" id="filterVehicleTypeSelect" style="width: 160px; font-size: 12px; padding: 6px 10px;">
+          <option value="">All Vehicle Classes</option>
+          <option value="truck" ${challanTableState.filterVehicleType === 'truck' ? 'selected' : ''}>🚛 Heavy Trucks</option>
+          <option value="bus" ${challanTableState.filterVehicleType === 'bus' ? 'selected' : ''}>🚌 Buses & Coaches</option>
+          <option value="bike" ${challanTableState.filterVehicleType === 'bike' ? 'selected' : ''}>🏍️ 2-Wheelers</option>
+          <option value="car" ${challanTableState.filterVehicleType === 'car' ? 'selected' : ''}>🚗 Cabs & Sedans</option>
+          <option value="pickup" ${challanTableState.filterVehicleType === 'pickup' ? 'selected' : ''}>🛻 Pickups</option>
+          <option value="van" ${challanTableState.filterVehicleType === 'van' ? 'selected' : ''}>🚐 Vans & LCVs</option>
+        </select>
+
         <!-- Offence Filter -->
-        <select class="form-select" id="filterOffenceSelect" style="width: 170px; font-size: 12px; padding: 6px 10px;">
+        <select class="form-select" id="filterOffenceSelect" style="width: 150px; font-size: 12px; padding: 6px 10px;">
           <option value="">All Offences</option>
           <option value="Speed" ${challanTableState.filterOffence === 'Speed' ? 'selected' : ''}>Overspeeding (Sec 183)</option>
           <option value="Signal" ${challanTableState.filterOffence === 'Signal' ? 'selected' : ''}>Red Light (Sec 184)</option>
@@ -123,33 +145,27 @@ function renderChallansView(container, actions, params = {}) {
           <option value="Mobile" ${challanTableState.filterOffence === 'Mobile' ? 'selected' : ''}>Mobile Phone</option>
         </select>
 
-        <!-- Source Filter -->
-        <select class="form-select" id="filterSourceSelect" style="width: 150px; font-size: 12px; padding: 6px 10px;">
-          <option value="">All Sources</option>
-          <option value="Parivahan API" ${challanTableState.filterSource === 'Parivahan API' ? 'selected' : ''}>Parivahan API</option>
-          <option value="Manual Upload" ${challanTableState.filterSource === 'Manual Upload' ? 'selected' : ''}>Manual Upload</option>
-          <option value="FASTag Gateway" ${challanTableState.filterSource === 'FASTag Gateway' ? 'selected' : ''}>FASTag Gateway</option>
-          <option value="Virtual Court" ${challanTableState.filterSource === 'Virtual Court' ? 'selected' : ''}>Virtual Court</option>
+        <!-- Quick View Filter -->
+        <select class="form-select" id="filterSavedViewSelect" style="width: 140px; font-size: 12px; padding: 6px 10px;" onchange="applyChallanSavedView(this.value)">
+          <option value="all" ${challanTableState.savedView === 'all' ? 'selected' : ''}>All Deadlines</option>
+          <option value="overdue" ${challanTableState.savedView === 'overdue' ? 'selected' : ''}>⚠️ Overdue Only</option>
+          <option value="due7days" ${challanTableState.savedView === 'due7days' ? 'selected' : ''}>⏳ Due in 7 Days</option>
+          <option value="highValue" ${challanTableState.savedView === 'highValue' ? 'selected' : ''}>💰 High Value (&gt; ₹2k)</option>
         </select>
 
         <!-- Party Filter -->
-        <select class="form-select" id="filterPartySelect" style="width: 150px; font-size: 12px; padding: 6px 10px;">
-          <option value="">All Responsible</option>
+        <select class="form-select" id="filterPartySelect" style="width: 135px; font-size: 12px; padding: 6px 10px;">
+          <option value="">All Parties</option>
           <option value="Driver" ${challanTableState.filterParty === 'Driver' ? 'selected' : ''}>Driver</option>
-          <option value="Lessee" ${challanTableState.filterParty === 'Lessee' ? 'selected' : ''}>Corporate Lessee</option>
+          <option value="Lessee" ${challanTableState.filterParty === 'Lessee' ? 'selected' : ''}>Lessee</option>
           <option value="Fleet Operator" ${challanTableState.filterParty === 'Fleet Operator' ? 'selected' : ''}>Fleet Operator</option>
-          <option value="Vehicle Owner" ${challanTableState.filterParty === 'Vehicle Owner' ? 'selected' : ''}>Vehicle Owner</option>
+          <option value="Vehicle Owner" ${challanTableState.filterParty === 'Vehicle Owner' ? 'selected' : ''}>Owner</option>
           <option value="Unassigned" ${challanTableState.filterParty === 'Unassigned' ? 'selected' : ''}>Unassigned</option>
         </select>
 
-        <!-- Date Filter -->
-        <select class="form-select" id="filterDateSelect" style="width: 130px; font-size: 12px; padding: 6px 10px;">
-          <option value="">All Dates</option>
-          <option value="today" ${challanTableState.filterDate === 'today' ? 'selected' : ''}>Today</option>
-          <option value="7days" ${challanTableState.filterDate === '7days' ? 'selected' : ''}>Last 7 Days</option>
-          <option value="30days" ${challanTableState.filterDate === '30days' ? 'selected' : ''}>Last 30 Days</option>
-          <option value="90days" ${challanTableState.filterDate === '90days' ? 'selected' : ''}>Last 90 Days</option>
-        </select>
+        ${hasActiveChallanFilters() ? `
+          <button class="btn btn--ghost btn--sm" style="font-size: 11px; padding: 2px 8px;" onclick="resetChallanFilters()">Reset</button>
+        ` : ''}
       </div>
 
       <div class="filter-group">
@@ -168,27 +184,25 @@ function renderChallansView(container, actions, params = {}) {
       <div class="table-pagination" id="challansPaginationContainer"></div>
     </div>
 
-    <!-- Sticky Bulk Actions Floating Bar -->
+    <!-- Floating Bulk Actions Dock (Jakob's Law) -->
     <div class="bulk-actions-bar" id="challanBulkActionsBar" style="display: none;">
-      <div style="display: flex; align-items: center; gap: var(--space-3);">
-        <span style="font-weight: 600; font-size: 13px;" id="selectedChallansCountText">0 Challans Selected</span>
-        <span class="badge badge--neutral" style="background: rgba(255,255,255,0.2); color: #fff;" id="selectedChallansTotalSum">Total: ₹0</span>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <span style="display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #34C759;"></span>
+        <span style="font-weight: 600; font-size: 13px; color: #FFFFFF;" id="selectedChallansCountText">0 Challans Selected</span>
+        <span class="badge" style="background: rgba(255,255,255,0.18); color: #fff; font-size: 11px; padding: 1.5px 8px; border-radius: 9999px;" id="selectedChallansTotalSum">Total: ₹0</span>
       </div>
-      <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
-        <button class="btn btn--outline btn--sm" style="background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); color: #fff;" onclick="openBulkAssignModal()">
-          Assign Responsibility
+      <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+        <button class="btn btn--primary btn--sm" style="height: 32px; padding: 0 14px;" onclick="executeBulkPaymentSimulation()">
+          Bulk Settle Notices
         </button>
-        <button class="btn btn--outline btn--sm" style="background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); color: #fff;" onclick="openBulkDisputeModal()">
-          Mark Disputed
+        <button class="btn btn--outline btn--sm" style="background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.25); color: #fff; height: 32px;" onclick="openBulkAssignModal()">
+          Assign Liability
         </button>
-        <button class="btn btn--secondary btn--sm" onclick="executeBulkPaymentSimulation()">
-          Bulk Pay Selected
-        </button>
-        <button class="btn btn--outline btn--sm" style="background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); color: #fff;" onclick="exportSelectedChallansCSV()">
+        <button class="btn btn--outline btn--sm" style="background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.25); color: #fff; height: 32px;" onclick="exportSelectedChallansCSV()">
           Export CSV
         </button>
-        <button class="btn btn--ghost btn--sm" style="color: #fff;" onclick="deselectAllChallans()">
-          Deselect All
+        <button class="btn btn--ghost btn--sm" style="color: rgba(255,255,255,0.7); height: 32px;" onclick="deselectAllChallans()">
+          ✕ Cancel
         </button>
       </div>
     </div>
@@ -219,6 +233,15 @@ function renderChallansView(container, actions, params = {}) {
   if (offenceSel) {
     offenceSel.addEventListener("change", (e) => {
       challanTableState.filterOffence = e.target.value;
+      challanTableState.currentPage = 1;
+      renderChallansTableAndPagination();
+    });
+  }
+
+  const vehicleTypeSel = container.querySelector("#filterVehicleTypeSelect") || document.getElementById("filterVehicleTypeSelect");
+  if (vehicleTypeSel) {
+    vehicleTypeSel.addEventListener("change", (e) => {
+      challanTableState.filterVehicleType = e.target.value;
       challanTableState.currentPage = 1;
       renderChallansTableAndPagination();
     });
@@ -269,6 +292,7 @@ function hasActiveChallanFilters() {
     challanTableState.savedView !== "all" ||
     challanTableState.searchQuery !== "" ||
     challanTableState.filterOffence !== "" ||
+    challanTableState.filterVehicleType !== "" ||
     challanTableState.filterSource !== "" ||
     challanTableState.filterParty !== "" ||
     challanTableState.filterDate !== ""
@@ -280,6 +304,7 @@ function resetChallanFilters() {
   challanTableState.savedView = "all";
   challanTableState.searchQuery = "";
   challanTableState.filterOffence = "";
+  challanTableState.filterVehicleType = "";
   challanTableState.filterSource = "";
   challanTableState.filterParty = "";
   challanTableState.filterDate = "";
@@ -299,6 +324,31 @@ function applyChallanSavedView(viewKey) {
 
   navigateTo("challans", true, viewKey !== 'all' ? { filter: viewKey } : {});
 }
+
+function applyChallanPresetView(presetKey) {
+  if (presetKey === 'unassigned') {
+    challanTableState.activeStatusTab = 'unassigned';
+    challanTableState.savedView = 'all';
+  } else if (presetKey === 'all') {
+    challanTableState.activeStatusTab = 'all';
+    challanTableState.savedView = 'all';
+  } else {
+    challanTableState.savedView = presetKey;
+  }
+  challanTableState.currentPage = 1;
+  const container = document.getElementById("moduleViewBody");
+  const actions = document.getElementById("viewHeaderActions");
+  renderChallansView(container, actions);
+}
+window.applyChallanPresetView = applyChallanPresetView;
+
+function handleChallanRowClick(event, challanId) {
+  if (event.target.closest('input[type="checkbox"]') || event.target.closest('button') || event.target.closest('a')) {
+    return;
+  }
+  navigateTo('challans', true, { id: challanId });
+}
+window.handleChallanRowClick = handleChallanRowClick;
 
 function renderChallansTableAndPagination() {
   const allChallans = StorageManager.getChallans();
@@ -333,6 +383,15 @@ function renderChallansTableAndPagination() {
 
   if (challanTableState.filterParty) {
     filtered = filtered.filter(c => c.responsibleParty === challanTableState.filterParty || c.suggestedParty === challanTableState.filterParty);
+  }
+
+  // Filter by Vehicle Type
+  if (challanTableState.filterVehicleType) {
+    filtered = filtered.filter(c => {
+      const veh = StorageManager.getVehicleById(c.vehicleId);
+      const vMeta = Utils.getVehicleTypeMeta(veh);
+      return vMeta.type === challanTableState.filterVehicleType;
+    });
   }
 
   // 4. Date Filter
@@ -451,9 +510,12 @@ function renderChallansTableAndPagination() {
             const isChecked = challanTableState.selectedChallanIds.has(c.id);
             const daysLeft = Utils.getDaysRemaining(c.dueDate);
             const isOverdue = daysLeft < 0 && c.status !== "paid";
+            const isUrgent = (isOverdue || (daysLeft <= 2 && c.status !== "paid")) && c.status !== "paid";
+            const veh = StorageManager.getVehicleById(c.vehicleId);
+            const vMeta = Utils.getVehicleTypeMeta(veh);
 
             return `
-              <tr class="${isChecked ? 'row-selected' : ''}">
+              <tr class="${isChecked ? 'row-selected' : ''} row-interactive ${isUrgent ? 'row-urgent-risk' : ''}" onclick="handleChallanRowClick(event, '${c.id}')" title="Click anywhere to inspect notice details">
                 <td style="text-align: center;">
                   <input type="checkbox" class="custom-checkbox" ${isChecked ? 'checked' : ''} onchange="toggleChallanRowSelection('${c.id}', this.checked)">
                 </td>
@@ -463,9 +525,14 @@ function renderChallansTableAndPagination() {
                   </a>
                 </td>
                 <td>
-                  <a href="#vehicles?id=${c.vehicleId}" class="plate-chip plate-chip--commercial" title="View vehicle profile">
-                    ${c.vehicleReg}
-                  </a>
+                  <div style="display: flex; flex-direction: column; gap: 4px; align-items: flex-start;">
+                    <a href="#vehicles?id=${c.vehicleId}" class="plate-chip plate-chip--commercial" title="View ${vMeta.label} profile">
+                      ${c.vehicleReg}
+                    </a>
+                    <span class="badge ${vMeta.badgeClass}" style="${vMeta.badgeStyle}; font-size: 10px; padding: 1.5px 6px;">
+                      ${vMeta.icon} ${vMeta.shortLabel}
+                    </span>
+                  </div>
                 </td>
                 <td>
                   <div class="cell-truncate" style="font-size: 13px; font-weight: 500;" title="${c.offence}">${c.offence}</div>
@@ -486,6 +553,7 @@ function renderChallansTableAndPagination() {
                 <td class="col-should">
                   <div class="text-xs">${Utils.formatDate(c.dueDate)}</div>
                   <div class="text-xs" style="font-weight: 600; color: ${isOverdue ? 'var(--status-unassigned)' : 'var(--color-text-muted)'};">
+                    ${isUrgent ? '<span class="urgent-pulse-dot" title="Urgent risk: Action required within 48h"></span>' : ''}
                     ${isOverdue ? `Overdue by ${Math.abs(daysLeft)}d` : `${daysLeft} days left`}
                   </div>
                 </td>
@@ -723,6 +791,7 @@ function renderChallanDetailsView(container, actions, challanId) {
   updateBreadcrumbs(["Hisaab", "Challans", challan.challanNumber]);
 
   const vehicle = StorageManager.getVehicleById(challan.vehicleId) || { regNumber: challan.vehicleReg, makeModel: "Commercial Fleet Vehicle" };
+  const vMeta = Utils.getVehicleTypeMeta(vehicle);
   const drivers = StorageManager.getDrivers();
   const lessees = StorageManager.getLessees();
 
@@ -778,6 +847,33 @@ function renderChallanDetailsView(container, actions, challanId) {
            =================================================================== -->
       <div style="display: flex; flex-direction: column; gap: var(--space-4);">
         
+        <!-- Associated Fleet Vehicle Asset Card -->
+        <div class="card" style="padding: 16px; border-radius: 16px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 14px;">
+            <div style="width: 84px; height: 58px; border-radius: 8px; overflow: hidden; border: 1px solid var(--color-border); flex-shrink: 0; background: var(--color-bg-app); box-shadow: var(--shadow-xs);">
+              <img src="${vMeta.image}" alt="${vehicle.makeModel}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='assets/images/tata-ace.jpg'">
+            </div>
+            <div>
+              <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+                <span class="vehicle-reg-tag" style="font-size: 11px; padding: 2.5px 7px;">${challan.vehicleReg}</span>
+                <span class="badge ${vMeta.badgeClass}" style="${vMeta.badgeStyle}">${vMeta.icon} ${vMeta.label}</span>
+              </div>
+              <div style="font-weight: 700; font-size: 14px; margin-top: 4px; color: var(--ink);">
+                ${vehicle.makeModel || 'Commercial Asset'} (${vehicle.year || '2024'})
+              </div>
+              <div class="text-xs text-muted" style="margin-top: 2px;">
+                Asset Owner: <strong class="text-main">${vehicle.ownerName || 'Apex Fleet Pvt Ltd'}</strong> •
+                FASTag: <span class="badge ${vehicle.fastagStatus === 'Active' ? 'badge--paid' : 'badge--unassigned'}" style="font-size: 9px; padding: 1px 4px;">${vehicle.fastagStatus || 'Active'}</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <a href="#vehicles?id=${challan.vehicleId}" class="btn btn--outline btn--sm" style="font-size: 11px;">
+              View Vehicle File →
+            </a>
+          </div>
+        </div>
+
         <!-- Evidence Photographic Card with Telemetry HUD -->
         <div class="evidence-card">
           <div class="evidence-photo-wrapper">
@@ -785,8 +881,8 @@ function renderChallanDetailsView(container, actions, challanId) {
             
             <!-- HUD Camera Telemetry Overlay -->
             <div class="evidence-telemetry-hud">
-              <span class="hud-tag">CAM: ANPR-DEL-DND-04</span>
-              <span class="hud-tag" style="color: #4ADE80;">CCTV FRAME: VERIFIED</span>
+              <span class="hud-tag">CAM: ANPR-${vMeta.type.toUpperCase()}-04</span>
+              <span class="hud-tag" style="color: #4ADE80;">CLASS: ${vMeta.label.toUpperCase()}</span>
             </div>
 
             <!-- Inset Zoomed License Plate Badge -->
@@ -829,18 +925,21 @@ function renderChallanDetailsView(container, actions, challanId) {
           <!-- Key Metadata Specs Grid -->
           <div class="specs-meta-grid">
             <div class="spec-item">
-              <span class="spec-label">Vehicle Registration</span>
-              <span class="spec-value" style="display: flex; align-items: center; gap: 8px;">
+              <span class="spec-label">Vehicle Registration & Class</span>
+              <span class="spec-value" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                 <a href="#vehicles?id=${challan.vehicleId}" class="plate-chip plate-chip--commercial">
                   ${challan.vehicleReg}
-                </a> <span style="color: var(--text-2); font-size: 12px;">(${vehicle.makeModel || 'LCV'})</span>
+                </a>
+                <span class="badge ${vMeta.badgeClass}" style="${vMeta.badgeStyle}; font-size: 11px;">
+                  ${vMeta.icon} ${vMeta.label}
+                </span>
               </span>
             </div>
 
             <div class="spec-item">
-              <span class="spec-label">Vehicle Category & Fleet Owner</span>
+              <span class="spec-label">Make, Model & Fleet Owner</span>
               <span class="spec-value">
-                <strong>${vehicle.category || 'Commercial Vehicle'}</strong> • ${vehicle.ownerName || 'Apex Fleet Pvt Ltd'}
+                <strong>${vehicle.makeModel || 'Commercial Vehicle'}</strong> (${vehicle.year || '2024'}) • ${vehicle.ownerName || 'Apex Fleet Pvt Ltd'}
               </span>
             </div>
 

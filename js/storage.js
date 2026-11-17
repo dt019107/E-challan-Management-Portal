@@ -96,6 +96,46 @@ const StorageManager = {
       };
     }
 
+    // Enrich vehicles with diverse fleet types (Bus, Truck, Bike, Car, LCV) and images
+    if (this.data.vehicles && this.data.vehicles.length > 0) {
+      const seedMap = new Map((INITIAL_MOCK_DATA.vehicles || []).map(v => [v.id, v]));
+      let modified = false;
+      this.data.vehicles.forEach(v => {
+        const seed = seedMap.get(v.id);
+        if (seed && (!v.vehicleType || v.makeModel !== seed.makeModel)) {
+          v.makeModel = seed.makeModel;
+          v.category = seed.category;
+          v.vehicleType = seed.vehicleType;
+          v.image = seed.image;
+          v.regNumber = seed.regNumber;
+          modified = true;
+        } else if (!v.vehicleType) {
+          const meta = Utils.getVehicleTypeMeta(v);
+          v.vehicleType = meta.type;
+          v.image = meta.image;
+          modified = true;
+        }
+      });
+      if (modified) this.persist();
+    }
+
+    // Ensure challans reflect updated vehicle registrations and authentic evidence images
+    if (this.data.challans && this.data.challans.length > 0) {
+      const seedChallanMap = new Map((INITIAL_MOCK_DATA.challans || []).map(c => [c.id, c]));
+      let chlModified = false;
+      this.data.challans.forEach(c => {
+        const seed = seedChallanMap.get(c.id);
+        if (seed && c.evidenceImage !== seed.evidenceImage) {
+          c.evidenceImage = seed.evidenceImage;
+          c.offence = seed.offence;
+          c.mvActSection = seed.mvActSection;
+          c.vehicleReg = seed.vehicleReg;
+          chlModified = true;
+        }
+      });
+      if (chlModified) this.persist();
+    }
+
     // Ensure edge case benchmark records exist in state
     if (this.data.drivers && !this.data.drivers.some(d => d.name.includes("Venkata Satyanarayana"))) {
       const edgeDriver = INITIAL_MOCK_DATA.drivers.find(d => d.name.includes("Venkata Satyanarayana"));

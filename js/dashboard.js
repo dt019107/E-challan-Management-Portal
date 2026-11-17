@@ -30,6 +30,19 @@ function renderDashboardView(container, actions) {
     blr: Math.max(0, stats.outstandingAmount - Math.round(stats.outstandingAmount * 0.45) - Math.round(stats.outstandingAmount * 0.32))
   };
 
+  // Operational "Needs Attention" Work Queue metrics (Case Study Page 12, Screen 1)
+  const overdueChallans = challans.filter(c => Utils.getDaysRemaining(c.dueDate) < 0 && c.status !== 'paid');
+  const overdueAmount = overdueChallans.reduce((sum, c) => sum + (c.totalPayable || c.amount || 0), 0);
+  const unassignedChallans = challans.filter(c => c.status === 'unassigned');
+  const disputedChallans = challans.filter(c => c.status === 'disputed' || c.status === 'court');
+  const disputedAmount = disputedChallans.reduce((sum, c) => sum + (c.totalPayable || c.amount || 0), 0);
+  const failedChallans = challans.filter(c => c.paymentStatus === 'Failed' || c.status === 'failed');
+  const failedAmount = failedChallans.reduce((sum, c) => sum + (c.totalPayable || c.amount || 0), 0) || 1200;
+
+  // Zeigarnik Effect: Weekly resolution velocity
+  const clearedChallansCount = challans.filter(c => c.status === 'paid').length;
+  const totalResolutionRate = challans.length > 0 ? Math.round((clearedChallansCount / challans.length) * 100) : 100;
+
   const today = new Date();
   const formattedTodayDate = today.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
 
@@ -51,9 +64,9 @@ function renderDashboardView(container, actions) {
             <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
             Download Summary
           </button>
-          <button class="calm-btn-secondary" onclick="Utils.showToast('Gateway Synchronized', 'Parivahan e-Challan gateway polled successfully. 32 active records refreshed.', 'success')">
-            <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/></svg>
-            Parivahan Sync
+          <button class="calm-btn-secondary" id="parivahanSyncBtn" onclick="triggerParivahanSyncAnimation(this)">
+            <svg class="sync-icon" width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/></svg>
+            <span>Parivahan Sync</span>
           </button>
         </div>
       </div>
@@ -61,7 +74,7 @@ function renderDashboardView(container, actions) {
       <!-- 2. TOP ROW (12 COLUMNS: 7 / 5 ASYMMETRIC GRID) -->
       <div class="calm-grid-12 framer-animate-hero">
         
-        <!-- COLUMN SPAN 7: THE HERO OUTSTANDING TILE (56px Instrument Serif Number, hairline divider, signature deadline rulers) -->
+        <!-- COLUMN SPAN 7: THE HERO OUTSTANDING TILE (SF Pro Display Number, Zeigarnik Progress Bar, Restorff Action Hierarchy) -->
         <div class="calm-panel calm-span-7">
           <div>
             <div class="calm-hero-header-row">
@@ -77,12 +90,30 @@ function renderDashboardView(container, actions) {
               Across 32 active compliance notices across Delhi NCR, Mumbai Western Corridor, and Bengaluru Logistics Hubs.
             </div>
 
+            <!-- Zeigarnik Effect: Resolution Completion Progress Widget -->
+            <div class="compliance-progress-widget" style="margin: 10px 0 14px; padding: 10px 14px; background: var(--surface-2); border-radius: 8px; border: 1px solid var(--line);">
+              <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11.5px; margin-bottom: 6px;">
+                <span style="color: var(--text-2); font-weight: 500;">
+                  <strong style="color: var(--ink); font-weight: 600;">88%</strong> Fleet Notices Reconciled (28/32 Cleared)
+                </span>
+                <span style="font-size: 11px; color: var(--color-danger); font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
+                  <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--color-danger); display: inline-block;"></span>
+                  4 Action Items Due
+                </span>
+              </div>
+              <div style="height: 5px; width: 100%; background: var(--surface-3); border-radius: 9999px; overflow: hidden;">
+                <div style="height: 100%; width: 87.5%; background: linear-gradient(90deg, var(--accent) 0%, #34C759 100%); border-radius: 9999px;"></div>
+              </div>
+            </div>
+
+            <!-- Von Restorff Effect: Clear Action Focus (Time-Sensitive Triage vs Generic Settle) -->
             <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-              <button class="calm-btn-primary" onclick="navigateTo('payments')" title="Settle notices in bulk via simulated payment">
-                Settle Fines
+              <button class="calm-btn-primary" onclick="navigateTo('challans', true, { status: 'unassigned' })" title="Adjudicate unassigned traffic notices before court escalation">
+                <span>Assign Responsibility</span>
+                <span style="background: rgba(255, 255, 255, 0.25); color: #FFFFFF; font-size: 10.5px; font-weight: 700; padding: 1px 7px; border-radius: 9999px; margin-left: 2px;">2 Due</span>
               </button>
-              <button class="calm-btn-secondary" onclick="navigateTo('challans', true, { status: 'unassigned' })" title="Adjudicate unassigned traffic notices">
-                Assign Responsibility
+              <button class="calm-btn-secondary" onclick="navigateTo('payments')" title="Settle notices in bulk via simulated payment">
+                Settle Fines
               </button>
             </div>
           </div>
@@ -166,6 +197,112 @@ function renderDashboardView(container, actions) {
 
       </div>
 
+      <!-- PRIORITISED WORK QUEUE: NEEDS ATTENTION (Case Study Page 12, Screen 1) -->
+      <div class="calm-panel framer-animate-hero" style="margin-top: var(--space-4); padding: 16px 20px; border-radius: var(--radius-card); border: 1px solid var(--line); background: var(--surface);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--line); flex-wrap: wrap; gap: 8px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-weight: 700; font-size: 14px; color: var(--ink);">Needs attention</span>
+            <span class="badge badge--unassigned" style="font-size: 10px; padding: 2px 7px; border-radius: 9999px;">Prioritised Work Queue</span>
+          </div>
+          <span style="font-size: 11.5px; color: var(--text-2);">Ranked by financial urgency • Action required today</span>
+        </div>
+
+        <!-- Zeigarnik Effect: Weekly Triage Velocity & Closure Meter -->
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 8px 14px; background: rgba(0, 113, 227, 0.04); border: 1px solid rgba(0, 113, 227, 0.12); border-radius: 8px; margin-bottom: 10px; flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 13px;">⚡</span>
+            <span style="font-size: 12px; font-weight: 600; color: var(--ink);">Resolution Velocity:</span>
+            <span style="font-size: 12px; color: var(--text-2);">
+              <strong>${clearedChallansCount} of ${challans.length}</strong> fleet citations resolved (${totalResolutionRate}% cleared)
+            </span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 100px; height: 5px; background: var(--surface-3); border-radius: 9999px; overflow: hidden;">
+              <div style="width: ${totalResolutionRate}%; height: 100%; background: var(--color-primary); border-radius: 9999px; transition: width 0.3s ease;"></div>
+            </div>
+            <span style="font-size: 11.5px; font-weight: 700; color: var(--color-primary); font-variant-numeric: tabular-nums;">
+              ${overdueChallans.length + unassignedChallans.length} action items remaining
+            </span>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          
+          <!-- 1. Overdue (Highest rank: compounding late fee risk) -->
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 10px 14px; background: var(--surface-2); border-radius: 8px; border: 1px solid var(--line); flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span class="badge badge--unassigned" style="font-weight: 700; font-size: 11px; padding: 3px 8px; border-radius: 9999px;">Overdue</span>
+              <span style="font-size: 12.5px; color: var(--ink);">
+                <strong>${overdueChallans.length} challans</strong> past due date — compounding statutory late fee risk
+              </span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span style="font-weight: 700; font-size: 13px; color: var(--status-unassigned); font-variant-numeric: tabular-nums;">
+                ${Utils.formatINR(overdueAmount)}
+              </span>
+              <button class="btn btn--secondary btn--sm" style="height: 30px; padding: 0 14px; font-size: 12px;" onclick="navigateTo('challans', true, { filter: 'overdue' })">
+                Review
+              </button>
+            </div>
+          </div>
+
+          <!-- 2. Unassigned (Needs owner) -->
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 10px 14px; background: var(--surface-2); border-radius: 8px; border: 1px solid var(--line); flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span class="badge badge--unassigned" style="font-weight: 700; font-size: 11px; padding: 3px 8px; border-radius: 9999px;">Unassigned</span>
+              <span style="font-size: 12.5px; color: var(--ink);">
+                <strong>${unassignedChallans.length} new challans</strong> from last sync have no responsible party attributed
+              </span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <button class="btn btn--primary btn--sm" style="height: 30px; padding: 0 14px; font-size: 12px;" onclick="navigateTo('challans', true, { status: 'unassigned' })">
+                Assign
+              </button>
+              <button class="btn btn--secondary btn--sm" style="height: 30px; padding: 0 14px; font-size: 12px;" onclick="navigateTo('challans', true, { status: 'unassigned' })">
+                Review
+              </button>
+            </div>
+          </div>
+
+          <!-- 3. Disputed (Awaiting evidence/hearing) -->
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 10px 14px; background: var(--surface-2); border-radius: 8px; border: 1px solid var(--line); flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span class="badge badge--pending" style="font-weight: 700; font-size: 11px; padding: 3px 8px; border-radius: 9999px;">Disputed</span>
+              <span style="font-size: 12.5px; color: var(--ink);">
+                <strong>${disputedChallans.length} disputes</strong> awaiting evidence upload or virtual court order
+              </span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span style="font-weight: 700; font-size: 13px; color: var(--ink); font-variant-numeric: tabular-nums;">
+                ${Utils.formatINR(disputedAmount)}
+              </span>
+              <button class="btn btn--secondary btn--sm" style="height: 30px; padding: 0 14px; font-size: 12px;" onclick="navigateTo('disputes')">
+                Review
+              </button>
+            </div>
+          </div>
+
+          <!-- 4. Failed (Retry or switch payment method) -->
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 10px 14px; background: var(--surface-2); border-radius: 8px; border: 1px solid var(--line); flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span class="badge badge--neutral" style="font-weight: 700; font-size: 11px; padding: 3px 8px; color: #D92D20; border-color: rgba(217, 45, 32, 0.2); border-radius: 9999px;">Failed</span>
+              <span style="font-size: 12.5px; color: var(--ink);">
+                <strong>${failedChallans.length > 0 ? failedChallans.length : 1} payment failed</strong> — gateway timeout or debited without confirmation
+              </span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span style="font-weight: 700; font-size: 13px; color: var(--text-2); font-variant-numeric: tabular-nums;">
+                ${Utils.formatINR(failedAmount)}
+              </span>
+              <button class="btn btn--secondary btn--sm" style="height: 30px; padding: 0 14px; font-size: 12px;" onclick="navigateTo('payments')">
+                Review
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
       <!-- 3. MIDDLE ROW (12 COLUMNS: 7 / 5 ASYMMETRIC GRID) -->
       <div class="calm-grid-12 framer-animate-charts">
         
@@ -210,7 +347,7 @@ function renderDashboardView(container, actions) {
             <div class="calm-donut-list">
               <div class="calm-donut-row">
                 <div class="calm-donut-name">
-                  <span style="width: 8px; height: 8px; border-radius: 2px; background: #2B3A67;"></span>
+                  <span style="width: 8px; height: 8px; border-radius: 2px; background: #0071E3;"></span>
                   <span>Driver Trips</span>
                 </div>
                 <div class="calm-donut-pct">42% (₹54,600)</div>
@@ -218,7 +355,7 @@ function renderDashboardView(container, actions) {
 
               <div class="calm-donut-row">
                 <div class="calm-donut-name">
-                  <span style="width: 8px; height: 8px; border-radius: 2px; background: #6B77A3;"></span>
+                  <span style="width: 8px; height: 8px; border-radius: 2px; background: #0066CC;"></span>
                   <span>Lessee Contracts</span>
                 </div>
                 <div class="calm-donut-pct">38% (₹49,400)</div>
@@ -226,7 +363,7 @@ function renderDashboardView(container, actions) {
 
               <div class="calm-donut-row">
                 <div class="calm-donut-name">
-                  <span style="width: 8px; height: 8px; border-radius: 2px; background: #A9B0C9;"></span>
+                  <span style="width: 8px; height: 8px; border-radius: 2px; background: #86868B;"></span>
                   <span>Fleet Default</span>
                 </div>
                 <div class="calm-donut-pct">20% (₹26,010)</div>
@@ -406,8 +543,8 @@ function renderFinexyDualBarChart(challans) {
   yTicks.forEach(tick => {
     const yPos = chartHeight - (tick.val / maxVal) * (chartHeight - 20);
     gridLines += `
-      <text x="0" y="${yPos + 3}" fill="#9A9CA6" font-size="9" font-family="'Geist', 'Inter Tight', sans-serif" font-weight="400">${tick.label}</text>
-      <line x1="24" y1="${yPos}" x2="${chartWidth}" y2="${yPos}" stroke="rgba(22, 24, 29, 0.06)" stroke-width="1" stroke-dasharray="3 3" />
+      <text x="0" y="${yPos + 3}" fill="#86868B" font-size="9" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif" font-weight="400">${tick.label}</text>
+      <line x1="24" y1="${yPos}" x2="${chartWidth}" y2="${yPos}" stroke="#E5E7EB" stroke-width="1" stroke-dasharray="3 3" />
     `;
   });
 
@@ -420,29 +557,29 @@ function renderFinexyDualBarChart(challans) {
     const yPos = chartHeight - bHeight;
 
     if (m.isCurrent) {
-      // Indigo Ink current month bar with 4px top radius and Framer spring animation
+      // Apple Primary Blue current month bar with 4px top radius and animation
       barsHTML += `
-        <rect class="framer-bar-rect" style="--bar-delay: ${idx * 0.045}s;" x="${xPos}" y="${yPos}" width="${barWidth}" height="${bHeight}" rx="4" ry="4" fill="#243360" />
-        <text x="${xPos + barWidth / 2}" y="${chartHeight + 14}" text-anchor="middle" fill="#16181D" font-size="9.5" font-weight="700" font-family="'Geist', 'Inter Tight', sans-serif">${m.label}</text>
+        <rect class="framer-bar-rect" style="--bar-delay: ${idx * 0.045}s;" x="${xPos}" y="${yPos}" width="${barWidth}" height="${bHeight}" rx="4" ry="4" fill="#0071E3" />
+        <text x="${xPos + barWidth / 2}" y="${chartHeight + 14}" text-anchor="middle" fill="#1D1D1F" font-size="9.5" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif">${m.label}</text>
       `;
 
-      // Floating tooltip on --surface with 1px border and soft shadow
+      // Floating tooltip on #FFFFFF with 1px border and soft shadow
       const ttX = xPos - 36;
       const ttY = yPos - 30;
       tooltipHTML = `
-        <g class="calm-chart-tooltip" filter="drop-shadow(0 2px 8px rgba(22, 24, 29, 0.10))">
-          <rect x="${ttX}" y="${ttY}" width="78" height="22" rx="4" fill="#FBFAF7" stroke="rgba(22, 24, 29, 0.16)" stroke-width="1" />
-          <polygon points="${xPos + barWidth/2 - 3},${ttY + 22} ${xPos + barWidth/2 + 3},${ttY + 22} ${xPos + barWidth/2},${ttY + 26}" fill="#FBFAF7" />
-          <text x="${ttX + 39}" y="${ttY + 15}" text-anchor="middle" fill="#16181D" font-size="9.5" font-weight="700" font-family="'Geist', 'Inter Tight', sans-serif">
+        <g class="calm-chart-tooltip" filter="drop-shadow(0 2px 8px rgba(0, 0, 0, 0.08))">
+          <rect x="${ttX}" y="${ttY}" width="78" height="22" rx="4" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1" />
+          <polygon points="${xPos + barWidth/2 - 3},${ttY + 22} ${xPos + barWidth/2 + 3},${ttY + 22} ${xPos + barWidth/2},${ttY + 26}" fill="#FFFFFF" />
+          <text x="${ttX + 39}" y="${ttY + 15}" text-anchor="middle" fill="#1D1D1F" font-size="9.5" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif">
             ${m.amount} (${m.notices})
           </text>
         </g>
       `;
     } else {
-      // Warm grey --surface-2 past months bars with 4px top radius and Framer spring animation
+      // Clean neutral Apple border tint #E5E7EB past months bars
       barsHTML += `
-        <rect class="framer-bar-rect" style="--bar-delay: ${idx * 0.045}s;" x="${xPos}" y="${yPos}" width="${barWidth}" height="${bHeight}" rx="4" ry="4" fill="#E2DFD7" />
-        <text x="${xPos + barWidth / 2}" y="${chartHeight + 14}" text-anchor="middle" fill="#606370" font-size="9.5" font-weight="500" font-family="'Geist', 'Inter Tight', sans-serif">${m.label}</text>
+        <rect class="framer-bar-rect" style="--bar-delay: ${idx * 0.045}s;" x="${xPos}" y="${yPos}" width="${barWidth}" height="${bHeight}" rx="4" ry="4" fill="#E5E7EB" />
+        <text x="${xPos + barWidth / 2}" y="${chartHeight + 14}" text-anchor="middle" fill="#6E6E73" font-size="9.5" font-weight="400" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif">${m.label}</text>
       `;
     }
   });
@@ -457,18 +594,17 @@ function renderFinexyDualBarChart(challans) {
 }
 
 /**
- * Signature Element: Donut Chart
- * 10px stroke, butt caps, 2px gap between segments, total in centre in Instrument Serif.
- * Tones: --accent (#2B3A67), #6B77A3, #A9B0C9, --surface-2 (#ECEAE4).
+ * Signature Element: Donut Chart (Apple Minimal Premium)
+ * 7px stroke, butt caps, 2px gap between segments, total in centre in SF Pro Display.
+ * Tones: Primary Blue (#0071E3), Secondary Blue (#0066CC), Muted (#86868B), Track (#E5E7EB).
  */
 function renderLiabilityDonutChart(challans) {
   const size = 92;
-  const stroke = 7; // Ultra-crisp 7px stroke for compact balance
+  const stroke = 7;
   const radius = (size - stroke) / 2;
   const circumference = 2 * Math.PI * radius;
 
   // Proportions: Driver 42%, Lessee 38%, Fleet 20%
-  // 2px gap between segments
   const gap = 2;
   const p1 = (0.42 * circumference) - gap;
   const p2 = (0.38 * circumference) - gap;
@@ -484,29 +620,29 @@ function renderLiabilityDonutChart(challans) {
       <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" style="transform: rotate(-90deg); display: block;">
         <!-- Track Background -->
         <circle cx="${size/2}" cy="${size/2}" r="${radius}" fill="none"
-          stroke="#ECEAE4" stroke-width="${stroke}" />
+          stroke="#E5E7EB" stroke-width="${stroke}" />
 
-        <!-- Segment 1: Driver Trips (--accent #243360 Indigo) -->
+        <!-- Segment 1: Driver Trips (#0071E3 Primary Apple Blue) -->
         <circle class="framer-donut-segment" style="--donut-delay: 0.2s;" cx="${size/2}" cy="${size/2}" r="${radius}" fill="none"
-          stroke="#243360" stroke-width="${stroke}" stroke-linecap="butt"
+          stroke="#0071E3" stroke-width="${stroke}" stroke-linecap="butt"
           stroke-dasharray="${p1} ${circumference}"
           stroke-dashoffset="${off1}" />
 
-        <!-- Segment 2: Lessee Contracts (#6B77A3 Slate Indigo) -->
+        <!-- Segment 2: Lessee Contracts (#0066CC Secondary Apple Blue) -->
         <circle class="framer-donut-segment" style="--donut-delay: 0.35s;" cx="${size/2}" cy="${size/2}" r="${radius}" fill="none"
-          stroke="#6B77A3" stroke-width="${stroke}" stroke-linecap="butt"
+          stroke="#0066CC" stroke-width="${stroke}" stroke-linecap="butt"
           stroke-dasharray="${p2} ${circumference}"
           stroke-dashoffset="${off2}" />
 
-        <!-- Segment 3: Fleet Default (#A9B0C9 Muted Lavender Grey) -->
+        <!-- Segment 3: Fleet Default (#86868B Muted Grey) -->
         <circle class="framer-donut-segment" style="--donut-delay: 0.5s;" cx="${size/2}" cy="${size/2}" r="${radius}" fill="none"
-          stroke="#A9B0C9" stroke-width="${stroke}" stroke-linecap="butt"
+          stroke="#86868B" stroke-width="${stroke}" stroke-linecap="butt"
           stroke-dasharray="${p3} ${circumference}"
           stroke-dashoffset="${off3}" />
       </svg>
-      <!-- Center Counter in Instrument Serif -->
+      <!-- Center Counter in SF Pro Display -->
       <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none;">
-        <span style="font-family: var(--font-family-serif); font-size: 23px; font-weight: 400; color: var(--ink); line-height: 1; letter-spacing: -0.02em;">32</span>
+        <span style="font-family: var(--font-family-display); font-size: 22px; font-weight: 700; color: var(--ink); line-height: 1; letter-spacing: -0.02em;">32</span>
         <span style="font-size: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-top: 2px;">NOTICES</span>
       </div>
     </div>
@@ -579,6 +715,9 @@ function renderAttentionItems(items) {
 
   return items.slice(0, 10).map(c => {
     const isUnassigned = c.status === "unassigned";
+    const daysLeft = Utils.getDaysRemaining(c.dueDate);
+    const isOverdue = daysLeft < 0 && c.status !== "paid";
+    const isUrgent = (isOverdue || (daysLeft <= 2 && c.status !== "paid")) && c.status !== "paid";
     const badge = getOffenceIconBadge(c.offence);
     const formattedDate = formatFinexyDateTime(c.offenceDate || c.date || c.dueDate);
 
@@ -598,7 +737,7 @@ function renderAttentionItems(items) {
     }
 
     return `
-      <tr>
+      <tr class="row-interactive ${isUrgent ? 'row-urgent-risk' : ''}" onclick="if(!event.target.closest('input') && !event.target.closest('button')) navigateTo('challans', true, { id: '${c.id}' })" title="Click anywhere to inspect notice details">
         <!-- Checkbox -->
         <td style="width: 36px;">
           <input type="checkbox" value="${c.id}" class="custom-checkbox">
@@ -683,3 +822,23 @@ function calculateMonthlyTrend(challans) {
     { label: "Aug", count: 58 }
   ];
 }
+
+/**
+ * Doherty Threshold: Instant micro-feedback on Gateway Sync
+ */
+function triggerParivahanSyncAnimation(btn) {
+  if (!btn) return;
+  const icon = btn.querySelector('.sync-icon');
+  if (icon) {
+    icon.style.transition = 'transform 450ms cubic-bezier(0.2, 0.8, 0.2, 1)';
+    icon.style.transform = 'rotate(360deg)';
+    setTimeout(() => {
+      icon.style.transition = 'none';
+      icon.style.transform = 'rotate(0deg)';
+    }, 480);
+  }
+  setTimeout(() => {
+    Utils.showToast('Gateway Synchronized', 'Parivahan e-Challan gateway polled successfully. 32 active records refreshed.', 'success');
+  }, 160);
+}
+window.triggerParivahanSyncAnimation = triggerParivahanSyncAnimation;

@@ -19,8 +19,20 @@ let vehicleTableState = {
   sortDirection: "asc",
   selectedVehicleIds: new Set(),
   activeFilterTab: "all",
+  vehicleTypeFilter: "all",
   searchQuery: ""
 };
+
+function setVehicleTypeFilter(type) {
+  vehicleTableState.vehicleTypeFilter = type;
+  vehicleTableState.currentPage = 1;
+  const pills = document.querySelectorAll(".vehicle-type-pill");
+  pills.forEach(p => {
+    if (p.dataset.vtype === type) p.classList.add("active");
+    else p.classList.remove("active");
+  });
+  renderVehiclesTableAndPagination();
+}
 
 function renderVehiclesView(container, actions, params = {}) {
   // If specific vehicle ID requested, render Vehicle Details Screen!
@@ -34,15 +46,15 @@ function renderVehiclesView(container, actions, params = {}) {
     vehicleTableState.searchQuery = params.search;
   }
 
-  // Header Actions
+  // Header Actions - Three Onboarding Paths (Case Study Screen 2, Page 13)
   actions.innerHTML = `
-    <button class="btn btn--outline btn--sm" onclick="Utils.exportToCSV(StorageManager.getVehicles(), 'apex-fleet-vehicles.csv')">
-      <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-      Export Fleet CSV
+    <button class="btn btn--outline btn--sm" onclick="triggerFetchByOwnerFlow()">
+      <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/></svg>
+      Fetch by Owner
     </button>
     <button class="btn btn--secondary btn--sm" onclick="openImportVehiclesWizard()">
-      <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
-      Import Vehicles (CSV)
+      <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 011.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+      Import Excel
     </button>
     <button class="btn btn--primary btn--sm" onclick="openAddVehicleModal()">
       + Add Vehicle
@@ -55,6 +67,15 @@ function renderVehiclesView(container, actions, params = {}) {
   const leasedCount = allVehicles.filter(v => v.currentLesseeId).length;
   const unassignedOwnerCount = allVehicles.filter(v => !v.ownerName || v.ownerName === "Unassigned" || !v.currentDriverId).length;
   const syncIssueCount = allVehicles.filter(v => v.syncStatus === "Failed" || v.syncStatus === "Partial").length;
+
+  const typeCounts = {
+    all: allVehicles.length,
+    truck: allVehicles.filter(v => Utils.getVehicleTypeMeta(v).type === 'truck').length,
+    bus: allVehicles.filter(v => Utils.getVehicleTypeMeta(v).type === 'bus').length,
+    bike: allVehicles.filter(v => Utils.getVehicleTypeMeta(v).type === 'bike').length,
+    car: allVehicles.filter(v => Utils.getVehicleTypeMeta(v).type === 'car').length,
+    van: allVehicles.filter(v => ['van', 'pickup'].includes(Utils.getVehicleTypeMeta(v).type)).length
+  };
 
   const tabs = [
     { key: "all", label: "All Vehicles", count: allVehicles.length },
@@ -74,18 +95,29 @@ function renderVehiclesView(container, actions, params = {}) {
       `).join("")}
     </div>
 
-    <!-- Filter & Search Toolbar -->
-    <div class="filter-toolbar" style="margin-bottom: var(--space-4);">
-      <div class="filter-group">
-        <div style="position: relative; width: 320px;">
+    <!-- Unified Executive Command Toolbar -->
+    <div class="filter-toolbar" style="margin-top: var(--space-4); margin-bottom: var(--space-4); display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); flex-wrap: wrap;">
+      <div class="filter-group" style="display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;">
+        <div style="position: relative; width: 340px;">
           <svg class="search-icon-prefix" viewBox="0 0 20 20" fill="currentColor" style="left: 10px;">
             <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
           </svg>
           <input type="text" class="form-input" id="vehicleSearchInput" style="padding-left: 34px;"
             placeholder="Search registration, model, owner, driver, chassis..." value="${vehicleTableState.searchQuery}">
         </div>
-        ${vehicleTableState.searchQuery ? `
-          <button class="btn btn--ghost btn--sm" onclick="clearVehicleSearch()">Clear Search</button>
+
+        <!-- Class Filter Select -->
+        <select class="form-select" id="vehicleTypeSelect" style="width: 190px; font-size: 12px; padding: 6px 10px;" onchange="setVehicleTypeFilter(this.value)">
+          <option value="all" ${vehicleTableState.vehicleTypeFilter === 'all' ? 'selected' : ''}>All Vehicle Classes (${typeCounts.all})</option>
+          <option value="truck" ${vehicleTableState.vehicleTypeFilter === 'truck' ? 'selected' : ''}>🚛 Heavy Trucks (${typeCounts.truck})</option>
+          <option value="bus" ${vehicleTableState.vehicleTypeFilter === 'bus' ? 'selected' : ''}>🚌 Commercial Buses (${typeCounts.bus})</option>
+          <option value="bike" ${vehicleTableState.vehicleTypeFilter === 'bike' ? 'selected' : ''}>🏍️ 2-Wheelers (${typeCounts.bike})</option>
+          <option value="car" ${vehicleTableState.vehicleTypeFilter === 'car' ? 'selected' : ''}>🚗 Cabs / Sedans (${typeCounts.car})</option>
+          <option value="van" ${vehicleTableState.vehicleTypeFilter === 'van' ? 'selected' : ''}>🚐 Vans & Pickups (${typeCounts.van})</option>
+        </select>
+
+        ${(vehicleTableState.searchQuery || vehicleTableState.vehicleTypeFilter !== 'all') ? `
+          <button class="btn btn--ghost btn--sm" style="font-size: 11px; padding: 2px 8px;" onclick="resetVehicleFilters()">Reset Filters</button>
         ` : ''}
       </div>
 
@@ -163,6 +195,14 @@ function clearVehicleSearch() {
   navigateTo("vehicles");
 }
 
+function resetVehicleFilters() {
+  vehicleTableState.searchQuery = "";
+  vehicleTableState.vehicleTypeFilter = "all";
+  vehicleTableState.currentPage = 1;
+  navigateTo("vehicles");
+}
+window.resetVehicleFilters = resetVehicleFilters;
+
 function renderVehiclesTableAndPagination() {
   const allVehicles = StorageManager.getVehicles();
   const drivers = StorageManager.getDrivers();
@@ -178,6 +218,17 @@ function renderVehiclesTableAndPagination() {
     filtered = filtered.filter(v => !v.ownerName || v.ownerName === "Unassigned" || !v.currentDriverId);
   } else if (vehicleTableState.activeFilterTab === "syncIssues") {
     filtered = filtered.filter(v => v.syncStatus === "Failed" || v.syncStatus === "Partial");
+  }
+
+  // 1.5 Filter by Vehicle Class (Truck, Bus, Bike, Car, Van)
+  if (vehicleTableState.vehicleTypeFilter && vehicleTableState.vehicleTypeFilter !== "all") {
+    filtered = filtered.filter(v => {
+      const t = Utils.getVehicleTypeMeta(v).type;
+      if (vehicleTableState.vehicleTypeFilter === "van") {
+        return t === "van" || t === "pickup";
+      }
+      return t === vehicleTableState.vehicleTypeFilter;
+    });
   }
 
   // 2. Filter by Search Query
@@ -271,6 +322,7 @@ function renderVehiclesTableAndPagination() {
       const isChecked = vehicleTableState.selectedVehicleIds.has(v.id);
       const lessee = lessees.find(l => l.id === v.currentLesseeId);
       const driver = drivers.find(d => d.id === v.currentDriverId);
+      const typeMeta = Utils.getVehicleTypeMeta(v);
 
       let syncBadge = `<span class="badge badge--paid">Synced</span>`;
       if (v.syncStatus === "Failed") syncBadge = `<span class="badge badge--unassigned">Failed</span>`;
@@ -282,20 +334,25 @@ function renderVehiclesTableAndPagination() {
                   <input type="checkbox" class="custom-checkbox" ${isChecked ? 'checked' : ''} onchange="toggleVehicleRowSelection('${v.id}', this.checked)">
                 </td>
                 <td>
-                  <div style="display: flex; align-items: center; gap: 10px;">
-                    <div style="width: 44px; height: 32px; border-radius: 4px; overflow: hidden; border: 1px solid var(--color-border); background: #FAFBFD; flex-shrink: 0;">
-                      <img src="${(v.makeModel || '').toLowerCase().includes('bolero') ? 'assets/images/bolero-maxx.jpg' : 'assets/images/tata-ace.jpg'}" alt="${v.makeModel}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none'">
+                  <div style="display: flex; align-items: center; gap: 12px;">
+                    <div style="width: 52px; height: 38px; border-radius: 6px; overflow: hidden; border: 1px solid var(--line); background: var(--surface-2); flex-shrink: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.06); position: relative;">
+                      <img src="${v.image || typeMeta.image}" alt="${v.makeModel}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='${typeMeta.image}'">
                     </div>
                     <div>
-                      <a href="#vehicles?id=${v.id}" class="font-mono font-semibold" style="color: var(--color-primary); font-size: 13px;" title="View vehicle compliance profile">
-                        ${v.regNumber}
-                      </a>
-                      <div class="text-xs text-muted">${v.category || 'Commercial'}</div>
+                      <div style="display: flex; align-items: center; gap: 6px;">
+                        <a href="#vehicles?id=${v.id}" class="plate-chip plate-chip--commercial font-mono font-bold" style="font-size: 12px;" title="View vehicle compliance profile">
+                          ${v.regNumber}
+                        </a>
+                        <span class="badge ${typeMeta.badgeClass}" style="${typeMeta.badgeStyle} font-size: 10px; padding: 1.5px 6px; border-radius: 4px; display: inline-flex; align-items: center; gap: 3px;" title="${typeMeta.label}">
+                          ${typeMeta.icon} ${typeMeta.shortLabel}
+                        </span>
+                      </div>
+                      <div class="text-xs text-muted" style="margin-top: 2px;">${v.category || typeMeta.label}</div>
                     </div>
                   </div>
                 </td>
                 <td>
-                  <strong class="cell-truncate" title="${v.makeModel}" style="color: var(--color-text-main); font-size: 13px;">${v.makeModel}</strong>
+                  <strong class="cell-truncate" title="${v.makeModel}" style="color: var(--ink); font-size: 13px;">${v.makeModel}</strong>
                   <div class="text-xs text-muted font-mono col-nice">Chassis: ${v.chassisNumber ? v.chassisNumber.slice(-8) : '—'}</div>
                 </td>
                 <td class="col-nice">
@@ -318,20 +375,20 @@ function renderVehiclesTableAndPagination() {
                   `}
                 </td>
                 <td>
-                  <strong class="amount-cell" style="color: ${(v.outstandingAmount || 0) > 0 ? 'var(--color-text-main)' : 'var(--color-text-muted)'}; white-space: nowrap;">
+                  <strong class="amount-cell" style="color: ${(v.outstandingAmount || 0) > 0 ? 'var(--ink)' : 'var(--text-3)'}; white-space: nowrap;">
                     ${Utils.formatINR(v.outstandingAmount || 0)}
                   </strong>
                 </td>
                 <td>${syncBadge}</td>
                 <td style="text-align: right;">
                   <div style="display: inline-flex; gap: 4px;">
-                    <a href="#vehicles?id=${v.id}" class="btn btn--outline btn--sm" style="padding: 3px 8px; font-size: 11px;" title="Open complete profile">
+                    <a href="#vehicles?id=${v.id}" class="btn btn--outline btn--sm" style="padding: 4px 10px; font-size: 11px;" title="Open complete profile">
                       Details
                     </a>
-                    <button class="btn btn--ghost btn--sm" style="padding: 3px 8px; font-size: 11px;" onclick="openEditVehicleModal('${v.id}')" title="Edit vehicle metadata">
+                    <button class="btn btn--ghost btn--sm" style="padding: 4px 8px; font-size: 11px;" onclick="openEditVehicleModal('${v.id}')" title="Edit vehicle metadata">
                       Edit
                     </button>
-                    <button class="btn btn--ghost btn--sm" style="padding: 3px 8px; font-size: 11px; color: var(--color-danger, #C24141);" onclick="archiveVehicle('${v.id}')" title="Archive vehicle">
+                    <button class="btn btn--ghost btn--sm" style="padding: 4px 8px; font-size: 11px; color: var(--color-danger, #C24141);" onclick="archiveVehicle('${v.id}')" title="Archive vehicle">
                       Archive
                     </button>
                   </div>
@@ -489,25 +546,27 @@ function renderVehicleDetailsView(container, actions, vehicleId) {
   // Compliance Flags
   const isPUCExpired = vehicle.pucExpiry && new Date(vehicle.pucExpiry) < new Date();
   const isInsuranceExpiring = vehicle.insuranceExpiry && Utils.getDaysRemaining(vehicle.insuranceExpiry) < 60;
+  const typeMeta = Utils.getVehicleTypeMeta(vehicle);
 
   container.innerHTML = `
     <!-- Vehicle Identification Banner -->
     <div class="vehicle-profile-banner" style="display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap;">
       <div style="display: flex; align-items: center; gap: var(--space-4);">
-        <div style="width: 110px; height: 74px; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--color-border); background: var(--color-bg-app); flex-shrink: 0; box-shadow: var(--shadow-xs);">
-          <img src="${(vehicle.makeModel || '').toLowerCase().includes('bolero') ? 'assets/images/bolero-maxx.jpg' : 'assets/images/tata-ace.jpg'}" alt="${vehicle.makeModel}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none'">
+        <div style="width: 120px; height: 84px; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--color-border); background: var(--color-bg-app); flex-shrink: 0; box-shadow: var(--shadow-xs);">
+          <img src="${typeMeta.image}" alt="${vehicle.makeModel}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='assets/images/tata-ace.jpg'">
         </div>
         <div>
           <div style="display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap;">
             <span class="vehicle-reg-tag">${vehicle.regNumber}</span>
+            <span class="badge ${typeMeta.badgeClass}" style="${typeMeta.badgeStyle}">${typeMeta.icon} ${typeMeta.label}</span>
             <span class="badge badge--paid">${vehicle.syncStatus || 'Synced'}</span>
-            <span class="badge badge--neutral">${vehicle.category || 'Commercial Vehicle'}</span>
             <span class="badge ${vehicle.fastagStatus === 'Active' ? 'badge--paid' : 'badge--unassigned'}">FASTag: ${vehicle.fastagStatus || 'Active'}</span>
           </div>
-          <h2 style="font-size: 20px; font-weight: 700; color: var(--color-text-main); margin-top: 6px; letter-spacing: var(--letter-spacing-tight);">
+          <h2 style="font-size: 22px; font-weight: 700; color: var(--color-text-main); margin-top: 6px; letter-spacing: var(--letter-spacing-tight); font-family: var(--font-display, var(--font-heading));">
             ${vehicle.makeModel} (${vehicle.year})
           </h2>
           <div class="text-xs text-muted" style="margin-top: 4px;">
+            Asset Class: <strong class="text-main">${typeMeta.label}</strong> •
             Chassis: <strong class="font-mono text-main">${vehicle.chassisNumber || 'MAT612034N9P12847'}</strong> • 
             Engine: <strong class="font-mono text-main">${vehicle.engineNumber || '475ID05KP9812'}</strong> •
             Source: <strong class="text-main">${vehicle.source || 'Parivahan API'}</strong>
@@ -516,11 +575,11 @@ function renderVehicleDetailsView(container, actions, vehicleId) {
       </div>
 
       <div style="display: flex; gap: var(--space-4); align-items: center;">
-        <div style="text-align: right;">
-          <div style="font-size: 20px; font-weight: 700; color: ${(vehicle.outstandingAmount || 0) > 0 ? 'var(--status-unassigned)' : 'var(--color-text-main)'};">
+        <div style="text-align: right; background: var(--color-bg-surface); padding: 10px 18px; border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+          <div style="font-size: 22px; font-weight: 700; color: ${(vehicle.outstandingAmount || 0) > 0 ? 'var(--status-unassigned)' : 'var(--color-text-main)'}; font-family: var(--font-display, inherit);">
             ${Utils.formatINR(vehicle.outstandingAmount || 0)}
           </div>
-          <div class="text-xs text-muted">${vehicle.openChallans || 0} Open Challans</div>
+          <div class="text-xs text-muted" style="font-weight: 500;">${vehicle.openChallans || 0} Open Compliance Notices</div>
         </div>
       </div>
     </div>
@@ -529,16 +588,16 @@ function renderVehicleDetailsView(container, actions, vehicleId) {
     <div class="compliance-badge-grid">
       <div class="compliance-item">
         <div>
-          <div class="text-xs text-muted">RC Smart Card Validity</div>
-          <strong class="text-sm">${Utils.formatDate(vehicle.rcValidity)}</strong>
+          <div class="text-xs text-muted" style="text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600;">RC Validity</div>
+          <strong class="text-sm" style="display: block; margin-top: 3px;">${Utils.formatDate(vehicle.rcValidity)}</strong>
         </div>
         <span class="badge badge--paid">Valid</span>
       </div>
 
       <div class="compliance-item ${isInsuranceExpiring ? 'alert-expired' : ''}">
         <div>
-          <div class="text-xs text-muted">Insurance Policy Expiry</div>
-          <strong class="text-sm">${Utils.formatDate(vehicle.insuranceExpiry)}</strong>
+          <div class="text-xs text-muted" style="text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600;">Insurance Expiry</div>
+          <strong class="text-sm" style="display: block; margin-top: 3px;">${Utils.formatDate(vehicle.insuranceExpiry)}</strong>
         </div>
         <span class="badge ${isInsuranceExpiring ? 'badge--pending' : 'badge--paid'}">
           ${isInsuranceExpiring ? 'Renew Soon' : 'Covered'}
@@ -547,8 +606,8 @@ function renderVehicleDetailsView(container, actions, vehicleId) {
 
       <div class="compliance-item ${isPUCExpired ? 'alert-expired' : ''}">
         <div>
-          <div class="text-xs text-muted">PUC Certificate Expiry</div>
-          <strong class="text-sm">${Utils.formatDate(vehicle.pucExpiry)}</strong>
+          <div class="text-xs text-muted" style="text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600;">PUC Certificate</div>
+          <strong class="text-sm" style="display: block; margin-top: 3px;">${Utils.formatDate(vehicle.pucExpiry)}</strong>
         </div>
         <span class="badge ${isPUCExpired ? 'badge--unassigned' : 'badge--paid'}">
           ${isPUCExpired ? 'Expired!' : 'Valid'}
@@ -557,8 +616,8 @@ function renderVehicleDetailsView(container, actions, vehicleId) {
 
       <div class="compliance-item">
         <div>
-          <div class="text-xs text-muted">FASTag Wallet Balance</div>
-          <strong class="text-sm">${Utils.formatINR(vehicle.fastagBalance || 0)}</strong>
+          <div class="text-xs text-muted" style="text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600;">FASTag Wallet</div>
+          <strong class="text-sm" style="display: block; margin-top: 3px;">${Utils.formatINR(vehicle.fastagBalance || 0)}</strong>
         </div>
         <span class="badge badge--paid">NHAI Active</span>
       </div>
@@ -568,23 +627,23 @@ function renderVehicleDetailsView(container, actions, vehicleId) {
     <div class="card" style="margin-top: var(--space-4); padding: var(--space-4);">
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4);">
         <div>
-          <div class="text-xs text-muted">Vehicle Owner</div>
-          <strong class="text-sm text-main">${vehicle.ownerName || 'Apex Fleet Pvt Ltd'}</strong>
+          <div class="text-xs text-muted" style="text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600;">Vehicle Owner</div>
+          <strong class="text-sm text-main" style="display: block; margin-top: 3px;">${vehicle.ownerName || 'Apex Fleet Pvt Ltd'}</strong>
           <div class="text-xs text-muted" style="margin-top: 2px;">Title Holder / Asset Owner</div>
         </div>
         <div>
-          <div class="text-xs text-muted">Corporate Lessee</div>
-          <strong class="text-sm text-main">${lessee ? lessee.name : 'Direct Fleet Operations'}</strong>
+          <div class="text-xs text-muted" style="text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600;">Corporate Lessee</div>
+          <strong class="text-sm text-main" style="display: block; margin-top: 3px;">${lessee ? lessee.name : 'Direct Fleet Operations'}</strong>
           <div class="text-xs text-muted" style="margin-top: 2px;">${lessee ? `Code: ${lessee.code || 'CORP'} • Tier 1` : 'In-House Asset'}</div>
         </div>
         <div>
-          <div class="text-xs text-muted">Assigned Duty Driver</div>
-          <strong class="text-sm text-main">${driver ? driver.name : 'Unassigned (Duty Pool)'}</strong>
-          <div class="text-xs text-muted" style="margin-top: 2px;">${driver ? `DL: ${driver.licenseNumber} • ${driver.phone}` : 'Active Fleet Pool'}</div>
+          <div class="text-xs text-muted" style="text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600;">Assigned Duty Driver</div>
+          <strong class="text-sm text-main" style="display: block; margin-top: 3px;">${driver ? driver.name : 'Unassigned (Duty Pool)'}</strong>
+          <div class="text-xs text-muted" style="margin-top: 2px;">${driver ? `DL: ${driver.dlNumber || driver.licenseNumber || 'Verified DL'} • ${driver.phone}` : 'Active Fleet Pool'}</div>
         </div>
         <div>
-          <div class="text-xs text-muted">Lease Contract Period</div>
-          <strong class="text-sm text-main">${vehicle.contractStart ? Utils.formatDate(vehicle.contractStart) : '01 Jan 2025'} — ${vehicle.contractEnd ? Utils.formatDate(vehicle.contractEnd) : '31 Dec 2027'}</strong>
+          <div class="text-xs text-muted" style="text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600;">Lease Contract Period</div>
+          <strong class="text-sm text-main" style="display: block; margin-top: 3px;">${vehicle.contractStart ? Utils.formatDate(vehicle.contractStart) : '01 Jan 2025'} — ${vehicle.contractEnd ? Utils.formatDate(vehicle.contractEnd) : '31 Dec 2027'}</strong>
           <div class="text-xs text-muted" style="margin-top: 2px;"><span class="badge badge--paid" style="font-size: 10px;">Active Master Agreement</span></div>
         </div>
       </div>
@@ -814,21 +873,26 @@ function renderVehicleChallansTab(vehicle, challans) {
           <tbody>
             ${challans.map(c => `
               <tr>
-                <td><strong>${c.challanNumber}</strong></td>
                 <td>
-                  <div>${c.offence}</div>
-                  <div class="text-xs text-muted">${c.mvActSection}</div>
+                  <a href="#challans?id=${c.id}" class="challan-no-link" style="font-weight: 700; color: var(--ink); text-decoration: underline; text-underline-offset: 2px;">
+                    ${c.challanNumber}
+                  </a>
+                </td>
+                <td>
+                  <div style="font-weight: 600;">${c.offence}</div>
+                  <div class="text-xs text-muted font-mono">${c.mvActSection}</div>
                 </td>
                 <td>${Utils.formatDate(c.offenceDate, true)}</td>
                 <td>${c.issuingAuthority}</td>
-                <td><strong>${Utils.formatINR(c.amount)}</strong></td>
+                <td style="font-weight: 700;">${Utils.formatINR(c.amount)}</td>
                 <td>${Utils.getStatusBadgeHTML(c.status)}</td>
                 <td><strong>${c.responsiblePartyName || c.responsibleParty}</strong></td>
                 <td>
-                  <div style="display: flex; gap: 4px;">
-                    <button class="btn btn--outline btn--sm" onclick="openAssignmentModal('${c.id}')">Assign</button>
+                  <div style="display: flex; gap: 4px; align-items: center;">
+                    <a href="#challans?id=${c.id}" class="btn btn--outline btn--sm" style="font-size: 11px;">View →</a>
+                    <button class="btn btn--outline btn--sm" style="font-size: 11px;" onclick="openAssignmentModal('${c.id}')">Assign</button>
                     ${c.status !== 'paid' && c.status !== 'court' ? `
-                      <button class="btn btn--secondary btn--sm" onclick="openPaymentModal('${c.id}')">Pay</button>
+                      <button class="btn btn--secondary btn--sm" style="font-size: 11px;" onclick="openPaymentModal('${c.id}')">Pay</button>
                     ` : ''}
                   </div>
                 </td>
@@ -1628,9 +1692,20 @@ function submitCustodyPeriodForm() {
   renderVehicleDetailsView(document.getElementById("moduleViewBody"), document.getElementById("viewHeaderActions"), vehicle.id);
 }
 
+function triggerFetchByOwnerFlow() {
+  const owner = prompt("Query Parivahan/VAHAN Database by Corporate Owner / Lessee Name:", "Apex Fleet Pvt Ltd");
+  if (!owner) return;
+  Utils.showToast("Querying VAHAN Database", `Looking up commercial vehicle registrations for "${owner}"...`, "info");
+  setTimeout(() => {
+    Utils.showToast("VAHAN Query Success", `Discovered 8 commercial vehicles under "${owner}". All records verified and synced.`, "success");
+    renderVehiclesTableAndPagination();
+  }, 1200);
+}
+
 // --------------------------------------------------------------------------
 // 16. GLOBAL WINDOW EXPORTS FOR HTML EVENT HANDLERS
 // --------------------------------------------------------------------------
+window.triggerFetchByOwnerFlow = triggerFetchByOwnerFlow;
 window.openAddVehicleModal = openAddVehicleModal;
 window.openEditVehicleModal = openEditVehicleModal;
 window.submitAddVehicleForm = submitAddVehicleForm;

@@ -945,94 +945,173 @@
 
   <!-- 8. Payment Settlement Receipt Voucher Modal (Printable / Downloadable) -->
   <div class="modal-backdrop" id="receiptModal">
-    <div class="modal-dialog" style="max-width: 560px;">
-      <div class="modal-header" style="background: var(--color-primary-subtle); border-bottom: 1px solid var(--color-primary-light);">
-        <div style="display: flex; align-items: center; gap: 14px;">
-          <div style="width: 44px; height: 44px; border-radius: 10px; background: #FFFFFF; padding: 4px; border: 1px solid rgba(22, 24, 29, 0.08); box-shadow: 0 1px 3px rgba(22, 24, 29, 0.06); flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
-            <img src="assets/images/challanos-logo.png" alt="Hisaab Logo" style="width: 100%; height: 100%; object-fit: contain;">
-          </div>
-          <div>
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span class="badge badge--paid">Verified Statutory Settlement</span>
-              <span class="badge badge--neutral" style="font-size: 10px;">DEMO VOUCHER</span>
+    <div class="modal-dialog receipt-modal-dialog">
+      <!-- Real Physical Paper Receipt Slip -->
+      <div class="receipt-slip" id="printableReceiptSlip">
+        
+        <!-- Scalloped Top Security Ribbon -->
+        <div class="receipt-top-serration"></div>
+
+        <!-- Receipt Header Strip -->
+        <div class="receipt-header">
+          <div class="receipt-header-top">
+            <div class="receipt-brand-mark">
+              <img src="assets/images/challanos-logo.png" alt="Logo" class="receipt-brand-img">
             </div>
-            <h3 class="modal-title" style="color: var(--color-primary); margin-top: 4px;">e-Challan Payment Receipt</h3>
-            <p class="text-xs text-muted" id="receiptVoucherNo">RCPT-2026-884120</p>
+            <div class="receipt-auth-meta">
+              <div class="receipt-gov-line">MoRTH • GOVERNMENT OF INDIA</div>
+              <h2 class="receipt-title">e-Challan Settlement Receipt</h2>
+              <div class="receipt-voucher-row">
+                <span>VOUCHER NO:</span>
+                <span class="receipt-voucher-mono" id="receiptVoucherNo">RCPT-2026-884120</span>
+              </div>
+            </div>
+            <button class="receipt-close-btn no-print" onclick="Utils.closeModal('receiptModal')" title="Close">
+              <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+            </button>
+          </div>
+
+          <div class="receipt-tags-row">
+            <span class="receipt-badge-settled">
+              <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              VERIFIED STATUTORY SETTLEMENT
+            </span>
+            <span class="receipt-badge-demo">OFFICIAL TAX INVOICE</span>
           </div>
         </div>
-        <button class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('receiptModal')" title="Close">
-          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-        </button>
+
+        <!-- Rubber Stamp Graphic -->
+        <div class="receipt-rubber-stamp" aria-hidden="true">
+          <div class="receipt-stamp-circle">
+            <div class="receipt-stamp-top">PARIVAHAN E-PAY</div>
+            <div class="receipt-stamp-main">PAID</div>
+            <div class="receipt-stamp-sub">RECONCILED</div>
+          </div>
+        </div>
+
+        <!-- Total Paid Banner Ribbon -->
+        <div class="receipt-total-ribbon">
+          <div class="receipt-total-label">Total Statutory Amount Paid</div>
+          <div class="receipt-total-value" id="receiptTotalAmt">₹2,025</div>
+          <div class="receipt-gateway-sub">
+            <svg width="13" height="13" viewBox="0 0 20 20" fill="currentColor" style="color: #0071E3;"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+            <span>Settled via National Electronic Toll &amp; Traffic Gateway (Parivahan)</span>
+          </div>
+        </div>
+
+        <!-- Perforation Cutout with Side Notches -->
+        <div class="receipt-perforation-divider">
+          <div class="receipt-notch-left"></div>
+          <div class="receipt-dashed-line"></div>
+          <div class="receipt-notch-right"></div>
+        </div>
+
+        <!-- Receipt Metadata Grid -->
+        <div class="receipt-body-grid">
+          <div class="receipt-grid-cell">
+            <span class="receipt-field-label">Challan Number</span>
+            <div class="receipt-field-value font-mono" id="receiptChallanNo">DL-884120</div>
+          </div>
+
+          <div class="receipt-grid-cell">
+            <span class="receipt-field-label">Vehicle Registration</span>
+            <div class="receipt-plate-wrapper">
+              <span class="receipt-plate-ind">IND</span>
+              <strong class="receipt-plate-reg" id="receiptVehicleReg">DL-01-AB-1234</strong>
+            </div>
+          </div>
+
+          <div class="receipt-grid-cell full-span">
+            <span class="receipt-field-label">Infraction / Law Section</span>
+            <div class="receipt-field-value" id="receiptOffence">Overspeeding (Sec 183(1) MV Act)</div>
+          </div>
+
+          <div class="receipt-grid-cell">
+            <span class="receipt-field-label">Settled Timestamp</span>
+            <div class="receipt-field-value" id="receiptPaymentDate">06 Nov 2026, 06:45 PM</div>
+          </div>
+
+          <div class="receipt-grid-cell">
+            <span class="receipt-field-label">Settlement Method</span>
+            <div class="receipt-field-value" id="receiptMethod">UPI (Gateway Ref: UPI-2940128)</div>
+          </div>
+
+          <div class="receipt-grid-cell">
+            <span class="receipt-field-label">Transaction Reference</span>
+            <div class="receipt-field-value font-mono receipt-txn-ref" id="receiptTxnRef">TXN-PARIVAHAN-2026-99218</div>
+          </div>
+
+          <div class="receipt-grid-cell">
+            <span class="receipt-field-label">Paid By (Payer)</span>
+            <div class="receipt-field-value" id="receiptPayer">Apex Fleet Pvt Ltd</div>
+          </div>
+
+          <div class="receipt-grid-cell full-span">
+            <span class="receipt-field-label">Recovery Allocation Target</span>
+            <div class="receipt-field-value" id="receiptRecoveryParty">Rahul Sharma (Driver - Payroll deduction)</div>
+          </div>
+        </div>
+
+        <!-- Itemized Financial Breakdown Table with Dot Leaders -->
+        <div class="receipt-accounting-box">
+          <div class="receipt-accounting-row">
+            <span class="receipt-accounting-name">Statutory Penalty Amount</span>
+            <span class="receipt-dot-leader"></span>
+            <span class="receipt-accounting-amount" id="receiptBaseAmt">₹2,000</span>
+          </div>
+          <div class="receipt-accounting-row">
+            <span class="receipt-accounting-name">Accumulated Late Fee / Surcharge</span>
+            <span class="receipt-dot-leader"></span>
+            <span class="receipt-accounting-amount" id="receiptLateFee">₹0</span>
+          </div>
+          <div class="receipt-accounting-row">
+            <span class="receipt-accounting-name">Gateway Convenience Fee</span>
+            <span class="receipt-dot-leader"></span>
+            <span class="receipt-accounting-amount" id="receiptConvFee">₹25</span>
+          </div>
+        </div>
+
+        <!-- Security Verification Seal -->
+        <div class="receipt-verification-bar">
+          <div class="receipt-cert-left">
+            <span class="receipt-cert-icon">✓</span>
+            <span>Digitally Certified Reconciliation Seal</span>
+          </div>
+          <span class="receipt-cert-badge font-mono">APEX-AUDIT-OK</span>
+        </div>
+
+        <!-- Barcode & QR Code Section -->
+        <div class="receipt-barcode-footer">
+          <div class="receipt-barcode-container">
+            <div class="receipt-barcode-graphic"></div>
+            <div class="receipt-barcode-caption">SECURITY HASH: 09F8-4120-PARIVAHAN-STATUTORY</div>
+          </div>
+          <div class="receipt-qr-container" title="Scan to verify clearance on Parivahan">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#1D1D1F" stroke-width="1.8">
+              <rect x="2" y="2" width="7" height="7" rx="1"></rect>
+              <rect x="4.5" y="4.5" width="2" height="2" fill="#1D1D1F"></rect>
+              <rect x="15" y="2" width="7" height="7" rx="1"></rect>
+              <rect x="17.5" y="4.5" width="2" height="2" fill="#1D1D1F"></rect>
+              <rect x="2" y="15" width="7" height="7" rx="1"></rect>
+              <rect x="4.5" y="17.5" width="2" height="2" fill="#1D1D1F"></rect>
+              <line x1="14" y1="14" x2="16" y2="14"></line>
+              <line x1="19" y1="14" x2="21" y2="14"></line>
+              <line x1="14" y1="18" x2="18" y2="18"></line>
+              <line x1="14" y1="21" x2="16" y2="21"></line>
+              <line x1="19" y1="21" x2="22" y2="21"></line>
+            </svg>
+            <span class="receipt-qr-text">VERIFY</span>
+          </div>
+        </div>
+
+        <!-- Bottom Saw-tooth / Perforated Edge -->
+        <div class="receipt-bottom-serration"></div>
       </div>
-      <div class="modal-body" style="display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-6);">
-        <!-- Summary Banner -->
-        <div style="text-align: center; padding: 16px; background: var(--color-bg-app); border: 1px dashed var(--color-border); border-radius: var(--radius-md);">
-          <div class="text-xs text-muted">Total Statutory Amount Paid</div>
-          <div style="font-size: 28px; font-weight: 800; color: var(--status-paid); margin: 4px 0;" id="receiptTotalAmt">₹2,025</div>
-          <div class="text-xs" style="color: var(--color-text-secondary);">Settled via National Electronic Toll & Traffic Gateway (Parivahan)</div>
-        </div>
 
-        <!-- Receipt Details Matrix -->
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 12px; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); padding: 12px 0;">
-          <div>
-            <span class="text-muted" style="display: block;">Challan Number:</span>
-            <strong id="receiptChallanNo">DL-884120</strong>
-          </div>
-          <div>
-            <span class="text-muted" style="display: block;">Vehicle Registration:</span>
-            <strong id="receiptVehicleReg">DL-01-AB-1234</strong>
-          </div>
-          <div style="grid-column: 1 / -1;">
-            <span class="text-muted" style="display: block;">Infraction / Law Section:</span>
-            <strong id="receiptOffence">Overspeeding (Sec 183(1) MV Act)</strong>
-          </div>
-          <div>
-            <span class="text-muted" style="display: block;">Settled Timestamp:</span>
-            <span id="receiptPaymentDate">06 Nov 2026, 06:45 PM</span>
-          </div>
-          <div>
-            <span class="text-muted" style="display: block;">Settlement Method:</span>
-            <span id="receiptMethod">UPI (Gateway Ref: UPI-2940128)</span>
-          </div>
-          <div>
-            <span class="text-muted" style="display: block;">Transaction Reference:</span>
-            <strong class="font-mono" id="receiptTxnRef" style="color: var(--color-primary);">TXN-PARIVAHAN-2026-99218</strong>
-          </div>
-          <div>
-            <span class="text-muted" style="display: block;">Paid By (Payer):</span>
-            <strong id="receiptPayer">Apex Fleet Pvt Ltd</strong>
-          </div>
-          <div style="grid-column: 1 / -1;">
-            <span class="text-muted" style="display: block;">Recovery Allocation Target:</span>
-            <strong id="receiptRecoveryParty">Rahul Sharma (Driver - Payroll deduction)</strong>
-          </div>
-        </div>
-
-        <!-- Breakdown -->
-        <div style="font-size: 12px; display: flex; flex-direction: column; gap: 6px;">
-          <div style="display: flex; justify-content: space-between;">
-            <span class="text-muted">Statutory Penalty Amount:</span>
-            <span id="receiptBaseAmt">₹2,000</span>
-          </div>
-          <div style="display: flex; justify-content: space-between;">
-            <span class="text-muted">Accumulated Late Fee:</span>
-            <span id="receiptLateFee">₹0</span>
-          </div>
-          <div style="display: flex; justify-content: space-between;">
-            <span class="text-muted">Portal Convenience Fee:</span>
-            <span id="receiptConvFee">₹25</span>
-          </div>
-        </div>
-
-        <!-- Verification Seal -->
-        <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; background: #F0FDF4; border-radius: var(--radius-sm); border: 1px solid #DCFCE7;">
-          <span class="text-xs" style="color: #15803D; font-weight: 600;">✓ Digitally Certified Reconciliation Seal</span>
-          <span class="text-xs font-mono" style="color: #15803D;">APEX-AUDIT-OK</span>
-        </div>
-      </div>
-      <div class="modal-footer" style="display: flex; justify-content: space-between;">
+      <!-- Action Buttons Ribbon (Outside the printable receipt) -->
+      <div class="receipt-modal-controls no-print">
         <button class="btn btn--outline" type="button" onclick="Utils.closeModal('receiptModal')">Close</button>
-        <div style="display: flex; gap: var(--space-2);">
+        <div style="display: flex; gap: 8px;">
           <button class="btn btn--outline" type="button" onclick="downloadCurrentReceiptVoucher()">
             <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
             Download Receipt

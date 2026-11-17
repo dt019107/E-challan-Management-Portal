@@ -482,6 +482,111 @@ const Utils = {
   },
 
   /**
+   * Determine vehicle type metadata (Bus, Truck, Bike, Car, LCV)
+   * Returns: { type, label, shortLabel, icon, iconSvg, image, badgeClass, badgeStyle }
+   */
+  getVehicleTypeMeta(vehicle) {
+    if (!vehicle) {
+      return {
+        type: 'van',
+        label: 'Commercial Vehicle',
+        shortLabel: 'LCV',
+        icon: '🚐',
+        iconSvg: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="15" height="12" rx="1"></rect><polygon points="16 7 20 7 23 10 23 16 16 16"></polygon><circle cx="5" cy="18" r="2"></circle><circle cx="18" cy="18" r="2"></circle></svg>',
+        image: 'assets/images/tata-ace.jpg',
+        badgeClass: 'badge--van',
+        badgeStyle: 'background: rgba(234, 88, 12, 0.08); color: #C2410C; border: 1px solid rgba(234, 88, 12, 0.25);'
+      };
+    }
+
+    const explicitType = (vehicle.vehicleType || '').toLowerCase();
+    const str = `${explicitType} ${vehicle.makeModel || ''} ${vehicle.category || ''} ${vehicle.regNumber || ''}`.toLowerCase();
+
+    // 1. Bus
+    if (explicitType === 'bus' || str.includes('bus') || str.includes('coach') || str.includes('viking') || str.includes('volvo') || str.includes('passenger bus')) {
+      return {
+        type: 'bus',
+        label: 'Commercial Bus',
+        shortLabel: 'Bus',
+        icon: '🚌',
+        iconSvg: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="15" rx="3"></rect><path d="M3 10h18M7 14h.01M17 14h.01M6 18v2M18 18v2"></svg>',
+        image: 'assets/images/bus-coach.jpg',
+        badgeClass: 'badge--bus',
+        badgeStyle: 'background: rgba(30, 64, 175, 0.08); color: #1E40AF; border: 1px solid rgba(30, 64, 175, 0.25);'
+      };
+    }
+
+    // 2. Bike / 2-Wheeler
+    if (explicitType === 'bike' || str.includes('bike') || str.includes('motorcycle') || str.includes('scooter') || str.includes('two-wheeler') || str.includes('2-wheeler') || str.includes('2w') || str.includes('nyx') || str.includes('pulsar') || str.includes('activa')) {
+      return {
+        type: 'bike',
+        label: '2-Wheeler Courier',
+        shortLabel: '2-Wheeler',
+        icon: '🏍️',
+        iconSvg: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5" cy="16" r="3"></circle><circle cx="19" cy="16" r="3"></circle><path d="M12 16h2l2-6H9l1 3M17 7l-3 3M9 10l2-4h3"></svg>',
+        image: 'assets/images/delivery-bike.jpg',
+        badgeClass: 'badge--bike',
+        badgeStyle: 'background: rgba(180, 83, 9, 0.08); color: #B45309; border: 1px solid rgba(180, 83, 9, 0.25);'
+      };
+    }
+
+    // 3. Heavy Truck
+    if (explicitType === 'truck' || str.includes('truck') || str.includes('signa') || str.includes('bharatbenz') || str.includes('hcv') || str.includes('trailer') || str.includes('multi-axle') || str.includes('container') || str.includes('16-wheel') || str.includes('heavy commercial') || str.includes('ashok leyland') || str.includes('4220')) {
+      const truckImg = (str.includes('container') || str.includes('4220') || str.includes('leyland')) ? 'assets/images/hcv-container-hauler.jpg' : 'assets/images/heavy-truck.jpg';
+      return {
+        type: 'truck',
+        label: 'Heavy Freight Truck',
+        shortLabel: 'Heavy Truck',
+        icon: '🚛',
+        iconSvg: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>',
+        image: truckImg,
+        badgeClass: 'badge--truck',
+        badgeStyle: 'background: rgba(51, 65, 85, 0.08); color: #334155; border: 1px solid rgba(51, 65, 85, 0.25);'
+      };
+    }
+
+    // 4. Car / Cab / Sedan
+    if (explicitType === 'car' || str.includes('car') || str.includes('sedan') || str.includes('cab') || str.includes('taxi') || str.includes('tigor') || str.includes('dzire') || str.includes('tour s')) {
+      return {
+        type: 'car',
+        label: 'Fleet Cab / Sedan',
+        shortLabel: 'Cab',
+        icon: '🚗',
+        iconSvg: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C2 10.9 2 11.1 2 11.3V16c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><circle cx="17" cy="17" r="2"></circle></svg>',
+        image: 'assets/images/fleet-car.jpg',
+        badgeClass: 'badge--car',
+        badgeStyle: 'background: rgba(22, 101, 52, 0.08); color: #166534; border: 1px solid rgba(22, 101, 52, 0.25);'
+      };
+    }
+
+    // 5. Pickup
+    if (str.includes('bolero') || str.includes('pickup') || str.includes('yodha') || str.includes('pik-up')) {
+      return {
+        type: 'pickup',
+        label: 'Pickup Truck',
+        shortLabel: 'Pickup',
+        icon: '🛻',
+        iconSvg: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="5" width="14" height="11"></rect><polygon points="15 8 19 8 22 11 22 16 15 16"></polygon><circle cx="6" cy="18" r="2"></circle><circle cx="18" cy="18" r="2"></circle></svg>',
+        image: 'assets/images/bolero-maxx.jpg',
+        badgeClass: 'badge--pickup',
+        badgeStyle: 'background: rgba(107, 33, 168, 0.08); color: #6B21A8; border: 1px solid rgba(107, 33, 168, 0.25);'
+      };
+    }
+
+    // 6. Default: Delivery Van / LCV
+    return {
+      type: 'van',
+      label: 'Light Cargo Van (LCV)',
+      shortLabel: 'LCV / Van',
+      icon: '🚐',
+      iconSvg: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="15" height="12" rx="1"></rect><polygon points="16 7 20 7 23 10 23 16 16 16"></polygon><circle cx="5" cy="18" r="2"></circle><circle cx="18" cy="18" r="2"></circle></svg>',
+      image: 'assets/images/tata-ace.jpg',
+      badgeClass: 'badge--van',
+      badgeStyle: 'background: rgba(234, 88, 12, 0.08); color: #C2410C; border: 1px solid rgba(234, 88, 12, 0.25);'
+    };
+  },
+
+  /**
    * Simple Debounce Helper
    */
   debounce(func, wait = 250) {

@@ -1,99 +1,112 @@
 /* ==========================================================================
-   ChallanOS Original Visual Identity Design Tokens
-   Warm Paper Canvas, Soft Generous Radii, Indigo Ink & Strict Urgency Amber
+   Apple Minimal Premium Design Tokens (design.md)
+   Clean, high-contrast editorial system with restrained color,
+   precise spacing, pill controls, and understated motion.
    ========================================================================== */
 
 :root {
   /* --------------------------------------------------------------------------
-     1. Strict Calibrated Color Tokens
-     Warm paper canvas, soft surfaces, deep ink, indigo primary, signal amber
+     1. Strict Calibrated Apple Minimal Color Tokens
      -------------------------------------------------------------------------- */
-  --canvas: #F3F2EE;           /* Warm paper canvas */
-  --surface: #FBFAF7;          /* Primary panels & card surface */
-  --surface-2: #ECEAE4;        /* Secondary surface, inputs, hover states */
-  --surface-3: #E2DFD7;        /* Raised chips & active controls */
-  
-  --ink: #16181D;              /* Deep ink text (WCAG AAA 15:1 contrast) */
-  --text-2: #4A4D59;           /* Secondary text, metadata & labels (WCAG AAA 7.5:1 contrast) */
-  --text-3: #606370;           /* Tertiary text, captions & headers (WCAG AA 5.5:1 contrast) */
+  --color-apple-primary: #0071E3;     /* Signature Apple Blue */
+  --color-apple-secondary: #0066CC;   /* Deeper interactive blue */
+  --color-apple-tertiary: #1D1D1F;    /* Apple near-black (navbar & headers) */
+  --color-apple-neutral: #FFFFFF;     /* Pure neutral white */
+  --color-apple-surface: #F5F5F7;     /* Soft, cool off-white section background */
+  --color-apple-on-surface: #1D1D1F;  /* Default readable text on light surface */
+  --color-apple-error: #D92D20;       /* Destructive & urgent state */
+  --color-apple-border: #E5E7EB;      /* Subtle interface boundary divider */
+  --color-apple-muted: #6E6E73;       /* Softer gray for supporting metadata */
 
-  --line: rgba(22, 24, 29, 0.09);
-  --line-strong: rgba(22, 24, 29, 0.18);
+  /* Semantic Core Canvas & Surfaces */
+  --canvas: var(--color-apple-surface);           /* #F5F5F7 cool surface */
+  --surface: var(--color-apple-neutral);          /* #FFFFFF pristine card surface */
+  --surface-2: var(--color-apple-surface);        /* #F5F5F7 secondary controls & hover */
+  --surface-3: #E5E7EB;                          /* Hairline chips & borders */
 
-  /* Primary Accent: Indigo ink for primary actions, selected states, and chart emphasis */
-  --accent: #243360;
-  --accent-hover: #192344;
-  --accent-muted: rgba(36, 51, 96, 0.10);
-  --accent-border: rgba(36, 51, 96, 0.28);
+  /* Text Colors */
+  --ink: var(--color-apple-on-surface);           /* #1D1D1F crisp editorial text */
+  --text-2: var(--color-apple-muted);            /* #6E6E73 secondary labels */
+  --text-3: #86868B;                             /* Tertiary subdued metadata */
 
-  /* Urgency Signal: Amber, used ONLY for urgency (due soon, needs review) */
-  --signal: #D97706;
-  --signal-muted: rgba(217, 119, 6, 0.12);
-  --signal-border: rgba(217, 119, 6, 0.30);
+  /* Dividers & Borders */
+  --line: var(--color-apple-border);              /* #E5E7EB subtle divider */
+  --line-strong: #D2D2D7;
 
-  /* Semantic Status Tokens (Calibrated high-contrast text on 12% tint of itself) */
-  --status-unassigned: #9E1B10;
-  --status-unassigned-bg: rgba(158, 27, 16, 0.10);
-  --status-unassigned-border: rgba(158, 27, 16, 0.24);
+  /* Primary Accent: Apple Signature Blue */
+  --accent: var(--color-apple-primary);           /* #0071E3 */
+  --accent-hover: var(--color-apple-secondary);   /* #0066CC */
+  --accent-muted: rgba(0, 113, 227, 0.08);
+  --accent-border: rgba(0, 113, 227, 0.25);
 
-  --status-assigned: #1541B8;
-  --status-assigned-bg: rgba(21, 65, 184, 0.10);
-  --status-assigned-border: rgba(21, 65, 184, 0.24);
+  /* Urgency Signal */
+  --signal: var(--color-apple-error);             /* #D92D20 */
+  --signal-muted: rgba(217, 45, 32, 0.08);
+  --signal-border: rgba(217, 45, 32, 0.22);
 
-  --status-pending: #9A4204;
-  --status-pending-bg: rgba(154, 66, 4, 0.10);
-  --status-pending-border: rgba(154, 66, 4, 0.24);
+  /* Semantic Status Tokens (Calibrated high-contrast on restrained Apple tints) */
+  --status-unassigned: #D92D20;
+  --status-unassigned-bg: rgba(217, 45, 32, 0.08);
+  --status-unassigned-border: rgba(217, 45, 32, 0.22);
 
-  --status-paid: #106830;
-  --status-paid-bg: rgba(16, 104, 48, 0.10);
-  --status-paid-border: rgba(16, 104, 48, 0.24);
+  --status-assigned: #0071E3;
+  --status-assigned-bg: rgba(0, 113, 227, 0.08);
+  --status-assigned-border: rgba(0, 113, 227, 0.22);
 
-  --status-disputed: #5B21B6;
-  --status-disputed-bg: rgba(91, 33, 182, 0.10);
-  --status-disputed-border: rgba(91, 33, 182, 0.24);
+  --status-pending: #B45309;
+  --status-pending-bg: rgba(245, 158, 11, 0.10);
+  --status-pending-border: rgba(245, 158, 11, 0.22);
 
-  --status-court: #035480;
-  --status-court-bg: rgba(3, 84, 128, 0.10);
-  --status-court-border: rgba(3, 84, 128, 0.24);
+  --status-paid: #15803D;
+  --status-paid-bg: rgba(21, 128, 61, 0.10);
+  --status-paid-border: rgba(21, 128, 61, 0.22);
 
-  /* Dark panel: #16181D, ONE per screen */
-  --dark-panel-bg: #16181D;
+  --status-disputed: #6D28D9;
+  --status-disputed-bg: rgba(109, 40, 217, 0.10);
+  --status-disputed-border: rgba(109, 40, 217, 0.22);
 
-  /* Aliased Core Tokens for Universal Compatibility */
+  --status-court: #0369A1;
+  --status-court-bg: rgba(3, 105, 161, 0.10);
+  --status-court-border: rgba(3, 105, 161, 0.22);
+
+  /* Dark panel & Navbar: #1D1D1F */
+  --dark-panel-bg: var(--color-apple-tertiary);
+
+  /* Aliased Core Tokens for Complete Backward Compatibility */
   --bg: var(--canvas);
-  --bg-sunken: var(--surface);
+  --bg-sunken: var(--color-apple-surface);
   --surface-1: var(--surface);
   --text: var(--ink);
 
   --color-primary: var(--accent);
-  --color-primary-navy: var(--accent);
+  --color-primary-navy: var(--dark-panel-bg);
   --color-primary-light: var(--accent-muted);
   --color-primary-dark: var(--accent-hover);
   --color-primary-hover: var(--accent-hover);
   --color-navy: var(--dark-panel-bg);
-  --color-navy-dark: #0F1115;
+  --color-navy-dark: #161617;
   --color-lime: var(--accent);
   --color-accent-lime: var(--accent);
   --color-emerald: var(--status-paid);
-  --color-emerald-dark: #0D5728;
+  --color-emerald-dark: #166534;
   --color-aqua: var(--accent);
   --color-accent-aqua: var(--accent);
   --color-accent-aqua-light: var(--accent-muted);
   --color-dark-panel: var(--dark-panel-bg);
 
   --color-bg-app: var(--canvas);
-  --color-bg-app-secondary: var(--surface);
-  --color-bg-muted: var(--surface-2);
+  --color-bg-app-secondary: var(--color-apple-surface);
+  --color-bg-muted: var(--color-apple-surface);
   --color-bg-surface: var(--surface);
   --color-bg-surface-secondary: var(--surface-2);
-  --color-bg-surface-subtle: var(--surface-3);
-  --color-bg-surface-hover: var(--surface-2);
+  --color-bg-surface-subtle: #F0F0F2;
+  --color-bg-surface-hover: var(--color-apple-surface);
 
   --color-text-main: var(--ink);
   --color-text-secondary: var(--text-2);
-  --color-text-muted: var(--text-3);
+  --color-text-muted: var(--text-2);
   --color-text-subtle: var(--text-3);
-  --color-text-inverse: var(--surface);
+  --color-text-inverse: #FFFFFF;
 
   --color-border: var(--line);
   --color-border-subtle: var(--line);
@@ -104,7 +117,7 @@
   --color-success-bg: var(--status-paid-bg);
   --color-warning: var(--status-pending);
   --color-warning-bg: var(--status-pending-bg);
-  --color-danger: var(--status-unassigned);
+  --color-danger: var(--color-apple-error);
   --color-danger-bg: var(--status-unassigned-bg);
   --color-purple: var(--status-disputed);
   --color-purple-bg: var(--status-disputed-bg);
@@ -112,49 +125,65 @@
   --color-info-bg: var(--status-assigned-bg);
 
   /* --------------------------------------------------------------------------
-     2. Geometry & Depth Scale
-     Panels 20px, controls 10px, chips 6px. Pills ONLY for status badges.
+     2. Geometry & Depth Scale (design.md)
+     rounded: none:0, sm:4px, md:8px (cards, inputs), lg:16px, xl:24px, full:9999px (buttons)
      -------------------------------------------------------------------------- */
+  --radius-none: 0px;
   --radius-xs: 4px;
-  --radius-sm: 6px;
-  --radius-md: 10px;
+  --radius-sm: 4px;
+  --radius-md: 8px;     /* Cards & Inputs default */
   --radius-lg: 16px;
-  --radius-xl: 20px;
-  --radius-2xl: 20px;
-  --radius-pill: 9999px; /* Strictly for status badges only */
+  --radius-xl: 24px;
+  --radius-2xl: 24px;
+  --radius-pill: 9999px; /* Buttons & Badges */
 
-  --radius-panel: 20px;
-  --radius-control: 10px;
+  --radius-panel: 8px;   /* Apple Minimal card radius: 8px */
+  --radius-card: 8px;
+  --radius-control: 9999px; /* Primary & Secondary buttons: pill geometry */
+  --radius-input: 8px;   /* Inputs: 8px */
   --radius-chip: 6px;
 
-  /* Soft shadow level: 0 1px 2px rgba(22,24,29,.04), 0 10px 28px -16px rgba(22,24,29,.12) */
-  --shadow-soft: 0 1px 2px rgba(22, 24, 29, 0.04), 0 10px 28px -16px rgba(22, 24, 29, 0.12);
-  --calm-shadow: var(--shadow-soft);
+  /* Apple Minimal Depth: Flat surfaces, minimal borders, subtle occlusion */
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.03), 0 2px 6px rgba(0, 0, 0, 0.02);
+  --calm-shadow: none;
   --calm-border: 1px solid var(--line);
-  --shadow-xs: 0 1px 2px rgba(22, 24, 29, 0.03);
-  --shadow-sm: 0 1px 2px rgba(22, 24, 29, 0.04);
-  --shadow-md: var(--shadow-soft);
-  --shadow-lg: 0 12px 32px -16px rgba(22, 24, 29, 0.14);
-  --shadow-xl: 0 20px 40px -16px rgba(22, 24, 29, 0.18);
-  --shadow-card-hover: 0 2px 4px rgba(22, 24, 29, 0.05), 0 14px 32px -16px rgba(22, 24, 29, 0.15);
-  --shadow-focus: 0 0 0 2px rgba(43, 58, 103, 0.25);
-  --shadow-dropdown: 0 14px 32px -8px rgba(22, 24, 29, 0.16), 0 0 0 1px var(--line);
-  --shadow-modal: 0 24px 48px -16px rgba(22, 24, 29, 0.25);
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.03);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.06);
+  --shadow-xl: 0 16px 36px rgba(0, 0, 0, 0.08);
+  --shadow-card-hover: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-focus: 0 0 0 3px rgba(0, 113, 227, 0.22);
+  --shadow-dropdown: 0 10px 30px rgba(0, 0, 0, 0.12), 0 0 0 1px var(--line);
+  --shadow-modal: 0 20px 48px rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.04);
 
   --bg-grain: none;
 
   /* --------------------------------------------------------------------------
-     3. Typography Scale & Font Metrics
-     UI: Geist (Inter fallback), tabular numerals. Body 14px/1.5, letter-spacing 0.
-     Display: "Instrument Serif" ONLY for greeting & hero numbers (56-60px, -0.02em).
-     Labels: sentence case 12px in --text-2. Uppercase tracked (.06em, 11px) ONLY for th.
-     Mono: Geist Mono 11-12px ONLY for vehicle plates, in --surface-3 chip.
+     3. Typography Scale & Font Metrics (design.md)
+     System built around SF Pro Display & SF Pro Text
      -------------------------------------------------------------------------- */
-  --font-family-base: 'Geist', 'Inter Tight', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-family-serif: 'Instrument Serif', Georgia, serif;
-  --font-family-editorial: 'Instrument Serif', Georgia, serif;
-  --font-family-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-family-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  --font-family-base: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+  --font-family-serif: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  --font-family-editorial: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  --font-family-mono: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, monospace;
 
+  /* Typography metrics from design.md */
+  --font-headline-display: 48px;
+  --font-headline-lg: 40px;
+  --font-headline-md: 32px;
+  --font-headline-sm: 25px;
+  --font-body-lg: 20px;
+  --font-body-md: 16px;
+  --font-body-sm: 14px;
+  --font-label-lg: 17px;
+  --font-label-md: 15px;
+  --font-label-sm: 12px;
+  --font-nav-item: 14px;
+  --font-button: 17px;
+
+  /* Standard rem sizes */
   --font-size-2xs: 0.6875rem; /* 11px */
   --font-size-xs: 0.75rem;     /* 12px */
   --font-size-sm: 0.8125rem;   /* 13px */
@@ -162,9 +191,10 @@
   --font-size-md: 1rem;        /* 16px */
   --font-size-lg: 1.125rem;    /* 18px */
   --font-size-xl: 1.25rem;     /* 20px */
-  --font-size-2xl: 1.5rem;     /* 24px */
-  --font-size-3xl: 1.875rem;   /* 30px */
-  --font-size-4xl: 2.25rem;    /* 36px */
+  --font-size-2xl: 1.5625rem;  /* 25px */
+  --font-size-3xl: 2rem;       /* 32px */
+  --font-size-4xl: 2.5rem;     /* 40px */
+  --font-size-display: 3rem;   /* 48px */
 
   --font-weight-regular: 400;
   --font-weight-medium: 500;
@@ -172,26 +202,29 @@
   --font-weight-bold: 700;
 
   --line-height-none: 1;
-  --line-height-tight: 1.25;
-  --line-height-snug: 1.375;
-  --line-height-normal: 1.5;
-  --line-height-relaxed: 1.625;
+  --line-height-tight: 1.1;
+  --line-height-snug: 1.25;
+  --line-height-normal: 1.45;
+  --line-height-relaxed: 1.6;
 
   --letter-spacing-tight: -0.02em;
-  --letter-spacing-caps: 0.06em;
+  --letter-spacing-caps: 0.02em;
 
   /* --------------------------------------------------------------------------
-     4. Responsive Density Tokens & Breakpoint Metrics
-     Breakpoints:
-     - Mobile:        < 600px
-     - Tablet:        600px - 840px
-     - Small laptop:  840px - 1200px
-     - Desktop:       1200px - 1536px
-     - Large:         1536px+
+     4. Restrained Apple Spacing Scale (design.md)
+     xs: 4px, sm: 12px, md: 20px, lg: 54px, xl: 70px, gutter: 16px, section: 80px
      -------------------------------------------------------------------------- */
-  --space-page: 32px;
-  --space-gap: 24px;
-  --font-h1: 44px;
+  --spacing-xs: 4px;
+  --spacing-sm: 12px;
+  --spacing-md: 20px;
+  --spacing-lg: 54px;
+  --spacing-xl: 70px;
+  --spacing-gutter: 16px;
+  --spacing-section: 80px;
+
+  --space-page: 24px;
+  --space-gap: 20px;
+  --font-h1: 40px;
   --font-body: 16px;
 
   --space-1: 4px;
@@ -202,26 +235,25 @@
   --space-6: 24px;
   --space-8: 32px;
   --space-10: 40px;
-  --space-12: 48px;
+  --space-12: 54px;
 
   /* --------------------------------------------------------------------------
      5. Layout Dimensions
-     - >= 1200px: 240px full sidebar
-     - 840px - 1200px: 72px icon rail
-     - < 840px: 240px off-canvas drawer (fixed)
      -------------------------------------------------------------------------- */
   --sidebar-width: 240px;
   --sidebar-collapsed-width: 72px;
-  --topbar-height: 56px;
+  --topbar-height: 52px;
   --content-max-width: 1440px;
 
   /* --------------------------------------------------------------------------
      6. Motion & Spring Timing Tokens
+     Understated motion-ready components
      -------------------------------------------------------------------------- */
+  --ease-apple: cubic-bezier(0.25, 0.1, 0.25, 1);
   --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
-  --transition-fast: 150ms var(--ease-out-quint);
-  --transition-normal: 200ms var(--ease-out-quint);
-  --transition-slow: 350ms var(--ease-out-quint);
+  --transition-fast: 160ms var(--ease-apple);
+  --transition-normal: 220ms var(--ease-apple);
+  --transition-slow: 320ms var(--ease-apple);
 
   /* --------------------------------------------------------------------------
      7. Z-Index Hierarchy

@@ -229,36 +229,164 @@ function getActiveReportData() {
     const paidCount = records.filter(c => c.status === "paid").length;
     const avgFine = records.length > 0 ? Math.round(totalAmount / records.length) : 0;
 
-    // Build Chart: Offence Breakdown
-    const offenceCounts = {};
+    // Build Structured Infraction Categories Analysis
+    const categoryStats = {};
     records.forEach(c => {
-      const off = c.offence.split("/")[0].trim().substring(0, 24);
-      offenceCounts[off] = (offenceCounts[off] || 0) + 1;
+      // Clean full category name without artificial 24-character substring truncation
+      let cleanName = c.offence.split("(")[0].split("/")[0].trim();
+      if (!cleanName) cleanName = "General Traffic Violation";
+      
+      let section = c.mvActSection ? c.mvActSection.replace(/Motor Vehicles Act.*/i, "").trim() : "MV Act";
+      if (!section) section = "MV Act";
+
+      if (!categoryStats[cleanName]) {
+        categoryStats[cleanName] = {
+          name: cleanName,
+          section: section,
+          count: 0,
+          totalAmount: 0
+        };
+      }
+      categoryStats[cleanName].count += 1;
+      categoryStats[cleanName].totalAmount += (c.amount || 0);
     });
-    const sortedOffences = Object.entries(offenceCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
-    const maxOffCount = sortedOffences.length > 0 ? sortedOffences[0][1] : 1;
+
+    const sortedCategories = Object.values(categoryStats).sort((a, b) => b.count - a.count).slice(0, 5);
+    const totalSetCount = records.length || 1;
+
+    function getCategoryVisualMeta(name) {
+      const lower = name.toLowerCase();
+      if (lower.includes("speed")) {
+        return { icon: "⚡", color: "#0071E3", bg: "rgba(0, 113, 227, 0.08)", label: "Speed Compliance" };
+      }
+      if (lower.includes("dangerous") || lower.includes("red light") || lower.includes("signal")) {
+        return { icon: "🚨", color: "#D92D20", bg: "rgba(217, 45, 32, 0.08)", label: "Critical Safety" };
+      }
+      if (lower.includes("seat") || lower.includes("belt") || lower.includes("helmet")) {
+        return { icon: "💺", color: "#AF52DE", bg: "rgba(175, 82, 222, 0.08)", label: "Occupant Safety" };
+      }
+      if (lower.includes("weight") || lower.includes("overload") || lower.includes("axle")) {
+        return { icon: "⚖️", color: "#F59E0B", bg: "rgba(245, 158, 11, 0.08)", label: "Payload Limit" };
+      }
+      if (lower.includes("parking") || lower.includes("obstruct")) {
+        return { icon: "🅿️", color: "#0066CC", bg: "rgba(0, 102, 204, 0.08)", label: "Parking & Transit" };
+      }
+      if (lower.includes("puc") || lower.includes("pollution") || lower.includes("smoke")) {
+        return { icon: "🌿", color: "#34C759", bg: "rgba(52, 199, 89, 0.08)", label: "Emissions" };
+      }
+      return { icon: "📋", color: "#6E6E73", bg: "rgba(110, 110, 115, 0.08)", label: "Regulatory" };
+    }
+
+    // Circumference for r=38 circle: 2 * pi * 38 = 238.761
+    const circumference = 2 * Math.PI * 38;
+    let cumulativeOffset = 0;
+    const slices = [...sortedCategories];
+    const topSum = slices.reduce((s, c) => s + c.count, 0);
+    const otherCount = records.length - topSum;
+
+    if (otherCount > 0) {
+      const otherAmount = records.reduce((s, c) => s + (c.amount || 0), 0) - slices.reduce((s, c) => s + c.totalAmount, 0);
+      slices.push({
+        name: "Other Infractions",
+        section: "Various",
+        count: otherCount,
+        totalAmount: Math.max(0, otherAmount),
+        isOther: true
+      });
+    }
+
+    const donutArcsHTML = records.length === 0 ? "" : slices.map(slice => {
+      const meta = slice.isOther ? { color: "#D1D5DB" } : getCategoryVisualMeta(slice.name);
+      const ratio = slice.count / totalSetCount;
+      const strokeLength = ratio * circumference;
+      const strokeGap = circumference - strokeLength;
+      const offset = -cumulativeOffset;
+      cumulativeOffset += strokeLength;
+      return `<circle cx="50" cy="50" r="38" fill="none" stroke="${meta.color}" stroke-width="11" stroke-dasharray="${strokeLength.toFixed(2)} ${strokeGap.toFixed(2)}" stroke-dashoffset="${offset.toFixed(2)}" stroke-linecap="butt" />`;
+    }).join("");
+
+    const rowsHTML = sortedCategories.length === 0 ? `
+      <div style="color: var(--text-3); font-size: 12px; padding: 14px 0;">No infractions recorded for current filters.</div>
+    ` : sortedCategories.map(cat => {
+      const meta = getCategoryVisualMeta(cat.name);
+      const truePct = Math.round((cat.count / totalSetCount) * 100);
+      return `
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 3px 0; font-size: 12px;">
+          <!-- Category Icon + Full Name + Section Tag -->
+          <div style="display: flex; align-items: center; gap: 7px; width: 220px; flex-shrink: 0; min-width: 0;">
+            <span style="font-size: 13px; line-height: 1; flex-shrink: 0;">${meta.icon}</span>
+            <span style="font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 12px;" title="${cat.name}">
+              ${cat.name}
+            </span>
+            <span class="badge badge--neutral" style="font-size: 9.5px; padding: 1px 5px; font-family: var(--font-family-mono); flex-shrink: 0; line-height: 1.2;">
+              ${cat.section}
+            </span>
+          </div>
+
+          <!-- Scalable Proportional Bar -->
+          <div style="flex: 1; height: 5px; background: var(--surface-3); border-radius: 9999px; overflow: hidden; min-width: 50px;">
+            <div style="width: ${truePct}%; height: 100%; background: ${meta.color}; border-radius: 9999px;"></div>
+          </div>
+
+          <!-- Counts & Amount -->
+          <div style="display: flex; align-items: center; gap: 8px; width: 145px; justify-content: flex-end; flex-shrink: 0; font-variant-numeric: tabular-nums;">
+            <span style="font-size: 11.5px; color: var(--text-2); font-weight: 500;">
+              ${cat.count} <span style="font-size: 10px; color: var(--text-3);">${cat.count === 1 ? 'ticket' : 'tickets'}</span> <strong style="color: var(--ink);">(${truePct}%)</strong>
+            </span>
+            <span style="font-size: 11.5px; font-weight: 700; color: var(--ink); min-width: 50px; text-align: right;">
+              ${Utils.formatINR(cat.totalAmount)}
+            </span>
+          </div>
+        </div>
+      `;
+    }).join("");
 
     const chartHTML = `
-      <div class="card" style="padding: 16px 20px;">
-        <div style="font-weight: 600; font-size: 14px; color: var(--ink); margin-bottom: 14px;">
-          Top Infraction Categories Distribution (Filtered Set)
+      <div class="card" style="padding: 14px 18px; border-radius: var(--radius-card); border: 1px solid var(--line); background: var(--surface); margin-bottom: var(--space-3);">
+        
+        <!-- Compact Header Row -->
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--line); flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-weight: 700; font-size: 13.5px; color: var(--ink); letter-spacing: -0.01em;">
+              Top Infraction Categories Distribution
+            </span>
+            <span class="badge badge--neutral" style="font-size: 10px; padding: 2px 7px; border-radius: 9999px;">
+              ${records.length} Filtered Violations
+            </span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px; font-size: 11.5px; color: var(--text-2);">
+            <span>Avg Fine: <strong style="color: var(--ink);">${Utils.formatINR(avgFine)}</strong></span>
+            <span>•</span>
+            <span>Total Exposure: <strong style="color: var(--color-primary);">${Utils.formatINR(totalAmount)}</strong></span>
+          </div>
         </div>
-        <div style="display: flex; flex-direction: column; gap: 12px;">
-          ${sortedOffences.map(([name, count]) => {
-            const pct = Math.round((count / maxOffCount) * 100);
-            return `
-              <div>
-                <div style="display: flex; justify-content: space-between; font-size: 12.5px; margin-bottom: 5px;">
-                  <span style="font-weight: 500; color: var(--ink);">${name}</span>
-                  <span style="font-size: 12px; color: var(--text-2);"><strong style="color: var(--ink);">${count}</strong> violations (${Math.round((count / (records.length || 1)) * 100)}%)</span>
-                </div>
-                <div style="height: 6px; background: var(--surface-2); border-radius: 3px; overflow: hidden;">
-                  <div style="width: ${pct}%; height: 100%; background: var(--accent); border-radius: 3px;"></div>
-                </div>
-              </div>
-            `;
-          }).join("")}
+
+        <!-- Scalable Donut + Mini Gauges Split View -->
+        <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+          
+          <!-- Left: SVG Mini Donut (92x92px) -->
+          <div style="position: relative; width: 92px; height: 92px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+            <svg width="92" height="92" viewBox="0 0 100 100" style="transform: rotate(-90deg); transform-origin: 50% 50%;">
+              <circle cx="50" cy="50" r="38" fill="none" stroke="var(--surface-3)" stroke-width="11" />
+              ${donutArcsHTML}
+            </svg>
+            <div style="position: absolute; text-align: center; pointer-events: none; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+              <span style="font-size: 17px; font-weight: 800; color: var(--ink); line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums;">
+                ${records.length}
+              </span>
+              <span style="font-size: 8px; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 2px;">
+                TOTAL
+              </span>
+            </div>
+          </div>
+
+          <!-- Right: Compact Scalable Bars -->
+          <div style="flex: 1; min-width: 320px; display: flex; flex-direction: column; gap: 4px;">
+            ${rowsHTML}
+          </div>
+
         </div>
+
       </div>
     `;
 
