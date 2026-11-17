@@ -246,14 +246,22 @@
   --content-max-width: 1440px;
 
   /* --------------------------------------------------------------------------
-     6. Motion & Spring Timing Tokens
-     Understated motion-ready components
+     6. Apple Minimal Framer Spring & Motion Tokens
      -------------------------------------------------------------------------- */
+  --ease-apple-fluid: cubic-bezier(0.16, 1, 0.3, 1);    /* Signature Apple Sheet Spring */
+  --ease-apple-snappy: cubic-bezier(0.2, 0.8, 0.2, 1);  /* Micro-tactile press */
+  --ease-apple-spring: cubic-bezier(0.175, 0.885, 0.32, 1.12); /* Soft landing spring */
   --ease-apple: cubic-bezier(0.25, 0.1, 0.25, 1);
   --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
-  --transition-fast: 160ms var(--ease-apple);
-  --transition-normal: 220ms var(--ease-apple);
-  --transition-slow: 320ms var(--ease-apple);
+
+  --duration-instant: 120ms;
+  --duration-quick: 180ms;
+  --duration-enter: 280ms;
+  --duration-normal: 320ms;
+
+  --transition-fast: var(--duration-instant) var(--ease-apple-snappy);
+  --transition-normal: var(--duration-quick) var(--ease-apple-fluid);
+  --transition-slow: var(--duration-enter) var(--ease-apple-fluid);
 
   /* --------------------------------------------------------------------------
      7. Z-Index Hierarchy

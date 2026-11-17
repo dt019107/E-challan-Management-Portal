@@ -668,8 +668,39 @@
   max-width: var(--content-max-width);
   margin: 0 auto;
   box-sizing: border-box;
-  animation: pageFadeInUp 280ms var(--ease-out-quint);
+  animation: pageFadeInUp var(--duration-enter) var(--ease-apple-fluid);
   opacity: 1 !important;
+}
+
+/* Apple Minimal Spatial Stagger: Cascading Child Mount */
+.module-view-body > *,
+.calm-dashboard-container > * {
+  animation: pageFadeInUp var(--duration-enter) var(--ease-apple-fluid) both;
+}
+
+.module-view-body > *:nth-child(1),
+.calm-dashboard-container > *:nth-child(1) {
+  animation-delay: 0ms;
+}
+
+.module-view-body > *:nth-child(2),
+.calm-dashboard-container > *:nth-child(2) {
+  animation-delay: 35ms;
+}
+
+.module-view-body > *:nth-child(3),
+.calm-dashboard-container > *:nth-child(3) {
+  animation-delay: 70ms;
+}
+
+.module-view-body > *:nth-child(4),
+.calm-dashboard-container > *:nth-child(4) {
+  animation-delay: 105ms;
+}
+
+.module-view-body > *:nth-child(5),
+.calm-dashboard-container > *:nth-child(5) {
+  animation-delay: 140ms;
 }
 
 /* Standard View Header for Sub-views (Vehicles, Challans, Payments, Reports, Settings) */

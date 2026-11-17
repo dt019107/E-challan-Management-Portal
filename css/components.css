@@ -18,15 +18,19 @@
   border: 1px solid transparent;
   cursor: pointer;
   white-space: nowrap;
-  transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  transition: transform var(--duration-instant) var(--ease-apple-snappy), background-color var(--duration-quick) ease, border-color var(--duration-quick) ease, box-shadow var(--duration-quick) ease;
   user-select: none;
   line-height: 1.25;
   position: relative;
   letter-spacing: -0.01em;
 }
 
+.btn:hover {
+  transform: translateY(-1px);
+}
+
 .btn:active {
-  transform: scale(0.98);
+  transform: scale(0.972);
 }
 
 .btn:disabled {
@@ -1436,7 +1440,6 @@
   color: var(--ink);
   font-weight: 600;
 }
-}
 
 .calm-badge.court {
   background: var(--status-court-bg);
@@ -2462,14 +2465,17 @@ td a[href*="#challans?id="]:hover,
   max-height: 90vh;
   display: flex;
   flex-direction: column;
-  transform: scale(0.97) translateY(10px);
-  transition: transform 220ms var(--ease-out-quint);
+  transform: scale(0.96) translateY(12px);
+  opacity: 0;
+  transition: transform var(--duration-enter) var(--ease-apple-fluid), opacity var(--duration-quick) ease-out;
   border: 1px solid var(--line-strong);
   overflow: hidden;
 }
 
-.modal-backdrop.show .modal-dialog {
+.modal-backdrop.show .modal-dialog,
+.modal-backdrop.show .receipt-modal-dialog {
   transform: scale(1) translateY(0);
+  opacity: 1;
 }
 
 .modal-header {
@@ -3182,9 +3188,6 @@ td a[href*="#challans?id="]:hover,
   background-color: rgba(255, 255, 255, 0.25);
   color: #FFFFFF;
 }
-  background-color: rgba(255, 255, 255, 0.2);
-  color: #FFFFFF;
-}
 
 /* Attention Cards List */
 .attention-items-list {
@@ -3775,12 +3778,12 @@ td a[href*="#challans?id="]:hover,
   z-index: 1000;
   max-width: 90vw;
   width: auto;
-  animation: floatDockSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: floatDockSlideUp var(--duration-enter) var(--ease-apple-spring);
 }
 
 @keyframes floatDockSlideUp {
-  from { transform: translate(-50%, 30px); opacity: 0; }
-  to { transform: translate(-50%, 0); opacity: 1; }
+  from { transform: translate(-50%, 40px) scale(0.96); opacity: 0; }
+  to { transform: translate(-50%, 0) scale(1); opacity: 1; }
 }
 
 /* Quick Preset Triage Pills (Hick's Law - Reduce Decision Complexity) */
@@ -3805,7 +3808,7 @@ td a[href*="#challans?id="]:hover,
   border: 1px solid var(--line);
   cursor: pointer;
   white-space: nowrap;
-  transition: all 160ms var(--ease-apple);
+  transition: all var(--duration-instant) var(--ease-apple-snappy);
   user-select: none;
 }
 
@@ -3813,6 +3816,11 @@ td a[href*="#challans?id="]:hover,
   background: var(--surface-2);
   color: var(--ink);
   border-color: var(--line-strong);
+  transform: translateY(-1px);
+}
+
+.preset-triage-pill:active {
+  transform: scale(0.965);
 }
 
 .preset-triage-pill.active {
@@ -4060,9 +4068,6 @@ td a[href*="#challans?id="]:hover,
   padding: 12px 14px;
   font-size: 12px;
   color: var(--text-2);
-  line-height: 1.5;
-}
-  color: #94A3B8;
   line-height: 1.5;
 }
 
@@ -5036,5 +5041,27 @@ td a[href*="#challans?id="]:hover,
   .receipt-notch-left,
   .receipt-notch-right {
     background: #FFFFFF !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   16. Apple Minimal Framer Motion: State Wash & Accessibility Guardrails
+   -------------------------------------------------------------------------- */
+@keyframes appleRowReconciledWash {
+  0% { background-color: rgba(0, 113, 227, 0.16); }
+  100% { background-color: transparent; }
+}
+
+.row-reconciled {
+  animation: appleRowReconciledWash 600ms var(--ease-apple-fluid) forwards;
+}
+
+/* Respect System Reduced-Motion Preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
