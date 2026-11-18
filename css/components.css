@@ -5065,3 +5065,44 @@ td a[href*="#challans?id="]:hover,
     scroll-behavior: auto !important;
   }
 }
+
+/* --------------------------------------------------------------------------
+   17. Apple-style Responsibility Radio Tiles
+   -------------------------------------------------------------------------- */
+.party-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.party-radio-tile {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm, 8px);
+  cursor: pointer;
+  transition: all var(--duration-instant) var(--ease-apple-snappy);
+  user-select: none;
+}
+
+.party-radio-tile:hover {
+  background: var(--surface-2);
+  border-color: var(--line-strong);
+}
+
+.party-radio-tile:has(input[type="radio"]:checked) {
+  background: rgba(0, 113, 227, 0.05);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 1px var(--color-primary);
+}
+
+.party-radio-tile input[type="radio"] {
+  accent-color: var(--color-primary);
+  width: 16px;
+  height: 16px;
+  margin-right: 10px;
+}
+

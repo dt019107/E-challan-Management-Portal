@@ -69,57 +69,70 @@ function renderChallansView(container, actions, params = {}) {
   `;
 
   const allChallans = StorageManager.getChallans();
+  const unassignedCount = allChallans.filter(c => c.status === "unassigned").length;
+  const assignedCount = allChallans.filter(c => c.status === "assigned").length;
+  const pendingCount = allChallans.filter(c => c.status === "pending").length;
+  const disputedCount = allChallans.filter(c => c.status === "disputed").length;
+  const courtCount = allChallans.filter(c => c.status === "court").length;
+  const paidCount = allChallans.filter(c => c.status === "paid").length;
+
+  const due7Count = allChallans.filter(c => {
+    const d = Utils.getDaysRemaining(c.dueDate);
+    return d >= 0 && d <= 7 && c.status !== "paid";
+  }).length;
+  const overdueCount = allChallans.filter(c => Utils.getDaysRemaining(c.dueDate) < 0 && c.status !== "paid").length;
+  const highValCount = allChallans.filter(c => (c.amount || 0) > 2000).length;
 
   // Status Tabs
   const tabs = [
-    { key: "all", label: "All", count: allChallans.length },
-    { key: "unassigned", label: "Unassigned", count: allChallans.filter(c => c.status === "unassigned").length },
-    { key: "assigned", label: "Assigned", count: allChallans.filter(c => c.status === "assigned").length },
-    { key: "pending", label: "Pending", count: allChallans.filter(c => c.status === "pending").length },
-    { key: "disputed", label: "Disputed", count: allChallans.filter(c => c.status === "disputed").length },
-    { key: "court", label: "Court", count: allChallans.filter(c => c.status === "court").length },
-    { key: "paid", label: "Paid", count: allChallans.filter(c => c.status === "paid").length }
+    { key: "all", label: "All Notices", count: allChallans.length },
+    { key: "unassigned", label: "Unassigned", count: unassignedCount, alert: unassignedCount > 0 },
+    { key: "assigned", label: "Assigned", count: assignedCount },
+    { key: "pending", label: "Pending", count: pendingCount },
+    { key: "disputed", label: "Disputed", count: disputedCount },
+    { key: "court", label: "Virtual Court", count: courtCount },
+    { key: "paid", label: "Settled", count: paidCount }
   ];
 
   container.innerHTML = `
-    <!-- Status Tabs -->
+    <!-- Top Status Control Tabs -->
     <div class="nav-tabs" id="challanStatusTabs">
       ${tabs.map(t => `
-        <button class="nav-tab ${challanTableState.activeStatusTab === t.key ? 'active' : ''}" data-status="${t.key}">
-          ${t.label} <span class="nav-tab-badge">${t.count}</span>
+        <button class="nav-tab ${challanTableState.activeStatusTab === t.key && challanTableState.savedView === 'all' ? 'active' : ''}" data-status="${t.key}">
+          ${t.label} <span class="nav-tab-badge" style="${t.alert ? 'background: rgba(194, 65, 65, 0.14); color: var(--status-unassigned); font-weight: 700;' : ''}">${t.count}</span>
         </button>
       `).join("")}
     </div>
 
-    <!-- Hick's Law: 1-Click Operational Preset Triage Pills -->
-    <div class="preset-triage-bar">
-      <span style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-3); margin-right: 4px;">Quick Triage:</span>
+    <!-- Quick Operational Triage Presets Strip -->
+    <div class="preset-triage-bar" style="margin-top: var(--space-3); margin-bottom: var(--space-3);">
+      <span style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-muted); margin-right: 4px;">Quick Triage:</span>
       <button class="preset-triage-pill ${challanTableState.savedView === 'all' && challanTableState.activeStatusTab === 'all' ? 'active' : ''}" onclick="applyChallanPresetView('all')">
         All Notices
       </button>
       <button class="preset-triage-pill ${challanTableState.activeStatusTab === 'unassigned' ? 'active urgent-active' : ''}" onclick="applyChallanPresetView('unassigned')">
-        🚨 Needs Assignment <span class="preset-triage-count">2</span>
+        Needs Assignment <span class="preset-triage-count" style="font-weight: 700;">${unassignedCount}</span>
       </button>
       <button class="preset-triage-pill ${challanTableState.savedView === 'due7days' ? 'active' : ''}" onclick="applyChallanPresetView('due7days')">
-        ⏳ Due in 7 Days
+        Due in 7 Days <span class="preset-triage-count">${due7Count}</span>
       </button>
       <button class="preset-triage-pill ${challanTableState.savedView === 'overdue' ? 'active urgent-active' : ''}" onclick="applyChallanPresetView('overdue')">
-        ⚠️ Overdue
+        Overdue <span class="preset-triage-count">${overdueCount}</span>
       </button>
       <button class="preset-triage-pill ${challanTableState.savedView === 'highValue' ? 'active' : ''}" onclick="applyChallanPresetView('highValue')">
-        💰 High Value (&gt;₹2k)
+        High Value (&gt;₹2,000) <span class="preset-triage-count">${highValCount}</span>
       </button>
     </div>
 
-    <!-- Unified Executive Command Toolbar -->
-    <div class="filter-toolbar" style="margin-top: var(--space-3); margin-bottom: var(--space-4); display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); flex-wrap: wrap;">
+    <!-- Unified Command & Filter Toolbar -->
+    <div class="filter-toolbar" style="margin-top: var(--space-2); margin-bottom: var(--space-4); display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); flex-wrap: wrap;">
       <div class="filter-group" style="display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;">
-        <div style="position: relative; width: 300px;">
+        <div style="position: relative; width: 310px;">
           <svg class="search-icon-prefix" viewBox="0 0 20 20" fill="currentColor" style="left: 10px;">
             <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
           </svg>
           <input type="text" class="form-input" id="challanSearchInput" style="padding-left: 34px;"
-            placeholder="Search challan no, vehicle, driver, location..." value="${challanTableState.searchQuery}">
+            placeholder="Search challan, vehicle, driver, location..." value="${challanTableState.searchQuery}">
         </div>
 
         <!-- Vehicle Class Filter -->
@@ -134,8 +147,8 @@ function renderChallansView(container, actions, params = {}) {
         </select>
 
         <!-- Offence Filter -->
-        <select class="form-select" id="filterOffenceSelect" style="width: 150px; font-size: 12px; padding: 6px 10px;">
-          <option value="">All Offences</option>
+        <select class="form-select" id="filterOffenceSelect" style="width: 155px; font-size: 12px; padding: 6px 10px;">
+          <option value="">All Violations</option>
           <option value="Speed" ${challanTableState.filterOffence === 'Speed' ? 'selected' : ''}>Overspeeding (Sec 183)</option>
           <option value="Signal" ${challanTableState.filterOffence === 'Signal' ? 'selected' : ''}>Red Light (Sec 184)</option>
           <option value="Seat Belt" ${challanTableState.filterOffence === 'Seat Belt' ? 'selected' : ''}>Seatbelt (Sec 194B)</option>
@@ -146,12 +159,12 @@ function renderChallansView(container, actions, params = {}) {
         </select>
 
         <!-- Party Filter -->
-        <select class="form-select" id="filterPartySelect" style="width: 135px; font-size: 12px; padding: 6px 10px;">
-          <option value="">All Parties</option>
+        <select class="form-select" id="filterPartySelect" style="width: 140px; font-size: 12px; padding: 6px 10px;">
+          <option value="">All Attributions</option>
           <option value="Driver" ${challanTableState.filterParty === 'Driver' ? 'selected' : ''}>Driver</option>
-          <option value="Lessee" ${challanTableState.filterParty === 'Lessee' ? 'selected' : ''}>Lessee</option>
+          <option value="Lessee" ${challanTableState.filterParty === 'Lessee' ? 'selected' : ''}>Corporate Lessee</option>
           <option value="Fleet Operator" ${challanTableState.filterParty === 'Fleet Operator' ? 'selected' : ''}>Fleet Operator</option>
-          <option value="Vehicle Owner" ${challanTableState.filterParty === 'Vehicle Owner' ? 'selected' : ''}>Owner</option>
+          <option value="Vehicle Owner" ${challanTableState.filterParty === 'Vehicle Owner' ? 'selected' : ''}>Asset Owner</option>
           <option value="Unassigned" ${challanTableState.filterParty === 'Unassigned' ? 'selected' : ''}>Unassigned</option>
         </select>
 
@@ -473,25 +486,19 @@ function renderChallansTableAndPagination() {
               <input type="checkbox" class="custom-checkbox" id="selectAllChallansCheckbox" ${isAllSelected ? 'checked' : ''} onchange="toggleSelectAllChallans(this.checked)">
             </th>
             <th onclick="sortChallansBy('challanNumber')" style="cursor: pointer;">
-              Challan No ${getChallanSortIcon('challanNumber')}
+              Notice & Violation ${getChallanSortIcon('challanNumber')}
             </th>
             <th onclick="sortChallansBy('vehicleReg')" style="cursor: pointer;">
-              Vehicle ${getChallanSortIcon('vehicleReg')}
+              Vehicle & Asset ${getChallanSortIcon('vehicleReg')}
             </th>
-            <th>Offence Description & Section</th>
-            <th class="col-nice" onclick="sortChallansBy('offenceDate')" style="cursor: pointer;">
-              Offence Date ${getChallanSortIcon('offenceDate')}
-            </th>
+            <th>Attributed Custody</th>
             <th onclick="sortChallansBy('amount')" style="cursor: pointer; text-align: right;">
               Penalty Amount ${getChallanSortIcon('amount')}
             </th>
-            <th class="col-should" onclick="sortChallansBy('dueDate')" style="cursor: pointer;">
-              Due Date ${getChallanSortIcon('dueDate')}
+            <th onclick="sortChallansBy('dueDate')" style="cursor: pointer;">
+              Timeline & Deadlines ${getChallanSortIcon('dueDate')}
             </th>
-            <th>Status</th>
-            <th class="col-should">Responsible Party</th>
-            <th class="col-nice">Source</th>
-            <th style="text-align: right;">Action</th>
+            <th style="text-align: right; min-width: 140px;">Status & Action</th>
           </tr>
         </thead>
         <tbody>
@@ -509,58 +516,75 @@ function renderChallansTableAndPagination() {
                   <input type="checkbox" class="custom-checkbox" ${isChecked ? 'checked' : ''} onchange="toggleChallanRowSelection('${c.id}', this.checked)">
                 </td>
                 <td>
-                  <a href="#challans?id=${c.id}" class="challan-no-link" title="Open Challan Details Screen">
-                    ${c.challanNumber}
-                  </a>
+                  <div style="display: flex; align-items: baseline; gap: 8px;">
+                    <a href="#challans?id=${c.id}" class="challan-no-link font-mono font-bold" style="font-size: 13px;" title="Open Challan Details">
+                      ${c.challanNumber}
+                    </a>
+                    <span class="badge badge--neutral" style="font-size: 10px; padding: 1px 5px;">${c.mvActSection}</span>
+                  </div>
+                  <div class="cell-truncate" style="font-size: 13px; font-weight: 500; color: var(--color-text-main); margin-top: 3px;" title="${c.offence}">
+                    ${c.offence}
+                  </div>
+                  <div class="text-xs text-muted" style="margin-top: 2px;">
+                    ${c.issuingAuthority} • ${c.source || 'Parivahan API'}
+                  </div>
                 </td>
                 <td>
-                  <div style="display: flex; flex-direction: column; gap: 4px; align-items: flex-start;">
-                    <a href="#vehicles?id=${c.vehicleId}" class="plate-chip plate-chip--commercial" title="View ${vMeta.label} profile">
+                  <div style="display: flex; align-items: center; gap: 6px;">
+                    <a href="#vehicles?id=${c.vehicleId}" class="plate-chip plate-chip--commercial font-mono font-bold" style="font-size: 12px;" title="View vehicle profile">
                       ${c.vehicleReg}
                     </a>
-                    <span class="badge ${vMeta.badgeClass}" style="${vMeta.badgeStyle}; font-size: 10px; padding: 1.5px 6px;">
+                    <span class="badge ${vMeta.badgeClass}" style="${vMeta.badgeStyle}; font-size: 10px; padding: 1px 6px;">
                       ${vMeta.icon} ${vMeta.shortLabel}
                     </span>
                   </div>
-                </td>
-                <td>
-                  <div class="cell-truncate" style="font-size: 13px; font-weight: 500;" title="${c.offence}">${c.offence}</div>
-                  <div class="text-xs text-muted">${c.mvActSection}</div>
-                </td>
-                <td class="col-nice">
-                  <div class="text-xs">${Utils.formatDate(c.offenceDate, true)}</div>
-                  <div class="text-xs text-muted" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px;">${c.location || '—'}</div>
-                </td>
-                <td style="text-align: right;">
-                  <strong class="amount-cell" style="font-size: 13px; white-space: nowrap; font-variant-numeric: tabular-nums;">${Utils.formatINR(c.amount)}</strong>
-                  ${(c.lateFee || 0) > 0 ? `
-                    <div style="font-size: 10px; color: var(--status-unassigned); font-weight: 600;">+${Utils.formatINR(c.lateFee)} fee</div>
-                  ` : ''}
-                </td>
-                <td class="col-should">
-                  <div class="text-xs">${Utils.formatDate(c.dueDate)}</div>
-                  <div class="text-xs" style="font-weight: 600; color: ${isOverdue ? 'var(--status-unassigned)' : 'var(--color-text-muted)'};">
-                    ${isUrgent ? '<span class="urgent-pulse-dot" title="Urgent risk: Action required within 48h"></span>' : ''}
-                    ${isOverdue ? `Overdue by ${Math.abs(daysLeft)}d` : `${daysLeft} days left`}
+                  <div class="text-xs text-muted" style="margin-top: 3px;">
+                    ${veh ? veh.makeModel : 'Commercial Asset'}
                   </div>
                 </td>
-                <td>${Utils.getStatusBadgeHTML(c.status)}</td>
-                <td class="col-should">
-                  <div><strong class="cell-truncate" title="${c.responsiblePartyName || c.responsibleParty}">${c.responsiblePartyName || c.responsibleParty}</strong></div>
-                  <div class="text-xs text-muted">${c.responsibleParty}</div>
-                </td>
-                <td class="col-nice">
-                  <span class="badge badge--neutral" style="font-size: 10px;">${c.source}</span>
+                <td>
+                  <div style="font-size: 13px; font-weight: 600; color: var(--color-text-main);">
+                    ${c.responsiblePartyName || c.responsibleParty}
+                  </div>
+                  <div style="margin-top: 3px;">
+                    <span class="badge ${c.responsibleParty === 'Unassigned' ? 'badge--unassigned' : 'badge--assigned'}" style="font-size: 10px; padding: 1px 6px;">
+                      ${c.responsibleParty}
+                    </span>
+                  </div>
                 </td>
                 <td style="text-align: right;">
-                  <div style="display: inline-flex; gap: 4px;">
-                    <a href="#challans?id=${c.id}" class="btn btn--outline btn--sm" title="Open Two-Column Details">
+                  <strong class="amount-cell" style="font-size: 14px; white-space: nowrap; font-variant-numeric: tabular-nums;">
+                    ${Utils.formatINR(c.amount)}
+                  </strong>
+                  ${(c.lateFee || 0) > 0 ? `
+                    <div style="font-size: 10px; color: var(--status-unassigned); font-weight: 600; margin-top: 2px;">
+                      +${Utils.formatINR(c.lateFee)} late fee
+                    </div>
+                  ` : ''}
+                </td>
+                <td>
+                  <div style="font-size: 12px; font-weight: 500; color: var(--color-text-main);">
+                    ${Utils.formatDate(c.dueDate)}
+                  </div>
+                  <div class="text-xs" style="margin-top: 3px; font-weight: 600; color: ${isOverdue ? 'var(--status-unassigned)' : 'var(--color-text-muted)'}; display: flex; align-items: center; gap: 4px;">
+                    ${isUrgent ? '<span class="urgent-pulse-dot" title="Urgent risk: Action required within 48h"></span>' : ''}
+                    <span>${isOverdue ? `Overdue by ${Math.abs(daysLeft)}d` : `${daysLeft} days left`}</span>
+                  </div>
+                </td>
+                <td style="text-align: right;">
+                  <div style="display: inline-flex; align-items: center; gap: 6px;">
+                    ${Utils.getStatusBadgeHTML(c.status)}
+                    <a href="#challans?id=${c.id}" class="btn btn--outline btn--sm" style="padding: 3px 8px; font-size: 11px;" title="Open Notice Details">
                       Details
                     </a>
                     ${c.status === 'unassigned' ? `
-                      <button class="btn btn--secondary btn--sm" onclick="openAssignmentModal('${c.id}')" title="Assign Liability">Assign</button>
+                      <button class="btn btn--primary btn--sm" style="padding: 3px 10px; font-size: 11px;" onclick="openAssignmentModal('${c.id}')" title="Assign Liability">
+                        Assign
+                      </button>
                     ` : (c.status !== 'paid' && c.status !== 'court' ? `
-                      <button class="btn btn--secondary btn--sm" onclick="openPaymentModal('${c.id}')" title="Pay Now">Pay</button>
+                      <button class="btn btn--secondary btn--sm" style="padding: 3px 10px; font-size: 11px;" onclick="openPaymentModal('${c.id}')" title="Pay Now">
+                        Pay
+                      </button>
                     ` : '')}
                   </div>
                 </td>
@@ -1029,26 +1053,56 @@ function renderChallanDetailsView(container, actions, challanId) {
               <!-- Option Selection Radios (Step 7.2) -->
               <div class="form-group">
                 <label class="form-label">Select Responsible Party *</label>
-                <div style="display: flex; flex-direction: column; gap: 8px;">
-                  <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer;">
-                    <input type="radio" name="detailsPartyRadio" value="Driver" ${suggestion.partyType === 'Driver' || challan.responsibleParty === 'Driver' ? 'checked' : ''} onchange="handleDetailsPartyTypeChange('Driver', ${challan.totalPayable || challan.amount || 2000})">
-                    <strong>Driver</strong> <span class="text-xs text-muted">(Operating custody & moving violations)</span>
+                <div class="party-radio-group">
+                  <label class="party-radio-tile">
+                    <div style="display: flex; align-items: center;">
+                      <input type="radio" name="detailsPartyRadio" value="Driver" ${suggestion.partyType === 'Driver' || challan.responsibleParty === 'Driver' ? 'checked' : ''} onchange="handleDetailsPartyTypeChange('Driver', ${challan.totalPayable || challan.amount || 2000})">
+                      <div>
+                        <strong style="font-size: 13px;">Commercial Driver</strong>
+                        <div class="text-xs text-muted">Operating custody during moving violation</div>
+                      </div>
+                    </div>
+                    <span class="badge badge--assigned" style="font-size: 10px;">Payroll</span>
                   </label>
-                  <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer;">
-                    <input type="radio" name="detailsPartyRadio" value="Lessee" ${suggestion.partyType === 'Lessee' || challan.responsibleParty === 'Lessee' ? 'checked' : ''} onchange="handleDetailsPartyTypeChange('Lessee', ${challan.totalPayable || challan.amount || 2000})">
-                    <strong>Corporate Lessee</strong> <span class="text-xs text-muted">(Master lease contract liability terms)</span>
+                  <label class="party-radio-tile">
+                    <div style="display: flex; align-items: center;">
+                      <input type="radio" name="detailsPartyRadio" value="Lessee" ${suggestion.partyType === 'Lessee' || challan.responsibleParty === 'Lessee' ? 'checked' : ''} onchange="handleDetailsPartyTypeChange('Lessee', ${challan.totalPayable || challan.amount || 2000})">
+                      <div>
+                        <strong style="font-size: 13px;">Corporate Lessee</strong>
+                        <div class="text-xs text-muted">Active long-term master lease agreement</div>
+                      </div>
+                    </div>
+                    <span class="badge badge--pending" style="font-size: 10px;">Invoice</span>
                   </label>
-                  <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer;">
-                    <input type="radio" name="detailsPartyRadio" value="Fleet Operator" ${suggestion.partyType === 'Fleet Operator' || challan.responsibleParty === 'Fleet Operator' ? 'checked' : ''} onchange="handleDetailsPartyTypeChange('Fleet Operator', ${challan.totalPayable || challan.amount || 2000})">
-                    <strong>Fleet Operator</strong> <span class="text-xs text-muted">(Apex Fleet internal absorption / paperwork lapses)</span>
+                  <label class="party-radio-tile">
+                    <div style="display: flex; align-items: center;">
+                      <input type="radio" name="detailsPartyRadio" value="Fleet Operator" ${suggestion.partyType === 'Fleet Operator' || challan.responsibleParty === 'Fleet Operator' ? 'checked' : ''} onchange="handleDetailsPartyTypeChange('Fleet Operator', ${challan.totalPayable || challan.amount || 2000})">
+                      <div>
+                        <strong style="font-size: 13px;">Fleet Operator</strong>
+                        <div class="text-xs text-muted">Statutory documents lapsed / company absorption</div>
+                      </div>
+                    </div>
+                    <span class="badge badge--neutral" style="font-size: 10px;">Opex</span>
                   </label>
-                  <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer;">
-                    <input type="radio" name="detailsPartyRadio" value="Vehicle Owner" ${suggestion.partyType === 'Vehicle Owner' || challan.responsibleParty === 'Vehicle Owner' ? 'checked' : ''} onchange="handleDetailsPartyTypeChange('Vehicle Owner', ${challan.totalPayable || challan.amount || 2000})">
-                    <strong>Vehicle Owner</strong> <span class="text-xs text-muted">(Commercial lessor / financing asset covenant)</span>
+                  <label class="party-radio-tile">
+                    <div style="display: flex; align-items: center;">
+                      <input type="radio" name="detailsPartyRadio" value="Vehicle Owner" ${suggestion.partyType === 'Vehicle Owner' || challan.responsibleParty === 'Vehicle Owner' ? 'checked' : ''} onchange="handleDetailsPartyTypeChange('Vehicle Owner', ${challan.totalPayable || challan.amount || 2000})">
+                      <div>
+                        <strong style="font-size: 13px;">Vehicle Owner</strong>
+                        <div class="text-xs text-muted">Registered lessor / asset financing covenant</div>
+                      </div>
+                    </div>
+                    <span class="badge badge--neutral" style="font-size: 10px;">Lessor</span>
                   </label>
-                  <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer;">
-                    <input type="radio" name="detailsPartyRadio" value="Split" ${challan.responsibleParty === 'Split' ? 'checked' : ''} onchange="handleDetailsPartyTypeChange('Split', ${challan.totalPayable || challan.amount || 2000})">
-                    <strong>Split Liability</strong> <span class="text-xs text-muted">(Divide fine proportionally between multiple parties)</span>
+                  <label class="party-radio-tile">
+                    <div style="display: flex; align-items: center;">
+                      <input type="radio" name="detailsPartyRadio" value="Split" ${challan.responsibleParty === 'Split' ? 'checked' : ''} onchange="handleDetailsPartyTypeChange('Split', ${challan.totalPayable || challan.amount || 2000})">
+                      <div>
+                        <strong style="font-size: 13px;">Split Proportional Liability</strong>
+                        <div class="text-xs text-muted">Apportion penalty between driver & operator</div>
+                      </div>
+                    </div>
+                    <span class="badge badge--neutral" style="font-size: 10px;">Split</span>
                   </label>
                 </div>
               </div>
