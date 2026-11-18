@@ -58,46 +58,46 @@ function renderPaymentsView(container, actions) {
     <div class="kpi-grid">
       <div class="kpi-card" onclick="switchPaymentsTab('settlements')">
         <div class="kpi-card-top">
-          <span class="kpi-label">Settled YTD (Direct)</span>
+          <span class="kpi-label">Settled YTD</span>
           <div class="kpi-icon-wrapper" style="background: var(--status-paid-bg); color: var(--status-paid);">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
           </div>
         </div>
         <div class="kpi-value">${Utils.formatINR(totalSettledAmount)}</div>
-        <div class="kpi-subtext">Across ${paidChallans.length} settled infraction receipts</div>
+        <div class="kpi-subtext">${paidChallans.length} direct Parivahan settlements</div>
       </div>
 
       <div class="kpi-card" onclick="switchPaymentsTab('recovery')">
         <div class="kpi-card-top">
-          <span class="kpi-label">Pending Recovery (Payroll)</span>
+          <span class="kpi-label">Pending Driver Recovery</span>
           <div class="kpi-icon-wrapper" style="background: var(--status-pending-bg); color: var(--status-pending);">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
           </div>
         </div>
         <div class="kpi-value" style="color: var(--status-pending);">${Utils.formatINR(pendingPayrollAmount)}</div>
-        <div class="kpi-subtext">Queued for driver salary deduction</div>
+        <div class="kpi-subtext">Queued for salary deduction</div>
       </div>
 
       <div class="kpi-card" onclick="switchPaymentsTab('recovery')">
         <div class="kpi-card-top">
-          <span class="kpi-label">Corporate Invoiced (Lessee)</span>
+          <span class="kpi-label">Corporate Invoiced</span>
           <div class="kpi-icon-wrapper" style="background: var(--status-assigned-bg); color: var(--status-assigned);">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
           </div>
         </div>
         <div class="kpi-value" style="color: var(--status-assigned);">${Utils.formatINR(invoicedLesseeAmount)}</div>
-        <div class="kpi-subtext">Included in lessee monthly billing</div>
+        <div class="kpi-subtext">Monthly corporate billing cycle</div>
       </div>
 
       <div class="kpi-card" onclick="switchPaymentsTab('recovery')">
         <div class="kpi-card-top">
-          <span class="kpi-label">Fleet Absorbed / Written-Off</span>
+          <span class="kpi-label">Absorbed / Written Off</span>
           <div class="kpi-icon-wrapper" style="background: var(--color-bg-app); color: var(--color-text-muted);">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
           </div>
         </div>
         <div class="kpi-value">${Utils.formatINR(writtenOffAmount)}</div>
-        <div class="kpi-subtext">Operational paperwork / fine waivers</div>
+        <div class="kpi-subtext">Operating paperwork waivers</div>
       </div>
     </div>
   `;
@@ -169,22 +169,19 @@ function renderSettlementsTabHTML(paidChallans) {
         <table class="data-table">
           <thead>
             <tr>
-              <th>Receipt / Voucher</th>
-              <th>Challan No</th>
+              <th>Receipt & Voucher</th>
+              <th>Challan & Offence</th>
               <th>Vehicle Asset</th>
               <th>Settled Amount</th>
-              <th class="col-nice">Payment Rail</th>
-              <th class="col-nice">Transaction Ref</th>
-              <th class="col-should">Payer Entity</th>
-              <th class="col-should">Recovery Target</th>
+              <th>Payer → Recovery Flow</th>
               <th>Status</th>
-              <th>Actions</th>
+              <th style="text-align: right; min-width: 100px;">Actions</th>
             </tr>
           </thead>
           <tbody>
             ${records.length === 0 ? `
               <tr>
-                <td colspan="10" style="text-align: center; padding: 40px;">
+                <td colspan="7" style="text-align: center; padding: 40px;">
                   <div class="empty-state">
                     <div class="empty-state-title">No Settlement Receipts Found</div>
                     <div class="empty-state-text">Settle an open challan to generate official settlement vouchers.</div>
@@ -200,45 +197,38 @@ function renderSettlementsTabHTML(paidChallans) {
                     <strong style="color: var(--color-primary); cursor: pointer;" onclick="openReceiptModal('${c.id}')">
                       ${receiptNo}
                     </strong>
-                    <div class="text-xs text-muted">${Utils.formatDate(c.paymentDate || c.offenceDate, true)}</div>
+                    <div class="text-xs text-muted" style="margin-top: 2px;">${Utils.formatDate(c.paymentDate || c.offenceDate, true)}</div>
                   </td>
                   <td>
-                    <strong>${c.challanNumber}</strong>
-                    <div class="text-xs text-muted">${c.offence}</div>
+                    <div class="font-mono text-xs font-semibold">${c.challanNumber}</div>
+                    <div class="text-xs text-muted cell-truncate" style="max-width: 220px;" title="${c.offence}">${c.offence}</div>
                   </td>
                   <td>
-                    <span class="plate-chip plate-chip--commercial">${c.vehicleReg}</span>
+                    <span class="plate-chip plate-chip--commercial font-mono font-bold">${c.vehicleReg}</span>
                   </td>
                   <td>
-                    <strong class="amount-cell" style="font-size: 14px; white-space: nowrap;">${Utils.formatINR(c.totalPayable || c.amount)}</strong>
-                    <div class="text-xs text-muted">Incl. ₹${c.convenienceFee || 25} fee</div>
+                    <strong class="amount-cell" style="font-size: 13px; white-space: nowrap;">${Utils.formatINR(c.totalPayable || c.amount)}</strong>
+                    <div class="text-xs text-muted">${c.paymentMethod || 'UPI'} • Fee: ₹${c.convenienceFee || 25}</div>
                   </td>
-                  <td class="col-nice">
-                    <span class="badge badge--neutral">${c.paymentMethod || 'UPI'}</span>
-                  </td>
-                  <td class="col-nice">
-                    <span class="font-mono text-xs text-muted">${txnRef}</span>
-                  </td>
-                  <td class="col-should">
-                    <div class="cell-truncate" style="font-size: 12px; font-weight: 600;" title="${c.payerType || 'Apex Fleet Pvt Ltd'}">${c.payerType || 'Apex Fleet Pvt Ltd'}</div>
-                    <div class="text-xs text-muted">Direct Settlement</div>
-                  </td>
-                  <td class="col-should">
-                    <div class="cell-truncate" style="font-size: 12px; font-weight: 600;" title="${c.recoveryParty || c.responsiblePartyName || 'Rahul Sharma'}">${c.recoveryParty || c.responsiblePartyName || 'Rahul Sharma'}</div>
-                    <span class="badge ${c.responsibleParty === 'Driver' ? 'badge--assigned' : 'badge--pending'}">
-                      ${c.recoveryMethod || (c.responsibleParty === 'Driver' ? 'Payroll deduction' : 'Invoice')}
-                    </span>
+                  <td>
+                    <div style="font-size: 12px; font-weight: 500;">${c.payerType || 'Apex Fleet'}</div>
+                    <div class="text-xs text-muted" style="margin-top: 2px;">
+                      Target: <strong>${c.recoveryParty || c.responsiblePartyName || 'Rahul Sharma'}</strong> 
+                      <span class="badge ${c.responsibleParty === 'Driver' ? 'badge--assigned' : 'badge--pending'}" style="font-size: 9px; padding: 0 4px; margin-left: 2px;">
+                        ${c.recoveryMethod || (c.responsibleParty === 'Driver' ? 'Payroll' : 'Invoice')}
+                      </span>
+                    </div>
                   </td>
                   <td>
                     <span class="badge badge--paid">✓ Settled</span>
                   </td>
-                  <td>
-                    <div style="display: flex; gap: 4px;">
-                      <button class="btn btn--outline btn--sm" onclick="openReceiptModal('${c.id}')" title="View receipt voucher modal">
+                  <td style="text-align: right;">
+                    <div style="display: inline-flex; gap: 4px;">
+                      <button class="btn btn--outline btn--sm" style="padding: 3px 8px; font-size: 11px;" onclick="openReceiptModal('${c.id}')" title="View receipt voucher">
                         View
                       </button>
-                      <button class="btn btn--ghost btn--icon btn--sm" onclick="downloadReceiptVoucher('${c.id}')" title="Download text voucher">
-                        <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                      <button class="btn btn--ghost btn--icon btn--sm" style="padding: 3px 6px;" onclick="downloadReceiptVoucher('${c.id}')" title="Download text voucher">
+                        <svg width="13" height="13" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
                       </button>
                     </div>
                   </td>
@@ -293,21 +283,19 @@ function renderRecoveryLedgerTabHTML(recoveries) {
         <table class="data-table">
           <thead>
             <tr>
-              <th>Recovery ID</th>
+              <th>Recovery Ref</th>
               <th>Challan & Vehicle</th>
-              <th>Upfront Payer</th>
-              <th>Recovery Target</th>
-              <th>Channel</th>
-              <th>Billing / Payroll Cycle</th>
+              <th>Payer → Target</th>
+              <th>Channel & Cycle</th>
               <th>Recoverable Amount</th>
-              <th>Recovery Status</th>
-              <th>Actions</th>
+              <th>Status</th>
+              <th style="text-align: right; min-width: 90px;">Actions</th>
             </tr>
           </thead>
           <tbody>
             ${records.length === 0 ? `
               <tr>
-                <td colspan="9" style="text-align: center; padding: 40px;">
+                <td colspan="7" style="text-align: center; padding: 40px;">
                   <div class="empty-state">
                     <div class="empty-state-title">No Recovery Records Found</div>
                     <div class="empty-state-text">Settled challans generate recovery ledger records automatically.</div>
@@ -332,53 +320,50 @@ function renderRecoveryLedgerTabHTML(recoveries) {
                 <tr>
                   <td>
                     <strong class="font-mono text-xs" style="color: var(--color-primary);">${r.id}</strong>
-                    <div class="text-xs text-muted">${Utils.formatDate(r.createdAt)}</div>
+                    <div class="text-xs text-muted" style="margin-top: 2px;">${Utils.formatDate(r.createdAt)}</div>
                   </td>
                   <td>
-                    <strong>${r.challanNumber}</strong>
-                    <div style="margin-top: 3px;">
-                      <span class="plate-chip plate-chip--commercial">${r.vehicleReg}</span>
+                    <div class="font-mono text-xs font-semibold">${r.challanNumber}</div>
+                    <div style="margin-top: 2px;">
+                      <span class="plate-chip plate-chip--commercial font-mono font-bold">${r.vehicleReg}</span>
                     </div>
                   </td>
                   <td>
-                    <div style="font-size: 12px; font-weight: 600;">${r.payer || 'Apex Fleet Pvt Ltd'}</div>
-                    <div class="text-xs text-muted">Liquidity Provider</div>
+                    <div style="font-size: 12px; font-weight: 500;">${r.payer || 'Apex Fleet'}</div>
+                    <div class="text-xs text-muted" style="margin-top: 2px;">
+                      → <strong>${r.responsiblePartyName}</strong>
+                      <span class="badge ${r.responsibleParty === 'Driver' ? 'badge--assigned' : 'badge--neutral'}" style="font-size: 9px; padding: 0 4px; margin-left: 2px;">${r.responsibleParty}</span>
+                    </div>
                   </td>
                   <td>
-                    <div style="font-size: 13px; font-weight: 600;">${r.responsiblePartyName}</div>
-                    <span class="badge ${r.responsibleParty === 'Driver' ? 'badge--assigned' : 'badge--neutral'}">${r.responsibleParty}</span>
+                    <div class="text-xs font-medium">${r.recoveryMethod}</div>
+                    <div class="font-mono text-xs text-muted" style="margin-top: 2px;">Cycle: ${r.cycleRef || 'Nov 2026'}</div>
                   </td>
                   <td>
-                    <span class="text-xs font-medium">${r.recoveryMethod}</span>
-                  </td>
-                  <td>
-                    <span class="font-mono text-xs text-muted">${r.cycleRef || 'Nov 2026'}</span>
-                  </td>
-                  <td>
-                    <strong style="font-size: 14px;">${Utils.formatINR(r.amount)}</strong>
+                    <strong class="amount-cell" style="font-size: 13px;">${Utils.formatINR(r.amount)}</strong>
                   </td>
                   <td>
                     ${statusBadge}
                   </td>
-                  <td>
-                    <div style="display: flex; gap: 4px;">
+                  <td style="text-align: right;">
+                    <div style="display: inline-flex; gap: 4px;">
                       ${isPayroll && r.recoveryStatus !== 'Deducted' ? `
-                        <button class="btn btn--outline btn--sm" onclick="handleRecoveryAction('${r.id}', 'DEDUCT')" title="Process payroll deduction">
+                        <button class="btn btn--outline btn--sm" style="padding: 3px 8px; font-size: 11px;" onclick="handleRecoveryAction('${r.id}', 'DEDUCT')" title="Process payroll deduction">
                           Deduct
                         </button>
                       ` : ''}
                       ${isInvoice && r.recoveryStatus !== 'Invoiced' ? `
-                        <button class="btn btn--outline btn--sm" onclick="handleRecoveryAction('${r.id}', 'INVOICE')" title="Append to lessee invoice">
+                        <button class="btn btn--outline btn--sm" style="padding: 3px 8px; font-size: 11px;" onclick="handleRecoveryAction('${r.id}', 'INVOICE')" title="Append to lessee invoice">
                           Invoice
                         </button>
                       ` : ''}
                       ${!isWriteOff && r.recoveryStatus !== 'Written Off' && r.recoveryStatus !== 'Deducted' && r.recoveryStatus !== 'Invoiced' ? `
-                        <button class="btn btn--ghost btn--sm" style="color: var(--status-unassigned);" onclick="handleRecoveryAction('${r.id}', 'WRITEOFF')" title="Approve operational write-off">
+                        <button class="btn btn--ghost btn--sm" style="padding: 3px 6px; font-size: 11px; color: var(--status-unassigned);" onclick="handleRecoveryAction('${r.id}', 'WRITEOFF')" title="Approve operational write-off">
                           Write-off
                         </button>
                       ` : ''}
                       ${(r.recoveryStatus === 'Deducted' || r.recoveryStatus === 'Invoiced' || r.recoveryStatus === 'Written Off') ? `
-                        <span class="text-xs text-muted">Reconciled</span>
+                        <span class="text-xs text-muted" style="font-weight: 500;">Closed</span>
                       ` : ''}
                     </div>
                   </td>

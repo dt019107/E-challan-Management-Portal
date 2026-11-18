@@ -296,25 +296,17 @@ function renderVehiclesTableAndPagination() {
               <input type="checkbox" class="custom-checkbox" id="selectAllVehiclesCheckbox" ${isAllSelected ? 'checked' : ''} onchange="toggleSelectAllVehicles(this.checked)">
             </th>
             <th onclick="sortVehiclesBy('regNumber')" style="cursor: pointer;">
-              Registration No ${getSortIcon('regNumber')}
+              Vehicle & Plate ${getSortIcon('regNumber')}
             </th>
             <th onclick="sortVehiclesBy('makeModel')" style="cursor: pointer;">
-              Make & Model ${getSortIcon('makeModel')}
+              Model & Specs ${getSortIcon('makeModel')}
             </th>
-            <th class="col-nice" onclick="sortVehiclesBy('year')" style="cursor: pointer;">
-              Year ${getSortIcon('year')}
-            </th>
-            <th class="col-nice">Owner</th>
-            <th class="col-nice">Lessee</th>
-            <th class="col-should">Assigned Driver</th>
-            <th onclick="sortVehiclesBy('openChallans')" style="cursor: pointer;">
-              Open Challans ${getSortIcon('openChallans')}
-            </th>
+            <th>Custody & Assignment</th>
             <th onclick="sortVehiclesBy('outstandingAmount')" style="cursor: pointer;">
-              Outstanding ${getSortIcon('outstandingAmount')}
+              Challans & Exposure ${getSortIcon('outstandingAmount')}
             </th>
-            <th>Status</th>
-            <th style="text-align: right; min-width: 140px;">Actions</th>
+            <th>Gateway Sync</th>
+            <th style="text-align: right; min-width: 120px;">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -334,8 +326,8 @@ function renderVehiclesTableAndPagination() {
                   <input type="checkbox" class="custom-checkbox" ${isChecked ? 'checked' : ''} onchange="toggleVehicleRowSelection('${v.id}', this.checked)">
                 </td>
                 <td>
-                  <div style="display: flex; align-items: center; gap: 12px;">
-                    <div style="width: 52px; height: 38px; border-radius: 6px; overflow: hidden; border: 1px solid var(--line); background: var(--surface-2); flex-shrink: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.06); position: relative;">
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 44px; height: 32px; border-radius: 6px; overflow: hidden; border: 1px solid var(--color-border); background: var(--color-bg-app); flex-shrink: 0;">
                       <img src="${v.image || typeMeta.image}" alt="${v.makeModel}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='${typeMeta.image}'">
                     </div>
                     <div>
@@ -343,7 +335,7 @@ function renderVehiclesTableAndPagination() {
                         <a href="#vehicles?id=${v.id}" class="plate-chip plate-chip--commercial font-mono font-bold" style="font-size: 12px;" title="View vehicle compliance profile">
                           ${v.regNumber}
                         </a>
-                        <span class="badge ${typeMeta.badgeClass}" style="${typeMeta.badgeStyle} font-size: 10px; padding: 1.5px 6px; border-radius: 4px; display: inline-flex; align-items: center; gap: 3px;" title="${typeMeta.label}">
+                        <span class="badge ${typeMeta.badgeClass}" style="${typeMeta.badgeStyle} font-size: 10px; padding: 1px 6px;">
                           ${typeMeta.icon} ${typeMeta.shortLabel}
                         </span>
                       </div>
@@ -352,43 +344,43 @@ function renderVehiclesTableAndPagination() {
                   </div>
                 </td>
                 <td>
-                  <strong class="cell-truncate" title="${v.makeModel}" style="color: var(--ink); font-size: 13px;">${v.makeModel}</strong>
-                  <div class="text-xs text-muted font-mono col-nice">Chassis: ${v.chassisNumber ? v.chassisNumber.slice(-8) : '—'}</div>
-                </td>
-                <td class="col-nice">
-                  <span class="font-medium">${v.year || 2023}</span>
-                </td>
-                <td class="col-nice">
-                  <div class="cell-truncate" title="${v.ownerName || 'Apex Fleet Pvt Ltd'}" style="font-weight: 500;">${v.ownerName || 'Apex Fleet Pvt Ltd'}</div>
-                </td>
-                <td class="col-nice">
-                  ${lessee ? `<div class="cell-truncate text-xs font-semibold" title="${lessee.name}" style="color: var(--color-purple, #7452C8);">${lessee.name}</div>` : '<span class="text-xs text-muted">—</span>'}
-                </td>
-                <td class="col-should">
-                  ${driver ? `<div class="cell-truncate text-xs font-medium" title="${driver.name}">${driver.name}</div>` : '<span class="text-xs text-muted">Unassigned</span>'}
+                  <strong class="cell-truncate" title="${v.makeModel}" style="color: var(--color-text-main); font-size: 13px;">${v.makeModel}</strong>
+                  <div class="text-xs text-muted font-mono" style="margin-top: 2px;">
+                    ${v.year || 2023} • Chassis: ${v.chassisNumber ? v.chassisNumber.slice(-8) : '—'}
+                  </div>
                 </td>
                 <td>
-                  ${(v.openChallans || 0) > 0 ? `
-                    <span class="badge badge--unassigned font-bold">${v.openChallans} Open</span>
-                  ` : `
-                    <span class="badge badge--paid">0 Clean</span>
-                  `}
+                  <div style="display: flex; flex-direction: column; gap: 2px;">
+                    <div style="font-size: 12px; font-weight: 500; color: var(--color-text-main);">
+                      ${driver ? driver.name : '<span class="text-muted">Unassigned Duty</span>'}
+                    </div>
+                    <div class="text-xs text-muted">
+                      ${lessee ? `<span style="color: var(--color-purple, #7452C8); font-weight: 500;">${lessee.name}</span>` : (v.ownerName || 'Apex Fleet')}
+                    </div>
+                  </div>
                 </td>
                 <td>
-                  <strong class="amount-cell" style="color: ${(v.outstandingAmount || 0) > 0 ? 'var(--ink)' : 'var(--text-3)'}; white-space: nowrap;">
-                    ${Utils.formatINR(v.outstandingAmount || 0)}
-                  </strong>
+                  <div style="display: flex; align-items: center; gap: 6px;">
+                    ${(v.openChallans || 0) > 0 ? `
+                      <span class="badge badge--unassigned font-bold">${v.openChallans} Open</span>
+                    ` : `
+                      <span class="badge badge--paid">Clean</span>
+                    `}
+                    <strong class="amount-cell" style="color: ${(v.outstandingAmount || 0) > 0 ? 'var(--color-text-main)' : 'var(--color-text-muted)'}; font-size: 12px;">
+                      ${Utils.formatINR(v.outstandingAmount || 0)}
+                    </strong>
+                  </div>
                 </td>
                 <td>${syncBadge}</td>
                 <td style="text-align: right;">
                   <div style="display: inline-flex; gap: 4px;">
-                    <a href="#vehicles?id=${v.id}" class="btn btn--outline btn--sm" style="padding: 4px 10px; font-size: 11px;" title="Open complete profile">
+                    <a href="#vehicles?id=${v.id}" class="btn btn--outline btn--sm" style="padding: 3px 8px; font-size: 11px;" title="Open vehicle details">
                       Details
                     </a>
-                    <button class="btn btn--ghost btn--sm" style="padding: 4px 8px; font-size: 11px;" onclick="openEditVehicleModal('${v.id}')" title="Edit vehicle metadata">
+                    <button class="btn btn--ghost btn--sm" style="padding: 3px 6px; font-size: 11px;" onclick="openEditVehicleModal('${v.id}')" title="Edit vehicle">
                       Edit
                     </button>
-                    <button class="btn btn--ghost btn--sm" style="padding: 4px 8px; font-size: 11px; color: var(--color-danger, #C24141);" onclick="archiveVehicle('${v.id}')" title="Archive vehicle">
+                    <button class="btn btn--ghost btn--sm" style="padding: 3px 6px; font-size: 11px; color: var(--status-unassigned);" onclick="archiveVehicle('${v.id}')" title="Archive vehicle">
                       Archive
                     </button>
                   </div>

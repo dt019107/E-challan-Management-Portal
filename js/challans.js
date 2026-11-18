@@ -123,7 +123,7 @@ function renderChallansView(container, actions, params = {}) {
         </div>
 
         <!-- Vehicle Class Filter -->
-        <select class="form-select" id="filterVehicleTypeSelect" style="width: 160px; font-size: 12px; padding: 6px 10px;">
+        <select class="form-select" id="filterVehicleTypeSelect" style="width: 155px; font-size: 12px; padding: 6px 10px;">
           <option value="">All Vehicle Classes</option>
           <option value="truck" ${challanTableState.filterVehicleType === 'truck' ? 'selected' : ''}>🚛 Heavy Trucks</option>
           <option value="bus" ${challanTableState.filterVehicleType === 'bus' ? 'selected' : ''}>🚌 Buses & Coaches</option>
@@ -143,14 +143,6 @@ function renderChallansView(container, actions, params = {}) {
           <option value="Overloading" ${challanTableState.filterOffence === 'Overloading' ? 'selected' : ''}>Overloading (Sec 194)</option>
           <option value="Parking" ${challanTableState.filterOffence === 'Parking' ? 'selected' : ''}>Improper Parking</option>
           <option value="Mobile" ${challanTableState.filterOffence === 'Mobile' ? 'selected' : ''}>Mobile Phone</option>
-        </select>
-
-        <!-- Quick View Filter -->
-        <select class="form-select" id="filterSavedViewSelect" style="width: 140px; font-size: 12px; padding: 6px 10px;" onchange="applyChallanSavedView(this.value)">
-          <option value="all" ${challanTableState.savedView === 'all' ? 'selected' : ''}>All Deadlines</option>
-          <option value="overdue" ${challanTableState.savedView === 'overdue' ? 'selected' : ''}>⚠️ Overdue Only</option>
-          <option value="due7days" ${challanTableState.savedView === 'due7days' ? 'selected' : ''}>⏳ Due in 7 Days</option>
-          <option value="highValue" ${challanTableState.savedView === 'highValue' ? 'selected' : ''}>💰 High Value (&gt; ₹2k)</option>
         </select>
 
         <!-- Party Filter -->
@@ -490,11 +482,8 @@ function renderChallansTableAndPagination() {
             <th class="col-nice" onclick="sortChallansBy('offenceDate')" style="cursor: pointer;">
               Offence Date ${getChallanSortIcon('offenceDate')}
             </th>
-            <th onclick="sortChallansBy('amount')" style="cursor: pointer;">
-              Amount ${getChallanSortIcon('amount')}
-            </th>
-            <th class="col-nice" onclick="sortChallansBy('lateFee')" style="cursor: pointer;">
-              Late Fee ${getChallanSortIcon('lateFee')}
+            <th onclick="sortChallansBy('amount')" style="cursor: pointer; text-align: right;">
+              Penalty Amount ${getChallanSortIcon('amount')}
             </th>
             <th class="col-should" onclick="sortChallansBy('dueDate')" style="cursor: pointer;">
               Due Date ${getChallanSortIcon('dueDate')}
@@ -542,13 +531,11 @@ function renderChallansTableAndPagination() {
                   <div class="text-xs">${Utils.formatDate(c.offenceDate, true)}</div>
                   <div class="text-xs text-muted" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px;">${c.location || '—'}</div>
                 </td>
-                <td>
-                  <strong class="amount-cell" style="font-size: 13px; white-space: nowrap;">${Utils.formatINR(c.amount)}</strong>
-                </td>
-                <td class="col-nice">
-                  <span style="font-size: 12px; font-weight: 600; color: ${(c.lateFee || 0) > 0 ? 'var(--status-unassigned)' : 'var(--color-text-muted)'};">
-                    ${Utils.formatINR(c.lateFee || 0)}
-                  </span>
+                <td style="text-align: right;">
+                  <strong class="amount-cell" style="font-size: 13px; white-space: nowrap; font-variant-numeric: tabular-nums;">${Utils.formatINR(c.amount)}</strong>
+                  ${(c.lateFee || 0) > 0 ? `
+                    <div style="font-size: 10px; color: var(--status-unassigned); font-weight: 600;">+${Utils.formatINR(c.lateFee)} fee</div>
+                  ` : ''}
                 </td>
                 <td class="col-should">
                   <div class="text-xs">${Utils.formatDate(c.dueDate)}</div>
@@ -843,70 +830,47 @@ function renderChallanDetailsView(container, actions, challanId) {
     <div class="challan-details-grid">
       
       <!-- ===================================================================
-           LEFT COLUMN: Challan Information & Evidence (Step 6.5)
+           LEFT COLUMN: Infraction Facts & Evidence (Case Study Screen 5)
            =================================================================== -->
       <div style="display: flex; flex-direction: column; gap: var(--space-4);">
         
-        <!-- Associated Fleet Vehicle Asset Card -->
-        <div class="card" style="padding: 16px; border-radius: 16px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
-          <div style="display: flex; align-items: center; gap: 14px;">
-            <div style="width: 84px; height: 58px; border-radius: 8px; overflow: hidden; border: 1px solid var(--color-border); flex-shrink: 0; background: var(--color-bg-app); box-shadow: var(--shadow-xs);">
-              <img src="${vMeta.image}" alt="${vehicle.makeModel}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='assets/images/tata-ace.jpg'">
-            </div>
-            <div>
-              <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
-                <span class="vehicle-reg-tag" style="font-size: 11px; padding: 2.5px 7px;">${challan.vehicleReg}</span>
-                <span class="badge ${vMeta.badgeClass}" style="${vMeta.badgeStyle}">${vMeta.icon} ${vMeta.label}</span>
-              </div>
-              <div style="font-weight: 700; font-size: 14px; margin-top: 4px; color: var(--ink);">
-                ${vehicle.makeModel || 'Commercial Asset'} (${vehicle.year || '2024'})
-              </div>
-              <div class="text-xs text-muted" style="margin-top: 2px;">
-                Asset Owner: <strong class="text-main">${vehicle.ownerName || 'Apex Fleet Pvt Ltd'}</strong> •
-                FASTag: <span class="badge ${vehicle.fastagStatus === 'Active' ? 'badge--paid' : 'badge--unassigned'}" style="font-size: 9px; padding: 1px 4px;">${vehicle.fastagStatus || 'Active'}</span>
-              </div>
-            </div>
-          </div>
-          <div>
-            <a href="#vehicles?id=${challan.vehicleId}" class="btn btn--outline btn--sm" style="font-size: 11px;">
-              View Vehicle File →
-            </a>
-          </div>
-        </div>
-
-        <!-- Evidence Photographic Card with Telemetry HUD -->
-        <div class="evidence-card">
-          <div class="evidence-photo-wrapper">
-            <img src="${challan.evidenceImage || 'assets/images/speed-camera-radar.jpg'}" alt="Traffic Infraction Evidence" onerror="this.src='assets/images/speed-camera-radar.jpg'">
+        <!-- Evidence Photographic Card (Clean Minimal ANPR Preview) -->
+        <div class="card" style="padding: 0; overflow: hidden; border-radius: var(--radius-card); border: 1px solid var(--line); background: var(--surface);">
+          <div style="position: relative; width: 100%; height: 220px; background: #0F172A; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+            <img src="${challan.evidenceImage || 'assets/images/speed-camera-radar.jpg'}" alt="Traffic Infraction Evidence" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='assets/images/speed-camera-radar.jpg'">
             
-            <!-- HUD Camera Telemetry Overlay -->
-            <div class="evidence-telemetry-hud">
-              <span class="hud-tag">CAM: ANPR-${vMeta.type.toUpperCase()}-04</span>
-              <span class="hud-tag" style="color: #4ADE80;">CLASS: ${vMeta.label.toUpperCase()}</span>
+            <div style="position: absolute; bottom: 12px; left: 14px; display: flex; align-items: center; gap: 8px;">
+              <span class="plate-chip plate-chip--commercial" style="box-shadow: 0 4px 12px rgba(0,0,0,0.4); font-size: 11px;">
+                ${challan.vehicleReg}
+              </span>
+              <span class="badge badge--neutral" style="background: rgba(0,0,0,0.65); color: #FFF; backdrop-filter: blur(8px); border: none; font-size: 10.5px;">
+                ANPR Camera Evidence
+              </span>
             </div>
-
-            <!-- Inset Zoomed License Plate Badge -->
-            <div class="evidence-inset-plate">
-              <span class="plate-ind-strip">IND</span>
-              <span>${challan.vehicleReg}</span>
+            
+            <div style="position: absolute; top: 12px; right: 14px;">
+              <span class="badge badge--neutral" style="background: rgba(0,0,0,0.65); color: #FFF; backdrop-filter: blur(8px); border: none; font-size: 10px;">
+                ${challan.source || 'Traffic Police'}
+              </span>
             </div>
           </div>
-
-          <div style="padding: var(--space-3) var(--space-4); background-color: #0F172A; color: #94A3B8; font-size: 11px; display: flex; justify-content: space-between;">
-            <span>GPS: 28.5672° N, 77.2100° E</span>
-            <span>Speed Sensor: <strong>78.4 km/h</strong> (Radar Calibrated)</span>
+          <div style="padding: 10px 16px; font-size: 11.5px; color: var(--text-2); background: var(--surface); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--line);">
+            <span>Infraction Location: <strong style="color: var(--ink);">${challan.location || 'Public Thoroughfare'}</strong></span>
+            <span>${Utils.formatDate(challan.offenceDate, true)}</span>
           </div>
         </div>
 
-        <!-- Infraction Summary Details: Signature Challan Ticket -->
-        <div class="challan-ticket">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <!-- Factual Specifications Card -->
+        <div class="card" style="padding: 18px 20px; border-radius: var(--radius-card); border: 1px solid var(--line); background: var(--surface);">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--line);">
             <div>
-              <span class="badge badge--neutral font-mono" style="letter-spacing: 0.04em;">${challan.challanNumber}</span>
-              <h2 style="font-family: var(--font-family-serif, serif); font-size: 26px; font-weight: 400; color: var(--ink); margin-top: 8px; line-height: 1.2;">
+              <div style="font-size: 11px; font-family: var(--font-family-mono); color: var(--text-3); letter-spacing: 0.04em;">
+                ${challan.challanNumber}
+              </div>
+              <h2 style="font-size: 18px; font-weight: 700; color: var(--ink); margin-top: 3px; line-height: 1.3;">
                 ${challan.offence}
               </h2>
-              <div class="text-xs" style="color: var(--accent); font-weight: 600; margin-top: 4px;">
+              <div style="font-size: 12px; font-weight: 600; color: var(--color-primary); margin-top: 2px;">
                 ${challan.mvActSection}
               </div>
             </div>
@@ -915,117 +879,91 @@ function renderChallanDetailsView(container, actions, challanId) {
             </div>
           </div>
 
-          <!-- Perforation Line -->
-          <div class="challan-ticket-perforation">
-            <div class="challan-ticket-notch-left"></div>
-            <div class="challan-ticket-dashed"></div>
-            <div class="challan-ticket-notch-right"></div>
-          </div>
-
-          <!-- Key Metadata Specs Grid -->
-          <div class="specs-meta-grid">
-            <div class="spec-item">
-              <span class="spec-label">Vehicle Registration & Class</span>
-              <span class="spec-value" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                <a href="#vehicles?id=${challan.vehicleId}" class="plate-chip plate-chip--commercial">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px 18px; font-size: 12px;">
+            <div>
+              <span style="color: var(--text-3); font-size: 11px; display: block;">Vehicle Asset</span>
+              <div style="display: flex; align-items: center; gap: 6px; margin-top: 2px;">
+                <a href="#vehicles?id=${challan.vehicleId}" class="plate-chip plate-chip--commercial" style="font-size: 10.5px; padding: 2px 6px;">
                   ${challan.vehicleReg}
                 </a>
-                <span class="badge ${vMeta.badgeClass}" style="${vMeta.badgeStyle}; font-size: 11px;">
-                  ${vMeta.icon} ${vMeta.label}
-                </span>
-              </span>
+                <span class="badge ${vMeta.badgeClass}" style="${vMeta.badgeStyle}; font-size: 9.5px; padding: 1px 5px;">${vMeta.label}</span>
+              </div>
             </div>
 
-            <div class="spec-item">
-              <span class="spec-label">Make, Model & Fleet Owner</span>
-              <span class="spec-value">
-                <strong>${vehicle.makeModel || 'Commercial Vehicle'}</strong> (${vehicle.year || '2024'}) • ${vehicle.ownerName || 'Apex Fleet Pvt Ltd'}
-              </span>
+            <div>
+              <span style="color: var(--text-3); font-size: 11px; display: block;">Make & Fleet Owner</span>
+              <strong style="color: var(--ink); display: block; margin-top: 2px;">
+                ${vehicle.makeModel || 'Commercial Vehicle'} (${vehicle.ownerName || 'Apex Fleet'})
+              </strong>
             </div>
 
-            <div class="spec-item">
-              <span class="spec-label">Issuing Authority</span>
-              <span class="spec-value">${challan.issuingAuthority}</span>
+            <div>
+              <span style="color: var(--text-3); font-size: 11px; display: block;">Issuing Authority</span>
+              <strong style="color: var(--ink); display: block; margin-top: 2px;">${challan.issuingAuthority}</strong>
             </div>
 
-            <div class="spec-item">
-              <span class="spec-label">Offence Timestamp</span>
-              <span class="spec-value">${Utils.formatDate(challan.offenceDate, true)}</span>
+            <div>
+              <span style="color: var(--text-3); font-size: 11px; display: block;">Offence Timestamp</span>
+              <strong style="color: var(--ink); display: block; margin-top: 2px;">${Utils.formatDate(challan.offenceDate, true)}</strong>
             </div>
 
-            <div class="spec-item">
-              <span class="spec-label">Infraction Location</span>
-              <span class="spec-value">${challan.location || 'Ring Road, New Delhi'}</span>
+            <div>
+              <span style="color: var(--text-3); font-size: 11px; display: block;">Data Source</span>
+              <strong style="color: var(--ink); display: block; margin-top: 2px;">${challan.source || 'e-Challan API'}</strong>
             </div>
 
-            <div class="spec-item">
-              <span class="spec-label">Data Source</span>
-              <span class="spec-value">${challan.source}</span>
-            </div>
-
-            <div class="spec-item">
-              <span class="spec-label">Current Responsible</span>
-              <span class="spec-value">
-                <strong>${challan.responsiblePartyName || challan.responsibleParty}</strong> (${challan.responsibleParty})
-              </span>
+            <div>
+              <span style="color: var(--text-3); font-size: 11px; display: block;">Current Attribution</span>
+              <strong style="color: var(--ink); display: block; margin-top: 2px;">
+                ${challan.responsiblePartyName || challan.responsibleParty} (${challan.responsibleParty})
+              </strong>
             </div>
           </div>
 
-          <!-- Fee & Payable Breakdown -->
-          <div style="margin-top: var(--space-4); background-color: var(--surface-2); border: 1px solid var(--line); border-radius: 14px; padding: 16px;">
-            <div style="display: flex; justify-content: space-between; font-size: 13px;">
-              <span class="text-secondary" style="color: var(--text-2);">Statutory Penalty Amount:</span>
-              <strong>${Utils.formatINR(challan.amount)}</strong>
+          <!-- Financial Breakdown & Payable Summary -->
+          <div style="margin-top: 16px; background-color: var(--surface-2); border: 1px solid var(--line); border-radius: 10px; padding: 14px;">
+            <div style="display: flex; justify-content: space-between; font-size: 12.5px;">
+              <span style="color: var(--text-2);">Statutory Penalty Amount:</span>
+              <strong style="color: var(--ink); font-variant-numeric: tabular-nums;">${Utils.formatINR(challan.amount)}</strong>
             </div>
-            <div style="display: flex; justify-content: space-between; font-size: 13px; margin-top: 6px;">
-              <span class="text-secondary" style="color: var(--text-2);">Accumulated Late Fee:</span>
-              <strong style="color: ${(challan.lateFee || 0) > 0 ? 'var(--status-unassigned)' : 'inherit'};">
+            <div style="display: flex; justify-content: space-between; font-size: 12.5px; margin-top: 4px;">
+              <span style="color: var(--text-2);">Accumulated Late Fee:</span>
+              <strong style="color: ${(challan.lateFee || 0) > 0 ? 'var(--status-unassigned)' : 'var(--text-3)'}; font-variant-numeric: tabular-nums;">
                 ${Utils.formatINR(challan.lateFee || 0)}
               </strong>
             </div>
-            <div style="display: flex; justify-content: space-between; font-size: 13px; margin-top: 6px;">
-              <span class="text-secondary" style="color: var(--text-2);">Gateway Convenience Surcharge:</span>
-              <strong>${Utils.formatINR(challan.convenienceFee || 25)}</strong>
+            <div style="display: flex; justify-content: space-between; font-size: 12.5px; margin-top: 4px;">
+              <span style="color: var(--text-2);">Gateway Convenience Surcharge:</span>
+              <strong style="color: var(--ink); font-variant-numeric: tabular-nums;">${Utils.formatINR(challan.convenienceFee || 25)}</strong>
             </div>
-            <div style="height: 1px; background-color: var(--line); margin: 10px 0;"></div>
+            <div style="height: 1px; background-color: var(--line); margin: 8px 0;"></div>
             <div style="display: flex; justify-content: space-between; align-items: baseline;">
-              <span style="font-size: 14px; font-weight: 600; color: var(--ink);">Total Payable Amount:</span>
-              <span style="font-family: var(--font-family-serif, serif); color: var(--ink); font-size: 28px; font-weight: 400; letter-spacing: -0.01em;">
+              <span style="font-size: 13px; font-weight: 600; color: var(--ink);">Total Statutory Payable:</span>
+              <span style="font-size: 22px; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; letter-spacing: -0.02em;">
                 ${Utils.formatINR(challan.totalPayable || challan.amount + (challan.lateFee || 0) + (challan.convenienceFee || 25))}
               </span>
             </div>
           </div>
 
-          <!-- Statutory Due Date & Signature Deadline Ruler -->
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-top: var(--space-4);">
-            <div style="padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface);">
-              <div class="text-xs text-muted">Statutory Due Date</div>
-              <strong class="text-sm" style="color: var(--ink); font-size: 13px;">${Utils.formatDate(challan.dueDate)}</strong>
-              <div class="deadline-ruler" style="margin-top: 6px;">
-                <div class="deadline-ruler-track">
-                  ${[0, 1, 2, 3, 4, 5, 6].map(i => {
-                    const isPast = daysDue <= 0 ? true : (i < Math.max(0, 7 - daysDue));
-                    const isDue = (7 - daysDue) === i;
-                    let style = "background: var(--surface-3);";
-                    if (isPast) style = "background: var(--signal); height: 10px;";
-                    if (isDue) style = "background: var(--ink); height: 12px; width: 2px;";
-                    return `<span class="deadline-ruler-tick" style="${style}" title="Day ${i+1}"></span>`;
-                  }).join("")}
-                </div>
-              </div>
-              <div class="text-xs" style="color: ${isOverdue ? 'var(--status-unassigned)' : 'var(--text-2)'}; font-weight: 600; margin-top: 2px;">
-                ${isOverdue ? `Overdue by ${Math.abs(daysDue)} days!` : `${daysDue} days remaining`}
+          <!-- Statutory Due Date & Dispute Window -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px;">
+            <div style="padding: 10px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface);">
+              <span style="font-size: 11px; color: var(--text-3); display: block;">Statutory Due Date</span>
+              <strong style="font-size: 12.5px; color: var(--ink);">${Utils.formatDate(challan.dueDate)}</strong>
+              <div style="font-size: 11px; color: ${isOverdue ? 'var(--status-unassigned)' : 'var(--text-2)'}; font-weight: 600; margin-top: 2px;">
+                ${isOverdue ? `Overdue by ${Math.abs(daysDue)} days` : `${daysDue} days remaining`}
               </div>
             </div>
 
-            <div style="padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface);">
-              <div class="text-xs text-muted">Dispute Filing Window</div>
-              <strong class="text-sm" style="color: var(--ink); font-size: 13px;">${Utils.formatDate(challan.disputeDeadline)}</strong>
-              <div class="text-xs" style="color: ${daysDispute <= 3 ? 'var(--status-unassigned)' : 'var(--accent)'}; font-weight: 600; margin-top: 18px;">
-                ${daysDispute < 0 ? 'Window Closed' : `${daysDispute} days left to contest`}
+            <div style="padding: 10px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface);">
+              <span style="font-size: 11px; color: var(--text-3); display: block;">Dispute Contest Window</span>
+              <strong style="font-size: 12.5px; color: var(--ink);">${Utils.formatDate(challan.disputeDeadline)}</strong>
+              <div style="font-size: 11px; color: ${daysDispute <= 3 ? 'var(--status-unassigned)' : 'var(--color-primary)'}; font-weight: 600; margin-top: 2px;">
+                ${daysDispute < 0 ? 'Window Expired' : `${daysDispute} days left to contest`}
               </div>
             </div>
           </div>
+
         </div>
 
       </div>

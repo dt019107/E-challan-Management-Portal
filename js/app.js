@@ -588,7 +588,7 @@ function renderDriversView(container, actions) {
   actions.innerHTML = `
     <button class="btn btn--outline btn--sm" onclick="Utils.exportToCSV('commercial-drivers-ledger.csv', StorageManager.getDrivers())">
       <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-      Export Drivers Directory
+      Export Directory
     </button>
   `;
 
@@ -598,21 +598,36 @@ function renderDriversView(container, actions) {
       <!-- Driver KPIs -->
       <div class="kpi-grid">
         <div class="kpi-card">
-          <span class="kpi-label">Active Roster Drivers</span>
+          <div class="kpi-card-top">
+            <span class="kpi-label">Active Drivers</span>
+            <div class="kpi-icon-wrapper" style="background: var(--status-assigned-bg); color: var(--status-assigned);">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </div>
+          </div>
           <div class="kpi-value">${drivers.length}</div>
-          <div class="kpi-subtext">Verified Commercial Heavy / Transport Licenses</div>
+          <div class="kpi-subtext">Verified transport licenses</div>
         </div>
 
         <div class="kpi-card">
-          <span class="kpi-label">Total Pending Recovery</span>
+          <div class="kpi-card-top">
+            <span class="kpi-label">Pending Recovery</span>
+            <div class="kpi-icon-wrapper" style="background: var(--status-pending-bg); color: var(--status-pending);">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </div>
+          </div>
           <div class="kpi-value" style="color: var(--status-pending);">${Utils.formatINR(totalRecovery)}</div>
-          <div class="kpi-subtext">Queued for monthly payroll deduction</div>
+          <div class="kpi-subtext">Queued for payroll deduction</div>
         </div>
 
         <div class="kpi-card">
-          <span class="kpi-label">Average Driver Safety Score</span>
+          <div class="kpi-card-top">
+            <span class="kpi-label">Fleet Safety Score</span>
+            <div class="kpi-icon-wrapper" style="background: var(--status-paid-bg); color: var(--status-paid);">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+          </div>
           <div class="kpi-value" style="color: var(--status-paid);">92 / 100</div>
-          <div class="kpi-subtext">Based on moving infractions per 10k km</div>
+          <div class="kpi-subtext">Infractions per 10k km</div>
         </div>
       </div>
 
@@ -620,8 +635,8 @@ function renderDriversView(container, actions) {
       <div class="card">
         <div class="card-header">
           <div>
-            <div class="card-title">Commercial Driver Directory & Allocation</div>
-            <div class="card-subtitle">Tracks driver duty allocations, commercial license compliance & HR payroll deductions</div>
+            <div class="card-title">Commercial Driver Roster</div>
+            <div class="card-subtitle">Active drivers, transport licenses and outstanding payroll liability</div>
           </div>
           <span class="badge badge--neutral">${drivers.length} Drivers</span>
         </div>
@@ -630,32 +645,36 @@ function renderDriversView(container, actions) {
           <table class="data-table">
             <thead>
               <tr>
-                <th>Driver Name</th>
-                <th>Contact Phone</th>
-                <th>Commercial DL Number</th>
-                <th>Assigned Vehicle</th>
+                <th>Driver & Contact</th>
+                <th>License & Vehicle Duty</th>
                 <th>Pending Fine Recovery</th>
-                <th>Operational Status</th>
-                <th>Action</th>
+                <th>Status</th>
+                <th style="text-align: right; min-width: 100px;">Actions</th>
               </tr>
             </thead>
             <tbody>
               ${drivers.map(d => `
                 <tr>
-                  <td><strong>${d.name}</strong></td>
-                  <td>${d.phone}</td>
-                  <td style="font-family: var(--font-family-mono); font-size: 12px;">${d.dlNumber}</td>
                   <td>
-                    <span class="plate-chip plate-chip--commercial" style="cursor: pointer;" onclick="navigateTo('vehicles', true, { search: '${d.assignedVehicleReg}' })">
-                      ${d.assignedVehicleReg}
-                    </span>
+                    <strong>${d.name}</strong>
+                    <div class="text-xs text-muted" style="margin-top: 2px;">${d.phone}</div>
                   </td>
-                  <td style="color: ${d.pendingRecovery > 0 ? 'var(--status-unassigned)' : 'inherit'}; font-weight: 600;">
-                    ${Utils.formatINR(d.pendingRecovery)}
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <span class="plate-chip plate-chip--commercial font-mono font-bold" style="cursor: pointer;" onclick="navigateTo('vehicles', true, { search: '${d.assignedVehicleReg}' })" title="Filter vehicles by ${d.assignedVehicleReg}">
+                        ${d.assignedVehicleReg}
+                      </span>
+                      <span class="font-mono text-xs text-muted">DL: ${d.dlNumber}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <strong class="amount-cell" style="color: ${d.pendingRecovery > 0 ? 'var(--status-unassigned)' : 'inherit'}; font-size: 13px;">
+                      ${Utils.formatINR(d.pendingRecovery)}
+                    </strong>
                   </td>
                   <td><span class="badge badge--paid">${d.status}</span></td>
-                  <td>
-                    <button class="btn btn--outline btn--sm" onclick="navigateTo('challans', true, { responsibleParty: 'Driver' })">
+                  <td style="text-align: right;">
+                    <button class="btn btn--outline btn--sm" style="padding: 3px 8px; font-size: 11px;" onclick="navigateTo('challans', true, { responsibleParty: 'Driver' })">
                       View Fines
                     </button>
                   </td>

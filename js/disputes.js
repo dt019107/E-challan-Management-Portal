@@ -49,44 +49,44 @@ function renderDisputesView(container, actions) {
         <div class="kpi-card-top">
           <span class="kpi-label">Administrative Grievances</span>
           <div class="kpi-icon-wrapper" style="background: var(--status-disputed-bg); color: var(--status-disputed);">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
           </div>
         </div>
         <div class="kpi-value" style="color: var(--status-disputed);">${disputed.length}</div>
-        <div class="kpi-subtext">Filed on Parivahan grievance cell</div>
+        <div class="kpi-subtext">Parivahan portal grievances</div>
       </div>
 
       <div class="kpi-card" onclick="switchDisputeTab('court')">
         <div class="kpi-card-top">
           <span class="kpi-label">Virtual Court Dockets</span>
           <div class="kpi-icon-wrapper" style="background: var(--status-court-bg); color: var(--status-court);">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
           </div>
         </div>
         <div class="kpi-value" style="color: var(--status-court);">${courtCases.length}</div>
-        <div class="kpi-subtext">Sub-judice stay active awaiting order</div>
+        <div class="kpi-subtext">Sub-judice stay lock active</div>
       </div>
 
       <div class="kpi-card">
         <div class="kpi-card-top">
           <span class="kpi-label">Contested Value</span>
           <div class="kpi-icon-wrapper" style="background: #FEF3F2; color: #B42318;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
           </div>
         </div>
         <div class="kpi-value">${Utils.formatINR(totalAmountUnderContest)}</div>
-        <div class="kpi-subtext">Statutory penalties under challenge</div>
+        <div class="kpi-subtext">Penalties under formal legal dispute</div>
       </div>
 
       <div class="kpi-card">
         <div class="kpi-card-top">
           <span class="kpi-label">Compounded / Waived</span>
           <div class="kpi-icon-wrapper" style="background: var(--status-paid-bg); color: var(--status-paid);">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
           </div>
         </div>
         <div class="kpi-value" style="color: var(--status-paid);">₹68,500</div>
-        <div class="kpi-subtext">Fines waived or reduced via judicial orders</div>
+        <div class="kpi-subtext">Recovered through judicial orders</div>
       </div>
     </div>
   `;
@@ -137,15 +137,12 @@ function renderDisputesView(container, actions) {
         <table class="data-table">
           <thead>
             <tr>
-              <th>Challan / Case Ref</th>
+              <th>Challan & Case Ref</th>
               <th>Vehicle Asset</th>
-              <th>Contestation Ground / Court Bench</th>
+              <th>Contestation Ground / Court</th>
               <th>Penalty Amount</th>
-              <th class="col-nice">Evidence Attached</th>
-              <th class="col-should">Deadline / Hearing Date</th>
-              <th>Status</th>
-              <th class="col-nice">Payment Gate</th>
-              <th>Actions</th>
+              <th>Deadline / Hearing</th>
+              <th style="text-align: right; min-width: 140px;">Status & Action</th>
             </tr>
           </thead>
           <tbody>
@@ -166,7 +163,7 @@ function renderDisputeTableRows(records) {
   if (!records || records.length === 0) {
     return `
       <tr>
-        <td colspan="9" style="text-align: center; padding: 40px;">
+        <td colspan="6" style="text-align: center; padding: 40px;">
           <div class="empty-state">
             <div class="empty-state-title">No Contested Infractions in this View</div>
             <div class="empty-state-text">All fleet infractions are currently uncontested or settled.</div>
@@ -196,58 +193,43 @@ function renderDisputeTableRows(records) {
           <a href="#challans?id=${c.id}" class="text-primary font-mono" style="font-weight: 600; text-decoration: none; font-size: 13px;">
             ${c.challanNumber}
           </a>
-          <div style="font-family: var(--font-family-mono); font-size: 10.5px; color: var(--text-3); margin-top: 2px;">
+          <div class="font-mono text-xs text-muted" style="margin-top: 2px;">
             ${caseRef}
           </div>
         </td>
-        <td style="white-space: nowrap;">
-          <div style="margin-bottom: 4px;">
-            <span class="plate-chip plate-chip--commercial">${c.vehicleReg}</span>
-          </div>
-          <div class="text-xs text-muted" style="max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${c.offence}</div>
+        <td>
+          <span class="plate-chip plate-chip--commercial font-mono font-bold">${c.vehicleReg}</span>
+          <div class="text-xs text-muted cell-truncate" style="max-width: 190px; margin-top: 2px;" title="${c.offence}">${c.offence}</div>
         </td>
         <td>
-          <div class="cell-truncate" style="font-size: 13px; font-weight: 500;" title="${ground}">${ground}</div>
-          <div class="text-xs text-muted" style="margin-top: 2px;">Authority: ${c.issuingAuthority}</div>
-        </td>
-        <td>
-          <strong class="amount-cell" style="font-size: 14px; white-space: nowrap;">${Utils.formatINR(c.amount)}</strong>
-        </td>
-        <td class="col-nice">
-          <div style="display: flex; align-items: center; gap: 4px;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--color-primary);"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+          <div class="cell-truncate" style="font-size: 12px; font-weight: 500;" title="${ground}">${ground}</div>
+          <div style="display: flex; align-items: center; gap: 4px; margin-top: 2px;">
+            <span class="text-xs text-muted">${c.issuingAuthority} •</span>
             <span class="text-xs font-mono" style="color: var(--color-primary);">${evidenceFile}</span>
           </div>
         </td>
-        <td class="col-should">
-          <div><strong>${Utils.formatDate(deadlineStr)}</strong></div>
-          <span class="text-xs" style="color: ${daysLeft < 3 ? 'var(--status-unassigned)' : 'var(--color-primary)'}; font-weight: 600;">
-            ${daysLeft < 0 ? 'Hearing Overdue' : `${daysLeft} days remaining`}
+        <td>
+          <strong class="amount-cell" style="font-size: 13px; white-space: nowrap;">${Utils.formatINR(c.amount)}</strong>
+        </td>
+        <td>
+          <div style="font-size: 12px; font-weight: 500;">${Utils.formatDate(deadlineStr)}</div>
+          <span class="text-xs font-semibold" style="color: ${daysLeft < 3 ? 'var(--status-unassigned)' : 'var(--color-primary)'};">
+            ${daysLeft < 0 ? 'Hearing Overdue' : `${daysLeft} days left`}
           </span>
         </td>
-        <td>
-          ${Utils.getStatusBadgeHTML(c.status)}
-        </td>
-        <td class="col-nice">
-          ${isCourt ? `
-            <span class="badge badge--unassigned" title="Direct settlement locked pending court compounding decree" style="cursor: help;">
-              🔒 Locked: Court Stay
-            </span>
-          ` : `
-            <span class="badge badge--pending">
-              In Review
-            </span>
-          `}
-        </td>
-        <td>
-          <div style="display: flex; gap: 4px;">
+        <td style="text-align: right;">
+          <div style="display: inline-flex; align-items: center; gap: 8px;">
             ${isCourt ? `
-              <button class="btn btn--outline btn--sm" onclick="openCourtCaseModal('${c.id}')" title="Record court compounding judgment outcome">
-                Record Order
+              <span class="badge badge--unassigned" title="Settlement locked pending judicial compounding decree" style="font-size: 10px;">
+                🔒 Court Stay
+              </span>
+              <button class="btn btn--outline btn--sm" style="padding: 3px 8px; font-size: 11px;" onclick="openCourtCaseModal('${c.id}')" title="Record court compounding judgment outcome">
+                Order
               </button>
             ` : `
-              <button class="btn btn--outline btn--sm" onclick="openSimulateAuthorityModal('${c.id}')" title="Simulate Parivahan grievance authority ruling">
-                Authority Ruling
+              <span class="badge badge--pending" style="font-size: 10px;">In Review</span>
+              <button class="btn btn--outline btn--sm" style="padding: 3px 8px; font-size: 11px;" onclick="openSimulateAuthorityModal('${c.id}')" title="Simulate Parivahan grievance authority ruling">
+                Ruling
               </button>
             `}
           </div>
