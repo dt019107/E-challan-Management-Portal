@@ -2136,21 +2136,21 @@
 }
 
 .data-table th {
-  padding: 10px 8px;
+  padding: 14px 16px;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-weight: 600;
-  color: var(--text-3);
+  color: var(--color-text-muted);
   white-space: nowrap;
   border: none;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .data-table td {
-  padding: 10px 8px;
-  border-bottom: 1px solid var(--line);
-  color: var(--ink);
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text-main);
   vertical-align: middle;
 }
 
@@ -2196,7 +2196,7 @@
   border-radius: 4px;
 }
 
-/* Authentic Indian Commercial Plate Chips across all tables and links (Vehicle Plates Only) */
+/* Clean Commercial Plate Chips across all tables and links */
 td a[href*="#vehicles?id="].font-mono,
 a[href*="#vehicles?id="].font-mono,
 a[href*="#vehicles?id="]:not(.btn),
@@ -2206,16 +2206,15 @@ a[href*="#vehicles?id="]:not(.btn),
   display: inline-flex !important;
   align-items: center !important;
   gap: 4px !important;
-  padding: 2.5px 7.5px !important;
-  background: #F4C430 !important;
-  border: 1px solid rgba(22, 24, 29, 0.45) !important;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35) !important;
+  padding: 2px 7px !important;
+  background: #FFF9E6 !important;
+  border: 1px solid #E2D49E !important;
   border-radius: 4px !important;
-  color: #16181D !important;
+  color: #1D1D1F !important;
   font-family: var(--font-family-mono, monospace) !important;
-  font-size: 11px !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.05em !important;
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.04em !important;
   text-decoration: none !important;
   white-space: nowrap !important;
   line-height: 1.3 !important;
@@ -2226,9 +2225,9 @@ td a[href*="#vehicles?id="]:not(.btn):hover,
 a[href*="#vehicles?id="]:not(.btn):hover,
 .plate-chip:hover,
 .plate-chip--commercial:hover {
-  background: #E8B928 !important;
-  border-color: rgba(22, 24, 29, 0.6) !important;
-  color: #16181D !important;
+  background: #FFF0C2 !important;
+  border-color: #D4C385 !important;
+  color: #1D1D1F !important;
 }
 
 /* Challan Reference Numbers: Clean Monospace Text (Not Plates) */

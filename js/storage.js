@@ -149,11 +149,19 @@ const StorageManager = {
       const edgeVehicle = INITIAL_MOCK_DATA.vehicles.find(v => v.regNumber === "AP-28-BX-9012");
       if (edgeVehicle) this.data.vehicles.unshift(edgeVehicle);
     }
-    if (this.data.challans && !this.data.challans.some(c => c.amount === 124500000)) {
-      const edgeChallan = INITIAL_MOCK_DATA.challans.find(c => c.amount === 124500000);
-      if (edgeChallan) {
-        this.data.challans.unshift(edgeChallan);
-        this.persist();
+    if (this.data.challans) {
+      this.data.challans.forEach(c => {
+        if (c.amount > 1000000) {
+          c.amount = 35000;
+          c.totalPayable = 35050;
+        }
+      });
+      if (!this.data.challans.some(c => c.id === "chl-edge-1")) {
+        const edgeChallan = INITIAL_MOCK_DATA.challans.find(c => c.id === "chl-edge-1");
+        if (edgeChallan) {
+          this.data.challans.unshift(edgeChallan);
+          this.persist();
+        }
       }
     }
 

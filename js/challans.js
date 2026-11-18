@@ -479,26 +479,23 @@ function renderChallansTableAndPagination() {
     const isAllSelected = paginatedRows.every(r => challanTableState.selectedChallanIds.has(r.id));
 
     tableContainer.innerHTML = `
-      <table class="data-table">
+      <table class="data-table" style="table-layout: fixed; width: 100%;">
         <thead>
           <tr>
-            <th style="width: 40px; text-align: center;">
+            <th style="width: 44px; text-align: center; padding-left: 14px;">
               <input type="checkbox" class="custom-checkbox" id="selectAllChallansCheckbox" ${isAllSelected ? 'checked' : ''} onchange="toggleSelectAllChallans(this.checked)">
             </th>
-            <th onclick="sortChallansBy('challanNumber')" style="cursor: pointer;">
+            <th onclick="sortChallansBy('challanNumber')" style="width: 30%; cursor: pointer;">
               Notice & Violation ${getChallanSortIcon('challanNumber')}
             </th>
-            <th onclick="sortChallansBy('vehicleReg')" style="cursor: pointer;">
-              Vehicle & Asset ${getChallanSortIcon('vehicleReg')}
+            <th onclick="sortChallansBy('vehicleReg')" style="width: 20%; cursor: pointer;">
+              Vehicle Asset ${getChallanSortIcon('vehicleReg')}
             </th>
-            <th>Attributed Custody</th>
-            <th onclick="sortChallansBy('amount')" style="cursor: pointer; text-align: right;">
+            <th style="width: 20%;">Attributed Custody</th>
+            <th onclick="sortChallansBy('amount')" style="width: 14%; cursor: pointer; text-align: right;">
               Penalty Amount ${getChallanSortIcon('amount')}
             </th>
-            <th onclick="sortChallansBy('dueDate')" style="cursor: pointer;">
-              Timeline & Deadlines ${getChallanSortIcon('dueDate')}
-            </th>
-            <th style="text-align: right; min-width: 140px;">Status & Action</th>
+            <th style="width: 16%; text-align: right; padding-right: 18px;">Status & Action</th>
           </tr>
         </thead>
         <tbody>
@@ -506,86 +503,65 @@ function renderChallansTableAndPagination() {
             const isChecked = challanTableState.selectedChallanIds.has(c.id);
             const daysLeft = Utils.getDaysRemaining(c.dueDate);
             const isOverdue = daysLeft < 0 && c.status !== "paid";
-            const isUrgent = (isOverdue || (daysLeft <= 2 && c.status !== "paid")) && c.status !== "paid";
             const veh = StorageManager.getVehicleById(c.vehicleId);
-            const vMeta = Utils.getVehicleTypeMeta(veh);
 
             return `
-              <tr class="${isChecked ? 'row-selected' : ''} row-interactive ${isUrgent ? 'row-urgent-risk' : ''}" onclick="handleChallanRowClick(event, '${c.id}')" title="Click anywhere to inspect notice details">
-                <td style="text-align: center;">
+              <tr class="${isChecked ? 'row-selected' : ''} row-interactive ${isOverdue ? 'row-urgent-risk' : ''}" onclick="handleChallanRowClick(event, '${c.id}')" title="Click to view full notice details">
+                <td style="text-align: center; padding-left: 14px;" onclick="event.stopPropagation()">
                   <input type="checkbox" class="custom-checkbox" ${isChecked ? 'checked' : ''} onchange="toggleChallanRowSelection('${c.id}', this.checked)">
                 </td>
                 <td>
-                  <div style="display: flex; align-items: baseline; gap: 8px;">
-                    <a href="#challans?id=${c.id}" class="challan-no-link font-mono font-bold" style="font-size: 13px;" title="Open Challan Details">
+                  <div style="display: flex; align-items: center; gap: 6px;">
+                    <a href="#challans?id=${c.id}" class="font-mono font-bold" style="font-size: 13px; color: var(--color-primary); text-decoration: none;">
                       ${c.challanNumber}
                     </a>
-                    <span class="badge badge--neutral" style="font-size: 10px; padding: 1px 5px;">${c.mvActSection}</span>
                   </div>
-                  <div class="cell-truncate" style="font-size: 13px; font-weight: 500; color: var(--color-text-main); margin-top: 3px;" title="${c.offence}">
+                  <div style="font-size: 13px; font-weight: 500; color: var(--color-text-main); margin-top: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${c.offence}">
                     ${c.offence}
                   </div>
-                  <div class="text-xs text-muted" style="margin-top: 2px;">
-                    ${c.issuingAuthority} • ${c.source || 'Parivahan API'}
-                  </div>
                 </td>
                 <td>
-                  <div style="display: flex; align-items: center; gap: 6px;">
-                    <a href="#vehicles?id=${c.vehicleId}" class="plate-chip plate-chip--commercial font-mono font-bold" style="font-size: 12px;" title="View vehicle profile">
+                  <div>
+                    <a href="#vehicles?id=${c.vehicleId}" class="plate-chip font-mono font-bold" title="View vehicle">
                       ${c.vehicleReg}
                     </a>
-                    <span class="badge ${vMeta.badgeClass}" style="${vMeta.badgeStyle}; font-size: 10px; padding: 1px 6px;">
-                      ${vMeta.icon} ${vMeta.shortLabel}
-                    </span>
                   </div>
-                  <div class="text-xs text-muted" style="margin-top: 3px;">
-                    ${veh ? veh.makeModel : 'Commercial Asset'}
+                  <div style="font-size: 12px; color: var(--color-text-muted); margin-top: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                    ${veh ? veh.makeModel.split('(')[0].trim() : 'Commercial Fleet'}
                   </div>
                 </td>
                 <td>
-                  <div style="font-size: 13px; font-weight: 600; color: var(--color-text-main);">
+                  <div style="font-size: 13px; font-weight: 600; color: var(--color-text-main); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                     ${c.responsiblePartyName || c.responsibleParty}
                   </div>
-                  <div style="margin-top: 3px;">
-                    <span class="badge ${c.responsibleParty === 'Unassigned' ? 'badge--unassigned' : 'badge--assigned'}" style="font-size: 10px; padding: 1px 6px;">
-                      ${c.responsibleParty}
-                    </span>
+                  <div style="font-size: 12px; color: var(--color-text-muted); margin-top: 3px;">
+                    ${c.responsibleParty === 'Unassigned' ? '<span style="color: var(--status-unassigned); font-weight: 500;">Needs Attribution</span>' : c.responsibleParty}
                   </div>
                 </td>
                 <td style="text-align: right;">
                   <strong class="amount-cell" style="font-size: 14px; white-space: nowrap; font-variant-numeric: tabular-nums;">
                     ${Utils.formatINR(c.amount)}
                   </strong>
-                  ${(c.lateFee || 0) > 0 ? `
-                    <div style="font-size: 10px; color: var(--status-unassigned); font-weight: 600; margin-top: 2px;">
-                      +${Utils.formatINR(c.lateFee)} late fee
-                    </div>
-                  ` : ''}
-                </td>
-                <td>
-                  <div style="font-size: 12px; font-weight: 500; color: var(--color-text-main);">
-                    ${Utils.formatDate(c.dueDate)}
-                  </div>
-                  <div class="text-xs" style="margin-top: 3px; font-weight: 600; color: ${isOverdue ? 'var(--status-unassigned)' : 'var(--color-text-muted)'}; display: flex; align-items: center; gap: 4px;">
-                    ${isUrgent ? '<span class="urgent-pulse-dot" title="Urgent risk: Action required within 48h"></span>' : ''}
-                    <span>${isOverdue ? `Overdue by ${Math.abs(daysLeft)}d` : `${daysLeft} days left`}</span>
+                  <div style="font-size: 11.5px; color: ${isOverdue ? 'var(--status-unassigned)' : 'var(--color-text-muted)'}; margin-top: 3px; font-weight: ${isOverdue ? '600' : '400'};">
+                    ${isOverdue ? `Overdue (${Utils.formatDate(c.dueDate)})` : `Due ${Utils.formatDate(c.dueDate)}`}
                   </div>
                 </td>
-                <td style="text-align: right;">
-                  <div style="display: inline-flex; align-items: center; gap: 6px;">
+                <td style="text-align: right; padding-right: 18px;" onclick="event.stopPropagation()">
+                  <div style="display: inline-flex; align-items: center; justify-content: flex-end; gap: 8px;">
                     ${Utils.getStatusBadgeHTML(c.status)}
-                    <a href="#challans?id=${c.id}" class="btn btn--outline btn--sm" style="padding: 3px 8px; font-size: 11px;" title="Open Notice Details">
-                      Details
-                    </a>
                     ${c.status === 'unassigned' ? `
                       <button class="btn btn--primary btn--sm" style="padding: 3px 10px; font-size: 11px;" onclick="openAssignmentModal('${c.id}')" title="Assign Liability">
                         Assign
                       </button>
                     ` : (c.status !== 'paid' && c.status !== 'court' ? `
-                      <button class="btn btn--secondary btn--sm" style="padding: 3px 10px; font-size: 11px;" onclick="openPaymentModal('${c.id}')" title="Pay Now">
+                      <button class="btn btn--secondary btn--sm" style="padding: 3px 10px; font-size: 11px;" onclick="openPaymentModal('${c.id}')" title="Pay Notice">
                         Pay
                       </button>
-                    ` : '')}
+                    ` : `
+                      <a href="#challans?id=${c.id}" class="btn btn--outline btn--sm" style="padding: 3px 8px; font-size: 11px;" title="View Details">
+                        Details
+                      </a>
+                    `)}
                   </div>
                 </td>
               </tr>

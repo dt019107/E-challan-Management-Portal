@@ -714,7 +714,7 @@ const INITIAL_MOCK_DATA = {
       currentDriverId: "drv-edge-1",
       defaultResponsibleParty: "Lessee",
       openChallans: 1,
-      outstandingAmount: 124500000,
+      outstandingAmount: 35000,
       syncStatus: "Synced",
       source: "Parivahan API",
       rcValidity: "2039-05-18",
@@ -742,10 +742,10 @@ const INITIAL_MOCK_DATA = {
       offenceDate: getRelativeDateTimeStr(-2, 11, 15),
       location: "Vijayawada NH-16 Commercial Weighbridge, Andhra Pradesh",
       issuingAuthority: "Andhra Pradesh Transport Dept",
-      amount: 124500000,
+      amount: 35000,
       lateFee: 0,
-      convenienceFee: 500,
-      totalPayable: 124500500,
+      convenienceFee: 50,
+      totalPayable: 35050,
       dueDate: getRelativeDateStr(5),
       disputeDeadline: getRelativeDateStr(12),
       status: "unassigned",
@@ -2017,7 +2017,7 @@ const INITIAL_MOCK_DATA = {
       gstin: "07AAACD9988F1Z9",
       activeContractsCount: 3,
       liabilityTerms: "Master Operating Lease specifies 100% Lessee indemnity for regional weighbridge and freight telemetry penalties.",
-      pendingChallanAmount: 124500000
+      pendingChallanAmount: 35000
     },
     {
       id: "les-1",
