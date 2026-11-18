@@ -83,56 +83,39 @@ function renderChallansView(container, actions, params = {}) {
   const overdueCount = allChallans.filter(c => Utils.getDaysRemaining(c.dueDate) < 0 && c.status !== "paid").length;
   const highValCount = allChallans.filter(c => (c.amount || 0) > 2000).length;
 
-  // Status Tabs
+  // Unified Operational Tabs (Hick's Law: Consolidated single-decision view bar)
   const tabs = [
-    { key: "all", label: "All Notices", count: allChallans.length },
-    { key: "unassigned", label: "Unassigned", count: unassignedCount, alert: unassignedCount > 0 },
-    { key: "assigned", label: "Assigned", count: assignedCount },
-    { key: "pending", label: "Pending", count: pendingCount },
-    { key: "disputed", label: "Disputed", count: disputedCount },
-    { key: "court", label: "Virtual Court", count: courtCount },
-    { key: "paid", label: "Settled", count: paidCount }
+    { key: "all", label: "All Notices", count: allChallans.length, type: "status" },
+    { key: "unassigned", label: "Needs Attribution", count: unassignedCount, type: "status", alert: unassignedCount > 0 },
+    { key: "due7days", label: "Due in 7 Days", count: due7Count, type: "savedView" },
+    { key: "overdue", label: "Overdue", count: overdueCount, type: "savedView", alert: overdueCount > 0 },
+    { key: "court", label: "In Court", count: courtCount, type: "status" },
+    { key: "paid", label: "Settled", count: paidCount, type: "status" }
   ];
 
   container.innerHTML = `
-    <!-- Top Status Control Tabs -->
+    <!-- Unified View Tabs -->
     <div class="nav-tabs" id="challanStatusTabs">
-      ${tabs.map(t => `
-        <button class="nav-tab ${challanTableState.activeStatusTab === t.key && challanTableState.savedView === 'all' ? 'active' : ''}" data-status="${t.key}">
-          ${t.label} <span class="nav-tab-badge" style="${t.alert ? 'background: rgba(194, 65, 65, 0.14); color: var(--status-unassigned); font-weight: 700;' : ''}">${t.count}</span>
-        </button>
-      `).join("")}
-    </div>
-
-    <!-- Quick Operational Triage Presets Strip -->
-    <div class="preset-triage-bar" style="margin-top: var(--space-3); margin-bottom: var(--space-3);">
-      <span style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-muted); margin-right: 4px;">Quick Triage:</span>
-      <button class="preset-triage-pill ${challanTableState.savedView === 'all' && challanTableState.activeStatusTab === 'all' ? 'active' : ''}" onclick="applyChallanPresetView('all')">
-        All Notices
-      </button>
-      <button class="preset-triage-pill ${challanTableState.activeStatusTab === 'unassigned' ? 'active urgent-active' : ''}" onclick="applyChallanPresetView('unassigned')">
-        Needs Assignment <span class="preset-triage-count" style="font-weight: 700;">${unassignedCount}</span>
-      </button>
-      <button class="preset-triage-pill ${challanTableState.savedView === 'due7days' ? 'active' : ''}" onclick="applyChallanPresetView('due7days')">
-        Due in 7 Days <span class="preset-triage-count">${due7Count}</span>
-      </button>
-      <button class="preset-triage-pill ${challanTableState.savedView === 'overdue' ? 'active urgent-active' : ''}" onclick="applyChallanPresetView('overdue')">
-        Overdue <span class="preset-triage-count">${overdueCount}</span>
-      </button>
-      <button class="preset-triage-pill ${challanTableState.savedView === 'highValue' ? 'active' : ''}" onclick="applyChallanPresetView('highValue')">
-        High Value (&gt;₹2,000) <span class="preset-triage-count">${highValCount}</span>
-      </button>
+      ${tabs.map(t => {
+        const isActive = (t.type === "status" && challanTableState.activeStatusTab === t.key && challanTableState.savedView === "all") ||
+                         (t.type === "savedView" && challanTableState.savedView === t.key);
+        return `
+          <button class="nav-tab ${isActive ? 'active' : ''}" data-type="${t.type}" data-key="${t.key}">
+            ${t.label} <span class="nav-tab-badge" style="${t.alert ? 'background: rgba(194, 65, 65, 0.14); color: var(--status-unassigned); font-weight: 700;' : ''}">${t.count}</span>
+          </button>
+        `;
+      }).join("")}
     </div>
 
     <!-- Unified Command & Filter Toolbar -->
-    <div class="filter-toolbar" style="margin-top: var(--space-2); margin-bottom: var(--space-4); display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); flex-wrap: wrap;">
+    <div class="filter-toolbar" style="margin-top: var(--space-3); margin-bottom: var(--space-4); display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); flex-wrap: wrap;">
       <div class="filter-group" style="display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;">
-        <div style="position: relative; width: 310px;">
+        <div style="position: relative; width: 320px;">
           <svg class="search-icon-prefix" viewBox="0 0 20 20" fill="currentColor" style="left: 10px;">
             <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
           </svg>
           <input type="text" class="form-input" id="challanSearchInput" style="padding-left: 34px;"
-            placeholder="Search challan, vehicle, driver, location..." value="${challanTableState.searchQuery}">
+            placeholder="Search notice no, vehicle reg, driver..." value="${challanTableState.searchQuery}">
         </div>
 
         <!-- Vehicle Class Filter -->
@@ -182,6 +165,10 @@ function renderChallansView(container, actions, params = {}) {
         </select>
       </div>
     </div>
+          <option value="30" ${challanTableState.pageSize === 30 ? 'selected' : ''}>30</option>
+        </select>
+      </div>
+    </div>
 
     <!-- Challans Table Card -->
     <div class="card" id="challansTableCardContainer">
@@ -213,11 +200,18 @@ function renderChallansView(container, actions, params = {}) {
     </div>
   `;
 
-  // Attach Status Tabs
+  // Attach Unified Operational View Tabs (Hick's Law)
   container.querySelectorAll("#challanStatusTabs .nav-tab").forEach(tabBtn => {
     tabBtn.addEventListener("click", () => {
-      challanTableState.activeStatusTab = tabBtn.dataset.status;
-      challanTableState.savedView = "all";
+      const type = tabBtn.dataset.type;
+      const key = tabBtn.dataset.key;
+      if (type === "status") {
+        challanTableState.activeStatusTab = key;
+        challanTableState.savedView = "all";
+      } else if (type === "savedView") {
+        challanTableState.savedView = key;
+        challanTableState.activeStatusTab = "all";
+      }
       challanTableState.currentPage = 1;
       renderChallansView(container, actions);
     });
