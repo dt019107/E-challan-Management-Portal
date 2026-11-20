@@ -201,37 +201,44 @@
   --line-height-relaxed: 1.6;
 
   /* --------------------------------------------------------------------------
-     6. Spacing Scale (4px Base Module)
+     6. Fluid Spacing Scale (8pt System Basis: 8, 16, 24, 32, 40, 48, 56, 64)
      -------------------------------------------------------------------------- */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 40px;
+  --space-6: 48px;
+  --space-7: 56px;
+  --space-8: 64px;
+
   --spacing-xs: 4px;
   --spacing-sm: 8px;
-  --spacing-md: 12px;
-  --spacing-base: 16px;
-  --spacing-lg: 30px;
+  --spacing-md: 16px;
+  --spacing-base: 24px;
+  --spacing-lg: 32px;
   --spacing-xl: 48px;
-  --spacing-3xl: 60px;
+  --spacing-2xl: 56px;
+  --spacing-3xl: 64px;
 
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 20px;
-  --space-6: 24px;
-  --space-8: 32px;
-  --space-10: 40px;
-  --space-12: 48px;
+  --space-page: clamp(16px, 2.5vw, 32px);
+  --space-gap: clamp(14px, 2vw, 24px);
+  --space-section: clamp(32px, 4vw, 56px);
 
-  --spacing-gutter: 16px;
-  --spacing-section: 48px;
-  --space-page: 24px;
-  --space-gap: 20px;
-  --font-h1: 32px;
+  --font-h1: clamp(24px, 2.2vw + 14px, 36px);
+  --font-h2: clamp(20px, 1.8vw + 12px, 28px);
+  --font-h3: clamp(16px, 1.2vw + 12px, 20px);
+  --font-body: clamp(13.5px, 0.4vw + 12px, 15px);
+  --font-hero-number: clamp(28px, 3.8vw + 12px, 44px);
+  --font-kpi-number: clamp(24px, 3vw + 12px, 32px);
+
+  --touch-target-min: 44px;
 
   /* Layout Dimensions */
   --sidebar-width: 250px;
   --sidebar-collapsed-width: 72px;
   --topbar-height: 64px;
-  --content-max-width: 1320px;
+  --content-max-width: 1360px;
 
   /* Motion */
   --ease-ebay: cubic-bezier(0.2, 0.8, 0.2, 1);

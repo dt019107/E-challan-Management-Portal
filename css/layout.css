@@ -346,14 +346,22 @@
 
 .mobile-menu-toggle {
   display: none;
-  width: 40px;
-  height: 40px;
+  width: var(--touch-target-min, 44px);
+  height: var(--touch-target-min, 44px);
+  min-width: 44px;
+  min-height: 44px;
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-pill);
   border: 1px solid var(--surface-1);
   color: var(--ink);
   background: var(--canvas);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.mobile-menu-toggle:hover {
+  background-color: var(--surface-2);
 }
 
 .global-search-container {
@@ -488,8 +496,10 @@
 }
 
 .topbar-btn {
-  width: 40px;
-  height: 40px;
+  width: var(--touch-target-min, 44px);
+  height: var(--touch-target-min, 44px);
+  min-width: 44px;
+  min-height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -510,8 +520,8 @@
 
 .topbar-notification-badge {
   position: absolute;
-  top: -2px;
-  right: -2px;
+  top: 0px;
+  right: 0px;
   min-width: 17px;
   height: 17px;
   background-color: var(--brand-red, #f02d2d);
@@ -531,8 +541,9 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 3px 12px 3px 4px;
-  height: 40px;
+  padding: 2px 14px 2px 4px;
+  height: var(--touch-target-min, 44px);
+  min-height: 44px;
   border-radius: var(--radius-pill);
   border: 1px solid var(--surface-1);
   background: var(--canvas);
