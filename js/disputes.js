@@ -134,7 +134,7 @@ function renderDisputesView(container, actions) {
       </div>
 
       <div class="card-body" style="padding: 0;">
-        <table class="data-table">
+        <table class="data-table" style="width: 100%; min-width: 960px;">
           <thead>
             <tr>
               <th>Challan & Case Ref</th>
@@ -142,7 +142,7 @@ function renderDisputesView(container, actions) {
               <th>Contestation Ground / Court</th>
               <th>Penalty Amount</th>
               <th>Deadline / Hearing</th>
-              <th style="text-align: right; min-width: 140px;">Status & Action</th>
+              <th style="text-align: right; min-width: 140px; padding-right: 20px;">Status & Action</th>
             </tr>
           </thead>
           <tbody>
@@ -209,26 +209,26 @@ function renderDisputeTableRows(records) {
           </div>
         </td>
         <td>
-          <strong class="amount-cell" style="font-size: 13px; white-space: nowrap;">${Utils.formatINR(c.amount)}</strong>
+          <strong class="amount-cell" style="font-size: 16px; font-weight: 700; color: var(--ink); white-space: nowrap; font-variant-numeric: tabular-nums;">${Utils.formatINR(c.amount)}</strong>
         </td>
         <td>
-          <div style="font-size: 12px; font-weight: 500;">${Utils.formatDate(deadlineStr)}</div>
+          <div style="font-size: 13px; font-weight: 500;">${Utils.formatDate(deadlineStr)}</div>
           <span class="text-xs font-semibold" style="color: ${daysLeft < 3 ? 'var(--status-unassigned)' : 'var(--color-primary)'};">
             ${daysLeft < 0 ? 'Hearing Overdue' : `${daysLeft} days left`}
           </span>
         </td>
-        <td style="text-align: right;">
+        <td style="text-align: right; padding-right: 20px;">
           <div style="display: inline-flex; align-items: center; gap: 8px;">
             ${isCourt ? `
-              <span class="badge badge--unassigned" title="Settlement locked pending judicial compounding decree" style="font-size: 10px;">
+              <span class="badge badge--court" title="Settlement locked pending judicial compounding decree">
                 🔒 Court Stay
               </span>
-              <button class="btn btn--outline btn--sm" style="padding: 3px 8px; font-size: 11px;" onclick="openCourtCaseModal('${c.id}')" title="Record court compounding judgment outcome">
+              <button class="btn btn--outline btn--sm" style="height: 32px; padding: 0 14px; font-size: 12px; font-weight: 600;" onclick="openCourtCaseModal('${c.id}')" title="Record court compounding judgment outcome">
                 Order
               </button>
             ` : `
-              <span class="badge badge--pending" style="font-size: 10px;">In Review</span>
-              <button class="btn btn--outline btn--sm" style="padding: 3px 8px; font-size: 11px;" onclick="openSimulateAuthorityModal('${c.id}')" title="Simulate Parivahan grievance authority ruling">
+              <span class="badge badge--pending">In Review</span>
+              <button class="btn btn--outline btn--sm" style="height: 32px; padding: 0 14px; font-size: 12px; font-weight: 600;" onclick="openSimulateAuthorityModal('${c.id}')" title="Simulate Parivahan grievance authority ruling">
                 Ruling
               </button>
             `}

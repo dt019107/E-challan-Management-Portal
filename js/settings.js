@@ -263,8 +263,8 @@ function renderActiveSettingsTab(company, currentUser, currentRole) {
 
         <!-- Permission Matrix Comparison Table -->
         <h4 class="text-sm font-semibold" style="margin-bottom: var(--space-3);">Frontend Permission Matrix by Role</h4>
-        <div style="border: 1px solid var(--color-border); border-radius: var(--radius-md); overflow: hidden;">
-          <table class="data-table">
+        <div style="border: 1px solid var(--surface-1); border-radius: var(--radius-md); overflow: auto;">
+          <table class="data-table" style="width: 100%; min-width: 700px;">
             <thead>
               <tr>
                 <th>Operation / Capability</th>

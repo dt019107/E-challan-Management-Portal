@@ -642,7 +642,7 @@ function renderDriversView(container, actions) {
         </div>
 
         <div class="card-body" style="padding: 0;">
-          <table class="data-table">
+          <table class="data-table" style="width: 100%; min-width: 800px;">
             <thead>
               <tr>
                 <th>Driver & Contact</th>

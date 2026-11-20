@@ -55,23 +55,35 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2.5px;
-  border: 1px solid rgba(22, 24, 29, 0.08);
-  box-shadow: 0 1px 3px rgba(22, 24, 29, 0.06);
+  padding: 4px;
+  border: 1px solid var(--surface-1);
+  box-shadow: none;
   flex-shrink: 0;
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  transition: transform var(--transition-fast);
 }
 
-.brand-logo-img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
+/* eBay Signature Four-Color Logo Dots & Lettermark */
+.brand-logo-mark.ebay-letter-dots {
+  display: grid;
+  grid-template-columns: repeat(2, 8px);
+  gap: 3px;
+  padding: 4px;
 }
+
+.ebay-letter-dots span {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.dot-red { background-color: var(--brand-red, #f02d2d); }
+.dot-blue { background-color: var(--brand-blue, #0968f6); }
+.dot-yellow { background-color: #d1b100; }
+.dot-green { background-color: var(--brand-green, #92c821); }
 
 .brand-wrapper:hover .brand-logo-mark {
   transform: scale(1.05);
-  box-shadow: 0 3px 8px rgba(22, 24, 29, 0.1);
 }
 
 .brand-text-block {
@@ -80,34 +92,33 @@
 }
 
 .brand-name {
-  font-size: 14.5px;
+  font-size: 16px;
   font-weight: 700;
   color: var(--ink);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 1px;
   line-height: 1.2;
 }
 
-.brand-tag {
-  font-size: 8.5px;
-  text-transform: uppercase;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  color: var(--accent);
-  background: var(--surface-2);
-  border: 1px solid var(--line);
-  padding: 1.5px 6px;
-  border-radius: 4px;
+.ebay-lettermark {
+  font-family: var(--font-family-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
+.ebay-lettermark .lm-red { color: var(--brand-red, #f02d2d); }
+.ebay-lettermark .lm-blue { color: var(--brand-blue, #0968f6); }
+.ebay-lettermark .lm-yellow { color: #b89800; }
+.ebay-lettermark .lm-green { color: var(--brand-green, #92c821); }
+
 .brand-subtext {
-  font-size: 10.5px;
+  font-size: 11px;
   color: var(--text-2);
-  font-weight: 450;
+  font-weight: 400;
   margin-top: 1px;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
   white-space: nowrap;
 }
 
@@ -310,19 +321,19 @@
 }
 
 /* --------------------------------------------------------------------------
-   3. Top Navigation Bar (Apple Minimal Dark Chrome Standard)
+   3. Top Navigation Bar (eBay Near-Monochrome Chrome Standard)
    -------------------------------------------------------------------------- */
 .app-topbar {
   height: var(--topbar-height);
-  background: var(--dark-panel-bg);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--canvas, #FFFFFF);
+  border-bottom: 1px solid var(--hairline, #c7c7c7);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 32px;
   z-index: var(--z-topbar);
   flex-shrink: 0;
-  color: #FFFFFF;
+  color: var(--ink, #191919);
 }
 
 .topbar-left {
@@ -330,77 +341,99 @@
   align-items: center;
   gap: 16px;
   flex: 1;
-  max-width: 520px;
+  max-width: 560px;
 }
 
 .mobile-menu-toggle {
   display: none;
-  width: 34px;
-  height: 34px;
+  width: 40px;
+  height: 40px;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-md);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #FFFFFF;
-  background: rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--surface-1);
+  color: var(--ink);
+  background: var(--canvas);
 }
 
 .global-search-container {
   position: relative;
   width: 100%;
-  max-width: 360px;
+  max-width: 480px;
+  display: flex;
+  align-items: center;
 }
 
 .global-search-input {
   width: 100%;
-  height: 34px;
-  padding: 0 38px 0 34px;
-  background-color: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: var(--radius-md);
+  height: 44px;
+  padding: 0 100px 0 38px;
+  background-color: var(--canvas, #FFFFFF);
+  border: 1px solid var(--ink, #191919);
+  border-radius: var(--radius-pill, 44px);
   box-shadow: none;
-  font-size: 13px;
-  color: #FFFFFF;
+  font-size: 14px;
+  color: var(--ink, #191919);
+  font-family: var(--font-family-base);
   transition: all 180ms ease;
 }
 
 .global-search-input:focus {
-  background-color: rgba(255, 255, 255, 0.12);
-  border-color: var(--accent);
-  box-shadow: 0 0 0 2px var(--accent-muted);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(9, 104, 246, 0.22);
   outline: none;
 }
 
 .global-search-input::placeholder {
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 12.5px;
+  color: var(--ink-muted, #555555);
+  font-size: 13.5px;
+}
+
+/* eBay Saturated Cobalt Pill Search Button */
+.ebay-search-btn {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 36px;
+  padding: 0 18px;
+  border-radius: var(--radius-pill, 44px);
+  background: var(--color-primary, #0968f6);
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: var(--font-family-base);
+  border: 1px solid var(--color-primary, #0968f6);
+  cursor: pointer;
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ebay-search-btn:hover {
+  background: var(--color-primary-dark, #003aa5);
+  border-color: var(--color-primary-dark, #003aa5);
+  transform: translateY(-50%) translateY(-1px);
+}
+
+.ebay-search-btn:active {
+  transform: translateY(-50%) scale(0.97);
 }
 
 .search-icon-prefix {
   position: absolute;
-  left: 11px;
+  left: 13px;
   top: 50%;
   transform: translateY(-50%);
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--ink-muted, #555555);
   pointer-events: none;
-  width: 15px;
-  height: 15px;
+  width: 16px;
+  height: 16px;
 }
 
 .search-shortcut-badge {
-  position: absolute;
-  right: 9px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 10px;
-  font-family: var(--font-family-mono);
-  font-weight: 500;
-  background-color: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 4px;
-  padding: 1.5px 5px;
-  color: rgba(255, 255, 255, 0.65);
-  pointer-events: none;
+  display: none;
 }
 
 /* Global Search Dropdown Results */
@@ -409,9 +442,9 @@
   top: calc(100% + 6px);
   left: 0;
   right: 0;
-  background-color: var(--surface-1);
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius-panel);
+  background-color: var(--canvas);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md, 16px);
   box-shadow: var(--shadow-dropdown);
   max-height: 380px;
   overflow-y: auto;
@@ -428,17 +461,17 @@
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  font-weight: 500;
+  font-weight: 700;
   color: var(--text-3);
 }
 
 .search-result-item {
-  padding: 9px 14px;
+  padding: 10px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--surface-1);
   transition: background-color var(--transition-fast);
 }
 
@@ -455,15 +488,15 @@
 }
 
 .topbar-btn {
-  width: 34px;
-  height: 34px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-pill);
-  color: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background-color: rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-full);
+  color: var(--ink);
+  border: 1px solid var(--surface-1);
+  background-color: var(--canvas);
   box-shadow: none;
   transition: all 180ms ease;
   position: relative;
@@ -471,27 +504,26 @@
 }
 
 .topbar-btn:hover {
-  background-color: rgba(255, 255, 255, 0.15);
-  color: #FFFFFF;
-  border-color: rgba(255, 255, 255, 0.25);
+  background-color: var(--surface-2);
+  border-color: var(--hairline);
 }
 
 .topbar-notification-badge {
   position: absolute;
-  top: -3px;
-  right: -3px;
-  min-width: 15px;
-  height: 15px;
-  background-color: var(--accent);
+  top: -2px;
+  right: -2px;
+  min-width: 17px;
+  height: 17px;
+  background-color: var(--brand-red, #f02d2d);
   color: #FFFFFF;
-  border-radius: var(--radius-pill);
-  font-size: 9.5px;
-  font-weight: 600;
+  border-radius: var(--radius-full);
+  font-size: 10px;
+  font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid var(--dark-panel-bg);
-  padding: 0 3px;
+  border: 2px solid var(--canvas);
+  padding: 0 4px;
   font-variant-numeric: tabular-nums;
 }
 
@@ -499,34 +531,34 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 2px 10px 2px 3px;
-  height: 34px;
+  padding: 3px 12px 3px 4px;
+  height: 40px;
   border-radius: var(--radius-pill);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--surface-1);
+  background: var(--canvas);
   box-shadow: none;
   transition: all 180ms ease;
   cursor: pointer;
 }
 
 .user-profile-btn:hover {
-  background-color: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.25);
+  background-color: var(--surface-2);
+  border-color: var(--hairline);
 }
 
 .user-avatar {
-  width: 26px;
-  height: 26px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.16);
-  color: #FFFFFF;
-  font-weight: 600;
-  font-size: 11px;
-  letter-spacing: 0.02em;
+  background: var(--surface-2);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid var(--hairline);
 }
 
 .user-info {
@@ -536,17 +568,16 @@
 }
 
 .user-name {
-  font-size: 12px;
-  font-weight: 500;
-  color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
   line-height: 1.2;
-  letter-spacing: -0.01em;
 }
 
 .user-role {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--ink-muted);
   margin-top: 1px;
 }
 
@@ -777,9 +808,9 @@
 }
 
 .modal-dialog {
-  background-color: var(--surface-1);
-  border-radius: var(--radius-panel);
-  border: 1px solid var(--line-strong);
+  background-color: var(--canvas, #FFFFFF);
+  border-radius: var(--radius-md, 16px);
+  border: 1px solid var(--surface-1, #e5e5e5);
   box-shadow: var(--shadow-modal);
   width: 100%;
   max-width: 640px;

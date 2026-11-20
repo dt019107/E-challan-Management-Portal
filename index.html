@@ -7,10 +7,10 @@
   <link rel="icon" type="image/png" href="assets/images/challanos-logo.png">
   <link rel="apple-touch-icon" href="assets/images/challanos-logo.png">
   
-  <!-- Fonts: Geist, Geist Mono, Instrument Serif, Inter Tight, Inter -->
+  <!-- Fonts: Inter, Source Sans 3, Geist Mono (eBay Design System Market Sans fallbacks) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
   
   <!-- ChallanOS Design System Stylesheets -->
   <link rel="stylesheet" href="css/variables.css">
@@ -32,11 +32,16 @@
       <!-- Sidebar Brand Header -->
       <div class="sidebar-header">
         <a href="#dashboard" class="brand-wrapper">
-          <div class="brand-logo-mark">
-            <img src="assets/images/challanos-logo.png" alt="Hisaab Logo" class="brand-logo-img">
+          <div class="brand-logo-mark ebay-letter-dots">
+            <span class="dot-red"></span>
+            <span class="dot-blue"></span>
+            <span class="dot-yellow"></span>
+            <span class="dot-green"></span>
           </div>
           <div class="brand-text-block">
-            <div class="brand-name">Hisaab</div>
+            <div class="brand-name ebay-lettermark">
+              <span class="lm-red">H</span><span class="lm-blue">i</span><span class="lm-yellow">s</span><span class="lm-green">aab</span>
+            </div>
             <div class="brand-subtext">Every challan, accounted for</div>
           </div>
         </a>
@@ -129,12 +134,13 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
           </button>
 
-          <!-- Global Search with Keyboard Shortcut -->
+          <!-- Global Search with eBay Cobalt Search Pill Button -->
           <div class="global-search-container">
             <svg class="search-icon-prefix" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
             </svg>
             <input type="text" class="global-search-input" id="globalSearchInput" placeholder="Search vehicle reg, challan no, driver..." autocomplete="off">
+            <button class="ebay-search-btn" id="globalSearchSubmitBtn" type="button">Search</button>
             <span class="search-shortcut-badge">⌘K</span>
             <!-- Live Search Results Dropdown -->
             <div class="search-results-dropdown" id="globalSearchDropdown"></div>

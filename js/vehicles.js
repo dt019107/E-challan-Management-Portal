@@ -297,10 +297,10 @@ function renderVehiclesTableAndPagination() {
     const isAllSelected = paginatedRows.every(r => vehicleTableState.selectedVehicleIds.has(r.id));
 
     tableContainer.innerHTML = `
-      <table class="data-table" style="table-layout: fixed; width: 100%;">
+      <table class="data-table" style="width: 100%; min-width: 960px;">
         <thead>
           <tr>
-            <th style="width: 44px; text-align: center; padding-left: 14px;">
+            <th style="width: 52px; text-align: center; padding-left: 18px;">
               <input type="checkbox" class="custom-checkbox" id="selectAllVehiclesCheckbox" ${isAllSelected ? 'checked' : ''} onchange="toggleSelectAllVehicles(this.checked)">
             </th>
             <th onclick="sortVehiclesBy('regNumber')" style="width: 28%; cursor: pointer;">
@@ -311,7 +311,7 @@ function renderVehiclesTableAndPagination() {
             <th onclick="sortVehiclesBy('outstandingAmount')" style="width: 16%; cursor: pointer; text-align: right;">
               Challan Exposure ${getSortIcon('outstandingAmount')}
             </th>
-            <th style="width: 14%; text-align: right; padding-right: 18px;">Action</th>
+            <th style="width: 14%; text-align: right; padding-right: 24px;">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -322,49 +322,49 @@ function renderVehiclesTableAndPagination() {
 
       return `
               <tr class="${isChecked ? 'row-selected' : ''} row-interactive" onclick="handleVehicleRowClick(event, '${v.id}')" title="Click to view vehicle profile">
-                <td style="text-align: center; padding-left: 14px;" onclick="event.stopPropagation()">
+                <td style="text-align: center; padding-left: 18px;" onclick="event.stopPropagation()">
                   <input type="checkbox" class="custom-checkbox" ${isChecked ? 'checked' : ''} onchange="toggleVehicleRowSelection('${v.id}', this.checked)">
                 </td>
                 <td>
                   <div>
-                    <a href="#vehicles?id=${v.id}" class="plate-chip font-mono font-bold" style="font-size: 12px;" title="View vehicle profile">
+                    <a href="#vehicles?id=${v.id}" class="plate-chip font-mono font-bold" style="font-size: 13px;" title="View vehicle profile">
                       ${v.regNumber}
                     </a>
                   </div>
-                  <div style="font-size: 13px; font-weight: 500; color: var(--color-text-main); margin-top: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                  <div style="font-size: 13px; font-weight: 500; color: var(--color-text-main); margin-top: 3px; max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                     ${v.makeModel} <span style="color: var(--color-text-muted); font-size: 12px;">(${v.year || 2024})</span>
                   </div>
                 </td>
                 <td>
-                  <div style="font-size: 13px; font-weight: 600; color: var(--color-text-main); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                  <div style="font-size: 13.5px; font-weight: 600; color: var(--color-text-main); max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                     ${driver ? driver.name : '<span style="color: var(--color-text-muted);">Unassigned Pool</span>'}
                   </div>
-                  <div style="font-size: 12px; color: var(--color-text-muted); margin-top: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                  <div style="font-size: 12px; color: var(--color-text-muted); margin-top: 3px; max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                     ${lessee ? lessee.name : (v.ownerName || 'Apex Fleet (In-House)')}
                   </div>
                 </td>
                 <td>
-                  <div style="font-size: 12px; font-weight: 500; color: var(--color-text-main);">
+                  <div style="font-size: 12.5px; font-weight: 500; color: var(--color-text-main);">
                     FASTag: <strong>${Utils.formatINR(v.fastagBalance || 0)}</strong>
                   </div>
-                  <div style="font-size: 11.5px; margin-top: 3px; color: ${v.syncStatus === 'Failed' ? 'var(--status-unassigned)' : (v.syncStatus === 'Partial' ? 'var(--status-pending)' : 'var(--color-text-muted)')}; font-weight: 500;">
+                  <div style="font-size: 12px; margin-top: 3px; color: ${v.syncStatus === 'Failed' ? 'var(--status-unassigned)' : (v.syncStatus === 'Partial' ? 'var(--status-pending)' : 'var(--color-text-muted)')}; font-weight: 500;">
                     ${v.syncStatus === 'Failed' ? '⚠ Parivahan Sync Failed' : (v.syncStatus === 'Partial' ? '⏳ Sync Delayed' : '✓ Gateway Synced')}
                   </div>
                 </td>
                 <td style="text-align: right;">
-                  <strong class="amount-cell" style="font-size: 14px; white-space: nowrap; font-variant-numeric: tabular-nums; color: ${(v.outstandingAmount || 0) > 0 ? 'var(--color-text-main)' : 'var(--color-text-muted)'};">
+                  <strong class="amount-cell" style="font-size: 16px; font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums; color: ${(v.outstandingAmount || 0) > 0 ? 'var(--color-text-main)' : 'var(--color-text-muted)'};">
                     ${(v.outstandingAmount || 0) > 0 ? Utils.formatINR(v.outstandingAmount) : '₹0'}
                   </strong>
-                  <div style="font-size: 11.5px; margin-top: 3px; color: ${(v.openChallans || 0) > 0 ? 'var(--status-unassigned)' : 'var(--color-text-muted)'}; font-weight: ${(v.openChallans || 0) > 0 ? '600' : '400'};">
+                  <div style="font-size: 12px; margin-top: 3px; color: ${(v.openChallans || 0) > 0 ? 'var(--status-unassigned)' : 'var(--color-text-muted)'}; font-weight: ${(v.openChallans || 0) > 0 ? '700' : '400'};">
                     ${(v.openChallans || 0) > 0 ? `${v.openChallans} Open Notices` : 'Clean • 0 Notices'}
                   </div>
                 </td>
-                <td style="text-align: right; padding-right: 18px;" onclick="event.stopPropagation()">
-                  <div style="display: inline-flex; align-items: center; justify-content: flex-end; gap: 6px;">
-                    <a href="#vehicles?id=${v.id}" class="btn btn--outline btn--sm" style="padding: 3px 10px; font-size: 11px;" title="Open Vehicle Details">
+                <td style="text-align: right; padding-right: 24px;" onclick="event.stopPropagation()">
+                  <div style="display: inline-flex; align-items: center; justify-content: flex-end; gap: 8px;">
+                    <a href="#vehicles?id=${v.id}" class="btn btn--outline btn--sm" style="height: 32px; padding: 0 14px; font-size: 12px; font-weight: 600;" title="Open Vehicle Details">
                       Details
                     </a>
-                    <button class="btn btn--ghost btn--sm" style="padding: 3px 6px; font-size: 11px;" onclick="openEditVehicleModal('${v.id}')" title="Edit Vehicle">
+                    <button class="btn btn--ghost btn--sm" style="height: 32px; padding: 0 10px; font-size: 12px;" onclick="openEditVehicleModal('${v.id}')" title="Edit Vehicle">
                       Edit
                     </button>
                   </div>

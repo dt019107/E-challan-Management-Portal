@@ -116,7 +116,7 @@ function renderReportsView(container, actions) {
         </div>
 
         <div class="card-body" style="padding: 0;">
-          <table class="data-table">
+          <table class="data-table" style="width: 100%; min-width: 900px;">
             <thead>
               <tr>
                 ${reportData.columns.map(c => `<th>${c}</th>`).join("")}

@@ -473,23 +473,23 @@ function renderChallansTableAndPagination() {
     const isAllSelected = paginatedRows.every(r => challanTableState.selectedChallanIds.has(r.id));
 
     tableContainer.innerHTML = `
-      <table class="data-table" style="table-layout: fixed; width: 100%;">
+      <table class="data-table" style="width: 100%; min-width: 980px;">
         <thead>
           <tr>
-            <th style="width: 44px; text-align: center; padding-left: 14px;">
+            <th style="width: 52px; text-align: center; padding-left: 18px;">
               <input type="checkbox" class="custom-checkbox" id="selectAllChallansCheckbox" ${isAllSelected ? 'checked' : ''} onchange="toggleSelectAllChallans(this.checked)">
             </th>
-            <th onclick="sortChallansBy('challanNumber')" style="width: 30%; cursor: pointer;">
+            <th onclick="sortChallansBy('challanNumber')" style="width: 28%; cursor: pointer;">
               Notice & Violation ${getChallanSortIcon('challanNumber')}
             </th>
-            <th onclick="sortChallansBy('vehicleReg')" style="width: 20%; cursor: pointer;">
+            <th onclick="sortChallansBy('vehicleReg')" style="width: 18%; cursor: pointer;">
               Vehicle Asset ${getChallanSortIcon('vehicleReg')}
             </th>
             <th style="width: 20%;">Attributed Custody</th>
-            <th onclick="sortChallansBy('amount')" style="width: 14%; cursor: pointer; text-align: right;">
+            <th onclick="sortChallansBy('amount')" style="width: 16%; cursor: pointer; text-align: right;">
               Penalty Amount ${getChallanSortIcon('amount')}
             </th>
-            <th style="width: 16%; text-align: right; padding-right: 18px;">Status & Action</th>
+            <th style="width: 18%; text-align: right; padding-right: 24px;">Status & Action</th>
           </tr>
         </thead>
         <tbody>
@@ -501,16 +501,16 @@ function renderChallansTableAndPagination() {
 
             return `
               <tr class="${isChecked ? 'row-selected' : ''} row-interactive ${isOverdue ? 'row-urgent-risk' : ''}" onclick="handleChallanRowClick(event, '${c.id}')" title="Click to view full notice details">
-                <td style="text-align: center; padding-left: 14px;" onclick="event.stopPropagation()">
+                <td style="text-align: center; padding-left: 18px;" onclick="event.stopPropagation()">
                   <input type="checkbox" class="custom-checkbox" ${isChecked ? 'checked' : ''} onchange="toggleChallanRowSelection('${c.id}', this.checked)">
                 </td>
                 <td>
                   <div style="display: flex; align-items: center; gap: 6px;">
-                    <a href="#challans?id=${c.id}" class="font-mono font-bold" style="font-size: 13px; color: var(--color-primary); text-decoration: none;">
+                    <a href="#challans?id=${c.id}" class="font-mono font-bold" style="font-size: 13.5px; color: var(--color-primary); text-decoration: none;">
                       ${c.challanNumber}
                     </a>
                   </div>
-                  <div style="font-size: 13px; font-weight: 500; color: var(--color-text-main); margin-top: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${c.offence}">
+                  <div style="font-size: 13px; font-weight: 500; color: var(--color-text-main); margin-top: 3px; max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${c.offence}">
                     ${c.offence}
                   </div>
                 </td>
@@ -520,39 +520,39 @@ function renderChallansTableAndPagination() {
                       ${c.vehicleReg}
                     </a>
                   </div>
-                  <div style="font-size: 12px; color: var(--color-text-muted); margin-top: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                  <div style="font-size: 12px; color: var(--color-text-muted); margin-top: 3px; max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                     ${veh ? veh.makeModel.split('(')[0].trim() : 'Commercial Fleet'}
                   </div>
                 </td>
                 <td>
-                  <div style="font-size: 13px; font-weight: 600; color: var(--color-text-main); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                  <div style="font-size: 13.5px; font-weight: 600; color: var(--color-text-main); max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                     ${c.responsiblePartyName || c.responsibleParty}
                   </div>
                   <div style="font-size: 12px; color: var(--color-text-muted); margin-top: 3px;">
-                    ${c.responsibleParty === 'Unassigned' ? '<span style="color: var(--status-unassigned); font-weight: 500;">Needs Attribution</span>' : c.responsibleParty}
+                    ${c.responsibleParty === 'Unassigned' ? '<span style="color: var(--status-unassigned); font-weight: 700;">Needs Attribution</span>' : c.responsibleParty}
                   </div>
                 </td>
                 <td style="text-align: right;">
-                  <strong class="amount-cell" style="font-size: 14px; white-space: nowrap; font-variant-numeric: tabular-nums;">
+                  <strong class="amount-cell" style="font-size: 16px; font-weight: 700; color: var(--ink); white-space: nowrap; font-variant-numeric: tabular-nums;">
                     ${Utils.formatINR(c.amount)}
                   </strong>
-                  <div style="font-size: 11.5px; color: ${isOverdue ? 'var(--status-unassigned)' : 'var(--color-text-muted)'}; margin-top: 3px; font-weight: ${isOverdue ? '600' : '400'};">
+                  <div style="font-size: 12px; color: ${isOverdue ? 'var(--status-unassigned)' : 'var(--color-text-muted)'}; margin-top: 3px; font-weight: ${isOverdue ? '700' : '400'};">
                     ${isOverdue ? `Overdue (${Utils.formatDate(c.dueDate)})` : `Due ${Utils.formatDate(c.dueDate)}`}
                   </div>
                 </td>
-                <td style="text-align: right; padding-right: 18px;" onclick="event.stopPropagation()">
+                <td style="text-align: right; padding-right: 24px;" onclick="event.stopPropagation()">
                   <div style="display: inline-flex; align-items: center; justify-content: flex-end; gap: 8px;">
                     ${Utils.getStatusBadgeHTML(c.status)}
                     ${c.status === 'unassigned' ? `
-                      <button class="btn btn--primary btn--sm" style="padding: 3px 10px; font-size: 11px;" onclick="openAssignmentModal('${c.id}')" title="Assign Liability">
+                      <button class="btn btn--primary btn--sm" style="height: 32px; padding: 0 14px; font-size: 12px; font-weight: 700;" onclick="openAssignmentModal('${c.id}')" title="Assign Liability">
                         Assign
                       </button>
                     ` : (c.status !== 'paid' && c.status !== 'court' ? `
-                      <button class="btn btn--secondary btn--sm" style="padding: 3px 10px; font-size: 11px;" onclick="openPaymentModal('${c.id}')" title="Pay Notice">
+                      <button class="btn btn--secondary btn--sm" style="height: 32px; padding: 0 14px; font-size: 12px; font-weight: 600;" onclick="openPaymentModal('${c.id}')" title="Pay Notice">
                         Pay
                       </button>
                     ` : `
-                      <a href="#challans?id=${c.id}" class="btn btn--outline btn--sm" style="padding: 3px 8px; font-size: 11px;" title="View Details">
+                      <a href="#challans?id=${c.id}" class="btn btn--outline btn--sm" style="height: 32px; padding: 0 14px; font-size: 12px; font-weight: 600;" title="View Details">
                         Details
                       </a>
                     `)}

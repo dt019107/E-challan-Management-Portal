@@ -166,7 +166,7 @@ function renderSettlementsTabHTML(paidChallans) {
       </div>
 
       <div class="card-body" style="padding: 0;">
-        <table class="data-table">
+        <table class="data-table" style="width: 100%; min-width: 960px;">
           <thead>
             <tr>
               <th>Receipt & Voucher</th>
@@ -280,7 +280,7 @@ function renderRecoveryLedgerTabHTML(recoveries) {
       </div>
 
       <div class="card-body" style="padding: 0;">
-        <table class="data-table">
+        <table class="data-table" style="width: 100%; min-width: 960px;">
           <thead>
             <tr>
               <th>Recovery Ref</th>
@@ -391,7 +391,7 @@ function renderPendingConfirmationTabHTML(pendingChallans) {
       </div>
 
       <div class="card-body" style="padding: 0;">
-        <table class="data-table">
+        <table class="data-table" style="width: 100%; min-width: 960px;">
           <thead>
             <tr>
               <th>Pending Txn Ref</th>

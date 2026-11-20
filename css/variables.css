@@ -1,231 +1,215 @@
 /* ==========================================================================
-   Apple Minimal Premium Design Tokens (design.md)
-   Clean, high-contrast editorial system with restrained color,
-   precise spacing, pill controls, and understated motion.
+   eBay Expressive Design System Tokens (ebay.design.md)
+   Near-monochrome system: ink-graphite #191919 text on pure white canvas,
+   signature four-color brand lettermark (red, cobalt, yellow, green),
+   single secondary cobalt blue #0968f6 reserved for primary CTAs and Search,
+   16px square radius across all cards & panels, and 44px pill buttons & inputs.
    ========================================================================== */
 
 :root {
   /* --------------------------------------------------------------------------
-     1. Strict Calibrated Apple Minimal Color Tokens
+     1. eBay Brand Colors (Four-Color Logomark & Primary Cobalt)
      -------------------------------------------------------------------------- */
-  --color-apple-primary: #0071E3;     /* Signature Apple Blue */
-  --color-apple-secondary: #0066CC;   /* Deeper interactive blue */
-  --color-apple-tertiary: #1D1D1F;    /* Apple near-black (navbar & headers) */
-  --color-apple-neutral: #FFFFFF;     /* Pure neutral white */
-  --color-apple-surface: #F5F5F7;     /* Soft, cool off-white section background */
-  --color-apple-on-surface: #1D1D1F;  /* Default readable text on light surface */
-  --color-apple-error: #D92D20;       /* Destructive & urgent state */
-  --color-apple-border: #E5E7EB;      /* Subtle interface boundary divider */
-  --color-apple-muted: #6E6E73;       /* Softer gray for supporting metadata */
+  --brand-red: #f02d2d;       /* eBay Red - 'e' */
+  --brand-blue: #0968f6;      /* eBay Blue - 'b' & Primary CTA */
+  --brand-yellow: #e3f13c;    /* eBay Yellow / Avocado - 'a' */
+  --brand-green: #92c821;     /* eBay Green - 'y' */
 
-  /* Semantic Core Canvas & Surfaces */
-  --canvas: var(--color-apple-surface);           /* #F5F5F7 cool surface */
-  --surface: var(--color-apple-neutral);          /* #FFFFFF pristine card surface */
-  --surface-2: var(--color-apple-surface);        /* #F5F5F7 secondary controls & hover */
-  --surface-3: #E5E7EB;                          /* Hairline chips & borders */
+  --color-primary: #0968f6;       /* Cobalt Primary */
+  --color-primary-dark: #003aa5;  /* Cobalt Dark / Legal links / Hover */
+  --color-primary-hover: #003aa5;
+  --color-primary-light: rgba(9, 104, 246, 0.08);
 
-  /* Text Colors */
-  --ink: var(--color-apple-on-surface);           /* #1D1D1F crisp editorial text */
-  --text-2: var(--color-apple-muted);            /* #6E6E73 secondary labels */
-  --text-3: #86868B;                             /* Tertiary subdued metadata */
-
-  /* Dividers & Borders */
-  --line: var(--color-apple-border);              /* #E5E7EB subtle divider */
-  --line-strong: #D2D2D7;
-
-  /* Primary Accent: Apple Signature Blue */
-  --accent: var(--color-apple-primary);           /* #0071E3 */
-  --accent-hover: var(--color-apple-secondary);   /* #0066CC */
-  --accent-muted: rgba(0, 113, 227, 0.08);
-  --accent-border: rgba(0, 113, 227, 0.25);
-
-  /* Urgency Signal */
-  --signal: var(--color-apple-error);             /* #D92D20 */
-  --signal-muted: rgba(217, 45, 32, 0.08);
-  --signal-border: rgba(217, 45, 32, 0.22);
-
-  /* Semantic Status Tokens (Calibrated high-contrast on restrained Apple tints) */
-  --status-unassigned: #D92D20;
-  --status-unassigned-bg: rgba(217, 45, 32, 0.08);
-  --status-unassigned-border: rgba(217, 45, 32, 0.22);
-
-  --status-assigned: #0071E3;
-  --status-assigned-bg: rgba(0, 113, 227, 0.08);
-  --status-assigned-border: rgba(0, 113, 227, 0.22);
-
-  --status-pending: #B45309;
-  --status-pending-bg: rgba(245, 158, 11, 0.10);
-  --status-pending-border: rgba(245, 158, 11, 0.22);
-
-  --status-paid: #15803D;
-  --status-paid-bg: rgba(21, 128, 61, 0.10);
-  --status-paid-border: rgba(21, 128, 61, 0.22);
-
-  --status-disputed: #6D28D9;
-  --status-disputed-bg: rgba(109, 40, 217, 0.10);
-  --status-disputed-border: rgba(109, 40, 217, 0.22);
-
-  --status-court: #0369A1;
-  --status-court-bg: rgba(3, 105, 161, 0.10);
-  --status-court-border: rgba(3, 105, 161, 0.22);
-
-  /* Dark panel & Navbar: #1D1D1F */
-  --dark-panel-bg: var(--color-apple-tertiary);
-
-  /* Aliased Core Tokens for Complete Backward Compatibility */
-  --bg: var(--canvas);
-  --bg-sunken: var(--color-apple-surface);
-  --surface-1: var(--surface);
-  --text: var(--ink);
-
-  --color-primary: var(--accent);
-  --color-primary-navy: var(--dark-panel-bg);
-  --color-primary-light: var(--accent-muted);
-  --color-primary-dark: var(--accent-hover);
-  --color-primary-hover: var(--accent-hover);
-  --color-navy: var(--dark-panel-bg);
-  --color-navy-dark: #161617;
-  --color-lime: var(--accent);
-  --color-accent-lime: var(--accent);
-  --color-emerald: var(--status-paid);
-  --color-emerald-dark: #166534;
-  --color-aqua: var(--accent);
-  --color-accent-aqua: var(--accent);
-  --color-accent-aqua-light: var(--accent-muted);
-  --color-dark-panel: var(--dark-panel-bg);
-
-  --color-bg-app: var(--canvas);
-  --color-bg-app-secondary: var(--color-apple-surface);
-  --color-bg-muted: var(--color-apple-surface);
-  --color-bg-surface: var(--surface);
-  --color-bg-surface-secondary: var(--surface-2);
-  --color-bg-surface-subtle: #F0F0F2;
-  --color-bg-surface-hover: var(--color-apple-surface);
-
-  --color-text-main: var(--ink);
-  --color-text-secondary: var(--text-2);
-  --color-text-muted: var(--text-2);
-  --color-text-subtle: var(--text-3);
-  --color-text-inverse: #FFFFFF;
-
-  --color-border: var(--line);
-  --color-border-subtle: var(--line);
-  --color-border-dark: var(--line-strong);
-
-  /* Functional Accents */
-  --color-success: var(--status-paid);
-  --color-success-bg: var(--status-paid-bg);
-  --color-warning: var(--status-pending);
-  --color-warning-bg: var(--status-pending-bg);
-  --color-danger: var(--color-apple-error);
-  --color-danger-bg: var(--status-unassigned-bg);
-  --color-purple: var(--status-disputed);
-  --color-purple-bg: var(--status-disputed-bg);
-  --color-info: var(--status-assigned);
-  --color-info-bg: var(--status-assigned-bg);
+  --accent: #0968f6;
+  --accent-hover: #003aa5;
+  --accent-muted: rgba(9, 104, 246, 0.08);
+  --accent-border: rgba(9, 104, 246, 0.25);
 
   /* --------------------------------------------------------------------------
-     2. Geometry & Depth Scale (design.md)
-     rounded: none:0, sm:4px, md:8px (cards, inputs), lg:16px, xl:24px, full:9999px (buttons)
+     2. Neutral & Ink Scale
+     -------------------------------------------------------------------------- */
+  --ink: #191919;               /* Dominant text and strong border */
+  --ink-soft: #41413f;          /* Near-black text accents */
+  --ink-muted: #555555;         /* Mid-gray: strikethrough price & metadata */
+  --ink-faint: #707070;         /* Light-gray: footer and secondary caption */
+  --canvas: #ffffff;            /* Pure white canvas */
+  --surface-1: #e5e5e5;         /* Border-subtle and secondary card surface */
+  --surface-2: #f7f7f7;         /* Soft utility background / input hover */
+  --surface-3: #e5e5e5;
+
+  --hairline: #c7c7c7;          /* 1px clean light-gray divider */
+  --hairline-medium: #8f8f8f;   /* Medium stroke default for inputs/states */
+  --shadow: #000000;
+
+  /* Aliased Semantic Tokens */
+  --bg: #ffffff;
+  --bg-app: #ffffff;
+  --bg-sunken: #f7f7f7;
+  --surface: #ffffff;
+  --surface-panel: #ffffff;
+  --line: #e5e5e5;
+  --line-strong: #c7c7c7;
+
+  --color-bg-app: #ffffff;
+  --color-bg-app-secondary: #f7f7f7;
+  --color-bg-muted: #f7f7f7;
+  --color-bg-surface: #ffffff;
+  --color-bg-surface-secondary: #f7f7f7;
+  --color-bg-surface-subtle: #fafafa;
+  --color-bg-surface-hover: #f0f0f0;
+
+  --color-text-main: #191919;
+  --color-text-secondary: #555555;
+  --color-text-muted: #555555;
+  --color-text-subtle: #707070;
+  --color-text-inverse: #ffffff;
+  --text: #191919;
+  --text-2: #555555;
+  --text-3: #707070;
+
+  --color-border: #e5e5e5;
+  --color-border-subtle: #e5e5e5;
+  --color-border-dark: #c7c7c7;
+
+  /* --------------------------------------------------------------------------
+     3. Semantic Status Tokens (Using eBay Brand Palette)
+     -------------------------------------------------------------------------- */
+  --status-unassigned: #f02d2d;     /* eBay Red: Urgent / Unassigned */
+  --status-unassigned-bg: rgba(240, 45, 45, 0.08);
+  --status-unassigned-border: rgba(240, 45, 45, 0.25);
+
+  --status-assigned: #0968f6;       /* eBay Blue: Assigned / In Fleet Custody */
+  --status-assigned-bg: rgba(9, 104, 246, 0.08);
+  --status-assigned-border: rgba(9, 104, 246, 0.25);
+
+  --status-pending: #b45309;        /* Warm Amber / Marigold tone */
+  --status-pending-bg: rgba(227, 241, 60, 0.18);
+  --status-pending-border: rgba(180, 83, 9, 0.25);
+
+  --status-paid: #15803d;           /* eBay Green: Settled / Paid */
+  --status-paid-bg: rgba(146, 200, 33, 0.15);
+  --status-paid-border: rgba(21, 128, 61, 0.25);
+
+  --status-disputed: #6d28d9;       /* Disputed Purple */
+  --status-disputed-bg: rgba(109, 40, 217, 0.08);
+  --status-disputed-border: rgba(109, 40, 217, 0.25);
+
+  --status-court: #003aa5;          /* Cobalt Dark: Virtual Court Docket */
+  --status-court-bg: rgba(0, 58, 165, 0.08);
+  --status-court-border: rgba(0, 58, 165, 0.25);
+
+  --signal: #f02d2d;
+  --signal-muted: rgba(240, 45, 45, 0.08);
+  --signal-border: rgba(240, 45, 45, 0.25);
+
+  --color-success: #15803d;
+  --color-success-bg: rgba(146, 200, 33, 0.15);
+  --color-warning: #b45309;
+  --color-warning-bg: rgba(227, 241, 60, 0.18);
+  --color-danger: #f02d2d;
+  --color-danger-bg: rgba(240, 45, 45, 0.08);
+  --color-purple: #6d28d9;
+  --color-purple-bg: rgba(109, 40, 217, 0.08);
+  --color-info: #0968f6;
+  --color-info-bg: rgba(9, 104, 246, 0.08);
+
+  /* --------------------------------------------------------------------------
+     4. Geometry & Radius Scale (16px Signature Card Radius, 44px Pill Controls)
      -------------------------------------------------------------------------- */
   --radius-none: 0px;
   --radius-xs: 4px;
-  --radius-sm: 4px;
-  --radius-md: 8px;     /* Cards & Inputs default */
+  --radius-sm: 8px;     /* Chip / small badge fallback */
+  --radius-md: 16px;    /* 16px Signature eBay Radius: Cards, Panels, Tables, Modals */
   --radius-lg: 16px;
-  --radius-xl: 24px;
-  --radius-2xl: 24px;
-  --radius-pill: 9999px; /* Buttons & Badges */
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-pill: 44px;  /* 44px Pill Radius: Search, Primary & Secondary Buttons */
+  --radius-full: 9999px;/* User Avatar hit target */
 
-  --radius-panel: 8px;   /* Apple Minimal card radius: 8px */
-  --radius-card: 8px;
-  --radius-control: 9999px; /* Primary & Secondary buttons: pill geometry */
-  --radius-input: 8px;   /* Inputs: 8px */
-  --radius-chip: 6px;
+  --radius-panel: 16px;
+  --radius-card: 16px;
+  --radius-control: 44px;
+  --radius-input: 44px;
+  --radius-chip: 44px;
 
-  /* Apple Minimal Depth: Flat surfaces, minimal borders, subtle occlusion */
-  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.03), 0 2px 6px rgba(0, 0, 0, 0.02);
+  /* Elevation: Flat surfaces with subtle 1px hairlines and state-layer overlays */
+  --shadow-soft: 0 1px 3px rgba(0, 0, 0, 0.04);
   --calm-shadow: none;
-  --calm-border: 1px solid var(--line);
+  --calm-border: 1px solid var(--surface-1);
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.03);
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
-  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.05);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.06);
-  --shadow-xl: 0 16px 36px rgba(0, 0, 0, 0.08);
-  --shadow-card-hover: 0 2px 8px rgba(0, 0, 0, 0.04);
-  --shadow-focus: 0 0 0 3px rgba(0, 113, 227, 0.22);
-  --shadow-dropdown: 0 10px 30px rgba(0, 0, 0, 0.12), 0 0 0 1px var(--line);
-  --shadow-modal: 0 20px 48px rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 20px 48px rgba(0, 0, 0, 0.12);
+  --shadow-card-hover: 0 4px 16px rgba(0, 0, 0, 0.06);
+  --shadow-focus: 0 0 0 3px rgba(9, 104, 246, 0.25);
+  --shadow-dropdown: 0 8px 24px rgba(0, 0, 0, 0.10), 0 0 0 1px var(--hairline);
+  --shadow-modal: 0 24px 60px rgba(0, 0, 0, 0.18), 0 0 0 1px var(--hairline);
 
   --bg-grain: none;
 
   /* --------------------------------------------------------------------------
-     3. Typography Scale & Font Metrics (design.md)
-     System built around SF Pro Display & SF Pro Text
+     5. Typography: Market Sans / Inter / Source Sans 3 (Weight 700 Display & Prices)
      -------------------------------------------------------------------------- */
-  --font-family-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
-  --font-family-base: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
-  --font-family-serif: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
-  --font-family-editorial: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
-  --font-family-mono: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, monospace;
+  --font-family-base: "Market Sans", "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  --font-family-display: "Market Sans", "Source Sans 3", Arial, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-family-mono: "Geist Mono", "SF Mono", ui-monospace, Menlo, Monaco, Consolas, monospace;
 
-  /* Typography metrics from design.md */
-  --font-headline-display: 48px;
-  --font-headline-lg: 40px;
-  --font-headline-md: 32px;
-  --font-headline-sm: 25px;
-  --font-body-lg: 20px;
+  --font-display-xl: 36px;
+  --font-display-md: 24px;
+  --font-heading-sm: 16px;
+  --font-price-md: 16px;
   --font-body-md: 16px;
   --font-body-sm: 14px;
-  --font-label-lg: 17px;
-  --font-label-md: 15px;
+  --font-caption: 12px;
+  --font-micro: 11px;
+
+  --font-headline-display: 36px;
+  --font-headline-lg: 32px;
+  --font-headline-md: 24px;
+  --font-headline-sm: 18px;
+  --font-label-lg: 16px;
+  --font-label-md: 14px;
   --font-label-sm: 12px;
   --font-nav-item: 14px;
-  --font-button: 17px;
-
-  /* Standard rem sizes */
-  --font-size-2xs: 0.6875rem; /* 11px */
-  --font-size-xs: 0.75rem;     /* 12px */
-  --font-size-sm: 0.8125rem;   /* 13px */
-  --font-size-base: 0.875rem;  /* 14px */
-  --font-size-md: 1rem;        /* 16px */
-  --font-size-lg: 1.125rem;    /* 18px */
-  --font-size-xl: 1.25rem;     /* 20px */
-  --font-size-2xl: 1.5625rem;  /* 25px */
-  --font-size-3xl: 2rem;       /* 32px */
-  --font-size-4xl: 2.5rem;     /* 40px */
-  --font-size-display: 3rem;   /* 48px */
+  --font-button: 14px;
 
   --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
-  --font-weight-bold: 700;
+  --font-weight-bold: 700; /* eBay display & price tier fixed at 700 */
+
+  --tracking-normal: 0px;
+
+  /* Rem scale */
+  --font-size-2xs: 0.6875rem; /* 11px */
+  --font-size-xs: 0.75rem;     /* 12px */
+  --font-size-sm: 0.875rem;    /* 14px */
+  --font-size-base: 0.875rem;  /* 14px */
+  --font-size-md: 1rem;        /* 16px */
+  --font-size-lg: 1.125rem;    /* 18px */
+  --font-size-xl: 1.25rem;     /* 20px */
+  --font-size-2xl: 1.5rem;     /* 24px */
+  --font-size-3xl: 2rem;       /* 32px */
+  --font-size-4xl: 2.25rem;    /* 36px */
+  --font-size-display: 2.25rem;/* 36px */
 
   --line-height-none: 1;
-  --line-height-tight: 1.1;
-  --line-height-snug: 1.25;
-  --line-height-normal: 1.45;
+  --line-height-tight: 1.2;
+  --line-height-snug: 1.33;
+  --line-height-normal: 1.5;
   --line-height-relaxed: 1.6;
 
-  --letter-spacing-tight: -0.02em;
-  --letter-spacing-caps: 0.02em;
-
   /* --------------------------------------------------------------------------
-     4. Restrained Apple Spacing Scale (design.md)
-     xs: 4px, sm: 12px, md: 20px, lg: 54px, xl: 70px, gutter: 16px, section: 80px
+     6. Spacing Scale (4px Base Module)
      -------------------------------------------------------------------------- */
   --spacing-xs: 4px;
-  --spacing-sm: 12px;
-  --spacing-md: 20px;
-  --spacing-lg: 54px;
-  --spacing-xl: 70px;
-  --spacing-gutter: 16px;
-  --spacing-section: 80px;
-
-  --space-page: 24px;
-  --space-gap: 20px;
-  --font-h1: 40px;
-  --font-body: 16px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-base: 16px;
+  --spacing-lg: 30px;
+  --spacing-xl: 48px;
+  --spacing-3xl: 60px;
 
   --space-1: 4px;
   --space-2: 8px;
@@ -235,37 +219,31 @@
   --space-6: 24px;
   --space-8: 32px;
   --space-10: 40px;
-  --space-12: 54px;
+  --space-12: 48px;
 
-  /* --------------------------------------------------------------------------
-     5. Layout Dimensions
-     -------------------------------------------------------------------------- */
-  --sidebar-width: 240px;
+  --spacing-gutter: 16px;
+  --spacing-section: 48px;
+  --space-page: 24px;
+  --space-gap: 20px;
+  --font-h1: 32px;
+
+  /* Layout Dimensions */
+  --sidebar-width: 250px;
   --sidebar-collapsed-width: 72px;
-  --topbar-height: 52px;
-  --content-max-width: 1440px;
+  --topbar-height: 64px;
+  --content-max-width: 1320px;
 
-  /* --------------------------------------------------------------------------
-     6. Apple Minimal Framer Spring & Motion Tokens
-     -------------------------------------------------------------------------- */
-  --ease-apple-fluid: cubic-bezier(0.16, 1, 0.3, 1);    /* Signature Apple Sheet Spring */
-  --ease-apple-snappy: cubic-bezier(0.2, 0.8, 0.2, 1);  /* Micro-tactile press */
-  --ease-apple-spring: cubic-bezier(0.175, 0.885, 0.32, 1.12); /* Soft landing spring */
-  --ease-apple: cubic-bezier(0.25, 0.1, 0.25, 1);
-  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
-
+  /* Motion */
+  --ease-ebay: cubic-bezier(0.2, 0.8, 0.2, 1);
   --duration-instant: 120ms;
   --duration-quick: 180ms;
-  --duration-enter: 280ms;
-  --duration-normal: 320ms;
+  --duration-normal: 240ms;
 
-  --transition-fast: var(--duration-instant) var(--ease-apple-snappy);
-  --transition-normal: var(--duration-quick) var(--ease-apple-fluid);
-  --transition-slow: var(--duration-enter) var(--ease-apple-fluid);
+  --transition-fast: var(--duration-instant) var(--ease-ebay);
+  --transition-normal: var(--duration-quick) var(--ease-ebay);
+  --transition-slow: var(--duration-normal) var(--ease-ebay);
 
-  /* --------------------------------------------------------------------------
-     7. Z-Index Hierarchy
-     -------------------------------------------------------------------------- */
+  /* Z-Index Hierarchy */
   --z-base: 1;
   --z-sticky: 50;
   --z-sidebar: 100;
