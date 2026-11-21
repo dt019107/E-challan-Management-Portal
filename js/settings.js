@@ -38,6 +38,33 @@ function renderSettingsView(container, actions) {
   container.innerHTML = `
     <div style="display: flex; flex-direction: column; gap: var(--space-4);">
       
+      <!-- Section Visual Hero Banner -->
+      <div class="card" style="padding: 24px 28px; border-radius: 18px; position: relative; overflow: hidden; background: linear-gradient(90deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.82) 55%, rgba(30, 96, 255, 0.45) 100%), url('assets/images/depot-warehouse.webp') center/cover no-repeat; color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.12); box-shadow: 0 10px 30px -4px rgba(15, 23, 42, 0.15);">
+        <div style="position: relative; z-index: 2; max-width: 680px;">
+          <div style="display: inline-flex; align-items: center; gap: 7px; background: rgba(255, 255, 255, 0.12); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 4px 12px; border-radius: 9999px; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 10px; color: #93C5FD;">
+            <span style="width: 7px; height: 7px; border-radius: 50%; background: #38BDF8; display: inline-block;"></span>
+            <span>Enterprise Workspace &amp; Governance</span>
+          </div>
+          <h2 style="font-size: 22px; font-weight: 800; color: #FFFFFF; letter-spacing: -0.02em; margin: 0 0 8px;">
+            System Settings &amp; Governance Rules Engine
+          </h2>
+          <p style="font-size: 13.5px; color: rgba(255, 255, 255, 0.85); line-height: 1.5; margin: 0 0 14px;">
+            Configure corporate statutory entities (CIN/PAN/GSTIN), 5-tier responsibility attribution algorithms, role-based access control, dual-authorization approval limits, and automated WhatsApp/email alert dispatches.
+          </p>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+            <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: #E2E8F0; background: rgba(255, 255, 255, 0.1); padding: 3px 10px; border-radius: 6px; border: 1px solid rgba(255, 255, 255, 0.15);">
+              🏢 <strong>${company.name || 'Apex Fleet'}</strong> Registered
+            </span>
+            <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: #A7F3D0; background: rgba(16, 185, 129, 0.15); padding: 3px 10px; border-radius: 6px; border: 1px solid rgba(16, 185, 129, 0.3);">
+              🛡️ Role: <strong>${currentRole || 'Fleet Manager'}</strong>
+            </span>
+            <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: #93C5FD; background: rgba(59, 130, 246, 0.15); padding: 3px 10px; border-radius: 6px; border: 1px solid rgba(59, 130, 246, 0.3);">
+              ⚙️ Maker-Checker Active
+            </span>
+          </div>
+        </div>
+      </div>
+
       <!-- Settings Tab Bar -->
       <div class="card" style="padding: var(--space-4) var(--space-6);">
         <div class="nav-tabs" style="border-bottom: none; margin-bottom: 0; flex-wrap: wrap;">

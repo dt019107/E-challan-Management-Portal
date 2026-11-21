@@ -86,6 +86,33 @@ function renderVehiclesView(container, actions, params = {}) {
   ];
 
   container.innerHTML = `
+    <!-- Section Visual Hero Banner -->
+    <div class="card" style="margin-bottom: 20px; padding: 24px 28px; border-radius: 18px; position: relative; overflow: hidden; background: linear-gradient(90deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.82) 55%, rgba(30, 96, 255, 0.45) 100%), url('assets/images/fleet-hero.jpg') center/cover no-repeat; color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.12); box-shadow: 0 10px 30px -4px rgba(15, 23, 42, 0.15);">
+      <div style="position: relative; z-index: 2; max-width: 680px;">
+        <div style="display: inline-flex; align-items: center; gap: 7px; background: rgba(255, 255, 255, 0.12); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 4px 12px; border-radius: 9999px; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 10px; color: #93C5FD;">
+          <span style="width: 7px; height: 7px; border-radius: 50%; background: #38BDF8; display: inline-block;"></span>
+          <span>Fleet Asset Inventory &amp; VAHAN Telematics</span>
+        </div>
+        <h2 style="font-size: 22px; font-weight: 800; color: #FFFFFF; letter-spacing: -0.02em; margin: 0 0 8px;">
+          Commercial Fleet Registry &amp; Custody Management
+        </h2>
+        <p style="font-size: 13.5px; color: rgba(255, 255, 255, 0.85); line-height: 1.5; margin: 0 0 14px;">
+          Continuous real-time VAHAN sync for 48 commercial transport assets. Audit vehicle fitness, FASTag balances, and active custody chains across Delhi NCR, Mumbai &amp; Bengaluru hubs.
+        </p>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+          <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: #E2E8F0; background: rgba(255, 255, 255, 0.1); padding: 3px 10px; border-radius: 6px; border: 1px solid rgba(255, 255, 255, 0.15);">
+            🚛 <strong>${allVehicles.length}</strong> Total Fleet Units
+          </span>
+          <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: #A7F3D0; background: rgba(16, 185, 129, 0.15); padding: 3px 10px; border-radius: 6px; border: 1px solid rgba(16, 185, 129, 0.3);">
+            ✓ <strong>${allVehicles.length - syncIssueCount}</strong> Parivahan Synced
+          </span>
+          <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: #FDE68A; background: rgba(245, 158, 11, 0.15); padding: 3px 10px; border-radius: 6px; border: 1px solid rgba(245, 158, 11, 0.3);">
+            ⚠️ <strong>${withChallansCount}</strong> With Active Notices
+          </span>
+        </div>
+      </div>
+    </div>
+
     <!-- Vehicle Filter Tabs (Step 5.2) -->
     <div class="nav-tabs" id="vehicleFilterTabs">
       ${tabs.map(t => `
@@ -319,20 +346,26 @@ function renderVehiclesTableAndPagination() {
       const isChecked = vehicleTableState.selectedVehicleIds.has(v.id);
       const lessee = lessees.find(l => l.id === v.currentLesseeId);
       const driver = drivers.find(d => d.id === v.currentDriverId);
+      const vMeta = Utils.getVehicleTypeMeta(v);
 
       return `
               <tr class="${isChecked ? 'row-selected' : ''} row-interactive" onclick="handleVehicleRowClick(event, '${v.id}')" title="Click to view vehicle profile">
                 <td style="text-align: center; padding-left: 18px;" onclick="event.stopPropagation()">
                   <input type="checkbox" class="custom-checkbox" ${isChecked ? 'checked' : ''} onchange="toggleVehicleRowSelection('${v.id}', this.checked)">
                 </td>
-                <td>
-                  <div>
-                    <a href="#vehicles?id=${v.id}" class="plate-chip font-mono font-bold" style="font-size: 13px;" title="View vehicle profile">
-                      ${v.regNumber}
-                    </a>
-                  </div>
-                  <div style="font-size: 13px; font-weight: 500; color: var(--color-text-main); margin-top: 3px; max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                    ${v.makeModel} <span style="color: var(--color-text-muted); font-size: 12px;">(${v.year || 2024})</span>
+                <td style="min-width: 190px;">
+                  <div style="display: flex; align-items: center; gap: 12px;">
+                    <img src="${vMeta.image}" alt="${vMeta.shortLabel}" style="width: 44px; height: 44px; border-radius: 10px; object-fit: cover; border: 1px solid var(--surface-1); box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); flex-shrink: 0;" onerror="this.src='assets/images/heavy-truck.jpg'">
+                    <div>
+                      <div>
+                        <a href="#vehicles?id=${v.id}" class="plate-chip font-mono font-bold" style="font-size: 12.5px;" title="View vehicle profile">
+                          ${v.regNumber}
+                        </a>
+                      </div>
+                      <div style="font-size: 12px; font-weight: 500; color: var(--color-text-main); margin-top: 2px; max-width: 170px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                        ${v.makeModel} <span style="color: var(--color-text-muted); font-size: 11px;">(${v.year || 2024})</span>
+                      </div>
+                    </div>
                   </div>
                 </td>
                 <td>

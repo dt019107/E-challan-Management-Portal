@@ -42,6 +42,36 @@ function renderDisputesView(container, actions) {
     </button>
   `;
 
+  // 0. Visual Hero Banner
+  const heroHTML = `
+    <!-- Section Visual Hero Banner -->
+    <div class="card" style="margin-bottom: 20px; padding: 24px 28px; border-radius: 18px; position: relative; overflow: hidden; background: linear-gradient(90deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.82) 55%, rgba(30, 96, 255, 0.45) 100%), url('assets/images/speed-camera-radar.jpg') center/cover no-repeat; color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.12); box-shadow: 0 10px 30px -4px rgba(15, 23, 42, 0.15);">
+      <div style="position: relative; z-index: 2; max-width: 680px;">
+        <div style="display: inline-flex; align-items: center; gap: 7px; background: rgba(255, 255, 255, 0.12); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 4px 12px; border-radius: 9999px; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 10px; color: #93C5FD;">
+          <span style="width: 7px; height: 7px; border-radius: 50%; background: #38BDF8; display: inline-block;"></span>
+          <span>Judicial Stay &amp; Grievance Docket</span>
+        </div>
+        <h2 style="font-size: 22px; font-weight: 800; color: #FFFFFF; letter-spacing: -0.02em; margin: 0 0 8px;">
+          Virtual Traffic Court Dockets &amp; Administrative Disputes
+        </h2>
+        <p style="font-size: 13.5px; color: rgba(255, 255, 255, 0.85); line-height: 1.5; margin: 0 0 14px;">
+          File online grievances against incorrect camera OCR reads and track matters referred to Virtual Traffic Court (Special Metropolitan Magistrate). Features automated judicial stay enforcement to prevent double-payment.
+        </p>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+          <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: #93C5FD; background: rgba(59, 130, 246, 0.15); padding: 3px 10px; border-radius: 6px; border: 1px solid rgba(59, 130, 246, 0.3);">
+            ⚖️ <strong>${courtCases.length}</strong> Virtual Court Dockets
+          </span>
+          <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: #FDE68A; background: rgba(245, 158, 11, 0.15); padding: 3px 10px; border-radius: 6px; border: 1px solid rgba(245, 158, 11, 0.3);">
+            📝 <strong>${disputed.length}</strong> Grievances Under Review
+          </span>
+          <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: #A7F3D0; background: rgba(16, 185, 129, 0.15); padding: 3px 10px; border-radius: 6px; border: 1px solid rgba(16, 185, 129, 0.3);">
+            ✓ <strong>₹68,500</strong> Compounded &amp; Quashed
+          </span>
+        </div>
+      </div>
+    </div>
+  `;
+
   // 1. Legal & Court KPIs
   const kpiHTML = `
     <div class="kpi-grid">
@@ -153,7 +183,7 @@ function renderDisputesView(container, actions) {
     </div>
   `;
 
-  container.innerHTML = kpiHTML + tabsHTML + tableHTML;
+  container.innerHTML = heroHTML + kpiHTML + tabsHTML + tableHTML;
 }
 
 /**

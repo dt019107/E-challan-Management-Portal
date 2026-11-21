@@ -95,6 +95,36 @@ function renderChallansView(container, actions, params = {}) {
   ];
 
   container.innerHTML = `
+    <!-- Section Visual Hero Banner -->
+    <div class="card" style="margin-bottom: 20px; padding: 24px 28px; border-radius: 18px; position: relative; overflow: hidden; background: linear-gradient(90deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.82) 55%, rgba(30, 96, 255, 0.45) 100%), url('assets/images/challan-hero.webp') center/cover no-repeat; color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.12); box-shadow: 0 10px 30px -4px rgba(15, 23, 42, 0.15);">
+      <div style="position: relative; z-index: 2; max-width: 680px;">
+        <div style="display: inline-flex; align-items: center; gap: 7px; background: rgba(255, 255, 255, 0.12); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 4px 12px; border-radius: 9999px; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 10px; color: #93C5FD;">
+          <span style="width: 7px; height: 7px; border-radius: 50%; background: #38BDF8; display: inline-block;"></span>
+          <span>Traffic Enforcement Triage • Optical ANPR Ingest</span>
+        </div>
+        <h2 style="font-size: 22px; font-weight: 800; color: #FFFFFF; letter-spacing: -0.02em; margin: 0 0 8px;">
+          e-Challan Attribution &amp; Violation Pipeline
+        </h2>
+        <p style="font-size: 13.5px; color: rgba(255, 255, 255, 0.85); line-height: 1.5; margin: 0 0 14px;">
+          Ingesting speed radar, red light, and lane discipline notices across State Police and MoRTH gateways. Triage liabilities across Driver, Lessee, and Fleet Operator with tamper-proof audit trails.
+        </p>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+          <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: #E2E8F0; background: rgba(255, 255, 255, 0.1); padding: 3px 10px; border-radius: 6px; border: 1px solid rgba(255, 255, 255, 0.15);">
+            📋 <strong>${allChallans.length}</strong> Total Notices
+          </span>
+          <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: #FCA5A5; background: rgba(239, 68, 68, 0.15); padding: 3px 10px; border-radius: 6px; border: 1px solid rgba(239, 68, 68, 0.3);">
+            ⚠️ <strong>${unassignedCount}</strong> Needs Attribution
+          </span>
+          <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: #FDE68A; background: rgba(245, 158, 11, 0.15); padding: 3px 10px; border-radius: 6px; border: 1px solid rgba(245, 158, 11, 0.3);">
+            ⏳ <strong>${overdueCount}</strong> Overdue Notices
+          </span>
+          <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: #A7F3D0; background: rgba(16, 185, 129, 0.15); padding: 3px 10px; border-radius: 6px; border: 1px solid rgba(16, 185, 129, 0.3);">
+            ✓ <strong>${paidCount}</strong> Settled
+          </span>
+        </div>
+      </div>
+    </div>
+
     <!-- Unified View Tabs -->
     <div class="nav-tabs" id="challanStatusTabs">
       ${tabs.map(t => {

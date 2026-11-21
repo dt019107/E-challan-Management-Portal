@@ -595,6 +595,33 @@ function renderDriversView(container, actions) {
   container.innerHTML = `
     <div style="display: flex; flex-direction: column; gap: var(--space-4);">
       
+      <!-- Section Visual Hero Banner -->
+      <div class="card" style="padding: 24px 28px; border-radius: 18px; position: relative; overflow: hidden; background: linear-gradient(90deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.82) 55%, rgba(30, 96, 255, 0.45) 100%), url('assets/images/truck-cab.webp') center/cover no-repeat; color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.12); box-shadow: 0 10px 30px -4px rgba(15, 23, 42, 0.15);">
+        <div style="position: relative; z-index: 2; max-width: 680px;">
+          <div style="display: inline-flex; align-items: center; gap: 7px; background: rgba(255, 255, 255, 0.12); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 4px 12px; border-radius: 9999px; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 10px; color: #93C5FD;">
+            <span style="width: 7px; height: 7px; border-radius: 50%; background: #38BDF8; display: inline-block;"></span>
+            <span>Commercial Operators &amp; Roster Custody</span>
+          </div>
+          <h2 style="font-size: 22px; font-weight: 800; color: #FFFFFF; letter-spacing: -0.02em; margin: 0 0 8px;">
+            Commercial Driver Directory &amp; Payroll Deduction Ledger
+          </h2>
+          <p style="font-size: 13.5px; color: rgba(255, 255, 255, 0.85); line-height: 1.5; margin: 0 0 14px;">
+            Transport license (HMV/LMV) verification, real-time vehicle duty assignments, fleet safety scoring, and automated payroll recovery escrow for driver-attributed traffic violations.
+          </p>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+            <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: #E2E8F0; background: rgba(255, 255, 255, 0.1); padding: 3px 10px; border-radius: 6px; border: 1px solid rgba(255, 255, 255, 0.15);">
+              👤 <strong>${drivers.length}</strong> Licensed Commercial Operators
+            </span>
+            <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: #A7F3D0; background: rgba(16, 185, 129, 0.15); padding: 3px 10px; border-radius: 6px; border: 1px solid rgba(16, 185, 129, 0.3);">
+              🛡️ <strong>92/100</strong> Fleet Safety Score
+            </span>
+            <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: #FDE68A; background: rgba(245, 158, 11, 0.15); padding: 3px 10px; border-radius: 6px; border: 1px solid rgba(245, 158, 11, 0.3);">
+              💳 <strong>${Utils.formatINR(totalRecovery)}</strong> Payroll Recovery Queued
+            </span>
+          </div>
+        </div>
+      </div>
+
       <!-- Driver KPIs -->
       <div class="kpi-grid">
         <div class="kpi-card">
@@ -656,8 +683,15 @@ function renderDriversView(container, actions) {
               ${drivers.map(d => `
                 <tr>
                   <td>
-                    <strong>${d.name}</strong>
-                    <div class="text-xs text-muted" style="margin-top: 2px;">${d.phone}</div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                      <div style="width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #1E60FF 0%, #60A5FA 100%); color: #fff; font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(30, 96, 255, 0.2); flex-shrink: 0;">
+                        ${d.name.split(' ').map(n=>n[0]).slice(0,2).join('')}
+                      </div>
+                      <div>
+                        <strong>${d.name}</strong>
+                        <div class="text-xs text-muted" style="margin-top: 2px;">${d.phone}</div>
+                      </div>
+                    </div>
                   </td>
                   <td>
                     <div style="display: flex; align-items: center; gap: 8px;">
