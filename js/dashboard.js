@@ -52,9 +52,14 @@ function renderDashboardView(container, actions) {
       <!-- 1. GREETING & ACTION HEADER -->
       <div class="calm-dashboard-header framer-animate-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
         <div class="calm-header-left">
-          <div class="calm-header-date" style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--text-2); font-weight: 500;">
-            <span class="dot framer-live-dot" style="width: 7px; height: 7px; border-radius: 50%; background: var(--color-success); display: inline-block;"></span>
-            <span>${formattedTodayDate} • MoRTH Parivahan Gateway Live</span>
+          <div class="calm-header-date" style="display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--text-2); font-weight: 500; flex-wrap: wrap;">
+            <span style="display: flex; align-items: center; gap: 6px;">
+              <span class="dot framer-live-dot" style="width: 7px; height: 7px; border-radius: 50%; background: var(--color-success); display: inline-block;"></span>
+              <span>MoRTH Parivahan Gateway Live</span>
+            </span>
+            <span class="badge" style="background: rgba(30, 96, 255, 0.08); color: var(--color-primary); border: 1px solid rgba(30, 96, 255, 0.2); font-size: 11px; font-weight: 600; padding: 2px 9px;">
+              📷 ANPR Highway Radar Feed • 99.4% Match
+            </span>
           </div>
           <h1 class="calm-header-greeting" style="font-size: var(--font-h1, 28px); font-weight: 800; color: var(--ink); letter-spacing: -0.025em; margin: 4px 0 0;">
             Operational Fleet Dashboard
@@ -104,26 +109,30 @@ function renderDashboardView(container, actions) {
         </div>
 
         <!-- Card 4: Primary Liability Action Hub -->
-        <div class="card" style="padding: 22px 20px; justify-content: space-between; border-radius: 18px;">
+        <div class="card" style="padding: 22px 20px; justify-content: space-between; border-radius: 18px; position: relative; overflow: hidden; background: linear-gradient(135deg, rgba(15, 23, 42, 0.94) 0%, rgba(30, 96, 255, 0.88) 100%), url('assets/images/speed-camera-radar.jpg') center/cover no-repeat; color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 12px 32px -4px rgba(30, 96, 255, 0.25);">
+          <div style="position: absolute; right: 14px; top: 14px; display: flex; align-items: center; gap: 6px; background: rgba(255, 255, 255, 0.12); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 3px 9px; border-radius: 9999px; font-size: 10px; font-weight: 600; letter-spacing: 0.04em;">
+            <span style="width: 6px; height: 6px; border-radius: 50%; background: #38BDF8; display: inline-block;"></span>
+            <span>HIGHWAY RADAR LIVE</span>
+          </div>
+
           <div>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-              <span style="font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-2);">Total Unsettled Liability</span>
-              <span class="badge badge--unassigned" style="font-size: 10.5px;">↑ 5.2% vs last 30d</span>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; padding-right: 130px;">
+              <span style="font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: rgba(255, 255, 255, 0.8);">Total Unsettled Liability</span>
             </div>
-            <div style="font-size: 34px; font-weight: 800; color: var(--ink); margin: 6px 0; letter-spacing: -0.025em; font-variant-numeric: tabular-nums;">
+            <div style="font-size: 34px; font-weight: 800; color: #FFFFFF; margin: 6px 0; letter-spacing: -0.025em; font-variant-numeric: tabular-nums;">
               ${Utils.formatINR(stats.outstandingAmount)}
             </div>
-            <div style="font-size: 12.5px; color: var(--text-2); line-height: 1.4;">
+            <div style="font-size: 12.5px; color: rgba(255, 255, 255, 0.85); line-height: 1.4;">
               Spanning 32 active compliance notices across Delhi NCR, Mumbai & Bengaluru Hubs.
             </div>
           </div>
 
           <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 16px;">
-            <button class="btn btn--primary btn--sm" style="flex: 1; height: 36px;" onclick="navigateTo('challans', true, { status: 'unassigned' })">
+            <button class="btn btn--primary btn--sm" style="flex: 1; height: 36px; background: #FFFFFF; color: var(--color-primary); font-weight: 700; border: none;" onclick="navigateTo('challans', true, { status: 'unassigned' })">
               <span>Assign Liability</span>
-              <span style="background: rgba(255,255,255,0.25); color: #fff; font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 9999px; margin-left: 4px;">2 Due</span>
+              <span style="background: rgba(30, 96, 255, 0.15); color: var(--color-primary); font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 9999px; margin-left: 4px;">2 Due</span>
             </button>
-            <button class="btn btn--outline btn--sm" style="height: 36px;" onclick="navigateTo('payments')">
+            <button class="btn btn--outline btn--sm" style="height: 36px; color: #FFFFFF; border-color: rgba(255, 255, 255, 0.4); background: rgba(255, 255, 255, 0.1);" onclick="navigateTo('payments')">
               Settle Fines
             </button>
           </div>
@@ -616,6 +625,8 @@ function renderAttentionItems(items) {
     const isUrgent = (isOverdue || (daysLeft <= 2 && c.status !== "paid")) && c.status !== "paid";
     const badge = getOffenceIconBadge(c.offence);
     const formattedDate = formatFinexyDateTime(c.offenceDate || c.date || c.dueDate);
+    const vehicle = typeof StorageManager !== 'undefined' && StorageManager.getVehicleById ? StorageManager.getVehicleById(c.vehicleId) : null;
+    const vehicleMeta = Utils.getVehicleTypeMeta(vehicle || { vehicleType: 'truck' });
 
     // Status class mapping for 22px high, 12% tint badge
     let statusClass = "assigned";
@@ -646,9 +657,15 @@ function renderAttentionItems(items) {
           </span>
         </td>
 
-        <!-- Monospace Registration Plate Chip -->
-        <td>
-          <span class="reg-plate-chip">${c.vehicleReg}</span>
+        <!-- Monospace Registration Plate Chip with Fleet Thumbnail -->
+        <td style="min-width: 175px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <img src="${vehicleMeta.image}" alt="${vehicleMeta.shortLabel}" style="width: 38px; height: 38px; border-radius: 8px; object-fit: cover; border: 1px solid var(--surface-1); box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); flex-shrink: 0;" onerror="this.src='assets/images/heavy-truck.jpg'">
+            <div>
+              <span class="reg-plate-chip" style="font-size: 11.5px; font-weight: 700;">${c.vehicleReg}</span>
+              <div style="font-size: 11px; color: var(--text-3); margin-top: 2px; white-space: nowrap;">${vehicleMeta.shortLabel}</div>
+            </div>
+          </div>
         </td>
 
         <!-- Violation -->
