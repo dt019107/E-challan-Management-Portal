@@ -65,64 +65,65 @@
   transform: scale(0.98);
 }
 
-/* eBay Secondary Button: Ink on White Pill */
+/* Modern Clean SaaS Secondary Button */
 .btn--secondary {
-  background: var(--canvas, #FFFFFF);
-  color: var(--ink, #191919);
-  border: 1px solid var(--ink, #191919);
+  background: #FFFFFF;
+  color: var(--ink, #0F172A);
+  border: 1px solid var(--surface-1, #E2E8F0);
   height: 40px;
   padding: 0 18px;
-  border-radius: var(--radius-pill, 44px);
-  box-shadow: none;
+  border-radius: 10px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
   font-weight: 600;
-  font-size: 14px;
-  transition: all 150ms var(--ease-ebay);
+  font-size: 13.5px;
+  transition: all 150ms ease;
 }
 
 .btn--secondary:hover {
-  background: var(--surface-2, #f7f7f7);
-  border-color: var(--ink, #191919);
-  color: var(--ink, #191919);
+  background: var(--surface-2, #F8FAFC);
+  border-color: var(--line-strong, #CBD5E1);
+  color: var(--ink, #0F172A);
+  box-shadow: 0 2px 5px rgba(15, 23, 42, 0.06);
   transform: translateY(-1px);
 }
 
-/* eBay Outline Button */
+/* Modern Outline Button */
 .btn--outline {
-  background: var(--canvas, #FFFFFF);
-  border: 1px solid var(--hairline, #c7c7c7);
-  color: var(--ink, #191919);
+  background: transparent;
+  border: 1px solid var(--surface-1, #E2E8F0);
+  color: var(--ink, #0F172A);
   height: 40px;
   padding: 0 18px;
-  border-radius: var(--radius-pill, 44px);
+  border-radius: 10px;
   box-shadow: none;
   font-weight: 600;
-  font-size: 14px;
-  transition: all 150ms var(--ease-ebay);
+  font-size: 13.5px;
+  transition: all 150ms ease;
 }
 
 .btn--outline:hover {
-  background: var(--surface-2, #f7f7f7);
-  border-color: var(--color-primary, #0968f6);
-  color: var(--color-primary, #0968f6);
+  background: var(--surface-2, #F8FAFC);
+  border-color: var(--color-primary, #1E60FF);
+  color: var(--color-primary, #1E60FF);
   transform: translateY(-1px);
 }
 
 .btn--danger {
-  background: var(--status-unassigned-bg);
-  color: var(--status-unassigned, #f02d2d);
-  border: 1px solid var(--status-unassigned-border);
+  background: var(--status-unassigned-bg, rgba(239, 68, 68, 0.09));
+  color: var(--status-unassigned, #EF4444);
+  border: 1px solid var(--status-unassigned-border, rgba(239, 68, 68, 0.22));
   box-shadow: none;
   height: 36px;
-  border-radius: var(--radius-pill, 44px);
+  border-radius: 10px;
   font-weight: 600;
   font-size: 13px;
   padding: 0 14px;
-  transition: all 150ms var(--ease-ebay);
+  transition: all 150ms ease;
 }
 
 .btn--danger:hover {
-  background: rgba(240, 45, 45, 0.16);
-  color: #b91c1c;
+  background: rgba(239, 68, 68, 0.16);
+  color: #DC2626;
   transform: translateY(-1px);
 }
 
@@ -130,12 +131,12 @@
   background-color: transparent;
   color: var(--ink-soft);
   border: 1px solid transparent;
-  border-radius: var(--radius-pill, 44px);
+  border-radius: 10px;
   font-size: 13px;
   font-weight: 500;
   padding: 0 14px;
   height: 36px;
-  transition: all 150ms var(--ease-ebay);
+  transition: all 150ms ease;
 }
 
 .btn--ghost:hover {
@@ -148,22 +149,14 @@
   font-size: 12px;
   height: 32px;
   gap: 5px;
-  border-radius: var(--radius-pill, 44px);
+  border-radius: 8px;
 }
 
 .btn--lg {
   padding: 0 24px;
   font-size: 15px;
   height: 48px;
-  border-radius: var(--radius-pill, 44px);
-}
-  font-size: 12px;
-  gap: 5px;
-}
-
-.btn--lg {
-  padding: 12px 24px;
-  font-size: 14px;
+  border-radius: 12px;
 }
 
 .btn--icon {
@@ -2060,42 +2053,42 @@
   font-family: inherit;
 }
 
-/* Form Controls: eBay 44px Pill Inputs & 16px Textareas */
+/* Form Controls: Modern Clean SaaS 10px Controls & 12px Textareas */
 .form-input,
 .form-select {
-  height: 44px;
-  padding: 0 16px;
+  height: 42px;
+  padding: 0 14px;
   background-color: var(--canvas, #FFFFFF);
-  border: 1px solid var(--hairline-medium, #8f8f8f);
-  border-radius: var(--radius-pill, 44px);
-  font-size: 14px;
-  color: var(--ink, #191919);
+  border: 1px solid var(--surface-1, #E2E8F0);
+  border-radius: var(--radius-control, 10px);
+  font-size: 13.5px;
+  color: var(--ink, #0F172A);
   transition: all 0.15s ease;
   font-family: var(--font-family-base);
 }
 
 .form-textarea {
-  border-radius: var(--radius-md, 16px);
-  padding: 14px 16px;
+  border-radius: 12px;
+  padding: 12px 14px;
   background-color: var(--canvas, #FFFFFF);
-  border: 1px solid var(--hairline-medium, #8f8f8f);
-  font-size: 14px;
-  color: var(--ink, #191919);
+  border: 1px solid var(--surface-1, #E2E8F0);
+  font-size: 13.5px;
+  color: var(--ink, #0F172A);
   font-family: var(--font-family-base);
 }
 
 .form-input:focus,
 .form-select:focus,
 .form-textarea:focus {
-  background-color: var(--canvas);
-  border-color: var(--color-primary, #0968f6);
+  background-color: var(--canvas, #FFFFFF);
+  border-color: var(--color-primary, #1E60FF);
   outline: none;
-  box-shadow: 0 0 0 3px rgba(9, 104, 246, 0.22);
+  box-shadow: 0 0 0 3px rgba(30, 96, 255, 0.16);
 }
 
 .form-input::placeholder,
 .form-textarea::placeholder {
-  color: var(--ink-muted, #555555);
+  color: var(--ink-faint, #94A3B8);
 }
 
 /* Filter Toolbar */
@@ -2205,15 +2198,19 @@
   color: var(--ink-muted, #555555);
 }
 
-/* Checkbox component */
+/* Checkbox component: Clean 18px with 5px radius and Cobalt accent */
 .custom-checkbox {
   width: 18px;
   height: 18px;
   cursor: pointer;
-  accent-color: var(--color-primary, #0968f6);
-  background-color: var(--canvas);
-  border: 1px solid var(--hairline-medium, #8f8f8f);
-  border-radius: 4px;
+  accent-color: var(--color-primary, #1E60FF);
+  background-color: var(--canvas, #FFFFFF);
+  border: 1px solid var(--line-strong, #CBD5E1);
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
 }
 
 /* Clean Commercial Plate Chips across all tables and links */
@@ -3878,7 +3875,7 @@ td a[href*="#challans?id="]:hover,
 }
 
 .data-table tbody tr.row-interactive:hover {
-  background-color: rgba(0, 113, 227, 0.04);
+  background-color: rgba(30, 96, 255, 0.035);
 }
 
 /* Jakob's Law: Sticky Table Header */

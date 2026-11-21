@@ -201,7 +201,6 @@
   color: #FFFFFF;
   background-color: var(--color-primary, #1E60FF);
 }
-}
 
 .nav-badge.danger {
   background-color: transparent;
