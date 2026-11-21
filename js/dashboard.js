@@ -109,7 +109,7 @@ function renderDashboardView(container, actions) {
         </div>
 
         <!-- Card 4: Primary Liability Action Hub -->
-        <div class="card" style="padding: 22px 20px; justify-content: space-between; border-radius: 18px; position: relative; overflow: hidden; background: linear-gradient(135deg, rgba(15, 23, 42, 0.94) 0%, rgba(30, 96, 255, 0.88) 100%), url('assets/images/speed-camera-radar.jpg') center/cover no-repeat; color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 12px 32px -4px rgba(30, 96, 255, 0.25);">
+        <div class="card" style="padding: 22px 20px; justify-content: space-between; border-radius: 18px; position: relative; overflow: hidden; background: linear-gradient(135deg, rgba(15, 23, 42, 0.94) 0%, rgba(30, 96, 255, 0.88) 100%), url('assets/images/real/highway-radar-speed.jpg') center/cover no-repeat; color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 12px 32px -4px rgba(30, 96, 255, 0.25);">
           <div style="position: absolute; right: 14px; top: 14px; display: flex; align-items: center; gap: 6px; background: rgba(255, 255, 255, 0.12); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 3px 9px; border-radius: 9999px; font-size: 10px; font-weight: 600; letter-spacing: 0.04em;">
             <span style="width: 6px; height: 6px; border-radius: 50%; background: #38BDF8; display: inline-block;"></span>
             <span>HIGHWAY RADAR LIVE</span>
