@@ -599,6 +599,83 @@ const Utils = {
       clearTimeout(timeout);
       timeout = setTimeout(later, wait);
     };
+  },
+
+  /**
+   * Modern Speedometer Arc Gauge Component (SVG)
+   * High-trust semi-circular compliance & health gauge matching modern fintech UI
+   */
+  renderArcGauge(percent = 85, label = "Compliance Score", subtext = "Statutory SLA on track", options = {}) {
+    const p = Math.max(0, Math.min(100, Math.round(percent)));
+    const r = 70;
+    const arcLength = Math.PI * r; // ~219.91
+    const dashOffset = arcLength - (p / 100) * arcLength;
+    const gradientId = options.gradientId || `gaugeGrad_${Math.random().toString(36).substr(2, 6)}`;
+    const startColor = options.startColor || "#1E60FF";
+    const endColor = options.endColor || "#38BDF8";
+
+    return `
+      <div class="arc-gauge-widget" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; width: 100%;">
+        <svg viewBox="0 0 200 124" style="width: 100%; max-width: 220px; height: auto; overflow: visible;">
+          <defs>
+            <linearGradient id="${gradientId}" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="${startColor}" />
+              <stop offset="100%" stop-color="${endColor}" />
+            </linearGradient>
+            <filter id="gaugeShadow" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12" flood-color="#1E60FF"/>
+            </filter>
+          </defs>
+          <!-- Background Track -->
+          <path d="M 30 95 A 70 70 0 0 1 170 95" fill="none" stroke="#E2E8F0" stroke-width="12" stroke-linecap="round" />
+          <!-- Active Foreground Arc -->
+          <path d="M 30 95 A 70 70 0 0 1 170 95" fill="none" stroke="url(#${gradientId})" stroke-width="12" stroke-linecap="round" stroke-dasharray="${arcLength}" stroke-dashoffset="${dashOffset}" filter="url(#gaugeShadow)" style="transition: stroke-dashoffset 0.8s cubic-bezier(0.16, 1, 0.3, 1);" />
+          <!-- Central Score Display -->
+          <text x="100" y="80" text-anchor="middle" font-size="28" font-weight="800" fill="var(--ink)" font-family="var(--font-family-base)" letter-spacing="-0.02em">${p}%</text>
+          <text x="100" y="98" text-anchor="middle" font-size="11" font-weight="600" fill="var(--text-2)" font-family="var(--font-family-base)">${label}</text>
+          <!-- Baseline min/max markers -->
+          <text x="25" y="116" font-size="10.5" font-weight="600" fill="var(--text-3)">0%</text>
+          <text x="175" y="116" text-anchor="end" font-size="10.5" font-weight="600" fill="var(--text-3)">100%</text>
+        </svg>
+        ${subtext ? `<div style="font-size: 12px; color: var(--text-2); margin-top: 4px; font-weight: 500;">${subtext}</div>` : ''}
+      </div>
+    `;
+  },
+
+  /**
+   * Lifecycle Progress Stepper Component
+   * Visualizes notice workflow progress (e.g. Notice Logged -> Assigned -> Court/Dispute -> Settled)
+   */
+  renderProgressStepper(steps = [], activeIndex = 0) {
+    if (!steps || steps.length === 0) return '';
+    return `
+      <div class="progress-stepper-container" style="display: flex; align-items: center; justify-content: space-between; width: 100%; position: relative; padding: 12px 6px;">
+        ${steps.map((step, idx) => {
+          const isCompleted = idx < activeIndex;
+          const isCurrent = idx === activeIndex;
+          const isPending = idx > activeIndex;
+
+          const dotBg = isCompleted ? '#10B981' : (isCurrent ? '#1E60FF' : '#E2E8F0');
+          const dotColor = isCompleted || isCurrent ? '#FFFFFF' : '#94A3B8';
+          const labelColor = isCurrent ? 'var(--ink)' : (isCompleted ? 'var(--text)' : 'var(--text-3)');
+          const labelWeight = isCurrent ? '700' : '500';
+
+          return `
+            <div style="display: flex; flex-direction: column; align-items: center; position: relative; z-index: 2; flex: 1;">
+              <div style="width: 28px; height: 28px; border-radius: 50%; background: ${dotBg}; color: ${dotColor}; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; box-shadow: ${isCurrent ? '0 0 0 4px rgba(30, 96, 255, 0.2)' : 'none'}; transition: all 0.2s ease;">
+                ${isCompleted ? '✓' : idx + 1}
+              </div>
+              <div style="font-size: 11.5px; font-weight: ${labelWeight}; color: ${labelColor}; margin-top: 6px; text-align: center; white-space: nowrap;">
+                ${step.title || step}
+              </div>
+            </div>
+            ${idx < steps.length - 1 ? `
+              <div style="flex: 1; height: 3px; background: ${idx < activeIndex ? '#10B981' : '#E2E8F0'}; margin: 0 -4px; margin-top: -18px; z-index: 1; transition: background 0.3s ease;"></div>
+            ` : ''}
+          `;
+        }).join('')}
+      </div>
+    `;
   }
 };
 

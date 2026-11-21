@@ -25,7 +25,8 @@ let challanTableState = {
   filterParty: "",
   filterDate: "",
   filterVehicleType: "",
-  savedView: "all"
+  savedView: "all",
+  viewMode: "table"
 };
 
 function renderChallansView(container, actions, params = {}) {
@@ -156,17 +157,25 @@ function renderChallansView(container, actions, params = {}) {
         ` : ''}
       </div>
 
-      <div class="filter-group">
-        <label class="text-xs text-muted">Rows:</label>
-        <select class="form-select" id="challanPageSizeSelect" style="width: 70px; padding: 4px 8px; font-size: 12px;">
-          <option value="10" ${challanTableState.pageSize === 10 ? 'selected' : ''}>10</option>
-          <option value="15" ${challanTableState.pageSize === 15 ? 'selected' : ''}>15</option>
-          <option value="30" ${challanTableState.pageSize === 30 ? 'selected' : ''}>30</option>
-        </select>
-      </div>
-    </div>
-          <option value="30" ${challanTableState.pageSize === 30 ? 'selected' : ''}>30</option>
-        </select>
+      <div class="filter-group" style="display: flex; align-items: center; gap: 12px;">
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <label class="text-xs text-muted">Rows:</label>
+          <select class="form-select" id="challanPageSizeSelect" style="width: 70px; padding: 4px 8px; font-size: 12px;">
+            <option value="10" ${challanTableState.pageSize === 10 ? 'selected' : ''}>10</option>
+            <option value="15" ${challanTableState.pageSize === 15 ? 'selected' : ''}>15</option>
+            <option value="30" ${challanTableState.pageSize === 30 ? 'selected' : ''}>30</option>
+          </select>
+        </div>
+
+        <!-- Dual View Mode Switcher (Screen 5 & 6) -->
+        <div class="view-mode-switcher" style="display: inline-flex; border: 1px solid var(--surface-1); border-radius: 8px; overflow: hidden; background: var(--surface-2);">
+          <button id="challanViewTableBtn" class="btn btn--sm ${challanTableState.viewMode === 'table' ? 'active' : ''}" style="border: none; border-radius: 0; height: 32px; padding: 0 10px; font-size: 12px; background: ${challanTableState.viewMode === 'table' ? '#FFFFFF' : 'transparent'}; box-shadow: ${challanTableState.viewMode === 'table' ? '0 1px 3px rgba(0,0,0,0.06)' : 'none'}; color: ${challanTableState.viewMode === 'table' ? 'var(--color-primary)' : 'var(--text-3)'};" onclick="toggleChallanViewMode('table')" title="Ledger Table View">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          </button>
+          <button id="challanViewGridBtn" class="btn btn--sm ${challanTableState.viewMode === 'grid' ? 'active' : ''}" style="border: none; border-radius: 0; height: 32px; padding: 0 10px; font-size: 12px; background: ${challanTableState.viewMode === 'grid' ? '#FFFFFF' : 'transparent'}; box-shadow: ${challanTableState.viewMode === 'grid' ? '0 1px 3px rgba(0,0,0,0.06)' : 'none'}; color: ${challanTableState.viewMode === 'grid' ? 'var(--color-primary)' : 'var(--text-3)'};" onclick="toggleChallanViewMode('grid')" title="Visual Cards View">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -469,6 +478,65 @@ function renderChallansTableAndPagination() {
         <button class="btn btn--outline btn--sm" onclick="resetChallanFilters()">Reset All Filters</button>
       </div>
     `;
+  } else if (challanTableState.viewMode === "grid") {
+    tableContainer.innerHTML = `
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 16px; padding: 20px; background: var(--canvas);">
+        ${paginatedRows.map(c => {
+          const daysLeft = Utils.getDaysRemaining(c.dueDate);
+          const isOverdue = daysLeft < 0 && c.status !== "paid";
+          const veh = StorageManager.getVehicleById(c.vehicleId);
+
+          return `
+            <div class="card" style="padding: 18px; border-radius: 16px; border: 1px solid var(--surface-1); box-shadow: var(--shadow-soft); cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;" onclick="handleChallanRowClick(event, '${c.id}')">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+                <div>
+                  <a href="#challans?id=${c.id}" class="font-mono font-bold" style="font-size: 13.5px; color: var(--color-primary); text-decoration: none;">
+                    ${c.challanNumber}
+                  </a>
+                  <div style="font-size: 11.5px; color: var(--text-3); margin-top: 2px;">
+                    ${Utils.formatDate(c.offenceDate || c.dueDate)}
+                  </div>
+                </div>
+                ${Utils.getStatusBadgeHTML(c.status)}
+              </div>
+
+              <div style="font-size: 13.5px; font-weight: 600; color: var(--ink); margin-bottom: 12px; line-height: 1.35; height: 38px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;" title="${c.offence}">
+                ${c.offence}
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; background: var(--surface-2); border-radius: 10px; margin-bottom: 14px; font-size: 12px;">
+                <div>
+                  <a href="#vehicles?id=${c.vehicleId}" class="plate-chip font-mono font-bold" style="font-size: 11.5px;">${c.vehicleReg}</a>
+                  <div style="font-size: 11px; color: var(--text-3); margin-top: 2px;">${veh ? veh.makeModel.split('(')[0].trim() : 'Commercial Fleet'}</div>
+                </div>
+                <div style="text-align: right;">
+                  <div style="font-weight: 600; color: var(--ink);">${c.responsiblePartyName || c.responsibleParty}</div>
+                  <div style="font-size: 11px; color: var(--text-3);">${c.responsibleParty === 'Unassigned' ? '<span style="color: var(--status-unassigned); font-weight: 700;">Needs Attribution</span>' : c.responsibleParty}</div>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--surface-1); padding-top: 12px; margin-top: auto;">
+                <div>
+                  <div style="font-size: 17px; font-weight: 800; color: var(--ink); font-variant-numeric: tabular-nums;">${Utils.formatINR(c.amount)}</div>
+                  <div style="font-size: 11px; color: ${isOverdue ? 'var(--status-unassigned)' : 'var(--text-3)'}; font-weight: ${isOverdue ? '700' : '500'};">
+                    ${isOverdue ? `Overdue (${Utils.formatDate(c.dueDate)})` : `Due ${Utils.formatDate(c.dueDate)}`}
+                  </div>
+                </div>
+                <div onclick="event.stopPropagation()">
+                  ${c.status === 'unassigned' ? `
+                    <button class="btn btn--primary btn--sm" style="height: 32px; padding: 0 14px; font-size: 12px;" onclick="openAssignmentModal('${c.id}')">Assign</button>
+                  ` : (c.status !== 'paid' && c.status !== 'court' ? `
+                    <button class="btn btn--secondary btn--sm" style="height: 32px; padding: 0 14px; font-size: 12px;" onclick="openPaymentModal('${c.id}')">Pay</button>
+                  ` : `
+                    <a href="#challans?id=${c.id}" class="btn btn--outline btn--sm" style="height: 32px; padding: 0 14px; font-size: 12px;">Details</a>
+                  `)}
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
   } else {
     const isAllSelected = paginatedRows.every(r => challanTableState.selectedChallanIds.has(r.id));
 
@@ -603,6 +671,19 @@ function sortChallansBy(col) {
     challanTableState.sortDirection = "asc";
   }
   renderChallansTableAndPagination();
+}
+
+function toggleChallanViewMode(mode) {
+  challanTableState.viewMode = mode;
+  renderChallansTableAndPagination();
+  const gridBtn = document.getElementById("challanViewGridBtn");
+  const tableBtn = document.getElementById("challanViewTableBtn");
+  if (gridBtn && tableBtn) {
+    gridBtn.style.background = mode === "grid" ? "#FFFFFF" : "transparent";
+    gridBtn.style.color = mode === "grid" ? "var(--color-primary)" : "var(--text-3)";
+    tableBtn.style.background = mode === "table" ? "#FFFFFF" : "transparent";
+    tableBtn.style.color = mode === "table" ? "var(--color-primary)" : "var(--text-3)";
+  }
 }
 
 function changeChallanPage(newPage) {

@@ -49,81 +49,66 @@ function renderDashboardView(container, actions) {
   container.innerHTML = `
     <div class="calm-dashboard-container">
       
-      <!-- 1. GREETING HEADER (44px Serif with dynamic date line) -->
+      <!-- 1. GREETING HEADER (Modern Clean SaaS Header) -->
       <div class="calm-dashboard-header framer-animate-header">
         <div class="calm-header-left">
           <div class="calm-header-date">
-            <span class="dot framer-live-dot"></span>
+            <span class="dot framer-live-dot" style="background: var(--color-success);"></span>
             <span>${formattedTodayDate} • MoRTH Parivahan Gateway Active</span>
           </div>
-          <h1 class="calm-header-greeting">Good morning, Deepak</h1>
+          <h1 class="calm-header-greeting" style="font-size: var(--font-h1, 28px); font-weight: 800; color: var(--ink); letter-spacing: -0.02em; margin-top: 4px;">
+            Operational Fleet Dashboard
+          </h1>
         </div>
 
-        <div class="calm-header-actions">
-          <button class="calm-btn-secondary" onclick="Utils.exportToCSV(StorageManager.getChallans(), 'fleet-liability-audit.csv')">
+        <div class="calm-header-actions" style="display: flex; gap: 10px; align-items: center;">
+          <button class="btn btn--outline btn--sm" onclick="Utils.exportToCSV(StorageManager.getChallans(), 'fleet-liability-audit.csv')">
             <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-            Download Summary
+            <span>Download CSV</span>
           </button>
-          <button class="calm-btn-secondary" id="parivahanSyncBtn" onclick="triggerParivahanSyncAnimation(this)">
+          <button class="btn btn--primary btn--sm" id="parivahanSyncBtn" onclick="triggerParivahanSyncAnimation(this)">
             <svg class="sync-icon" width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/></svg>
             <span>Parivahan Sync</span>
           </button>
         </div>
       </div>
 
-      <!-- 2. TOP ROW (12 COLUMNS: 7 / 5 ASYMMETRIC GRID) -->
-      <div class="calm-grid-12 framer-animate-hero">
+      <!-- 2. TOP ROW (SPEEDOMETER ARC GAUGES & FLEET COMPLIANCE HUB) -->
+      <div class="calm-grid-12 framer-animate-hero" style="margin-bottom: var(--space-4);">
         
-        <!-- COLUMN SPAN 7: THE HERO OUTSTANDING TILE (SF Pro Display Number, Zeigarnik Progress Bar, Restorff Action Hierarchy) -->
+        <!-- COLUMN SPAN 7: THE HERO OUTSTANDING TILE & CORRIDOR RULERS -->
         <div class="calm-panel calm-span-7">
           <div>
             <div class="calm-hero-header-row">
-              <span class="calm-hero-label">Outstanding fleet liability</span>
-              <span class="calm-hero-trend">↑ 5.2% vs last 30d</span>
+              <span class="calm-hero-label" style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-2);">Total Outstanding Liability</span>
+              <span class="badge badge--unassigned" style="font-size: 11px;">↑ 5.2% vs last 30d</span>
             </div>
 
-            <div class="calm-hero-number" id="dashboardHeroNumber">
+            <div class="calm-hero-number" id="dashboardHeroNumber" style="font-size: 38px; font-weight: 800; color: var(--ink); margin: 6px 0; letter-spacing: -0.02em;">
               ${Utils.formatINR(stats.outstandingAmount)}
             </div>
 
-            <div class="calm-subtext">
-              Across 32 active compliance notices across Delhi NCR, Mumbai Western Corridor, and Bengaluru Logistics Hubs.
+            <div class="calm-subtext" style="font-size: 13px; color: var(--text-2); margin-bottom: 14px;">
+              Across 32 active compliance notices spanning NCR, Mumbai Western Corridor, and Bengaluru Logistics Hubs.
             </div>
 
-            <!-- Zeigarnik Effect: Resolution Completion Progress Widget -->
-            <div class="compliance-progress-widget" style="margin: 10px 0 14px; padding: 10px 14px; background: var(--surface-2); border-radius: 8px; border: 1px solid var(--line);">
-              <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11.5px; margin-bottom: 6px;">
-                <span style="color: var(--text-2); font-weight: 500;">
-                  <strong style="color: var(--ink); font-weight: 600;">88%</strong> Fleet Notices Reconciled (28/32 Cleared)
-                </span>
-                <span style="font-size: 11px; color: var(--color-danger); font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
-                  <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--color-danger); display: inline-block;"></span>
-                  4 Action Items Due
-                </span>
-              </div>
-              <div style="height: 5px; width: 100%; background: var(--surface-3); border-radius: 9999px; overflow: hidden;">
-                <div style="height: 100%; width: 87.5%; background: linear-gradient(90deg, var(--accent) 0%, #34C759 100%); border-radius: 9999px;"></div>
-              </div>
-            </div>
-
-            <!-- Von Restorff Effect: Clear Action Focus (Time-Sensitive Triage vs Generic Settle) -->
-            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-              <button class="calm-btn-primary" onclick="navigateTo('challans', true, { status: 'unassigned' })" title="Adjudicate unassigned traffic notices before court escalation">
+            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 18px;">
+              <button class="btn btn--primary btn--sm" onclick="navigateTo('challans', true, { status: 'unassigned' })" title="Adjudicate unassigned traffic notices before court escalation">
                 <span>Assign Responsibility</span>
-                <span style="background: rgba(255, 255, 255, 0.25); color: #FFFFFF; font-size: 10.5px; font-weight: 700; padding: 1px 7px; border-radius: 9999px; margin-left: 2px;">2 Due</span>
+                <span style="background: rgba(255, 255, 255, 0.25); color: #FFFFFF; font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 9999px; margin-left: 4px;">2 Due</span>
               </button>
-              <button class="calm-btn-secondary" onclick="navigateTo('payments')" title="Settle notices in bulk via simulated payment">
+              <button class="btn btn--outline btn--sm" onclick="navigateTo('payments')" title="Settle notices in bulk via simulated payment">
                 Settle Fines
               </button>
             </div>
           </div>
 
           <!-- Hairline divider and three plain columns with Signature Deadline Rulers -->
-          <div class="calm-corridor-row">
+          <div class="calm-corridor-row" style="border-top: 1px solid var(--surface-1); padding-top: 14px; margin-top: auto;">
             <div class="calm-corridor-col">
               <div class="calm-corridor-header">
-                <span class="calm-corridor-title">NCR Corridor</span>
-                <span class="calm-corridor-val">${Utils.formatINR(corridorAmounts.ncr)}</span>
+                <span class="calm-corridor-title" style="font-weight: 600; font-size: 12px;">NCR Corridor</span>
+                <span class="calm-corridor-val" style="font-weight: 700; font-size: 12.5px;">${Utils.formatINR(corridorAmounts.ncr)}</span>
               </div>
               <div class="deadline-ruler" title="Adjudication timeline (7-day window)">
                 <div class="deadline-ruler-track">
@@ -136,12 +121,12 @@ function renderDashboardView(container, actions) {
                   <span class="deadline-ruler-tick"></span>
                 </div>
               </div>
-              <div class="calm-corridor-sub">Limit ₹50k/mo • 4d window</div>
+              <div class="calm-corridor-sub" style="font-size: 11px; color: var(--text-3);">Limit ₹50k/mo • 4d window</div>
             </div>
             <div class="calm-corridor-col">
               <div class="calm-corridor-header">
-                <span class="calm-corridor-title">Mumbai Western</span>
-                <span class="calm-corridor-val">${Utils.formatINR(corridorAmounts.mumbai)}</span>
+                <span class="calm-corridor-title" style="font-weight: 600; font-size: 12px;">Mumbai Western</span>
+                <span class="calm-corridor-val" style="font-weight: 700; font-size: 12.5px;">${Utils.formatINR(corridorAmounts.mumbai)}</span>
               </div>
               <div class="deadline-ruler" title="Adjudication timeline (7-day window)">
                 <div class="deadline-ruler-track">
@@ -154,12 +139,12 @@ function renderDashboardView(container, actions) {
                   <span class="deadline-ruler-tick"></span>
                 </div>
               </div>
-              <div class="calm-corridor-sub">Limit ₹35k/mo • 5d window</div>
+              <div class="calm-corridor-sub" style="font-size: 11px; color: var(--text-3);">Limit ₹35k/mo • 5d window</div>
             </div>
             <div class="calm-corridor-col">
               <div class="calm-corridor-header">
-                <span class="calm-corridor-title">Bengaluru Hub</span>
-                <span class="calm-corridor-val">${Utils.formatINR(corridorAmounts.blr)}</span>
+                <span class="calm-corridor-title" style="font-weight: 600; font-size: 12px;">Bengaluru Hub</span>
+                <span class="calm-corridor-val" style="font-weight: 700; font-size: 12.5px;">${Utils.formatINR(corridorAmounts.blr)}</span>
               </div>
               <div class="deadline-ruler" title="Adjudication timeline (7-day window)">
                 <div class="deadline-ruler-track">
@@ -172,29 +157,47 @@ function renderDashboardView(container, actions) {
                   <span class="deadline-ruler-tick"></span>
                 </div>
               </div>
-              <div class="calm-corridor-sub">Limit ₹25k/mo • 6d window</div>
+              <div class="calm-corridor-sub" style="font-size: 11px; color: var(--text-3);">Limit ₹25k/mo • 6d window</div>
             </div>
           </div>
         </div>
 
-        <!-- COLUMN SPAN 5: THE DUE-IN-7-DAYS DARK PHOTO PANEL (Real Indian highway truck photo under warm monochrome scrim) -->
-        <div class="calm-navy-photo-panel calm-span-5">
-          <div>
-            <div class="calm-hero-header-row">
-              <span class="calm-photo-label">Impending deadline (7 days)</span>
-              <span class="calm-photo-sublabel">Toll &amp; Highway Radar</span>
-            </div>
+        <!-- COLUMN SPAN 5: SPEEDOMETER ARC GAUGES (Screens 1, 3, & 7 from reference) -->
+        <div class="calm-panel calm-span-5" style="align-items: center; justify-content: center; text-align: center;">
+          <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 8px;">
+            <span style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-2);">Operational Health Hub</span>
+            <span class="badge badge--paid" style="font-size: 11px;">Active Tracking</span>
+          </div>
 
-            <div class="calm-navy-number">
-              ₹24,800
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; width: 100%; align-items: center;">
+            <div style="background: var(--surface-2); padding: 12px 8px; border-radius: 12px; border: 1px solid var(--surface-1);">
+              ${Utils.renderArcGauge(totalResolutionRate || 88, "Fleet Compliance", `${clearedChallansCount}/${challans.length} Resolved`, { startColor: "#1E60FF", endColor: "#38BDF8" })}
             </div>
+            <div style="background: var(--surface-2); padding: 12px 8px; border-radius: 12px; border: 1px solid var(--surface-1);">
+              ${Utils.renderArcGauge(92, "Resolution SLA", "Avg 4.2d Clearance", { startColor: "#10B981", endColor: "#34D399" })}
+            </div>
+          </div>
 
-            <div class="calm-navy-desc">
-              14 commercial notices entering judicial compounding penalty within 7 business days if unadjudicated.
-            </div>
+          <div style="width: 100%; margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--surface-1); display: flex; align-items: center; justify-content: space-between; font-size: 12px;">
+            <span style="color: var(--text-2);">Urgent compounding risk:</span>
+            <span style="color: var(--color-danger); font-weight: 700;">${overdueChallans.length} citations overdue</span>
           </div>
         </div>
 
+      </div>
+
+      <!-- 3. LIFECYCLE PROGRESS PIPELINE STEPPER -->
+      <div class="calm-panel framer-animate-hero" style="margin-bottom: var(--space-4); padding: 16px 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <span style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-2);">Infraction Lifecycle Pipeline</span>
+          <span style="font-size: 12px; color: var(--text-3);">Stage 2 of 4 Active</span>
+        </div>
+        ${Utils.renderProgressStepper([
+          { title: "1. Notice Logged" },
+          { title: "2. Attributed Custody" },
+          { title: "3. Settle / Escrow" },
+          { title: "4. Court / Dismissed" }
+        ], 1)}
       </div>
 
       <!-- PRIORITISED WORK QUEUE: NEEDS ATTENTION (Case Study Page 12, Screen 1) -->

@@ -10,16 +10,16 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 0 20px;
-  height: 44px;
-  font-size: 14px;
+  padding: 0 18px;
+  height: 40px;
+  font-size: 13.5px;
   font-weight: 500;
   font-family: var(--font-family-base);
-  border-radius: var(--radius-pill, 44px);
+  border-radius: 10px;
   border: 1px solid transparent;
   cursor: pointer;
   white-space: nowrap;
-  transition: transform var(--duration-instant) var(--ease-ebay), background-color var(--duration-quick) ease, border-color var(--duration-quick) ease;
+  transition: all var(--duration-quick) cubic-bezier(0.16, 1, 0.3, 1);
   user-select: none;
   line-height: 1;
   position: relative;
@@ -31,7 +31,7 @@
 }
 
 .btn:active {
-  transform: scale(0.978);
+  transform: scale(0.98);
 }
 
 .btn:disabled {
@@ -41,13 +41,22 @@
   transform: none !important;
 }
 
-/* eBay Saturated Cobalt Primary Button */
+/* Modern Cobalt Primary Button */
 .btn--primary {
-  background: var(--color-primary, #0968f6);
+  background: var(--color-primary, #1E60FF);
   color: #FFFFFF;
-  font-weight: 700;
-  height: 44px;
-  padding: 0 20px;
+  font-weight: 600;
+  height: 40px;
+  padding: 0 18px;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 2px 8px rgba(30, 96, 255, 0.20);
+}
+
+.btn--primary:hover {
+  background: var(--color-primary-dark, #1550E0);
+  box-shadow: 0 4px 14px rgba(30, 96, 255, 0.30);
+}
   border-radius: var(--radius-pill, 44px);
   border: 1px solid var(--color-primary, #0968f6);
   box-shadow: none;
@@ -347,17 +356,18 @@
    -------------------------------------------------------------------------- */
 .card {
   background-color: var(--canvas, #FFFFFF);
-  border: 1px solid var(--surface-1, #e5e5e5);
+  border: 1px solid var(--surface-1, #E2E8F0);
   border-radius: var(--radius-md, 16px);
-  box-shadow: none;
+  box-shadow: var(--shadow-soft);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  transition: border-color 0.15s ease;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
 }
 
 .card:hover {
-  border-color: var(--hairline-medium, #8f8f8f);
+  border-color: rgba(30, 96, 255, 0.25);
+  box-shadow: var(--shadow-card-hover);
 }
 
 .card-header {
@@ -722,22 +732,23 @@
   }
 }
 
-/* 3. Panel Cards (eBay 16px Signature Radius) */
+/* 3. Panel Cards (Modern SaaS 16px Radius with Soft Ambient Elevation) */
 .calm-panel {
   background: var(--canvas, #FFFFFF);
   border-radius: var(--radius-md, 16px);
-  border: 1px solid var(--surface-1, #e5e5e5);
-  box-shadow: none;
-  padding: 20px 24px;
+  border: 1px solid var(--surface-1, #E2E8F0);
+  box-shadow: var(--shadow-soft);
+  padding: 22px 24px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: border-color 150ms ease;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
   position: relative;
 }
 
 .calm-panel:hover {
-  border-color: var(--hairline-medium, #8f8f8f);
+  border-color: rgba(30, 96, 255, 0.25);
+  box-shadow: var(--shadow-card-hover);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2472,8 +2483,8 @@ td a[href*="#challans?id="]:hover,
 }
 
 .modal-dialog {
-  background-color: var(--surface-1);
-  border-radius: var(--radius-panel);
+  background-color: #FFFFFF;
+  border-radius: var(--radius-xl, 20px);
   box-shadow: var(--shadow-modal);
   width: 100%;
   max-width: 600px;
@@ -2483,7 +2494,7 @@ td a[href*="#challans?id="]:hover,
   transform: scale(0.96) translateY(12px);
   opacity: 0;
   transition: transform var(--duration-enter) var(--ease-apple-fluid), opacity var(--duration-quick) ease-out;
-  border: 1px solid var(--line-strong);
+  border: 1px solid var(--surface-1, #E2E8F0);
   overflow: hidden;
 }
 
@@ -2495,27 +2506,29 @@ td a[href*="#challans?id="]:hover,
 
 .modal-header {
   padding: 20px 24px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid var(--surface-1, #E2E8F0);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background-color: #FFFFFF;
 }
 
 .modal-body {
   padding: 24px;
   overflow-y: auto;
+  background-color: #FFFFFF;
 }
 
 .modal-footer {
   padding: 16px 24px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid var(--surface-1, #E2E8F0);
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: 12px;
-  background-color: #181B26;
-  border-bottom-left-radius: 24px;
-  border-bottom-right-radius: 24px;
+  background-color: var(--surface-2, #F8FAFC);
+  border-bottom-left-radius: var(--radius-xl, 20px);
+  border-bottom-right-radius: var(--radius-xl, 20px);
 }
 
 /* --------------------------------------------------------------------------

@@ -151,12 +151,12 @@
   color: var(--ink);
 }
 
-/* Active item = Apple Minimal highlight */
+/* Active item = Clean SaaS active state with soft tinted pill */
 .nav-item.active {
-  background: var(--surface-2);
-  color: var(--accent);
+  background: var(--color-primary-light, rgba(30, 96, 255, 0.08));
+  color: var(--color-primary, #1E60FF);
   font-weight: 600;
-  border-radius: var(--radius-md);
+  border-radius: 10px;
   padding-left: 12px;
 }
 
@@ -165,7 +165,7 @@
 }
 
 .nav-item.active .nav-icon {
-  color: var(--accent);
+  color: var(--color-primary, #1E60FF);
 }
 
 .nav-icon {
@@ -189,15 +189,18 @@
 
 .nav-badge {
   font-size: 11px;
-  font-weight: 500;
-  padding: 0 4px;
-  background-color: transparent;
-  color: var(--text-3);
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: var(--radius-pill, 9999px);
+  background-color: var(--surface-1);
+  color: var(--text-2);
   font-variant-numeric: tabular-nums;
 }
 
 .nav-item.active .nav-badge {
-  color: var(--ink);
+  color: #FFFFFF;
+  background-color: var(--color-primary, #1E60FF);
+}
 }
 
 .nav-badge.danger {
@@ -349,44 +352,45 @@
 
 .global-search-input {
   width: 100%;
-  height: 44px;
-  padding: 0 100px 0 38px;
-  background-color: var(--canvas, #FFFFFF);
-  border: 1px solid var(--ink, #191919);
-  border-radius: var(--radius-pill, 44px);
+  height: 42px;
+  padding: 0 92px 0 40px;
+  background-color: var(--color-bg-muted, #F1F5F9);
+  border: 1px solid var(--surface-1, #E2E8F0);
+  border-radius: var(--radius-pill, 9999px);
   box-shadow: none;
-  font-size: 14px;
-  color: var(--ink, #191919);
+  font-size: 13.5px;
+  color: var(--ink, #0F172A);
   font-family: var(--font-family-base);
   transition: all 180ms ease;
 }
 
 .global-search-input:focus {
+  background-color: #FFFFFF;
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(9, 104, 246, 0.22);
+  box-shadow: 0 0 0 3px rgba(30, 96, 255, 0.16);
   outline: none;
 }
 
 .global-search-input::placeholder {
-  color: var(--ink-muted, #555555);
-  font-size: 13.5px;
+  color: var(--ink-muted, #64748B);
+  font-size: 13px;
 }
 
-/* eBay Saturated Cobalt Pill Search Button */
+/* Saturated Modern Cobalt Pill Search Button */
 .ebay-search-btn {
   position: absolute;
   right: 4px;
   top: 50%;
   transform: translateY(-50%);
-  height: 36px;
-  padding: 0 18px;
-  border-radius: var(--radius-pill, 44px);
-  background: var(--color-primary, #0968f6);
+  height: 34px;
+  padding: 0 16px;
+  border-radius: var(--radius-pill, 9999px);
+  background: var(--color-primary, #1E60FF);
   color: #FFFFFF;
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 13px;
+  font-weight: 600;
   font-family: var(--font-family-base);
-  border: 1px solid var(--color-primary, #0968f6);
+  border: none;
   cursor: pointer;
   transition: background-color var(--transition-fast), transform var(--transition-fast);
   display: inline-flex;
@@ -395,8 +399,7 @@
 }
 
 .ebay-search-btn:hover {
-  background: var(--color-primary-dark, #003aa5);
-  border-color: var(--color-primary-dark, #003aa5);
+  background: var(--color-primary-dark, #1550E0);
   transform: translateY(-50%) translateY(-1px);
 }
 

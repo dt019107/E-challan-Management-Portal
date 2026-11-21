@@ -8,143 +8,148 @@
 
 :root {
   /* --------------------------------------------------------------------------
-     1. eBay Brand Colors (Four-Color Logomark & Primary Cobalt)
+     1. Modern Clean SaaS / Fintech Brand Colors (Cobalt & Ice-Slate Architecture)
      -------------------------------------------------------------------------- */
-  --brand-red: #f02d2d;       /* eBay Red - 'e' */
-  --brand-blue: #0968f6;      /* eBay Blue - 'b' & Primary CTA */
-  --brand-yellow: #e3f13c;    /* eBay Yellow / Avocado - 'a' */
-  --brand-green: #92c821;     /* eBay Green - 'y' */
+  --brand-blue: #1E60FF;          /* Signature Cobalt / Royal Blue */
+  --brand-blue-hover: #1550E0;
+  --brand-sky: #38BDF8;           /* Accent Sky for Gauge Accents */
+  --brand-indigo: #6366F1;        /* Accent Indigo for Legal / Deep Analytics */
+  --brand-red: #EF4444;           /* Alert Red */
+  --brand-amber: #F59E0B;         /* Attention Amber */
+  --brand-emerald: #10B981;       /* Compliant Emerald */
 
-  --color-primary: #0968f6;       /* Cobalt Primary */
-  --color-primary-dark: #003aa5;  /* Cobalt Dark / Legal links / Hover */
-  --color-primary-hover: #003aa5;
-  --color-primary-light: rgba(9, 104, 246, 0.08);
+  --color-primary: #1E60FF;       /* Electric Royal Blue */
+  --color-primary-dark: #1550E0;  /* Royal Blue Dark / Hover */
+  --color-primary-hover: #1550E0;
+  --color-primary-light: rgba(30, 96, 255, 0.08);
+  --color-primary-border: rgba(30, 96, 255, 0.20);
 
-  --accent: #0968f6;
-  --accent-hover: #003aa5;
-  --accent-muted: rgba(9, 104, 246, 0.08);
-  --accent-border: rgba(9, 104, 246, 0.25);
+  --accent: #1E60FF;
+  --accent-hover: #1550E0;
+  --accent-muted: rgba(30, 96, 255, 0.08);
+  --accent-border: rgba(30, 96, 255, 0.20);
 
   /* --------------------------------------------------------------------------
-     2. Neutral & Ink Scale
+     2. Slate & Ink Scale (High Legibility & Visual Contrast)
      -------------------------------------------------------------------------- */
-  --ink: #191919;               /* Dominant text and strong border */
-  --ink-soft: #41413f;          /* Near-black text accents */
-  --ink-muted: #555555;         /* Mid-gray: strikethrough price & metadata */
-  --ink-faint: #707070;         /* Light-gray: footer and secondary caption */
-  --canvas: #ffffff;            /* Pure white canvas */
-  --surface-1: #e5e5e5;         /* Border-subtle and secondary card surface */
-  --surface-2: #f7f7f7;         /* Soft utility background / input hover */
-  --surface-3: #e5e5e5;
+  --ink: #0F172A;                 /* Slate 900 - Headings & Hero KPIs */
+  --ink-soft: #1E293B;            /* Slate 800 */
+  --ink-body: #334155;            /* Slate 700 - Body Copy */
+  --ink-muted: #64748B;           /* Slate 500 - Secondary Metadata */
+  --ink-faint: #94A3B8;           /* Slate 400 - Captions & Subtext */
+  --canvas: #F4F7FC;              /* Ice-Tinted Slate Canvas */
+  --surface-1: #E2E8F0;           /* Subtle border & hairline */
+  --surface-2: #F8FAFC;           /* Sunken utility & card secondary */
+  --surface-3: #EDF2F7;           /* Hover tone */
 
-  --hairline: #c7c7c7;          /* 1px clean light-gray divider */
-  --hairline-medium: #8f8f8f;   /* Medium stroke default for inputs/states */
-  --shadow: #000000;
+  --hairline: #E2E8F0;            /* 1px clean slate divider */
+  --hairline-medium: #CBD5E1;     /* Input border default */
+  --shadow: rgba(15, 23, 42, 0.08);
 
   /* Aliased Semantic Tokens */
-  --bg: #ffffff;
-  --bg-app: #ffffff;
-  --bg-sunken: #f7f7f7;
-  --surface: #ffffff;
-  --surface-panel: #ffffff;
-  --line: #e5e5e5;
-  --line-strong: #c7c7c7;
+  --bg: #F4F7FC;
+  --bg-app: #F4F7FC;
+  --bg-sunken: #EEF2F6;
+  --surface: #FFFFFF;
+  --surface-panel: #FFFFFF;
+  --line: #E2E8F0;
+  --line-strong: #CBD5E1;
 
-  --color-bg-app: #ffffff;
-  --color-bg-app-secondary: #f7f7f7;
-  --color-bg-muted: #f7f7f7;
-  --color-bg-surface: #ffffff;
-  --color-bg-surface-secondary: #f7f7f7;
-  --color-bg-surface-subtle: #fafafa;
-  --color-bg-surface-hover: #f0f0f0;
+  --color-bg-app: #F4F7FC;
+  --color-bg-app-secondary: #F8FAFC;
+  --color-bg-muted: #F1F5F9;
+  --color-bg-surface: #FFFFFF;
+  --color-bg-surface-secondary: #F8FAFC;
+  --color-bg-surface-subtle: #F8FAFC;
+  --color-bg-surface-hover: #F1F5F9;
 
-  --color-text-main: #191919;
-  --color-text-secondary: #555555;
-  --color-text-muted: #555555;
-  --color-text-subtle: #707070;
-  --color-text-inverse: #ffffff;
-  --text: #191919;
-  --text-2: #555555;
-  --text-3: #707070;
+  --color-text-main: #0F172A;
+  --color-text-secondary: #64748B;
+  --color-text-muted: #64748B;
+  --color-text-subtle: #94A3B8;
+  --color-text-inverse: #FFFFFF;
+  --text: #0F172A;
+  --text-2: #64748B;
+  --text-3: #94A3B8;
 
-  --color-border: #e5e5e5;
-  --color-border-subtle: #e5e5e5;
-  --color-border-dark: #c7c7c7;
+  --color-border: #E2E8F0;
+  --color-border-subtle: #EDF2F7;
+  --color-border-dark: #CBD5E1;
 
   /* --------------------------------------------------------------------------
-     3. Semantic Status Tokens (Using eBay Brand Palette)
+     3. Semantic Status Tokens (Refined Modern Indicators)
      -------------------------------------------------------------------------- */
-  --status-unassigned: #f02d2d;     /* eBay Red: Urgent / Unassigned */
-  --status-unassigned-bg: rgba(240, 45, 45, 0.08);
-  --status-unassigned-border: rgba(240, 45, 45, 0.25);
+  --status-unassigned: #EF4444;     /* Alert Red: Urgent / Unassigned */
+  --status-unassigned-bg: rgba(239, 68, 68, 0.09);
+  --status-unassigned-border: rgba(239, 68, 68, 0.22);
 
-  --status-assigned: #0968f6;       /* eBay Blue: Assigned / In Fleet Custody */
-  --status-assigned-bg: rgba(9, 104, 246, 0.08);
-  --status-assigned-border: rgba(9, 104, 246, 0.25);
+  --status-assigned: #1E60FF;       /* Royal Blue: Assigned / In Custody */
+  --status-assigned-bg: rgba(30, 96, 255, 0.08);
+  --status-assigned-border: rgba(30, 96, 255, 0.22);
 
-  --status-pending: #b45309;        /* Warm Amber / Marigold tone */
-  --status-pending-bg: rgba(227, 241, 60, 0.18);
-  --status-pending-border: rgba(180, 83, 9, 0.25);
+  --status-pending: #D97706;        /* Warm Amber tone */
+  --status-pending-bg: rgba(245, 158, 11, 0.10);
+  --status-pending-border: rgba(245, 158, 11, 0.25);
 
-  --status-paid: #15803d;           /* eBay Green: Settled / Paid */
-  --status-paid-bg: rgba(146, 200, 33, 0.15);
-  --status-paid-border: rgba(21, 128, 61, 0.25);
+  --status-paid: #10B981;           /* Emerald: Settled / Compliant */
+  --status-paid-bg: rgba(16, 185, 129, 0.10);
+  --status-paid-border: rgba(16, 185, 129, 0.25);
 
-  --status-disputed: #6d28d9;       /* Disputed Purple */
-  --status-disputed-bg: rgba(109, 40, 217, 0.08);
-  --status-disputed-border: rgba(109, 40, 217, 0.25);
+  --status-disputed: #8B5CF6;       /* Violet / Disputed */
+  --status-disputed-bg: rgba(139, 92, 246, 0.09);
+  --status-disputed-border: rgba(139, 92, 246, 0.22);
 
-  --status-court: #003aa5;          /* Cobalt Dark: Virtual Court Docket */
-  --status-court-bg: rgba(0, 58, 165, 0.08);
-  --status-court-border: rgba(0, 58, 165, 0.25);
+  --status-court: #6366F1;          /* Indigo: Virtual Court Docket */
+  --status-court-bg: rgba(99, 102, 241, 0.09);
+  --status-court-border: rgba(99, 102, 241, 0.22);
 
-  --signal: #f02d2d;
-  --signal-muted: rgba(240, 45, 45, 0.08);
-  --signal-border: rgba(240, 45, 45, 0.25);
+  --signal: #EF4444;
+  --signal-muted: rgba(239, 68, 68, 0.09);
+  --signal-border: rgba(239, 68, 68, 0.22);
 
-  --color-success: #15803d;
-  --color-success-bg: rgba(146, 200, 33, 0.15);
-  --color-warning: #b45309;
-  --color-warning-bg: rgba(227, 241, 60, 0.18);
-  --color-danger: #f02d2d;
-  --color-danger-bg: rgba(240, 45, 45, 0.08);
-  --color-purple: #6d28d9;
-  --color-purple-bg: rgba(109, 40, 217, 0.08);
-  --color-info: #0968f6;
-  --color-info-bg: rgba(9, 104, 246, 0.08);
+  --color-success: #10B981;
+  --color-success-bg: rgba(16, 185, 129, 0.10);
+  --color-warning: #D97706;
+  --color-warning-bg: rgba(245, 158, 11, 0.10);
+  --color-danger: #EF4444;
+  --color-danger-bg: rgba(239, 68, 68, 0.09);
+  --color-purple: #8B5CF6;
+  --color-purple-bg: rgba(139, 92, 246, 0.09);
+  --color-info: #1E60FF;
+  --color-info-bg: rgba(30, 96, 255, 0.08);
 
   /* --------------------------------------------------------------------------
-     4. Geometry & Radius Scale (16px Signature Card Radius, 44px Pill Controls)
+     4. Geometry & Radius Scale (16px Card, 20px Modal, 10px-12px Control, 44px Pill)
      -------------------------------------------------------------------------- */
   --radius-none: 0px;
   --radius-xs: 4px;
-  --radius-sm: 8px;     /* Chip / small badge fallback */
-  --radius-md: 16px;    /* 16px Signature eBay Radius: Cards, Panels, Tables, Modals */
-  --radius-lg: 16px;
-  --radius-xl: 16px;
-  --radius-2xl: 20px;
-  --radius-pill: 44px;  /* 44px Pill Radius: Search, Primary & Secondary Buttons */
-  --radius-full: 9999px;/* User Avatar hit target */
+  --radius-sm: 8px;     /* Chip / small badge */
+  --radius-md: 16px;    /* 16px Modern Card Radius */
+  --radius-lg: 18px;
+  --radius-xl: 20px;    /* 20px Modal / Container Radius */
+  --radius-2xl: 24px;
+  --radius-pill: 9999px;/* Rounded Pills & Search */
+  --radius-full: 9999px;
 
   --radius-panel: 16px;
   --radius-card: 16px;
-  --radius-control: 44px;
-  --radius-input: 44px;
-  --radius-chip: 44px;
+  --radius-control: 10px;
+  --radius-input: 10px;
+  --radius-chip: 9999px;
 
-  /* Elevation: Flat surfaces with subtle 1px hairlines and state-layer overlays */
-  --shadow-soft: 0 1px 3px rgba(0, 0, 0, 0.04);
-  --calm-shadow: none;
+  /* Ambient SaaS Drop Shadows (Diffuse & Natural) */
+  --shadow-soft: 0 4px 20px -2px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.02);
+  --calm-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.02);
   --calm-border: 1px solid var(--surface-1);
-  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.03);
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.08);
-  --shadow-xl: 0 20px 48px rgba(0, 0, 0, 0.12);
-  --shadow-card-hover: 0 4px 16px rgba(0, 0, 0, 0.06);
-  --shadow-focus: 0 0 0 3px rgba(9, 104, 246, 0.25);
-  --shadow-dropdown: 0 8px 24px rgba(0, 0, 0, 0.10), 0 0 0 1px var(--hairline);
-  --shadow-modal: 0 24px 60px rgba(0, 0, 0, 0.18), 0 0 0 1px var(--hairline);
+  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.03);
+  --shadow-sm: 0 2px 4px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 8px 24px -4px rgba(15, 23, 42, 0.06), 0 2px 6px rgba(15, 23, 42, 0.03);
+  --shadow-lg: 0 16px 36px -6px rgba(15, 23, 42, 0.08), 0 4px 12px rgba(15, 23, 42, 0.04);
+  --shadow-xl: 0 24px 60px -8px rgba(15, 23, 42, 0.12);
+  --shadow-card-hover: 0 12px 32px -4px rgba(30, 96, 255, 0.08), 0 4px 12px rgba(15, 23, 42, 0.03);
+  --shadow-focus: 0 0 0 3px rgba(30, 96, 255, 0.20);
+  --shadow-dropdown: 0 12px 32px rgba(15, 23, 42, 0.10), 0 0 0 1px var(--hairline);
+  --shadow-modal: 0 24px 64px -8px rgba(15, 23, 42, 0.18), 0 0 0 1px var(--hairline);
 
   --bg-grain: none;
 
