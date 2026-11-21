@@ -375,6 +375,13 @@ function renderDashboardView(container, actions) {
       listContainer.innerHTML = renderAttentionItems(getActiveFilteredList());
     });
   }
+
+  // Trigger GSAP Arc Gauge Springs & Number Odometers
+  if (typeof Utils !== "undefined" && Utils.animateGauges) {
+    requestAnimationFrame(() => {
+      Utils.animateGauges(container);
+    });
+  }
 }
 
 /**
@@ -719,15 +726,19 @@ function triggerParivahanSyncAnimation(btn) {
   if (!btn) return;
   const icon = btn.querySelector('.sync-icon');
   if (icon) {
-    icon.style.transition = 'transform 450ms cubic-bezier(0.2, 0.8, 0.2, 1)';
-    icon.style.transform = 'rotate(360deg)';
+    icon.style.transition = 'transform 600ms cubic-bezier(0.2, 0.8, 0.2, 1)';
+    icon.style.transform = 'rotate(720deg)';
     setTimeout(() => {
       icon.style.transition = 'none';
       icon.style.transform = 'rotate(0deg)';
-    }, 480);
+    }, 620);
   }
+  
   setTimeout(() => {
     Utils.showToast('Gateway Synchronized', 'Parivahan e-Challan gateway polled successfully. 32 active records refreshed.', 'success');
-  }, 160);
+    if (typeof Utils !== 'undefined' && Utils.animateGauges) {
+      Utils.animateGauges(document);
+    }
+  }, 250);
 }
 window.triggerParivahanSyncAnimation = triggerParivahanSyncAnimation;

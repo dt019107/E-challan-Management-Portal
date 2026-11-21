@@ -628,10 +628,10 @@ const Utils = {
           </defs>
           <!-- Background Track -->
           <path d="M 30 95 A 70 70 0 0 1 170 95" fill="none" stroke="#E2E8F0" stroke-width="12" stroke-linecap="round" />
-          <!-- Active Foreground Arc -->
-          <path d="M 30 95 A 70 70 0 0 1 170 95" fill="none" stroke="url(#${gradientId})" stroke-width="12" stroke-linecap="round" stroke-dasharray="${arcLength}" stroke-dashoffset="${dashOffset}" filter="url(#gaugeShadow)" style="transition: stroke-dashoffset 0.8s cubic-bezier(0.16, 1, 0.3, 1);" />
-          <!-- Central Score Display -->
-          <text x="100" y="80" text-anchor="middle" font-size="28" font-weight="800" fill="var(--ink)" font-family="var(--font-family-base)" letter-spacing="-0.02em">${p}%</text>
+          <!-- Active Foreground Arc with Spring Animation -->
+          <path class="gauge-arc-path" data-target-offset="${dashOffset}" data-arc-length="${arcLength}" d="M 30 95 A 70 70 0 0 1 170 95" fill="none" stroke="url(#${gradientId})" stroke-width="12" stroke-linecap="round" stroke-dasharray="${arcLength}" stroke-dashoffset="${dashOffset}" filter="url(#gaugeShadow)" />
+          <!-- Central Score Display with Rolling Counter -->
+          <text class="gauge-counter-val" data-target-value="${p}" x="100" y="80" text-anchor="middle" font-size="28" font-weight="800" fill="var(--ink)" font-family="var(--font-family-base)" letter-spacing="-0.02em">${p}%</text>
           <text x="100" y="98" text-anchor="middle" font-size="11" font-weight="600" fill="var(--text-2)" font-family="var(--font-family-base)">${label}</text>
           <!-- Baseline min/max markers -->
           <text x="25" y="116" font-size="10.5" font-weight="600" fill="var(--text-3)">0%</text>
@@ -640,6 +640,54 @@ const Utils = {
         ${subtext ? `<div style="font-size: 12px; color: var(--text-2); margin-top: 4px; font-weight: 500;">${subtext}</div>` : ''}
       </div>
     `;
+  },
+
+  /**
+   * GSAP Physics Animation Engine for Arc Gauges & Number Odometers
+   */
+  animateGauges(container = document) {
+    if (typeof gsap === "undefined") {
+      container.querySelectorAll(".gauge-arc-path").forEach(path => {
+        path.style.strokeDashoffset = path.dataset.targetOffset || "0";
+      });
+      container.querySelectorAll(".gauge-counter-val").forEach(text => {
+        text.textContent = (text.dataset.targetValue || "0") + "%";
+      });
+      return;
+    }
+
+    // 1. Arc Spring Fill
+    container.querySelectorAll(".gauge-arc-path").forEach((path, i) => {
+      const targetOffset = parseFloat(path.dataset.targetOffset || "0");
+      const arcLength = parseFloat(path.dataset.arcLength || "220");
+      gsap.fromTo(path, 
+        { strokeDashoffset: arcLength },
+        {
+          strokeDashoffset: targetOffset,
+          duration: 1.3,
+          delay: i * 0.08,
+          ease: "power3.out"
+        }
+      );
+    });
+
+    // 2. Rolling Number Odometer
+    container.querySelectorAll(".gauge-counter-val").forEach((text, i) => {
+      const targetVal = parseFloat(text.dataset.targetValue || "0");
+      const countObj = { val: 0 };
+      gsap.fromTo(countObj, 
+        { val: 0 },
+        {
+          val: targetVal,
+          duration: 1.2,
+          delay: i * 0.08,
+          ease: "power2.out",
+          onUpdate: () => {
+            text.textContent = Math.round(countObj.val) + "%";
+          }
+        }
+      );
+    });
   },
 
   /**
