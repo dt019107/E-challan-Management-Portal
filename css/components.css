@@ -352,13 +352,13 @@
 }
 
 /* --------------------------------------------------------------------------
-   3. Cards & Containers (eBay 16px Signature Radius)
+   3. Cards & Containers (Modern Clean SaaS 18px Radius)
    -------------------------------------------------------------------------- */
 .card {
-  background-color: var(--canvas, #FFFFFF);
+  background-color: #FFFFFF;
   border: 1px solid var(--surface-1, #E2E8F0);
-  border-radius: var(--radius-md, 16px);
-  box-shadow: var(--shadow-soft);
+  border-radius: 18px;
+  box-shadow: 0 10px 30px -4px rgba(15, 23, 42, 0.04), 0 2px 8px rgba(15, 23, 42, 0.02);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -367,24 +367,25 @@
 
 .card:hover {
   border-color: rgba(30, 96, 255, 0.25);
-  box-shadow: var(--shadow-card-hover);
+  box-shadow: 0 16px 36px -4px rgba(30, 96, 255, 0.08), 0 4px 14px rgba(15, 23, 42, 0.03);
 }
 
 .card-header {
   padding: 18px 24px;
-  border-bottom: 1px solid var(--surface-1, #e5e5e5);
+  border-bottom: 1px solid var(--surface-1, #E2E8F0);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+  background-color: #FFFFFF;
 }
 
 .card-title {
   font-family: var(--font-family-base);
   font-size: 16px;
   font-weight: 700;
-  color: var(--ink, #191919);
-  letter-spacing: 0;
+  color: var(--ink);
+  letter-spacing: -0.01em;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -392,7 +393,7 @@
 
 .card-subtitle {
   font-size: 13px;
-  color: var(--ink-muted, #555555);
+  color: var(--text-2);
   margin-top: 3px;
 }
 
@@ -403,8 +404,8 @@
 
 .card-footer {
   padding: 14px 24px;
-  border-top: 1px solid var(--surface-1, #e5e5e5);
-  background-color: var(--canvas, #FFFFFF);
+  border-top: 1px solid var(--surface-1, #E2E8F0);
+  background-color: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -418,16 +419,16 @@
 }
 
 .kpi-card {
-  background-color: var(--canvas, #FFFFFF);
-  border: 1px solid var(--surface-1, #e5e5e5);
-  border-radius: var(--radius-md, 16px);
-  padding: 22px 24px;
-  box-shadow: none;
+  background-color: #FFFFFF;
+  border: 1px solid var(--surface-1, #E2E8F0);
+  border-radius: 18px;
+  padding: 20px 22px;
+  box-shadow: 0 8px 24px -4px rgba(15, 23, 42, 0.04), 0 2px 6px rgba(15, 23, 42, 0.02);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 8px;
-  transition: border-color 0.15s ease;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
   cursor: pointer;
   position: relative;
   overflow: hidden;
@@ -435,7 +436,9 @@
 }
 
 .kpi-card:hover {
-  border-color: var(--hairline-medium, #8f8f8f);
+  border-color: rgba(30, 96, 255, 0.25);
+  box-shadow: 0 14px 32px -4px rgba(30, 96, 255, 0.08), 0 4px 12px rgba(15, 23, 42, 0.03);
+  transform: translateY(-1px);
 }
 
 .kpi-card-top {

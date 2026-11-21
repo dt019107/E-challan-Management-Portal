@@ -299,19 +299,20 @@
 }
 
 /* --------------------------------------------------------------------------
-   3. Top Navigation Bar (eBay Near-Monochrome Chrome Standard)
+   3. Top Navigation Bar (Modern SaaS Floating Topbar)
    -------------------------------------------------------------------------- */
 .app-topbar {
   height: var(--topbar-height);
-  background: var(--canvas, #FFFFFF);
-  border-bottom: 1px solid var(--hairline, #c7c7c7);
+  background: #FFFFFF;
+  border-bottom: 1px solid var(--surface-1, #E2E8F0);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 32px;
   z-index: var(--z-topbar);
   flex-shrink: 0;
-  color: var(--ink, #191919);
+  color: var(--ink);
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.02);
 }
 
 .topbar-left {
@@ -474,18 +475,18 @@
 }
 
 .topbar-btn {
-  width: var(--touch-target-min, 44px);
-  height: var(--touch-target-min, 44px);
-  min-width: 44px;
-  min-height: 44px;
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  min-height: 38px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-full);
   color: var(--ink);
   border: 1px solid var(--surface-1);
-  background-color: var(--canvas);
-  box-shadow: none;
+  background-color: #FFFFFF;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
   transition: all 180ms ease;
   position: relative;
   cursor: pointer;
@@ -493,16 +494,17 @@
 
 .topbar-btn:hover {
   background-color: var(--surface-2);
-  border-color: var(--hairline);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 
 .topbar-notification-badge {
   position: absolute;
-  top: 0px;
-  right: 0px;
-  min-width: 17px;
-  height: 17px;
-  background-color: var(--brand-red, #f02d2d);
+  top: -2px;
+  right: -2px;
+  min-width: 16px;
+  height: 16px;
+  background-color: var(--brand-red, #EF4444);
   color: #FFFFFF;
   border-radius: var(--radius-full);
   font-size: 10px;
@@ -510,8 +512,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid var(--canvas);
-  padding: 0 4px;
+  border: 2px solid #FFFFFF;
+  padding: 0 3px;
   font-variant-numeric: tabular-nums;
 }
 
@@ -519,20 +521,20 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 2px 14px 2px 4px;
-  height: var(--touch-target-min, 44px);
-  min-height: 44px;
+  padding: 3px 12px 3px 4px;
+  height: 38px;
+  min-height: 38px;
   border-radius: var(--radius-pill);
   border: 1px solid var(--surface-1);
-  background: var(--canvas);
-  box-shadow: none;
+  background: #FFFFFF;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
   transition: all 180ms ease;
   cursor: pointer;
 }
 
 .user-profile-btn:hover {
   background-color: var(--surface-2);
-  border-color: var(--hairline);
+  border-color: rgba(30, 96, 255, 0.3);
 }
 
 .user-avatar {

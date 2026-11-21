@@ -47,21 +47,21 @@ function renderDashboardView(container, actions) {
   const formattedTodayDate = today.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
 
   container.innerHTML = `
-    <div class="calm-dashboard-container">
+    <div class="calm-dashboard-container" style="display: flex; flex-direction: column; gap: 20px;">
       
-      <!-- 1. GREETING HEADER (Modern Clean SaaS Header) -->
-      <div class="calm-dashboard-header framer-animate-header">
+      <!-- 1. GREETING & ACTION HEADER -->
+      <div class="calm-dashboard-header framer-animate-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
         <div class="calm-header-left">
-          <div class="calm-header-date">
-            <span class="dot framer-live-dot" style="background: var(--color-success);"></span>
-            <span>${formattedTodayDate} • MoRTH Parivahan Gateway Active</span>
+          <div class="calm-header-date" style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--text-2); font-weight: 500;">
+            <span class="dot framer-live-dot" style="width: 7px; height: 7px; border-radius: 50%; background: var(--color-success); display: inline-block;"></span>
+            <span>${formattedTodayDate} • MoRTH Parivahan Gateway Live</span>
           </div>
-          <h1 class="calm-header-greeting" style="font-size: var(--font-h1, 28px); font-weight: 800; color: var(--ink); letter-spacing: -0.02em; margin-top: 4px;">
+          <h1 class="calm-header-greeting" style="font-size: var(--font-h1, 28px); font-weight: 800; color: var(--ink); letter-spacing: -0.025em; margin: 4px 0 0;">
             Operational Fleet Dashboard
           </h1>
         </div>
 
-        <div class="calm-header-actions" style="display: flex; gap: 10px; align-items: center;">
+        <div class="calm-header-actions" style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
           <button class="btn btn--outline btn--sm" onclick="Utils.exportToCSV(StorageManager.getChallans(), 'fleet-liability-audit.csv')">
             <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
             <span>Download CSV</span>
@@ -73,257 +73,145 @@ function renderDashboardView(container, actions) {
         </div>
       </div>
 
-      <!-- 2. TOP ROW (SPEEDOMETER ARC GAUGES & FLEET COMPLIANCE HUB) -->
-      <div class="calm-grid-12 framer-animate-hero" style="margin-bottom: var(--space-4);">
+      <!-- 2. SPEEDOMETER ARC GAUGES & HEALTH HUB (Matches Screens 1, 3, & 7 from Reference) -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px;">
         
-        <!-- COLUMN SPAN 7: THE HERO OUTSTANDING TILE & CORRIDOR RULERS -->
-        <div class="calm-panel calm-span-7">
-          <div>
-            <div class="calm-hero-header-row">
-              <span class="calm-hero-label" style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-2);">Total Outstanding Liability</span>
-              <span class="badge badge--unassigned" style="font-size: 11px;">↑ 5.2% vs last 30d</span>
-            </div>
-
-            <div class="calm-hero-number" id="dashboardHeroNumber" style="font-size: 38px; font-weight: 800; color: var(--ink); margin: 6px 0; letter-spacing: -0.02em;">
-              ${Utils.formatINR(stats.outstandingAmount)}
-            </div>
-
-            <div class="calm-subtext" style="font-size: 13px; color: var(--text-2); margin-bottom: 14px;">
-              Across 32 active compliance notices spanning NCR, Mumbai Western Corridor, and Bengaluru Logistics Hubs.
-            </div>
-
-            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 18px;">
-              <button class="btn btn--primary btn--sm" onclick="navigateTo('challans', true, { status: 'unassigned' })" title="Adjudicate unassigned traffic notices before court escalation">
-                <span>Assign Responsibility</span>
-                <span style="background: rgba(255, 255, 255, 0.25); color: #FFFFFF; font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 9999px; margin-left: 4px;">2 Due</span>
-              </button>
-              <button class="btn btn--outline btn--sm" onclick="navigateTo('payments')" title="Settle notices in bulk via simulated payment">
-                Settle Fines
-              </button>
-            </div>
+        <!-- Arc Gauge 1: Fleet Compliance Index -->
+        <div class="card" style="padding: 22px 20px; align-items: center; justify-content: center; text-align: center; border-radius: 18px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 6px;">
+            <span style="font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-2);">Fleet Compliance</span>
+            <span class="badge badge--paid" style="font-size: 10.5px;">Active SLA</span>
           </div>
-
-          <!-- Hairline divider and three plain columns with Signature Deadline Rulers -->
-          <div class="calm-corridor-row" style="border-top: 1px solid var(--surface-1); padding-top: 14px; margin-top: auto;">
-            <div class="calm-corridor-col">
-              <div class="calm-corridor-header">
-                <span class="calm-corridor-title" style="font-weight: 600; font-size: 12px;">NCR Corridor</span>
-                <span class="calm-corridor-val" style="font-weight: 700; font-size: 12.5px;">${Utils.formatINR(corridorAmounts.ncr)}</span>
-              </div>
-              <div class="deadline-ruler" title="Adjudication timeline (7-day window)">
-                <div class="deadline-ruler-track">
-                  <span class="deadline-ruler-tick past"></span>
-                  <span class="deadline-ruler-tick past"></span>
-                  <span class="deadline-ruler-tick past"></span>
-                  <span class="deadline-ruler-tick due"></span>
-                  <span class="deadline-ruler-tick"></span>
-                  <span class="deadline-ruler-tick"></span>
-                  <span class="deadline-ruler-tick"></span>
-                </div>
-              </div>
-              <div class="calm-corridor-sub" style="font-size: 11px; color: var(--text-3);">Limit ₹50k/mo • 4d window</div>
-            </div>
-            <div class="calm-corridor-col">
-              <div class="calm-corridor-header">
-                <span class="calm-corridor-title" style="font-weight: 600; font-size: 12px;">Mumbai Western</span>
-                <span class="calm-corridor-val" style="font-weight: 700; font-size: 12.5px;">${Utils.formatINR(corridorAmounts.mumbai)}</span>
-              </div>
-              <div class="deadline-ruler" title="Adjudication timeline (7-day window)">
-                <div class="deadline-ruler-track">
-                  <span class="deadline-ruler-tick past"></span>
-                  <span class="deadline-ruler-tick past"></span>
-                  <span class="deadline-ruler-tick due"></span>
-                  <span class="deadline-ruler-tick"></span>
-                  <span class="deadline-ruler-tick"></span>
-                  <span class="deadline-ruler-tick"></span>
-                  <span class="deadline-ruler-tick"></span>
-                </div>
-              </div>
-              <div class="calm-corridor-sub" style="font-size: 11px; color: var(--text-3);">Limit ₹35k/mo • 5d window</div>
-            </div>
-            <div class="calm-corridor-col">
-              <div class="calm-corridor-header">
-                <span class="calm-corridor-title" style="font-weight: 600; font-size: 12px;">Bengaluru Hub</span>
-                <span class="calm-corridor-val" style="font-weight: 700; font-size: 12.5px;">${Utils.formatINR(corridorAmounts.blr)}</span>
-              </div>
-              <div class="deadline-ruler" title="Adjudication timeline (7-day window)">
-                <div class="deadline-ruler-track">
-                  <span class="deadline-ruler-tick past"></span>
-                  <span class="deadline-ruler-tick due"></span>
-                  <span class="deadline-ruler-tick"></span>
-                  <span class="deadline-ruler-tick"></span>
-                  <span class="deadline-ruler-tick"></span>
-                  <span class="deadline-ruler-tick"></span>
-                  <span class="deadline-ruler-tick"></span>
-                </div>
-              </div>
-              <div class="calm-corridor-sub" style="font-size: 11px; color: var(--text-3);">Limit ₹25k/mo • 6d window</div>
-            </div>
-          </div>
+          ${Utils.renderArcGauge(totalResolutionRate || 88, "Compliance Health", `${clearedChallansCount}/${challans.length} Notices Cleared`, { startColor: "#1E60FF", endColor: "#38BDF8" })}
         </div>
 
-        <!-- COLUMN SPAN 5: SPEEDOMETER ARC GAUGES (Screens 1, 3, & 7 from reference) -->
-        <div class="calm-panel calm-span-5" style="align-items: center; justify-content: center; text-align: center;">
-          <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 8px;">
-            <span style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-2);">Operational Health Hub</span>
-            <span class="badge badge--paid" style="font-size: 11px;">Active Tracking</span>
+        <!-- Arc Gauge 2: Resolution Velocity -->
+        <div class="card" style="padding: 22px 20px; align-items: center; justify-content: center; text-align: center; border-radius: 18px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 6px;">
+            <span style="font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-2);">Resolution Velocity</span>
+            <span class="badge badge--paid" style="font-size: 10.5px;">On Track</span>
+          </div>
+          ${Utils.renderArcGauge(92, "Resolution SLA", "Avg 4.2d Clearance Window", { startColor: "#10B981", endColor: "#34D399" })}
+        </div>
+
+        <!-- Arc Gauge 3: Asset Safety Index -->
+        <div class="card" style="padding: 22px 20px; align-items: center; justify-content: center; text-align: center; border-radius: 18px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 6px;">
+            <span style="font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-2);">Asset Safety Score</span>
+            <span class="badge badge--assigned" style="font-size: 10.5px;">Optimal</span>
+          </div>
+          ${Utils.renderArcGauge(96, "Fleet Safety Index", "Zero Blacklist Impoundments", { startColor: "#6366F1", endColor: "#8B5CF6" })}
+        </div>
+
+        <!-- Card 4: Primary Liability Action Hub -->
+        <div class="card" style="padding: 22px 20px; justify-content: space-between; border-radius: 18px;">
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+              <span style="font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-2);">Total Unsettled Liability</span>
+              <span class="badge badge--unassigned" style="font-size: 10.5px;">↑ 5.2% vs last 30d</span>
+            </div>
+            <div style="font-size: 34px; font-weight: 800; color: var(--ink); margin: 6px 0; letter-spacing: -0.025em; font-variant-numeric: tabular-nums;">
+              ${Utils.formatINR(stats.outstandingAmount)}
+            </div>
+            <div style="font-size: 12.5px; color: var(--text-2); line-height: 1.4;">
+              Spanning 32 active compliance notices across Delhi NCR, Mumbai & Bengaluru Hubs.
+            </div>
           </div>
 
-          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; width: 100%; align-items: center;">
-            <div style="background: var(--surface-2); padding: 12px 8px; border-radius: 12px; border: 1px solid var(--surface-1);">
-              ${Utils.renderArcGauge(totalResolutionRate || 88, "Fleet Compliance", `${clearedChallansCount}/${challans.length} Resolved`, { startColor: "#1E60FF", endColor: "#38BDF8" })}
-            </div>
-            <div style="background: var(--surface-2); padding: 12px 8px; border-radius: 12px; border: 1px solid var(--surface-1);">
-              ${Utils.renderArcGauge(92, "Resolution SLA", "Avg 4.2d Clearance", { startColor: "#10B981", endColor: "#34D399" })}
-            </div>
-          </div>
-
-          <div style="width: 100%; margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--surface-1); display: flex; align-items: center; justify-content: space-between; font-size: 12px;">
-            <span style="color: var(--text-2);">Urgent compounding risk:</span>
-            <span style="color: var(--color-danger); font-weight: 700;">${overdueChallans.length} citations overdue</span>
+          <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 16px;">
+            <button class="btn btn--primary btn--sm" style="flex: 1; height: 36px;" onclick="navigateTo('challans', true, { status: 'unassigned' })">
+              <span>Assign Liability</span>
+              <span style="background: rgba(255,255,255,0.25); color: #fff; font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 9999px; margin-left: 4px;">2 Due</span>
+            </button>
+            <button class="btn btn--outline btn--sm" style="height: 36px;" onclick="navigateTo('payments')">
+              Settle Fines
+            </button>
           </div>
         </div>
 
       </div>
 
-      <!-- 3. LIFECYCLE PROGRESS PIPELINE STEPPER -->
-      <div class="calm-panel framer-animate-hero" style="margin-bottom: var(--space-4); padding: 16px 24px;">
+      <!-- 3. INTERACTIVE INFRACTION LIFECYCLE PIPELINE STEPPER -->
+      <div class="card" style="padding: 18px 24px; border-radius: 18px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
           <span style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-2);">Infraction Lifecycle Pipeline</span>
-          <span style="font-size: 12px; color: var(--text-3);">Stage 2 of 4 Active</span>
+          <span class="badge badge--assigned" style="font-size: 11px;">Stage 2 of 4 Active</span>
         </div>
         ${Utils.renderProgressStepper([
-          { title: "1. Notice Logged" },
+          { title: "1. Notice Logged (MoRTH)" },
           { title: "2. Attributed Custody" },
           { title: "3. Settle / Escrow" },
           { title: "4. Court / Dismissed" }
         ], 1)}
       </div>
 
-      <!-- PRIORITISED WORK QUEUE: NEEDS ATTENTION (Case Study Page 12, Screen 1) -->
-      <div class="calm-panel framer-animate-hero" style="margin-top: var(--space-4); padding: 16px 20px; border-radius: var(--radius-card); border: 1px solid var(--line); background: var(--surface);">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--line); flex-wrap: wrap; gap: 8px;">
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <span style="font-weight: 700; font-size: 14px; color: var(--ink);">Needs attention</span>
-            <span class="badge badge--unassigned" style="font-size: 10px; padding: 2px 7px; border-radius: 9999px;">Prioritised Work Queue</span>
+      <!-- 4. OPERATIONAL WORK METRIC TILES -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px;">
+        
+        <div class="card" style="padding: 16px 18px; border-radius: 16px; cursor: pointer;" onclick="navigateTo('challans', true, { filter: 'overdue' })">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <span style="font-size: 12px; color: var(--text-2); font-weight: 600;">Compounding Overdue</span>
+            <span class="badge badge--unassigned" style="font-size: 10px;">${overdueChallans.length} Critical</span>
           </div>
-          <span style="font-size: 11.5px; color: var(--text-2);">Ranked by financial urgency • Action required today</span>
+          <div style="font-size: 22px; font-weight: 800; color: var(--status-unassigned); font-variant-numeric: tabular-nums;">
+            ${Utils.formatINR(overdueAmount)}
+          </div>
+          <div style="font-size: 11.5px; color: var(--text-3); margin-top: 4px;">Past due date • late fee risk</div>
         </div>
 
-        <!-- Zeigarnik Effect: Weekly Triage Velocity & Closure Meter -->
-        <div style="display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 8px 14px; background: rgba(0, 113, 227, 0.04); border: 1px solid rgba(0, 113, 227, 0.12); border-radius: 8px; margin-bottom: 10px; flex-wrap: wrap;">
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <span style="font-size: 13px;">⚡</span>
-            <span style="font-size: 12px; font-weight: 600; color: var(--ink);">Resolution Velocity:</span>
-            <span style="font-size: 12px; color: var(--text-2);">
-              <strong>${clearedChallansCount} of ${challans.length}</strong> fleet citations resolved (${totalResolutionRate}% cleared)
-            </span>
+        <div class="card" style="padding: 16px 18px; border-radius: 16px; cursor: pointer;" onclick="navigateTo('challans', true, { status: 'unassigned' })">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <span style="font-size: 12px; color: var(--text-2); font-weight: 600;">Unassigned Notices</span>
+            <span class="badge badge--unassigned" style="font-size: 10px;">Needs Owner</span>
           </div>
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <div style="width: 100px; height: 5px; background: var(--surface-3); border-radius: 9999px; overflow: hidden;">
-              <div style="width: ${totalResolutionRate}%; height: 100%; background: var(--color-primary); border-radius: 9999px; transition: width 0.3s ease;"></div>
-            </div>
-            <span style="font-size: 11.5px; font-weight: 700; color: var(--color-primary); font-variant-numeric: tabular-nums;">
-              ${overdueChallans.length + unassignedChallans.length} action items remaining
-            </span>
+          <div style="font-size: 22px; font-weight: 800; color: var(--ink);">
+            ${unassignedChallans.length} Citations
           </div>
+          <div style="font-size: 11.5px; color: var(--text-3); margin-top: 4px;">Requires driver/lessee attribution</div>
         </div>
 
-        <div style="display: flex; flex-direction: column; gap: 8px;">
-          
-          <!-- 1. Overdue (Highest rank: compounding late fee risk) -->
-          <div style="display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 10px 14px; background: var(--surface-2); border-radius: 8px; border: 1px solid var(--line); flex-wrap: wrap;">
-            <div style="display: flex; align-items: center; gap: 12px;">
-              <span class="badge badge--unassigned" style="font-weight: 700; font-size: 11px; padding: 3px 8px; border-radius: 9999px;">Overdue</span>
-              <span style="font-size: 12.5px; color: var(--ink);">
-                <strong>${overdueChallans.length} challans</strong> past due date — compounding statutory late fee risk
-              </span>
-            </div>
-            <div style="display: flex; align-items: center; gap: 12px;">
-              <span style="font-weight: 700; font-size: 13px; color: var(--status-unassigned); font-variant-numeric: tabular-nums;">
-                ${Utils.formatINR(overdueAmount)}
-              </span>
-              <button class="btn btn--secondary btn--sm" style="height: 30px; padding: 0 14px; font-size: 12px;" onclick="navigateTo('challans', true, { filter: 'overdue' })">
-                Review
-              </button>
-            </div>
+        <div class="card" style="padding: 16px 18px; border-radius: 16px; cursor: pointer;" onclick="navigateTo('disputes')">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <span style="font-size: 12px; color: var(--text-2); font-weight: 600;">Virtual Court / Disputes</span>
+            <span class="badge badge--pending" style="font-size: 10px;">Sub-Judice</span>
           </div>
-
-          <!-- 2. Unassigned (Needs owner) -->
-          <div style="display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 10px 14px; background: var(--surface-2); border-radius: 8px; border: 1px solid var(--line); flex-wrap: wrap;">
-            <div style="display: flex; align-items: center; gap: 12px;">
-              <span class="badge badge--unassigned" style="font-weight: 700; font-size: 11px; padding: 3px 8px; border-radius: 9999px;">Unassigned</span>
-              <span style="font-size: 12.5px; color: var(--ink);">
-                <strong>${unassignedChallans.length} new challans</strong> from last sync have no responsible party attributed
-              </span>
-            </div>
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <button class="btn btn--primary btn--sm" style="height: 30px; padding: 0 14px; font-size: 12px;" onclick="navigateTo('challans', true, { status: 'unassigned' })">
-                Assign
-              </button>
-              <button class="btn btn--secondary btn--sm" style="height: 30px; padding: 0 14px; font-size: 12px;" onclick="navigateTo('challans', true, { status: 'unassigned' })">
-                Review
-              </button>
-            </div>
+          <div style="font-size: 22px; font-weight: 800; color: var(--ink); font-variant-numeric: tabular-nums;">
+            ${Utils.formatINR(disputedAmount)}
           </div>
-
-          <!-- 3. Disputed (Awaiting evidence/hearing) -->
-          <div style="display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 10px 14px; background: var(--surface-2); border-radius: 8px; border: 1px solid var(--line); flex-wrap: wrap;">
-            <div style="display: flex; align-items: center; gap: 12px;">
-              <span class="badge badge--pending" style="font-weight: 700; font-size: 11px; padding: 3px 8px; border-radius: 9999px;">Disputed</span>
-              <span style="font-size: 12.5px; color: var(--ink);">
-                <strong>${disputedChallans.length} disputes</strong> awaiting evidence upload or virtual court order
-              </span>
-            </div>
-            <div style="display: flex; align-items: center; gap: 12px;">
-              <span style="font-weight: 700; font-size: 13px; color: var(--ink); font-variant-numeric: tabular-nums;">
-                ${Utils.formatINR(disputedAmount)}
-              </span>
-              <button class="btn btn--secondary btn--sm" style="height: 30px; padding: 0 14px; font-size: 12px;" onclick="navigateTo('disputes')">
-                Review
-              </button>
-            </div>
-          </div>
-
-          <!-- 4. Failed (Retry or switch payment method) -->
-          <div style="display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 10px 14px; background: var(--surface-2); border-radius: 8px; border: 1px solid var(--line); flex-wrap: wrap;">
-            <div style="display: flex; align-items: center; gap: 12px;">
-              <span class="badge badge--neutral" style="font-weight: 700; font-size: 11px; padding: 3px 8px; color: #D92D20; border-color: rgba(217, 45, 32, 0.2); border-radius: 9999px;">Failed</span>
-              <span style="font-size: 12.5px; color: var(--ink);">
-                <strong>${failedChallans.length > 0 ? failedChallans.length : 1} payment failed</strong> — gateway timeout or debited without confirmation
-              </span>
-            </div>
-            <div style="display: flex; align-items: center; gap: 12px;">
-              <span style="font-weight: 700; font-size: 13px; color: var(--text-2); font-variant-numeric: tabular-nums;">
-                ${Utils.formatINR(failedAmount)}
-              </span>
-              <button class="btn btn--secondary btn--sm" style="height: 30px; padding: 0 14px; font-size: 12px;" onclick="navigateTo('payments')">
-                Review
-              </button>
-            </div>
-          </div>
-
+          <div style="font-size: 11.5px; color: var(--text-3); margin-top: 4px;">${disputedChallans.length} cases under legal contest</div>
         </div>
+
+        <div class="card" style="padding: 16px 18px; border-radius: 16px; cursor: pointer;" onclick="navigateTo('vehicles')">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <span style="font-size: 12px; color: var(--text-2); font-weight: 600;">Commercial Fleet</span>
+            <span class="badge badge--paid" style="font-size: 10px;">100% Active</span>
+          </div>
+          <div style="font-size: 22px; font-weight: 800; color: var(--ink);">
+            ${vehicles.length} Assets
+          </div>
+          <div style="font-size: 11.5px; color: var(--text-3); margin-top: 4px;">Tracked across national corridors</div>
+        </div>
+
       </div>
 
-      <!-- 3. MIDDLE ROW (12 COLUMNS: 7 / 5 ASYMMETRIC GRID) -->
-      <div class="calm-grid-12 framer-animate-charts">
+      <!-- 5. MIDDLE ROW: MODERN 2-COLUMN ANALYTICS (Matches Screen 4 from Reference) -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 18px;">
         
-        <!-- COLUMN SPAN 7: CUSTOM BAR CHART (14px Bars, 6px Radius Tops, Indigo Current Month, Floating Tooltip) -->
-        <div class="calm-panel calm-span-7">
-          <div class="calm-chart-header">
+        <!-- Left: Custom Bar Chart (Volume & Velocity) -->
+        <div class="card" style="padding: 22px 24px; border-radius: 18px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
             <div>
-              <div class="calm-chart-title">Notice &amp; Settlement Velocity</div>
-              <div class="calm-chart-sub">Monthly trend across national fleet operations</div>
+              <div style="font-size: 15px; font-weight: 700; color: var(--ink);">Notice &amp; Settlement Velocity</div>
+              <div style="font-size: 12px; color: var(--text-2); margin-top: 2px;">Monthly trend across national fleet operations</div>
             </div>
-            <div class="calm-chart-legend">
-              <div class="calm-chart-legend-item">
-                <span class="calm-chart-legend-dot" style="background: var(--surface-2); border: 1px solid var(--line-strong);"></span>
-                <span>Past Months</span>
+            <div style="display: flex; align-items: center; gap: 12px; font-size: 11.5px;">
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <span style="width: 8px; height: 8px; border-radius: 2px; background: var(--surface-1); display: inline-block;"></span>
+                <span style="color: var(--text-3);">Past Months</span>
               </div>
-              <div class="calm-chart-legend-item">
-                <span class="calm-chart-legend-dot" style="background: var(--accent);"></span>
-                <span style="color: var(--ink); font-weight: 500;">Current Month</span>
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <span style="width: 8px; height: 8px; border-radius: 2px; background: var(--color-primary); display: inline-block;"></span>
+                <span style="color: var(--ink); font-weight: 600;">Current Month</span>
               </div>
             </div>
           </div>
@@ -333,43 +221,41 @@ function renderDashboardView(container, actions) {
           </div>
         </div>
 
-        <!-- COLUMN SPAN 5: LIABILITY ATTRIBUTION DONUT CHART -->
-        <div class="calm-panel calm-span-5">
-          <div class="calm-chart-header">
-            <div>
-              <div class="calm-chart-title">Liability Attribution</div>
-              <div class="calm-chart-sub">Adjudicated legal responsibility breakdown</div>
-            </div>
+        <!-- Right: Liability Attribution Breakdown -->
+        <div class="card" style="padding: 22px 24px; border-radius: 18px;">
+          <div style="margin-bottom: 12px;">
+            <div style="font-size: 15px; font-weight: 700; color: var(--ink);">Liability Attribution Breakdown</div>
+            <div style="font-size: 12px; color: var(--text-2); margin-top: 2px;">Adjudicated legal responsibility distribution</div>
           </div>
 
-          <div class="calm-donut-container">
-            <!-- SVG Donut with 10px stroke, butt caps, 2px gap & serif central counter -->
+          <div class="calm-donut-container" style="display: flex; align-items: center; justify-content: space-around; flex-wrap: wrap; gap: 16px;">
+            <!-- SVG Donut -->
             ${renderLiabilityDonutChart(challans)}
 
-            <!-- Hairline Category Breakdown List -->
-            <div class="calm-donut-list">
-              <div class="calm-donut-row">
-                <div class="calm-donut-name">
-                  <span style="width: 8px; height: 8px; border-radius: 2px; background: #0071E3;"></span>
-                  <span>Driver Trips</span>
+            <!-- Category Breakdown List -->
+            <div class="calm-donut-list" style="display: flex; flex-direction: column; gap: 10px; flex: 1; min-width: 180px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; background: var(--surface-2); border-radius: 8px; font-size: 12.5px;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="width: 8px; height: 8px; border-radius: 50%; background: #1E60FF;"></span>
+                  <span style="color: var(--ink); font-weight: 500;">Driver Trips</span>
                 </div>
-                <div class="calm-donut-pct">42% (₹54,600)</div>
+                <div style="font-weight: 700; color: var(--ink);">42% (₹54,600)</div>
               </div>
 
-              <div class="calm-donut-row">
-                <div class="calm-donut-name">
-                  <span style="width: 8px; height: 8px; border-radius: 2px; background: #0066CC;"></span>
-                  <span>Lessee Contracts</span>
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; background: var(--surface-2); border-radius: 8px; font-size: 12.5px;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="width: 8px; height: 8px; border-radius: 50%; background: #38BDF8;"></span>
+                  <span style="color: var(--ink); font-weight: 500;">Lessee Contracts</span>
                 </div>
-                <div class="calm-donut-pct">38% (₹49,400)</div>
+                <div style="font-weight: 700; color: var(--ink);">38% (₹49,400)</div>
               </div>
 
-              <div class="calm-donut-row">
-                <div class="calm-donut-name">
-                  <span style="width: 8px; height: 8px; border-radius: 2px; background: #86868B;"></span>
-                  <span>Fleet Default</span>
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; background: var(--surface-2); border-radius: 8px; font-size: 12.5px;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="width: 8px; height: 8px; border-radius: 50%; background: #94A3B8;"></span>
+                  <span style="color: var(--ink); font-weight: 500;">Fleet Default</span>
                 </div>
-                <div class="calm-donut-pct">20% (₹26,010)</div>
+                <div style="font-weight: 700; color: var(--ink);">20% (₹26,010)</div>
               </div>
             </div>
           </div>
@@ -377,13 +263,13 @@ function renderDashboardView(container, actions) {
 
       </div>
 
-      <!-- 4. BOTTOM ROW (SPAN 12: ACTION QUEUE & RECENT INFRACTIONS) -->
-      <div class="calm-panel calm-span-12 framer-animate-table">
+      <!-- 6. BOTTOM ROW: ACTION QUEUE & RECENT INFRACTIONS LEDGER (Matches Screen 6 from Reference) -->
+      <div class="card" style="padding: 22px 24px; border-radius: 18px;">
         
-        <div class="calm-table-header">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; margin-bottom: 16px;">
           <div>
-            <div class="calm-chart-title">Action Queue &amp; Recent Infractions</div>
-            <div class="calm-chart-sub">Live compliance triage requiring financial or legal adjudication</div>
+            <div style="font-size: 16px; font-weight: 800; color: var(--ink); letter-spacing: -0.01em;">Action Queue &amp; Recent Infractions</div>
+            <div style="font-size: 12.5px; color: var(--text-2); margin-top: 2px;">Live compliance triage requiring financial or legal adjudication</div>
           </div>
 
           <!-- Queue Filter Tabs & Search Control -->
@@ -413,18 +299,18 @@ function renderDashboardView(container, actions) {
           </div>
         </div>
 
-        <!-- Strict 56px Table Rows, No Vertical Lines, 11px Uppercase Tracked Headers -->
-        <div style="overflow-x: auto; margin-top: 8px;">
-          <table class="calm-table">
+        <!-- High-Density Data Table -->
+        <div style="overflow-x: auto;">
+          <table class="data-table" style="width: 100%; min-width: 960px;">
             <thead>
               <tr>
-                <th style="width: 36px;"><input type="checkbox" id="selectAllAttentionCheckbox" title="Select all items"></th>
-                <th style="width: 150px;">Notice ID</th>
-                <th style="width: 140px;">Vehicle Plate</th>
+                <th style="width: 44px; text-align: center;"><input type="checkbox" id="selectAllAttentionCheckbox" title="Select all items"></th>
+                <th style="width: 160px;">Notice ID</th>
+                <th style="width: 150px;">Vehicle Plate</th>
                 <th>Violation / Offence</th>
-                <th class="text-right" style="width: 120px;">Amount</th>
+                <th class="text-right" style="width: 130px;">Amount</th>
                 <th style="width: 130px;">Status</th>
-                <th class="col-nice" style="width: 180px;">Offence Timestamp</th>
+                <th style="width: 180px;">Offence Timestamp</th>
                 <th class="text-right" style="width: 120px;">Action</th>
               </tr>
             </thead>
