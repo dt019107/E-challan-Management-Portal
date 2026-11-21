@@ -192,9 +192,9 @@ function renderSettlementsTabHTML(paidChallans) {
               const receiptNo = c.receiptNumber || `RCPT-2026-${Math.floor(100000 + Math.random() * 900000)}`;
               const txnRef = c.transactionReference || `TXN-PARIVAHAN-2026-${Math.floor(100000 + Math.random() * 900000)}`;
               return `
-                <tr>
+                <tr class="row-interactive" onclick="if(!event.target.closest('button') && !event.target.closest('a')) openReceiptModal('${c.id}')" title="Click to view settlement voucher">
                   <td>
-                    <strong style="color: var(--color-primary); cursor: pointer;" onclick="openReceiptModal('${c.id}')">
+                    <strong style="color: var(--color-primary); cursor: pointer;">
                       ${receiptNo}
                     </strong>
                     <div class="text-xs text-muted" style="margin-top: 2px;">${Utils.formatDate(c.paymentDate || c.offenceDate, true)}</div>
@@ -317,7 +317,7 @@ function renderRecoveryLedgerTabHTML(recoveries) {
               }
 
               return `
-                <tr>
+                <tr class="row-interactive" onclick="if(!event.target.closest('button') && !event.target.closest('a')) navigateTo('challans', true, { search: '${r.challanNumber}' })" title="Click to view associated notice">
                   <td>
                     <strong class="font-mono text-xs" style="color: var(--color-primary);">${r.id}</strong>
                     <div class="text-xs text-muted" style="margin-top: 2px;">${Utils.formatDate(r.createdAt)}</div>

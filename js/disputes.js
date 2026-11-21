@@ -196,7 +196,7 @@ function renderDisputeTableRows(records) {
     const daysLeft = Utils.getDaysRemaining(deadlineStr);
 
     return `
-      <tr>
+      <tr class="row-interactive" onclick="if(!event.target.closest('button') && !event.target.closest('a')) navigateTo('challans', true, { id: '${c.id}' })" title="Click to view contested notice details">
         <td>
           <a href="#challans?id=${c.id}" class="text-primary font-mono" style="font-weight: 600; text-decoration: none; font-size: 13px;">
             ${c.challanNumber}
