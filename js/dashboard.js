@@ -79,10 +79,10 @@ function renderDashboardView(container, actions) {
       </div>
 
       <!-- 2. SPEEDOMETER ARC GAUGES & HEALTH HUB (Matches Screens 1, 3, & 7 from Reference) -->
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; align-items: stretch;">
         
         <!-- Arc Gauge 1: Fleet Compliance Index -->
-        <div class="card" style="padding: 22px 20px; align-items: center; justify-content: center; text-align: center; border-radius: 18px;">
+        <div class="card" style="padding: 22px 20px; display: flex; flex-direction: column; justify-content: space-between; align-items: center; text-align: center; border-radius: 18px; min-height: 230px;">
           <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 6px;">
             <span style="font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-2);">Fleet Compliance</span>
             <span class="badge badge--paid" style="font-size: 10.5px;">Active SLA</span>
@@ -91,7 +91,7 @@ function renderDashboardView(container, actions) {
         </div>
 
         <!-- Arc Gauge 2: Resolution Velocity -->
-        <div class="card" style="padding: 22px 20px; align-items: center; justify-content: center; text-align: center; border-radius: 18px;">
+        <div class="card" style="padding: 22px 20px; display: flex; flex-direction: column; justify-content: space-between; align-items: center; text-align: center; border-radius: 18px; min-height: 230px;">
           <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 6px;">
             <span style="font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-2);">Resolution Velocity</span>
             <span class="badge badge--paid" style="font-size: 10.5px;">On Track</span>
@@ -100,7 +100,7 @@ function renderDashboardView(container, actions) {
         </div>
 
         <!-- Arc Gauge 3: Asset Safety Index -->
-        <div class="card" style="padding: 22px 20px; align-items: center; justify-content: center; text-align: center; border-radius: 18px;">
+        <div class="card" style="padding: 22px 20px; display: flex; flex-direction: column; justify-content: space-between; align-items: center; text-align: center; border-radius: 18px; min-height: 230px;">
           <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 6px;">
             <span style="font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-2);">Asset Safety Score</span>
             <span class="badge badge--assigned" style="font-size: 10.5px;">Optimal</span>
@@ -109,7 +109,7 @@ function renderDashboardView(container, actions) {
         </div>
 
         <!-- Card 4: Primary Liability Action Hub -->
-        <div class="card" style="padding: 22px 20px; justify-content: space-between; border-radius: 18px; position: relative; overflow: hidden; background: linear-gradient(135deg, rgba(15, 23, 42, 0.94) 0%, rgba(30, 96, 255, 0.88) 100%), url('assets/images/real/highway-radar-speed.jpg') center/cover no-repeat; color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 12px 32px -4px rgba(30, 96, 255, 0.25);">
+        <div class="card" style="padding: 22px 20px; display: flex; flex-direction: column; justify-content: space-between; border-radius: 18px; min-height: 230px; position: relative; overflow: hidden; background: linear-gradient(135deg, rgba(15, 23, 42, 0.94) 0%, rgba(30, 96, 255, 0.88) 100%), url('assets/images/real/highway-radar-speed.jpg') center/cover no-repeat; color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 12px 32px -4px rgba(30, 96, 255, 0.25);">
           <div style="position: absolute; right: 14px; top: 14px; display: flex; align-items: center; gap: 6px; background: rgba(255, 255, 255, 0.12); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 3px 9px; border-radius: 9999px; font-size: 10px; font-weight: 600; letter-spacing: 0.04em;">
             <span style="width: 6px; height: 6px; border-radius: 50%; background: #38BDF8; display: inline-block;"></span>
             <span>HIGHWAY RADAR LIVE</span>

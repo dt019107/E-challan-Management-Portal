@@ -51,23 +51,13 @@
   border-radius: 10px;
   border: none;
   box-shadow: 0 2px 8px rgba(30, 96, 255, 0.20);
+  cursor: pointer;
+  transition: all 180ms ease;
 }
 
 .btn--primary:hover {
   background: var(--color-primary-dark, #1550E0);
   box-shadow: 0 4px 14px rgba(30, 96, 255, 0.30);
-}
-  border-radius: var(--radius-pill, 44px);
-  border: 1px solid var(--color-primary, #0968f6);
-  box-shadow: none;
-  font-size: 14px;
-  transition: all 150ms var(--ease-ebay);
-}
-
-.btn--primary:hover {
-  background: var(--color-primary-dark, #003aa5);
-  border-color: var(--color-primary-dark, #003aa5);
-  box-shadow: 0 4px 12px rgba(9, 104, 246, 0.28);
   transform: translateY(-1px);
 }
 
@@ -4457,50 +4447,53 @@ td a[href*="#challans?id="]:hover,
   display: none !important;
 }
 
-/* 4. eBay Pill Nav Tabs across all sub-views */
+/* 4. Modern Inset Segmented Pill Nav Tabs across all sub-views (Matches Design Inspiration) */
 .nav-tabs,
 .tab-container-clean {
-  display: flex !important;
+  display: inline-flex !important;
   align-items: center !important;
-  gap: 6px !important;
-  background: var(--surface-2, #f7f7f7) !important;
+  gap: 4px !important;
+  background: #EDF2F7 !important;
   padding: 4px !important;
-  border-radius: var(--radius-pill, 44px) !important;
-  border: 1px solid var(--surface-1, #e5e5e5) !important;
+  border-radius: var(--radius-pill, 9999px) !important;
+  border: 1px solid rgba(15, 23, 42, 0.06) !important;
   overflow-x: auto !important;
   margin-bottom: 20px !important;
+  max-width: 100% !important;
+  box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.04) !important;
 }
 
 .nav-tab,
 .tab-btn-clean {
   display: inline-flex !important;
   align-items: center !important;
-  gap: 8px !important;
-  padding: 8px 18px !important;
-  border-radius: var(--radius-pill, 44px) !important;
+  gap: 7px !important;
+  padding: 7px 16px !important;
+  border-radius: var(--radius-pill, 9999px) !important;
   border: 1px solid transparent !important;
   background: transparent !important;
-  color: var(--ink-muted, #555555) !important;
-  font-size: 13px !important;
+  color: var(--ink-muted, #64748B) !important;
+  font-size: 12.5px !important;
   font-weight: 500 !important;
   cursor: pointer !important;
   white-space: nowrap !important;
-  transition: all 150ms var(--ease-ebay) !important;
+  transition: all 180ms cubic-bezier(0.16, 1, 0.3, 1) !important;
   text-decoration: none !important;
+  user-select: none !important;
 }
 
 .nav-tab:hover,
 .tab-btn-clean:hover {
-  color: var(--ink, #191919) !important;
-  background: rgba(0, 0, 0, 0.04) !important;
+  color: var(--ink, #0F172A) !important;
+  background: rgba(255, 255, 255, 0.6) !important;
 }
 
 .nav-tab.active,
 .tab-btn-clean.active {
-  background: var(--canvas, #FFFFFF) !important;
-  color: var(--ink, #191919) !important;
-  border-color: var(--hairline, #c7c7c7) !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+  background: #FFFFFF !important;
+  color: var(--ink, #0F172A) !important;
+  border-color: rgba(15, 23, 42, 0.08) !important;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.08), 0 1px 2px rgba(15, 23, 42, 0.04) !important;
   font-weight: 700 !important;
 }
 
@@ -4509,15 +4502,16 @@ td a[href*="#challans?id="]:hover,
   font-size: 11px !important;
   font-weight: 700 !important;
   padding: 1px 7px !important;
-  border-radius: var(--radius-pill, 44px) !important;
-  background: var(--surface-2, #f7f7f7) !important;
-  color: var(--ink-muted, #555555) !important;
+  border-radius: var(--radius-pill, 9999px) !important;
+  background: rgba(15, 23, 42, 0.06) !important;
+  color: var(--ink-muted, #64748B) !important;
+  font-variant-numeric: tabular-nums !important;
 }
 
 .nav-tab.active .nav-tab-badge,
 .tab-btn-clean.active .tab-badge-clean {
-  background: var(--color-primary-light, rgba(9, 104, 246, 0.1)) !important;
-  color: var(--color-primary, #0968f6) !important;
+  background: rgba(30, 96, 255, 0.12) !important;
+  color: var(--color-primary, #1E60FF) !important;
 }
 
 /* 5. Clean Restyled Reports Progress Bars (No lime green, No emoji) */

@@ -123,7 +123,15 @@ function renderDisputesView(container, actions) {
   }
 
   const tableHTML = `
-    <div class="card" style="margin-top: var(--space-4);">
+    <!-- Judicial Stay Notice -->
+    <div style="background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 12px; padding: 12px 18px; display: flex; align-items: center; gap: 12px; margin-top: var(--space-4);">
+      <span style="font-size: 18px;">⚖️</span>
+      <div style="font-size: 12.5px; color: var(--ink); line-height: 1.4;">
+        <strong>Sub-Judice Statutory Stay Guard Active:</strong> Contested notices under Special Metropolitan Magistrate review maintain active legal stay. Direct Parivahan settlement is locked to prevent contempt of court or double payment.
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: var(--space-3);">
       <div class="card-header" style="flex-wrap: wrap; gap: var(--space-3);">
         <div>
           <div class="card-title">Legal Dockets & Administrative Contests</div>
