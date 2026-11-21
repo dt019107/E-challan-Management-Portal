@@ -53,36 +53,6 @@ function renderPaymentsView(container, actions) {
     </button>
   `;
 
-  // 0. Visual Hero Banner
-  const heroHTML = `
-    <!-- Section Visual Hero Banner -->
-    <div class="card" style="margin-bottom: 20px; padding: 24px 28px; border-radius: 18px; position: relative; overflow: hidden; background: linear-gradient(90deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.82) 55%, rgba(30, 96, 255, 0.45) 100%), url('assets/images/real/fintech-payment-settlement.jpg') center/cover no-repeat; color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.12); box-shadow: 0 10px 30px -4px rgba(15, 23, 42, 0.15);">
-      <div style="position: relative; z-index: 2; max-width: 680px;">
-        <div style="display: inline-flex; align-items: center; gap: 7px; background: rgba(255, 255, 255, 0.12); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 4px 12px; border-radius: 9999px; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 10px; color: #93C5FD;">
-          <span style="width: 7px; height: 7px; border-radius: 50%; background: #38BDF8; display: inline-block;"></span>
-          <span>Statutory Clearance &amp; Financial Recovery</span>
-        </div>
-        <h2 style="font-size: 22px; font-weight: 800; color: #FFFFFF; letter-spacing: -0.02em; margin: 0 0 8px;">
-          Treasury Settlement &amp; Multi-Rail Recovery Ledger
-        </h2>
-        <p style="font-size: 13.5px; color: rgba(255, 255, 255, 0.85); line-height: 1.5; margin: 0 0 14px;">
-          Direct MoRTH Parivahan treasury settlement to safeguard fleet RC fitness and prevent vehicle blacklisting, paired with automated multi-rail financial recovery across Driver Payroll, Lessee Invoicing, and Operational Absorption.
-        </p>
-        <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
-          <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: #A7F3D0; background: rgba(16, 185, 129, 0.15); padding: 3px 10px; border-radius: 6px; border: 1px solid rgba(16, 185, 129, 0.3);">
-            ✓ <strong>${Utils.formatINR(totalSettledAmount)}</strong> Parivahan Settled
-          </span>
-          <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: #93C5FD; background: rgba(59, 130, 246, 0.15); padding: 3px 10px; border-radius: 6px; border: 1px solid rgba(59, 130, 246, 0.3);">
-            💼 <strong>${Utils.formatINR(invoicedLesseeAmount)}</strong> Lessee Invoiced
-          </span>
-          <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: #FDE68A; background: rgba(245, 158, 11, 0.15); padding: 3px 10px; border-radius: 6px; border: 1px solid rgba(245, 158, 11, 0.3);">
-            💳 <strong>${Utils.formatINR(pendingPayrollAmount)}</strong> Driver Payroll Holds
-          </span>
-        </div>
-      </div>
-    </div>
-  `;
-
   // 1. KPI Metric Cards
   const kpiHTML = `
     <div class="kpi-grid">
@@ -157,7 +127,7 @@ function renderPaymentsView(container, actions) {
     contentHTML = renderPendingConfirmationTabHTML(pendingChallans);
   }
 
-  container.innerHTML = heroHTML + kpiHTML + tabsHTML + contentHTML;
+  container.innerHTML = kpiHTML + tabsHTML + contentHTML;
 }
 
 /**
