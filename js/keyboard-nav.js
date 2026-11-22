@@ -182,7 +182,31 @@ const KeyboardNav = {
         return;
       }
 
-      // 5. Table Navigation: J or ArrowDown (Next Row)
+      // 5. In-Drawer / Detail View J/K Jump or Table Navigation: J or ArrowDown (Next Row)
+      const isDetailsOpen = document.querySelector(".challan-details-grid") !== null;
+      const currentHash = window.location.hash || "";
+      const isChallanDetailHash = currentHash.includes("challans?id=");
+
+      if ((isDetailsOpen || isChallanDetailHash) && (e.key === "j" || e.key === "J")) {
+        const idMatch = currentHash.match(/id=([^&]+)/);
+        const currentId = idMatch ? idMatch[1] : null;
+        if (currentId && typeof window.navigateToNextChallan === "function") {
+          e.preventDefault();
+          window.navigateToNextChallan(currentId);
+          return;
+        }
+      }
+
+      if ((isDetailsOpen || isChallanDetailHash) && (e.key === "k" || e.key === "K")) {
+        const idMatch = currentHash.match(/id=([^&]+)/);
+        const currentId = idMatch ? idMatch[1] : null;
+        if (currentId && typeof window.navigateToPrevChallan === "function") {
+          e.preventDefault();
+          window.navigateToPrevChallan(currentId);
+          return;
+        }
+      }
+
       if (e.key === "j" || e.key === "J" || e.key === "ArrowDown") {
         const rows = this.getVisibleTableRows();
         if (rows.length) {

@@ -70,10 +70,10 @@ function renderReportsView(container, actions) {
           <!-- Filter Controls -->
           <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
             <!-- Date Filter -->
-            <select class="form-select" style="width: 150px; font-size: 12px;" id="reportPeriodSelect" onchange="switchReportDateRange(this.value)">
-              <option value="ytd" ${reportsViewState.dateRange === 'ytd' ? 'selected' : ''}>Year to Date (2026)</option>
+            <select class="form-select" style="width: 160px; font-size: 12px;" id="reportPeriodSelect" onchange="switchReportDateRange(this.value)" aria-label="Select report date range">
               <option value="30days" ${reportsViewState.dateRange === '30days' ? 'selected' : ''}>Last 30 Days</option>
-              <option value="quarter" ${reportsViewState.dateRange === 'quarter' ? 'selected' : ''}>Current Quarter</option>
+              <option value="quarter" ${reportsViewState.dateRange === 'quarter' ? 'selected' : ''}>This Quarter (Q4)</option>
+              <option value="ytd" ${reportsViewState.dateRange === 'ytd' ? 'selected' : ''}>FY 2025-26 (YTD)</option>
               <option value="all" ${reportsViewState.dateRange === 'all' ? 'selected' : ''}>All Historical</option>
             </select>
 
@@ -904,14 +904,35 @@ function getActiveReportData() {
 }
 
 /**
- * Universal CSV Exporter for Active Report
+ * Universal CSV Exporter for Active Report with Visual Loading State (Frontend Implementation Skill)
  */
-function exportCurrentReportCSV() {
-  const reportData = getActiveReportData();
-  if (!reportData.rows || reportData.rows.length === 0) {
-    Utils.showToast("No Data", "No report rows available to export.", "warning");
-    return;
+function exportCurrentReportCSV(btn) {
+  const triggerBtn = btn || document.querySelector("button[onclick*='exportCurrentReportCSV']");
+  const origHTML = triggerBtn ? triggerBtn.innerHTML : "";
+  if (triggerBtn) {
+    triggerBtn.disabled = true;
+    triggerBtn.innerHTML = `
+      <svg class="sync-icon" width="14" height="14" viewBox="0 0 20 20" fill="currentColor" style="animation: spin 1s linear infinite;"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/></svg>
+      <span>Generating CSV...</span>
+    `;
   }
-  Utils.exportToCSV(reportData.rows, reportData.exportFilename);
+
+  setTimeout(() => {
+    const reportData = getActiveReportData();
+    if (!reportData.rows || reportData.rows.length === 0) {
+      Utils.showToast("No Data", "No report rows available to export.", "warning");
+      if (triggerBtn) {
+        triggerBtn.disabled = false;
+        triggerBtn.innerHTML = origHTML;
+      }
+      return;
+    }
+    Utils.exportToCSV(reportData.rows, reportData.exportFilename);
+    Utils.showToast("Export Ready", `Generated official ledger: ${reportData.exportFilename}`, "success");
+    if (triggerBtn) {
+      triggerBtn.disabled = false;
+      triggerBtn.innerHTML = origHTML;
+    }
+  }, 350);
 }
 window.exportCurrentReportCSV = exportCurrentReportCSV;

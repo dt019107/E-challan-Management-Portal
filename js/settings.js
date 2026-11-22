@@ -427,7 +427,7 @@ function renderActiveSettingsTab(company, currentUser, currentRole) {
               <strong style="font-size: 13px;">Driver WhatsApp Infraction Notice</strong>
               <p class="text-xs text-muted">Sends instant WhatsApp notification with ANPR CCTV evidence link upon liability attribution.</p>
             </div>
-            <input type="checkbox" id="setNotifDriverWhatsApp" ${notifs.driverNoticeWhatsApp !== false ? 'checked' : ''}>
+            <input type="checkbox" id="setNotifDriverWhatsApp" role="switch" aria-checked="${notifs.driverNoticeWhatsApp !== false}" onchange="this.setAttribute('aria-checked', this.checked)" ${notifs.driverNoticeWhatsApp !== false ? 'checked' : ''}>
           </div>
 
           <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px; border: 1px solid var(--color-border); border-radius: var(--radius-md);">
@@ -435,7 +435,7 @@ function renderActiveSettingsTab(company, currentUser, currentRole) {
               <strong style="font-size: 13px;">Corporate Lessee Weekly Email Digest</strong>
               <p class="text-xs text-muted">Dispatches consolidated debit note summary for all vehicles operating under commercial lease agreements.</p>
             </div>
-            <input type="checkbox" id="setNotifLesseeEmail" ${notifs.lesseeWeeklyEmailDigest !== false ? 'checked' : ''}>
+            <input type="checkbox" id="setNotifLesseeEmail" role="switch" aria-checked="${notifs.lesseeWeeklyEmailDigest !== false}" onchange="this.setAttribute('aria-checked', this.checked)" ${notifs.lesseeWeeklyEmailDigest !== false ? 'checked' : ''}>
           </div>
 
           <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px; border: 1px solid var(--color-border); border-radius: var(--radius-md);">
@@ -443,7 +443,7 @@ function renderActiveSettingsTab(company, currentUser, currentRole) {
               <strong style="font-size: 13px;">Impoundment & Court Summons Urgent Warning</strong>
               <p class="text-xs text-muted">High-priority alert when a vehicle's fine is within 3 days of court summons or RC blacklisting.</p>
             </div>
-            <input type="checkbox" id="setNotifImpoundment" ${notifs.impoundmentUrgentAlerts !== false ? 'checked' : ''}>
+            <input type="checkbox" id="setNotifImpoundment" role="switch" aria-checked="${notifs.impoundmentUrgentAlerts !== false}" onchange="this.setAttribute('aria-checked', this.checked)" ${notifs.impoundmentUrgentAlerts !== false ? 'checked' : ''}>
           </div>
         </div>
 
@@ -592,22 +592,57 @@ function triggerSimulatedNotification(type) {
 window.triggerSimulatedNotification = triggerSimulatedNotification;
 
 /**
- * Reset Demo Data Confirmation Dialog
+ * Reset Demo Data Confirmation Dialog (Usability Psychologist Skill)
+ * Replaces basic browser confirm() with an explicit typing check to defend against accidental data loss.
  */
 function openResetDataConfirmationModal() {
-  const proceed = confirm(
-    "ARE YOU SURE YOU WANT TO RESET DEMO DATA?\n\n" +
-    "This will clear all localStorage modifications, custom vehicles, edited challans, simulated payments, disputes, and court dockets, and restore the pristine initial Indian fleet dataset.\n\n" +
-    "Click OK to confirm data reset."
-  );
-
-  if (proceed) {
-    StorageManager.resetToDefault();
-    Utils.showToast("System Reset Complete", "Pristine initial fleet mock data restored.", "success");
-    setTimeout(() => {
-      window.location.hash = "#dashboard";
+  const modal = document.getElementById("resetDemoDataModal");
+  if (!modal) {
+    if (confirm("Reset demo data to factory defaults?")) {
+      StorageManager.resetToDefault();
       window.location.reload();
-    }, 600);
+    }
+    return;
   }
+
+  const input = document.getElementById("confirmResetInput");
+  const btn = document.getElementById("executeResetDataBtn");
+  if (input) input.value = "";
+  if (btn) {
+    btn.disabled = true;
+    btn.style.opacity = "0.5";
+  }
+
+  Utils.openModal("resetDemoDataModal");
 }
 window.openResetDataConfirmationModal = openResetDataConfirmationModal;
+
+function handleResetConfirmationInput(val) {
+  const btn = document.getElementById("executeResetDataBtn");
+  if (!btn) return;
+  if ((val || "").trim().toUpperCase() === "RESET") {
+    btn.disabled = false;
+    btn.style.opacity = "1";
+  } else {
+    btn.disabled = true;
+    btn.style.opacity = "0.5";
+  }
+}
+window.handleResetConfirmationInput = handleResetConfirmationInput;
+
+function executeConfirmedDemoReset() {
+  const input = document.getElementById("confirmResetInput");
+  if ((input?.value || "").trim().toUpperCase() !== "RESET") {
+    Utils.showToast("Verification Required", "Please type RESET to confirm factory restore.", "warning");
+    return;
+  }
+
+  Utils.closeModal("resetDemoDataModal");
+  StorageManager.resetToDefault();
+  Utils.showToast("System Reset Complete", "Pristine initial fleet mock data restored.", "success");
+  setTimeout(() => {
+    window.location.hash = "#dashboard";
+    window.location.reload();
+  }, 600);
+}
+window.executeConfirmedDemoReset = executeConfirmedDemoReset;

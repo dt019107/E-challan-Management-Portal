@@ -615,8 +615,8 @@ const Utils = {
     const endColor = options.endColor || "#38BDF8";
 
     return `
-      <div class="arc-gauge-widget" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; width: 100%;">
-        <svg viewBox="0 0 200 124" style="width: 100%; max-width: 220px; height: auto; overflow: visible;">
+      <div class="arc-gauge-widget" role="meter" aria-valuenow="${p}" aria-valuemin="0" aria-valuemax="100" aria-label="${label}: ${p} percent" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; width: 100%;">
+        <svg viewBox="0 0 200 124" aria-hidden="true" style="width: 100%; max-width: 220px; height: auto; overflow: visible;">
           <defs>
             <linearGradient id="${gradientId}" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" stop-color="${startColor}" />

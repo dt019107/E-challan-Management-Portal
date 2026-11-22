@@ -485,7 +485,7 @@
           </div>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
             <div class="form-group">
-              <label class="form-label">Upfront Payer (Settlement Entity) *</label>
+              <label class="form-label" for="payPayerSelect">Upfront Payer (Settlement Entity) *</label>
               <select class="form-select" id="payPayerSelect" onchange="handlePayPayerChange(this.value)">
                 <option value="Apex Fleet Pvt Ltd">Apex Fleet Pvt Ltd (Pre-funds Fine)</option>
                 <option value="Lessee Direct">Corporate Lessee Direct</option>
@@ -494,7 +494,7 @@
               <span class="text-xs text-muted">Entity providing immediate liquidity</span>
             </div>
             <div class="form-group">
-              <label class="form-label">Responsible Party (Legally Liable)</label>
+              <label class="form-label" for="payResponsiblePartyDisplay">Responsible Party (Legally Liable)</label>
               <input type="text" class="form-input" id="payResponsiblePartyDisplay" readonly style="background: var(--color-bg-app); font-weight: 600;">
               <span class="text-xs text-muted">Determined by custody engine</span>
             </div>
@@ -502,12 +502,12 @@
 
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-top: 8px;">
             <div class="form-group">
-              <label class="form-label">Recovery Party Target *</label>
+              <label class="form-label" for="payRecoveryPartyInput">Recovery Party Target *</label>
               <input type="text" class="form-input" id="payRecoveryPartyInput" required placeholder="Driver or Lessee Name">
               <span class="text-xs text-muted">Whom to recover funds from</span>
             </div>
             <div class="form-group">
-              <label class="form-label">Recovery Channel / Ledger *</label>
+              <label class="form-label" for="payRecoveryChannelSelect">Recovery Channel / Ledger *</label>
               <select class="form-select" id="payRecoveryChannelSelect">
                 <option value="Payroll deduction">Payroll deduction (Driver salary hold)</option>
                 <option value="Invoice">Corporate Invoice (Lessee monthly billing)</option>
@@ -1255,12 +1255,17 @@
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);" id="courtCompoundedAmountContainer">
             <div class="form-group">
               <label class="form-label" for="courtCompoundedAmountInput">Compounded Fine (INR) *</label>
-              <input type="number" class="form-input" id="courtCompoundedAmountInput" value="1000" min="0" step="100">
+              <input type="number" class="form-input" id="courtCompoundedAmountInput" value="1000" min="0" step="100" oninput="updateCompoundingCalculation()">
               <span class="text-xs text-muted">Amount decreed by Magistrate</span>
             </div>
             <div class="form-group">
               <label class="form-label" for="courtOrderRefInput">Court Order Reference No *</label>
               <input type="text" class="form-input font-mono" id="courtOrderRefInput" placeholder="e.g. ORDER-VC-2026-9912">
+            </div>
+            <!-- Live Compounding Savings Saliency Badge -->
+            <div id="courtCompoundingSavingsBadge" style="grid-column: 1 / -1; padding: 10px 14px; background: #ECFDF5; border: 1px solid #A7F3D0; border-radius: var(--radius-sm); color: #065F46; font-size: 12.5px; font-weight: 600; display: flex; align-items: center; justify-content: space-between;">
+              <span id="courtCompoundingSavingsText">⚖️ Compounding Savings: Calculating...</span>
+              <span id="courtCompoundingReductionPill" class="badge badge--paid" style="font-size: 11px;">0% Compounded</span>
             </div>
           </div>
 
@@ -1387,6 +1392,10 @@
           <span style="font-size: 13px; color: var(--ink);">Close Active Modal / Drawer</span>
           <div><kbd>Esc</kbd></div>
         </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--surface-1);">
+          <span style="font-size: 13px; color: var(--ink);">Next / Prev Notice in Detail View</span>
+          <div style="display: flex; gap: 4px;"><kbd>J</kbd> <span style="font-size: 11px; color: var(--text-3); align-self: center;">/</span> <kbd>K</kbd></div>
+        </div>
         <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 0;">
           <span style="font-size: 13px; color: var(--ink);">Show / Hide Shortcuts</span>
           <div><kbd>?</kbd></div>
@@ -1394,6 +1403,41 @@
       </div>
       <div class="modal-footer" style="justify-content: flex-end;">
         <button class="btn btn--primary" type="button" onclick="Utils.closeModal('keyboardShortcutsModal')">Got it</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. Defensive Reset Demo Data Confirmation Modal (Usability Psychologist Skill) -->
+  <div class="modal-backdrop" id="resetDemoDataModal" role="dialog" aria-modal="true" aria-labelledby="resetModalTitle">
+    <div class="modal-dialog" style="max-width: 480px;">
+      <div class="modal-header" style="background: #FEF3F2; border-bottom: 1px solid #FECDCA;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B42318" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            <h3 class="modal-title" id="resetModalTitle" style="color: #B42318;">Reset System Demo Data</h3>
+          </div>
+          <p class="text-xs text-muted">Defensive safeguard against accidental operational data loss</p>
+        </div>
+        <button class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('resetDemoDataModal')" title="Close">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+        </button>
+      </div>
+      <div class="modal-body" style="padding: 20px 24px; display: flex; flex-direction: column; gap: 14px;">
+        <p style="font-size: 13.5px; color: var(--text-2); line-height: 1.5; margin: 0;">
+          This action will permanently purge all custom fleet assets, vehicle assignments, simulated payment receipts, and Virtual Court compounding decrees, restoring the factory mock dataset.
+        </p>
+        <div style="background: var(--surface-2); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 12px 14px;">
+          <label for="confirmResetInput" class="form-label" style="margin-bottom: 6px; font-weight: 600;">
+            Type <span style="font-family: var(--font-family-mono); color: #B42318; font-weight: 800; background: #FEF3F2; padding: 2px 6px; border-radius: 4px;">RESET</span> to confirm:
+          </label>
+          <input type="text" id="confirmResetInput" class="form-input font-mono" placeholder="RESET" oninput="handleResetConfirmationInput(this.value)" autocomplete="off">
+        </div>
+      </div>
+      <div class="modal-footer" style="display: flex; justify-content: space-between;">
+        <button class="btn btn--outline" type="button" onclick="Utils.closeModal('resetDemoDataModal')">Cancel</button>
+        <button class="btn btn--danger" type="button" id="executeResetDataBtn" disabled onclick="executeConfirmedDemoReset()">
+          Confirm Factory Reset
+        </button>
       </div>
     </div>
   </div>

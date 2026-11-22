@@ -136,18 +136,22 @@ function renderDriversView(container, actions) {
                 <tr class="row-interactive">
                   <td style="padding-left: 20px;">
                     <div style="display: flex; align-items: center; gap: 12px;">
-                      <div style="width: 38px; height: 38px; border-radius: 50%; background: var(--color-primary, #1E60FF); color: #FFFFFF; font-weight: 700; font-size: 12.5px; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(30, 96, 255, 0.25); flex-shrink: 0;">
+                      <div style="width: 38px; height: 38px; border-radius: 50%; background: #1E60FF; color: #FFFFFF; font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(30, 96, 255, 0.28); flex-shrink: 0;" aria-hidden="true">
                         ${initials}
                       </div>
                       <div>
                         <strong style="color: var(--ink); font-size: 13.5px;">${d.name}</strong>
-                        <div style="font-size: 12px; color: var(--text-3); margin-top: 2px;">📞 ${d.phone || '+91 98765 43210'}</div>
+                        <div style="font-size: 12px; margin-top: 2px;">
+                          <a href="tel:${d.phone || '+91 98765 43210'}" aria-label="Call Driver ${d.name} at ${d.phone || '+91 98765 43210'}" style="color: var(--text-3); text-decoration: none;">
+                            📞 ${d.phone || '+91 98765 43210'}
+                          </a>
+                        </div>
                       </div>
                     </div>
                   </td>
                   <td>
                     <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                      <span class="reg-plate-chip" style="cursor: pointer; font-size: 12px; font-weight: 700;" onclick="navigateTo('vehicles', true, { search: '${d.assignedVehicleReg}' })" title="Filter vehicles by ${d.assignedVehicleReg}">
+                      <span class="reg-plate-chip" role="button" tabindex="0" style="cursor: pointer; font-size: 12px; font-weight: 700;" onclick="navigateTo('vehicles', true, { search: '${d.assignedVehicleReg}' })" onkeydown="if(event.key==='Enter') navigateTo('vehicles', true, { search: '${d.assignedVehicleReg}' })" aria-label="Filter fleet vehicles by ${d.assignedVehicleReg}" title="Filter vehicles by ${d.assignedVehicleReg}">
                         ${d.assignedVehicleReg}
                       </span>
                       <span style="font-family: var(--font-family-mono); font-size: 11.5px; color: var(--text-2); background: rgba(15, 23, 42, 0.05); padding: 2px 7px; border-radius: 4px;">
@@ -156,12 +160,19 @@ function renderDriversView(container, actions) {
                     </div>
                   </td>
                   <td class="text-right">
-                    <strong style="font-size: 14px; font-variant-numeric: tabular-nums; color: ${hasRecovery ? 'var(--status-unassigned)' : 'var(--text-3)'}; font-weight: 700;">
-                      ${hasRecovery ? Utils.formatINR(d.pendingRecovery) : '₹0'}
-                    </strong>
-                    <div style="font-size: 11px; color: var(--text-3); margin-top: 2px;">
-                      ${hasRecovery ? 'Queued for deduction' : 'Zero Liability'}
-                    </div>
+                    ${hasRecovery ? `
+                      <a href="#payments" onclick="if(window.switchPaymentsTab) switchPaymentsTab('recovery');" class="recovery-chip" aria-label="View payroll recovery ledger for ${d.name}" style="cursor: pointer; text-decoration: none; display: inline-flex; flex-direction: column; align-items: flex-end;">
+                        <strong style="font-size: 14px; font-variant-numeric: tabular-nums; color: var(--status-unassigned); font-weight: 700;">
+                          ${Utils.formatINR(d.pendingRecovery)}
+                        </strong>
+                        <div style="font-size: 11px; color: var(--status-unassigned); margin-top: 2px; font-weight: 600; text-decoration: underline;">
+                          Queued in Payroll Ledger →
+                        </div>
+                      </a>
+                    ` : `
+                      <strong style="font-size: 14px; font-variant-numeric: tabular-nums; color: var(--text-3); font-weight: 700;">₹0</strong>
+                      <div style="font-size: 11px; color: var(--text-3); margin-top: 2px;">Zero Liability</div>
+                    `}
                   </td>
                   <td>
                     <div class="calm-badge ${d.status === 'Active' ? 'paid' : 'assigned'}">

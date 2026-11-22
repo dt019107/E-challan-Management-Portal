@@ -3880,8 +3880,11 @@ td a[href*="#challans?id="]:hover,
 .data-table thead th {
   position: sticky;
   top: 0;
-  z-index: 3;
-  background-color: var(--surface-2);
+  z-index: 10;
+  background-color: rgba(248, 250, 252, 0.94);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border-subtle, #E2E8F0);
 }
 
 /* Von Restorff Effect: Visual Isolation of High Urgency/Overdue Rows */

@@ -411,10 +411,52 @@ function openCourtCaseModal(challanId) {
   document.getElementById("courtOrderNotesInput").value = "Special Metropolitan Magistrate: First offence compounding granted. Fine mitigated upon vehicle telematics submission.";
   document.getElementById("courtCompoundedAmountContainer").style.display = "grid";
 
+  // Real-Time Compounding Math Update
+  updateCompoundingCalculation();
+
   Utils.openModal("courtModal");
 }
 window.openCourtCaseModal = openCourtCaseModal;
 window.openResolveCourtModal = openCourtCaseModal;
+
+/**
+ * Real-Time Judicial Compounding Math Calculation (UI Designer + Usability Psychologist)
+ */
+function updateCompoundingCalculation() {
+  const challanId = document.getElementById("courtModalChallanId")?.value;
+  const challan = StorageManager.getChallanById(challanId);
+  if (!challan) return;
+
+  const originalFine = challan.amount || 1000;
+  const outcome = document.getElementById("courtOrderOutcomeSelect")?.value || "COMPOUNDED";
+  const savingsText = document.getElementById("courtCompoundingSavingsText");
+  const savingsPill = document.getElementById("courtCompoundingReductionPill");
+  if (!savingsText || !savingsPill) return;
+
+  if (outcome === "DISMISSED") {
+    savingsText.textContent = "⚖️ Case Dismissed / Quashed: 100% fine waived by judicial decree";
+    savingsPill.textContent = `Full Waiver (${Utils.formatINR(originalFine)})`;
+    savingsPill.className = "badge badge--paid";
+    return;
+  }
+
+  if (outcome === "UPHELD") {
+    savingsText.textContent = "⚖️ Statutory Fine Upheld: No compounding reduction applied";
+    savingsPill.textContent = "₹0 Saved";
+    savingsPill.className = "badge badge--unassigned";
+    return;
+  }
+
+  const inputEl = document.getElementById("courtCompoundedAmountInput");
+  const decreedAmount = parseFloat(inputEl?.value) || 0;
+  const savings = Math.max(0, originalFine - decreedAmount);
+  const percentage = originalFine > 0 ? Math.round((savings / originalFine) * 100) : 0;
+
+  savingsText.innerHTML = `⚖️ Compounding Savings: <strong>${Utils.formatINR(savings)}</strong> (${Utils.formatINR(originalFine)} → ${Utils.formatINR(decreedAmount)})`;
+  savingsPill.textContent = `${percentage}% Compounded`;
+  savingsPill.className = percentage > 0 ? "badge badge--paid" : "badge badge--unassigned";
+}
+window.updateCompoundingCalculation = updateCompoundingCalculation;
 
 /**
  * Handle Court Outcome Dropdown Change
@@ -426,6 +468,7 @@ function handleCourtOutcomeChange(outcome) {
   } else {
     container.style.display = "none";
   }
+  updateCompoundingCalculation();
 }
 window.handleCourtOutcomeChange = handleCourtOutcomeChange;
 

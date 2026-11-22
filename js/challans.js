@@ -574,6 +574,7 @@ function renderChallansTableAndPagination() {
                 </td>
                 <td>
                   <div style="display: flex; align-items: center; gap: 6px;">
+                    ${isOverdue ? '<span class="urgent-pulse-dot" title="Statutory SLA Overdue: Urgent Action Required"></span>' : ''}
                     <a href="#challans?id=${c.id}" class="font-mono font-bold" style="font-size: 13.5px; color: var(--color-primary); text-decoration: none;">
                       ${c.challanNumber}
                     </a>
@@ -867,8 +868,16 @@ function renderChallanDetailsView(container, actions, challanId) {
 
   // Actions Bar
   actions.innerHTML = `
+    <div style="display: inline-flex; gap: 4px;">
+      <button class="btn btn--outline btn--sm" onclick="navigateToPrevChallan('${challan.id}')" title="Previous Notice (K)" aria-label="Previous Notice (K)">
+        ‹ Prev (K)
+      </button>
+      <button class="btn btn--outline btn--sm" onclick="navigateToNextChallan('${challan.id}')" title="Next Notice (J)" aria-label="Next Notice (J)">
+        Next (J) ›
+      </button>
+    </div>
     <button class="btn btn--outline btn--sm" onclick="navigateTo('challans')">
-      ← Back to Challan List
+      ← Back to Challans
     </button>
     <button class="btn btn--outline btn--sm" onclick="openEditChallanModal('${challan.id}')">
       Edit Challan
@@ -1754,6 +1763,31 @@ window.applyChallanSavedView = applyChallanSavedView;
 window.resetChallanFilters = resetChallanFilters;
 window.handleDetailsPartyTypeChange = handleDetailsPartyTypeChange;
 window.validateSplitTotal = validateSplitTotal;
+
+/**
+ * In-Drawer / Detail View Next Notice Navigation (Keyboard Nav J/K)
+ */
+function navigateToNextChallan(currentId) {
+  const challans = StorageManager.getChallans();
+  const idx = challans.findIndex(c => c.id === currentId);
+  if (idx !== -1 && idx < challans.length - 1) {
+    navigateTo('challans', true, { id: challans[idx + 1].id });
+  } else if (idx === challans.length - 1) {
+    Utils.showToast("Last Notice", "You have reached the last infraction notice.", "info");
+  }
+}
+window.navigateToNextChallan = navigateToNextChallan;
+
+function navigateToPrevChallan(currentId) {
+  const challans = StorageManager.getChallans();
+  const idx = challans.findIndex(c => c.id === currentId);
+  if (idx > 0) {
+    navigateTo('challans', true, { id: challans[idx - 1].id });
+  } else if (idx === 0) {
+    Utils.showToast("First Notice", "You are viewing the first infraction notice.", "info");
+  }
+}
+window.navigateToPrevChallan = navigateToPrevChallan;
 window.submitDetailsAssignment = submitDetailsAssignment;
 window.validateModalSplitTotal = validateModalSplitTotal;
 window.populateEntityOptions = populateEntityOptions;

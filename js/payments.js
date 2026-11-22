@@ -624,10 +624,26 @@ function executePaymentSimulation() {
   const challan = StorageManager.getChallanById(challanId);
   if (!challan) return;
 
-  // Check Court Lock
+  // Defensive Guardrail 1: Hard-Stop Judicial Stay Lock Check
   const courtLock = StorageManager.isPaymentLockedByCourt(challan);
   if (courtLock.locked) {
     Utils.showToast("Payment Blocked", courtLock.reason, "error");
+    return;
+  }
+
+  // Defensive Guardrail 2: Statutory Breakdown Validation
+  const baseAmt = challan.amount || 0;
+  const total = challan.totalPayable || (baseAmt + (challan.lateFee || 0) + (challan.convenienceFee !== undefined ? challan.convenienceFee : 25));
+  if (total <= 0) {
+    Utils.showToast("Invalid Amount", "Statutory payable amount must be greater than zero.", "warning");
+    return;
+  }
+
+  // Defensive Guardrail 3: Recovery Entity Allocation
+  const recoveryParty = (document.getElementById("payRecoveryPartyInput").value || "").trim();
+  if (!recoveryParty) {
+    Utils.showToast("Allocation Required", "Please specify a Recovery Party Target before authorizing payment.", "warning");
+    document.getElementById("payRecoveryPartyInput").focus();
     return;
   }
 
@@ -637,7 +653,6 @@ function executePaymentSimulation() {
 
   const method = document.getElementById("paySelectedMethod").value;
   const payerType = document.getElementById("payPayerSelect").value;
-  const recoveryParty = document.getElementById("payRecoveryPartyInput").value || challan.responsiblePartyName || "Rahul Sharma";
   const recoveryMethod = document.getElementById("payRecoveryChannelSelect").value;
 
   const result = StorageManager.recordPayment(challanId, {
