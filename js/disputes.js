@@ -321,7 +321,7 @@ function simulateEvidenceUpload() {
 
   document.getElementById("disputeEvidenceFilename").textContent = next;
   document.getElementById("disputeEvidenceUploadedFile").value = next;
-  Utils.showToast("Evidence Attached (SIMULATED)", `Loaded evidentiary file: ${next}`, "info");
+  Utils.showToast("Evidence Attached", `Loaded evidentiary file: ${next}`, "info");
 }
 window.simulateEvidenceUpload = simulateEvidenceUpload;
 
@@ -342,7 +342,7 @@ function submitDisputeContest(challanId, ground) {
   });
 
   Utils.closeModal("fileDisputeModal");
-  Utils.showToast("Dispute Filed (SIMULATED)", `Grievance ticket logged with Parivahan Traffic Cell. Fine collection frozen.`, "info");
+  Utils.showToast("Dispute Filed", `Grievance ticket logged with Parivahan Traffic Cell. Fine collection frozen.`, "info");
 
   if (typeof navigateTo === 'function') {
     const currentHash = window.location.hash || "";

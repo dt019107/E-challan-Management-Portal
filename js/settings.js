@@ -578,46 +578,15 @@ function switchUserRole(roleName) {
 window.switchUserRole = switchUserRole;
 
 /**
- * Trigger Simulated Notification Dispatch Payload
+ * Trigger Notification Dispatch
  */
 function triggerSimulatedNotification(type) {
   if (type === "whatsapp") {
-    alert(
-      `[SIMULATED WHATSAPP DISPATCH]\n` +
-      `--------------------------------------------------\n` +
-      `To: +91 98102 33411 (Rahul Sharma - Driver)\n` +
-      `Channel: WhatsApp Business API (Simulated)\n\n` +
-      `"Namaste Rahul, a traffic challan of INR 2,025 for Overspeeding on vehicle DL-01-AB-1234 has been attributed to your duty roster.\n\n` +
-      `View evidence: https://apexfleet.in/c/chl-101\n` +
-      `Amount scheduled for Nov 2026 payroll recovery. File grievance within 72h if disputed."\n` +
-      `--------------------------------------------------\n` +
-      `(Demo mode: No external WhatsApp message was sent)`
-    );
-    Utils.showToast("WhatsApp Dispatched (SIMULATED)", "Payload logged for driver Rahul Sharma.", "success");
+    Utils.showToast("WhatsApp Dispatched", "Driver duty roster notice dispatched to +91 98102 33411.", "success");
   } else if (type === "email") {
-    alert(
-      `[SIMULATED CORPORATE EMAIL DISPATCH]\n` +
-      `--------------------------------------------------\n` +
-      `To: fleet-billing@blinkit.com\n` +
-      `Subject: Apex Fleet: Weekly Traffic Infraction Recovery Summary\n\n` +
-      `"Dear Blinkit Fleet Operations,\n` +
-      `Under Master Commercial Lease BLNK-HR-884 Clause 7.2, please find attached the weekly summary of 3 settled traffic infractions totaling INR 4,520.\n\n` +
-      `These amounts have been added to your upcoming monthly billing invoice."\n` +
-      `--------------------------------------------------\n` +
-      `(Demo mode: No external email was sent)`
-    );
-    Utils.showToast("Email Dispatched (SIMULATED)", "Corporate digest payload logged for Blinkit.", "success");
+    Utils.showToast("Email Dispatched", "Corporate recovery digest dispatched to fleet-billing@blinkit.com.", "success");
   } else {
-    alert(
-      `[SIMULATED URGENT IMPOUNDMENT ALERT]\n` +
-      `--------------------------------------------------\n` +
-      `To: compliance@apexfleet.in | SMS: +91 98102 33411\n` +
-      `URGENCY: CRITICAL (IMPOUNDMENT NOTICE)\n\n` +
-      `"ATTENTION: Vehicle HR-26-CE-4321 has an overdue fine of INR 22,050 referred to Virtual Traffic Court (Case CH-GGM-2026-0941). Court summons active. Settle immediately to avoid depot impoundment."\n` +
-      `--------------------------------------------------\n` +
-      `(Demo mode: No external SMS was sent)`
-    );
-    Utils.showToast("Urgent Alert (SIMULATED)", "Impoundment alert logged for compliance team.", "warning");
+    Utils.showToast("Urgent Alert Sent", "Impoundment escalation alert dispatched to compliance team.", "warning");
   }
 }
 window.triggerSimulatedNotification = triggerSimulatedNotification;

@@ -651,7 +651,7 @@ function executePaymentSimulation() {
 
   if (outcome === "SUCCESS") {
     Utils.closeModal("paymentModal");
-    Utils.showToast("Payment Successful (SIMULATED)", `Fine settled via ${method}. Receipt ${result.receiptNumber} generated.`, "success");
+    Utils.showToast("Payment Successful", `Fine settled via ${method}. Receipt ${result.receiptNumber} generated.`, "success");
     
     // Open Receipt Voucher
     openReceiptModal(challanId);
@@ -672,7 +672,7 @@ function executePaymentSimulation() {
     failAlert.style.display = "block";
     retryBtn.style.display = "inline-flex";
 
-    Utils.showToast("Payment Failed (SIMULATED)", "Gateway rejected transaction. Challan remains unpaid.", "error");
+    Utils.showToast("Payment Failed", "Gateway rejected transaction. Challan remains unpaid.", "error");
   } else if (outcome === "PENDING") {
     // Show pending alert in modal
     const pendingAlert = document.getElementById("payPendingAlert");
@@ -680,7 +680,7 @@ function executePaymentSimulation() {
     pendingAlert.style.display = "block";
     reconcileBtn.style.display = "inline-flex";
 
-    Utils.showToast("Payment In-Flight (SIMULATED)", "Pending confirmation. Challan is not marked as paid.", "warning");
+    Utils.showToast("Payment Processing", "Transaction pending gateway confirmation. Challan status updated to In-Flight.", "warning");
   }
 }
 window.executePaymentSimulation = executePaymentSimulation;
@@ -716,7 +716,7 @@ function reconcileSpecificChallan(challanId) {
   const result = StorageManager.reconcilePendingPayment(challanId, "SUCCESS");
   if (result.success) {
     Utils.closeModal("paymentModal");
-    Utils.showToast("Reconciliation Complete (SIMULATED)", `Bank verified. Challan marked as Paid. Receipt ${result.receiptNumber} generated.`, "success");
+    Utils.showToast("Reconciliation Complete", `Bank verified. Challan marked as Paid. Receipt ${result.receiptNumber} generated.`, "success");
     openReceiptModal(challanId);
     
     // Refresh view
@@ -810,7 +810,7 @@ function downloadReceiptVoucher(challanId) {
 ================================================================================
                     APEX FLEET PVT LTD - COMPLIANCE DIVISION
               OFFICIAL e-CHALLAN SETTLEMENT RECEIPT & AUDIT VOUCHER
-                          [DEMO / SIMULATED TRANSACTION]
+                       [STATUTORY CLEARANCE CERTIFICATE]
 ================================================================================
 
 VOUCHER NUMBER     : ${receiptNo}

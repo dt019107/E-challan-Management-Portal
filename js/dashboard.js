@@ -109,30 +109,26 @@ function renderDashboardView(container, actions) {
         </div>
 
         <!-- Card 4: Primary Liability Action Hub -->
-        <div class="card" style="padding: 22px 20px; display: flex; flex-direction: column; justify-content: space-between; border-radius: 18px; min-height: 230px; position: relative; overflow: hidden; background: linear-gradient(135deg, rgba(15, 23, 42, 0.94) 0%, rgba(30, 96, 255, 0.88) 100%), url('assets/images/real/highway-radar-speed.jpg') center/cover no-repeat; color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 12px 32px -4px rgba(30, 96, 255, 0.25);">
-          <div style="position: absolute; right: 14px; top: 14px; display: flex; align-items: center; gap: 6px; background: rgba(255, 255, 255, 0.12); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 3px 9px; border-radius: 9999px; font-size: 10px; font-weight: 600; letter-spacing: 0.04em;">
-            <span style="width: 6px; height: 6px; border-radius: 50%; background: #38BDF8; display: inline-block;"></span>
-            <span>HIGHWAY RADAR LIVE</span>
-          </div>
-
+        <div class="card" style="padding: 22px 20px; display: flex; flex-direction: column; justify-content: space-between; border-radius: 18px; min-height: 230px; background: #FFFFFF; border: 1px solid var(--surface-1); box-shadow: var(--shadow-card);">
           <div>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; padding-right: 130px;">
-              <span style="font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: rgba(255, 255, 255, 0.8);">Total Unsettled Liability</span>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <span style="font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-2);">Total Unsettled Liability</span>
+              <span class="badge badge--unassigned" style="font-size: 10.5px;">Action Required</span>
             </div>
-            <div style="font-size: 34px; font-weight: 800; color: #FFFFFF; margin: 6px 0; letter-spacing: -0.025em; font-variant-numeric: tabular-nums;">
+            <div style="font-size: 32px; font-weight: 800; color: var(--ink); margin: 4px 0 6px; letter-spacing: -0.02em; font-variant-numeric: tabular-nums;">
               ${Utils.formatINR(stats.outstandingAmount)}
             </div>
-            <div style="font-size: 12.5px; color: rgba(255, 255, 255, 0.85); line-height: 1.4;">
-              Spanning 32 active compliance notices across Delhi NCR, Mumbai & Bengaluru Hubs.
+            <div style="font-size: 12.5px; color: var(--text-2); line-height: 1.45;">
+              32 active compliance notices across Delhi NCR, Mumbai & Bengaluru transport hubs.
             </div>
           </div>
 
           <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 16px;">
-            <button class="btn btn--primary btn--sm" style="flex: 1; height: 36px; background: #FFFFFF; color: var(--color-primary); font-weight: 700; border: none;" onclick="navigateTo('challans', true, { status: 'unassigned' })">
+            <button class="btn btn--primary btn--sm" style="flex: 1; height: 36px;" onclick="navigateTo('challans', true, { status: 'unassigned' })">
               <span>Assign Liability</span>
-              <span style="background: rgba(30, 96, 255, 0.15); color: var(--color-primary); font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 9999px; margin-left: 4px;">2 Due</span>
+              <span style="background: rgba(255, 255, 255, 0.25); color: #FFFFFF; font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 9999px; margin-left: 4px;">2 Due</span>
             </button>
-            <button class="btn btn--outline btn--sm" style="height: 36px; color: #FFFFFF; border-color: rgba(255, 255, 255, 0.4); background: rgba(255, 255, 255, 0.1);" onclick="navigateTo('payments')">
+            <button class="btn btn--outline btn--sm" style="height: 36px;" onclick="navigateTo('payments')">
               Settle Fines
             </button>
           </div>

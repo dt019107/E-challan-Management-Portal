@@ -136,7 +136,7 @@ function renderDriversView(container, actions) {
                 <tr class="row-interactive">
                   <td style="padding-left: 20px;">
                     <div style="display: flex; align-items: center; gap: 12px;">
-                      <div style="width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, #1E60FF 0%, #38BDF8 100%); color: #fff; font-weight: 700; font-size: 12.5px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(30, 96, 255, 0.22); flex-shrink: 0;">
+                      <div style="width: 38px; height: 38px; border-radius: 50%; background: var(--color-primary, #1E60FF); color: #FFFFFF; font-weight: 700; font-size: 12.5px; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(30, 96, 255, 0.25); flex-shrink: 0;">
                         ${initials}
                       </div>
                       <div>

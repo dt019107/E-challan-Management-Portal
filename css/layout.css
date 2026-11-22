@@ -1,5 +1,5 @@
 /* ==========================================================================
-   ChallanOS Application Shell Layout (Dribbble Creative Director Standard)
+   ChallanOS Application Shell Layout
    ========================================================================== */
 
 /* Overall App Shell with Calm Editorial Background and 2.5% Grain */
@@ -376,7 +376,8 @@
   font-size: 13px;
 }
 
-/* Saturated Modern Cobalt Pill Search Button */
+/* Cobalt Pill Search Button */
+.search-submit-btn,
 .ebay-search-btn {
   position: absolute;
   right: 4px;
@@ -398,11 +399,13 @@
   justify-content: center;
 }
 
+.search-submit-btn:hover,
 .ebay-search-btn:hover {
   background: var(--color-primary-dark, #1550E0);
   transform: translateY(-50%) translateY(-1px);
 }
 
+.search-submit-btn:active,
 .ebay-search-btn:active {
   transform: translateY(-50%) scale(0.97);
 }

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   ChallanOS Reusable UI Components (Linear / Stripe / Framer Quality)
+   ChallanOS UI Components
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -197,7 +197,7 @@
   flex-shrink: 0;
 }
 
-/* Semantic Badges with eBay Brand Palette */
+/* Semantic Status Badges */
 .badge--unassigned {
   background-color: var(--status-unassigned-bg);
   color: var(--status-unassigned, #f02d2d);
@@ -394,7 +394,7 @@
   justify-content: space-between;
 }
 
-/* KPI Cards with eBay 16px Signature Radius & 700-Weight Typography */
+/* KPI Cards */
 .kpi-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -445,21 +445,12 @@
 .kpi-value {
   font-family: var(--font-family-display);
   font-size: 32px;
-  font-weight: 700; /* eBay signature weight 700 */
+  font-weight: 700;
   color: var(--ink, #191919);
   letter-spacing: 0;
   font-variant-numeric: tabular-nums;
   line-height: 1.15;
   margin: 4px 0;
-}
-
-.kpi-subtext {
-  font-size: 12px;
-  color: var(--ink-faint, #707070);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  line-height: 1.4;
 }
 
 .kpi-subtext {
@@ -472,7 +463,7 @@
 }
 
 /* ==========================================================================
-   ChallanOS Calm Editorial Fintech Dashboard UI (Award-Level Framer/Webflow)
+   ChallanOS Operational Dashboard Layout
    ========================================================================== */
 
 .calm-dashboard-container {
@@ -486,7 +477,7 @@
 }
 
 /* ==========================================================================
-   Framer / Webflow Level Animation Engine (Orchestrated Spring Deceleration)
+   Animation Keyframes & State Transitions
    ========================================================================== */
 
 @keyframes framerSlideUpFade {
@@ -2114,7 +2105,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   5. Data Tables (eBay Clean 16px Radius Table & Zero Clipping)
+   5. Data Tables
    -------------------------------------------------------------------------- */
 .table-wrapper {
   background-color: var(--canvas, #FFFFFF);
@@ -2152,7 +2143,7 @@
   font-size: 11.5px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  font-weight: 700; /* eBay heading weight 700 */
+  font-weight: 700;
   color: var(--ink-muted, #555555);
   white-space: nowrap;
   border: none;
@@ -5070,15 +5061,15 @@ td a[href*="#challans?id="]:hover,
 }
 
 /* --------------------------------------------------------------------------
-   16. Apple Minimal Framer Motion: State Wash & Accessibility Guardrails
+   16. Row Reconciliation State Wash & Accessibility Guardrails
    -------------------------------------------------------------------------- */
 @keyframes appleRowReconciledWash {
-  0% { background-color: rgba(0, 113, 227, 0.16); }
+  0% { background-color: rgba(30, 96, 255, 0.16); }
   100% { background-color: transparent; }
 }
 
 .row-reconciled {
-  animation: appleRowReconciledWash 600ms var(--ease-apple-fluid) forwards;
+  animation: appleRowReconciledWash 600ms var(--ease-ebay, ease) forwards;
 }
 
 /* Respect System Reduced-Motion Preference */
@@ -5092,7 +5083,7 @@ td a[href*="#challans?id="]:hover,
 }
 
 /* --------------------------------------------------------------------------
-   17. Apple-style Responsibility Radio Tiles
+   17. Responsibility Radio Tiles
    -------------------------------------------------------------------------- */
 .party-radio-group {
   display: flex;

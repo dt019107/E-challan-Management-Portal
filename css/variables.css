@@ -1,14 +1,11 @@
 /* ==========================================================================
-   eBay Expressive Design System Tokens (ebay.design.md)
-   Near-monochrome system: ink-graphite #191919 text on pure white canvas,
-   signature four-color brand lettermark (red, cobalt, yellow, green),
-   single secondary cobalt blue #0968f6 reserved for primary CTAs and Search,
-   16px square radius across all cards & panels, and 44px pill buttons & inputs.
+   ChallanOS Design Tokens
+   Cobalt Blue #1E60FF, Ice-Slate #F4F7FC, 18px Card Radii, and Slate Typography
    ========================================================================== */
 
 :root {
   /* --------------------------------------------------------------------------
-     1. Modern Clean SaaS / Fintech Brand Colors (Cobalt & Ice-Slate Architecture)
+     1. Brand Colors (Cobalt & Ice-Slate Architecture)
      -------------------------------------------------------------------------- */
   --brand-blue: #1E60FF;          /* Signature Cobalt / Royal Blue */
   --brand-blue-hover: #1550E0;
@@ -183,7 +180,7 @@
   --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
-  --font-weight-bold: 700; /* eBay display & price tier fixed at 700 */
+  --font-weight-bold: 700;
 
   --tracking-normal: 0px;
 
