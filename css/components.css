@@ -200,49 +200,49 @@
 /* Semantic Status Badges */
 .badge--unassigned {
   background-color: var(--status-unassigned-bg);
-  color: var(--status-unassigned, #f02d2d);
+  color: var(--status-unassigned, #B91C1C);
   border-color: var(--status-unassigned-border);
   font-weight: 700;
 }
 
 .badge--assigned {
   background-color: var(--status-assigned-bg);
-  color: var(--status-assigned, #0968f6);
+  color: var(--status-assigned, #1E60FF);
   border-color: var(--status-assigned-border);
   font-weight: 700;
 }
 
 .badge--pending {
   background-color: var(--status-pending-bg);
-  color: var(--status-pending, #b45309);
+  color: var(--status-pending, #92400E);
   border-color: var(--status-pending-border);
   font-weight: 700;
 }
 
 .badge--paid {
   background-color: var(--status-paid-bg);
-  color: var(--status-paid, #15803d);
+  color: var(--status-paid, #15803D);
   border-color: var(--status-paid-border);
   font-weight: 700;
 }
 
 .badge--disputed {
   background-color: var(--status-disputed-bg);
-  color: var(--status-disputed, #6d28d9);
+  color: var(--status-disputed, #6D28D9);
   border-color: var(--status-disputed-border);
   font-weight: 700;
 }
 
 .badge--court {
   background-color: var(--status-court-bg);
-  color: var(--status-court, #003aa5);
+  color: var(--status-court, #4338CA);
   border-color: var(--status-court-border);
   font-weight: 700;
 }
 
 .badge--neutral {
   background-color: var(--surface-2);
-  color: var(--ink-muted);
+  color: var(--text-2, #475569);
   border-color: var(--surface-1);
   font-weight: 600;
 }
@@ -326,8 +326,9 @@
 }
 
 .vehicle-type-count {
-  font-size: 10px;
-  padding: 1px 5px;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 1px 6px;
   border-radius: 999px;
   background: var(--surface-2);
   color: var(--text-2);
@@ -2156,6 +2157,7 @@
   border-bottom: 1px solid var(--surface-1, #e5e5e5);
   color: var(--ink, #191919);
   vertical-align: middle;
+  font-variant-numeric: tabular-nums;
 }
 
 .data-table td:last-child {
@@ -2202,6 +2204,8 @@
   align-items: center;
   justify-content: center;
   vertical-align: middle;
+  margin: 0;
+  margin-top: -1px;
 }
 
 /* Authentic Commercial Plate Chips across all tables and links (UI Designer Skill) */

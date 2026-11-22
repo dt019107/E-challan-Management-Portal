@@ -134,7 +134,7 @@
             <svg class="search-icon-prefix" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
             </svg>
-            <input type="text" class="global-search-input" id="globalSearchInput" placeholder="Search vehicle reg, challan no, driver..." autocomplete="off">
+            <input type="text" class="global-search-input" id="globalSearchInput" placeholder="Search vehicle reg, challan no, driver..." autocomplete="off" aria-label="Search vehicle registration, challan number, or driver">
             <button class="ebay-search-btn" id="globalSearchSubmitBtn" type="button">Search</button>
             <span class="search-shortcut-badge">⌘K</span>
             <!-- Live Search Results Dropdown -->
@@ -618,19 +618,19 @@
         <div class="modal-body" style="display: flex; flex-direction: column; gap: var(--space-4); max-height: 75vh; overflow-y: auto;">
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
             <div class="form-group">
-              <label class="form-label">Registration Number *</label>
+              <label class="form-label" for="addVehReg">Registration Number *</label>
               <input type="text" class="form-input font-mono" id="addVehReg" placeholder="e.g. DL-01-AB-1234" required style="text-transform: uppercase;">
               <span class="input-feedback-text text-xs text-muted" id="addVehRegFeedback">Standard Indian format (e.g. DL-01-AB-1234)</span>
             </div>
             <div class="form-group">
-              <label class="form-label">Make & Model *</label>
+              <label class="form-label" for="addVehModel">Make & Model *</label>
               <input type="text" class="form-input" id="addVehModel" placeholder="e.g. Tata Ace Gold Diesel" required>
             </div>
           </div>
 
           <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-3);">
             <div class="form-group">
-              <label class="form-label">Category *</label>
+              <label class="form-label" for="addVehCategory">Category *</label>
               <select class="form-select" id="addVehCategory">
                 <option value="Light Commercial Vehicle (LCV)">LCV (Light Commercial)</option>
                 <option value="Medium Commercial Vehicle (MCV)">MCV (Medium Commercial)</option>
@@ -642,24 +642,24 @@
               </select>
             </div>
             <div class="form-group">
-              <label class="form-label">Manufacturing Year *</label>
+              <label class="form-label" for="addVehYear">Manufacturing Year *</label>
               <input type="number" class="form-input" id="addVehYear" value="2023" min="2010" max="2027" required>
             </div>
             <div class="form-group">
-              <label class="form-label">Owner Classification *</label>
+              <label class="form-label" for="addVehOwner">Owner Classification *</label>
               <input type="text" class="form-input" id="addVehOwner" value="Apex Fleet Pvt Ltd" required>
             </div>
           </div>
 
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
             <div class="form-group">
-              <label class="form-label">Corporate Lessee (if leased)</label>
+              <label class="form-label" for="addVehLessee">Corporate Lessee (if leased)</label>
               <select class="form-select" id="addVehLessee">
                 <option value="">None (Direct In-house Operations)</option>
               </select>
             </div>
             <div class="form-group">
-              <label class="form-label">Assigned Driver</label>
+              <label class="form-label" for="addVehDriver">Assigned Driver</label>
               <select class="form-select" id="addVehDriver">
                 <option value="">Unassigned (Duty Pool)</option>
               </select>
@@ -669,33 +669,33 @@
           <!-- Contract Information Dates (Step 5.3) -->
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
             <div class="form-group">
-              <label class="form-label">Contract Start Date</label>
+              <label class="form-label" for="addVehContractStart">Contract Start Date</label>
               <input type="date" class="form-input" id="addVehContractStart" value="2025-01-01">
             </div>
             <div class="form-group">
-              <label class="form-label">Contract End Date</label>
+              <label class="form-label" for="addVehContractEnd">Contract End Date</label>
               <input type="date" class="form-input" id="addVehContractEnd" value="2027-12-31">
             </div>
           </div>
 
           <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-3);">
             <div class="form-group">
-              <label class="form-label">RC Validity *</label>
+              <label class="form-label" for="addVehRC">RC Validity *</label>
               <input type="date" class="form-input" id="addVehRC" value="2038-05-15" required>
             </div>
             <div class="form-group">
-              <label class="form-label">Insurance Expiry *</label>
+              <label class="form-label" for="addVehInsurance">Insurance Expiry *</label>
               <input type="date" class="form-input" id="addVehInsurance" value="2027-01-30" required>
             </div>
             <div class="form-group">
-              <label class="form-label">PUC Expiry *</label>
+              <label class="form-label" for="addVehPUC">PUC Expiry *</label>
               <input type="date" class="form-input" id="addVehPUC" value="2026-12-15" required>
             </div>
           </div>
 
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
             <div class="form-group">
-              <label class="form-label">FASTag Status</label>
+              <label class="form-label" for="addVehFastagStatus">FASTag Status</label>
               <select class="form-select" id="addVehFastagStatus">
                 <option value="Active">Active</option>
                 <option value="Low Balance">Low Balance</option>
@@ -703,7 +703,7 @@
               </select>
             </div>
             <div class="form-group">
-              <label class="form-label">FASTag Balance (INR)</label>
+              <label class="form-label" for="addVehFastagBalance">FASTag Balance (INR)</label>
               <input type="number" class="form-input" id="addVehFastagBalance" value="1500" min="0">
             </div>
           </div>
@@ -1113,11 +1113,11 @@
       <div class="receipt-modal-controls no-print">
         <button class="btn btn--outline" type="button" onclick="Utils.closeModal('receiptModal')">Close</button>
         <div style="display: flex; gap: 8px;">
-          <button class="btn btn--outline" type="button" onclick="downloadCurrentReceiptVoucher()">
+          <button class="btn btn--outline" type="button" onclick="downloadCurrentReceiptVoucher()" aria-label="Download Settlement Receipt Voucher">
             <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
             Download Receipt
           </button>
-          <button class="btn btn--primary" type="button" onclick="window.print()">
+          <button class="btn btn--primary" type="button" onclick="window.print()" aria-label="Print Official Settlement Voucher">
             <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v3a2 2 0 002 2h1v2a2 2 0 002 2h6a2 2 0 002-2v-2h1a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z" clip-rule="evenodd"/></svg>
             Print Voucher
           </button>
@@ -1254,18 +1254,18 @@
 
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);" id="courtCompoundedAmountContainer">
             <div class="form-group">
-              <label class="form-label">Compounded Fine (INR) *</label>
+              <label class="form-label" for="courtCompoundedAmountInput">Compounded Fine (INR) *</label>
               <input type="number" class="form-input" id="courtCompoundedAmountInput" value="1000" min="0" step="100">
               <span class="text-xs text-muted">Amount decreed by Magistrate</span>
             </div>
             <div class="form-group">
-              <label class="form-label">Court Order Reference No *</label>
+              <label class="form-label" for="courtOrderRefInput">Court Order Reference No *</label>
               <input type="text" class="form-input font-mono" id="courtOrderRefInput" placeholder="e.g. ORDER-VC-2026-9912">
             </div>
           </div>
 
           <div class="form-group" style="margin-top: 8px;">
-            <label class="form-label">Judicial Order Summary & Notes</label>
+            <label class="form-label" for="courtOrderNotesInput">Judicial Order Summary & Notes</label>
             <textarea class="form-textarea" id="courtOrderNotesInput" rows="2" placeholder="Record judge remarks, advocate submission summary, or compounding receipt stamp..."></textarea>
           </div>
         </div>
@@ -1308,34 +1308,34 @@
           </div>
 
           <div class="form-group">
-            <label class="form-label">Infraction Location *</label>
+            <label class="form-label" for="editChallanLocation">Infraction Location *</label>
             <input type="text" class="form-input" id="editChallanLocation" required placeholder="e.g. Ring Road, Near Moolchand Underpass">
           </div>
 
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
             <div class="form-group">
-              <label class="form-label">Statutory Due Date *</label>
+              <label class="form-label" for="editChallanDueDate">Statutory Due Date *</label>
               <input type="date" class="form-input" id="editChallanDueDate" required>
             </div>
             <div class="form-group">
-              <label class="form-label">Dispute Window Deadline</label>
+              <label class="form-label" for="editChallanDisputeDeadline">Dispute Window Deadline</label>
               <input type="date" class="form-input" id="editChallanDisputeDeadline">
             </div>
           </div>
 
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
             <div class="form-group">
-              <label class="form-label">Accumulated Late Fee (INR)</label>
+              <label class="form-label" for="editChallanLateFee">Accumulated Late Fee (INR)</label>
               <input type="number" class="form-input" id="editChallanLateFee" min="0" step="50" value="0">
             </div>
             <div class="form-group">
-              <label class="form-label">Gateway Convenience Fee (INR)</label>
+              <label class="form-label" for="editChallanConvenienceFee">Gateway Convenience Fee (INR)</label>
               <input type="number" class="form-input" id="editChallanConvenienceFee" min="0" step="5" value="25">
             </div>
           </div>
 
           <div class="form-group">
-            <label class="form-label">Operational Notes & Justification</label>
+            <label class="form-label" for="editChallanNotes">Operational Notes & Justification</label>
             <textarea class="form-textarea" id="editChallanNotes" rows="2" placeholder="Reason for updating challan metadata..."></textarea>
           </div>
         </div>
