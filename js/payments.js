@@ -762,6 +762,18 @@ function openReceiptModal(challanId) {
   document.getElementById("receiptTxnRef").textContent = txnRef;
 
   Utils.openModal("receiptModal");
+
+  // Creative Coder Micro-Delight: Tactile Rubber Stamp Spring Animation (Respects Reduced Motion)
+  if (typeof gsap !== "undefined" && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const stamp = document.querySelector(".receipt-rubber-stamp");
+    if (stamp) {
+      gsap.fromTo(
+        stamp,
+        { scale: 2.4, opacity: 0, rotation: -28 },
+        { scale: 1, opacity: 0.88, rotation: -12, duration: 0.45, ease: "back.out(2.2)", delay: 0.12 }
+      );
+    }
+  }
 }
 window.openReceiptModal = openReceiptModal;
 

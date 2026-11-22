@@ -1045,6 +1045,13 @@ function openAddVehicleModal() {
     driverSelect.value = "";
   }
 
+  // Hook real-time validation feedback (Usability Psychologist skill)
+  const regInputEl = document.getElementById("addVehReg");
+  const regFeedbackEl = document.getElementById("addVehRegFeedback");
+  if (regInputEl && typeof Validators !== "undefined") {
+    Validators.bindFieldValidation(regInputEl, (val) => Validators.validateVehiclePlate(val), regFeedbackEl);
+  }
+
   Utils.openModal("addVehicleModal");
 }
 
@@ -1118,6 +1125,13 @@ function openEditVehicleModal(vehicleId) {
   const fastagBal = document.getElementById("addVehFastagBalance");
   if (fastagBal) fastagBal.value = vehicle.fastagBalance !== undefined ? vehicle.fastagBalance : 0;
 
+  // Hook real-time validation feedback (Usability Psychologist skill)
+  const regInputEl = document.getElementById("addVehReg");
+  const regFeedbackEl = document.getElementById("addVehRegFeedback");
+  if (regInputEl && typeof Validators !== "undefined") {
+    Validators.bindFieldValidation(regInputEl, (val) => Validators.validateVehiclePlate(val), regFeedbackEl);
+  }
+
   Utils.openModal("addVehicleModal");
 }
 
@@ -1138,10 +1152,13 @@ function submitAddVehicleForm() {
   const fastagStatus = document.getElementById("addVehFastagStatus").value;
   const fastagBalance = parseFloat(document.getElementById("addVehFastagBalance").value) || 0;
 
-  // 1. Regex validation for Indian vehicle registration: e.g. DL-01-AB-1234 or DL01AB1234
-  const regRegex = /^[A-Z]{2}[ -]?[0-9]{1,2}[ -]?[A-Z]{1,3}[ -]?[0-9]{4}$/;
-  if (!regRegex.test(reg)) {
-    alert("Please enter a valid Indian vehicle registration number (e.g. DL-01-AB-1234).");
+  // 1. Validation for Indian vehicle registration (Standard + Bharat Series)
+  const plateCheck = typeof Validators !== "undefined"
+    ? Validators.validateVehiclePlate(reg)
+    : { isValid: /^[A-Z]{2}[ -]?[0-9]{1,2}[ -]?[A-Z]{1,3}[ -]?[0-9]{4}$/.test(reg), message: "Format: DL-01-AB-1234" };
+
+  if (!plateCheck.isValid) {
+    Utils.showToast("Invalid Registration Plate", plateCheck.message, "error");
     document.getElementById("addVehReg").focus();
     return;
   }
@@ -1150,7 +1167,7 @@ function submitAddVehicleForm() {
   const allVehicles = StorageManager.getAllVehicles(true) || [];
   const duplicate = allVehicles.find(v => v.regNumber === reg && v.id !== editId);
   if (duplicate) {
-    alert(`Vehicle with registration "${reg}" already exists in the fleet repository.`);
+    Utils.showToast("Duplicate Registration", `Vehicle with registration "${reg}" already exists in the fleet repository.`, "warning");
     document.getElementById("addVehReg").focus();
     return;
   }
