@@ -57,9 +57,6 @@ function renderDashboardView(container, actions) {
               <span class="dot framer-live-dot" style="width: 7px; height: 7px; border-radius: 50%; background: var(--color-success); display: inline-block;"></span>
               <span>MoRTH Parivahan Gateway Live</span>
             </span>
-            <span class="badge" style="background: rgba(30, 96, 255, 0.08); color: var(--color-primary); border: 1px solid rgba(30, 96, 255, 0.2); font-size: 11px; font-weight: 600; padding: 2px 9px;">
-              📷 ANPR Highway Radar Feed • 99.4% Match
-            </span>
           </div>
           <h1 class="calm-header-greeting" style="font-size: var(--font-h1, 28px); font-weight: 800; color: var(--ink); letter-spacing: -0.025em; margin: 4px 0 0;">
             Operational Fleet Dashboard
