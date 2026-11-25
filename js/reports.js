@@ -39,83 +39,75 @@ function renderReportsView(container, actions) {
   const reportData = getActiveReportData();
 
   container.innerHTML = `
-    <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+    <div class="view-enter" style="display: flex; flex-direction: column; gap: 24px;">
       
-      <!-- Report Type Selector & Filter Bar -->
-      <div class="card" style="padding: var(--space-4) var(--space-6);">
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-3);">
-          
-          <!-- 6 Report Sub-Tabs -->
-          <div class="nav-tabs" style="border-bottom: none; margin-bottom: 0; flex-wrap: wrap;">
-            <button class="nav-tab ${reportsViewState.activeReportType === 'challan_summary' ? 'active' : ''}" onclick="switchReportType('challan_summary')">
-              1. Challan Summary
-            </button>
-            <button class="nav-tab ${reportsViewState.activeReportType === 'vehicle_compliance' ? 'active' : ''}" onclick="switchReportType('vehicle_compliance')">
-              2. Vehicle Summary
-            </button>
-            <button class="nav-tab ${reportsViewState.activeReportType === 'payment_ledger' ? 'active' : ''}" onclick="switchReportType('payment_ledger')">
-              3. Payment Summary
-            </button>
-            <button class="nav-tab ${reportsViewState.activeReportType === 'outstanding_summary' ? 'active' : ''}" onclick="switchReportType('outstanding_summary')">
-              4. Outstanding Summary
-            </button>
-            <button class="nav-tab ${reportsViewState.activeReportType === 'recovery_ledger' ? 'active' : ''}" onclick="switchReportType('recovery_ledger')">
-              5. Recovery Ledger
-            </button>
-            <button class="nav-tab ${reportsViewState.activeReportType === 'responsibility_summary' ? 'active' : ''}" onclick="switchReportType('responsibility_summary')">
-              6. Responsibility Summary
-            </button>
-          </div>
+      <!-- Architectural Tabs & Filter Controls (Zero Boxed Card Wrapper) -->
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+        <div class="editorial-tabs" role="tablist" aria-label="Report Categories">
+          <button class="editorial-tab-btn ${reportsViewState.activeReportType === 'challan_summary' ? 'active' : ''}" onclick="switchReportType('challan_summary')">
+            Challans
+          </button>
+          <button class="editorial-tab-btn ${reportsViewState.activeReportType === 'vehicle_compliance' ? 'active' : ''}" onclick="switchReportType('vehicle_compliance')">
+            Vehicles
+          </button>
+          <button class="editorial-tab-btn ${reportsViewState.activeReportType === 'payment_ledger' ? 'active' : ''}" onclick="switchReportType('payment_ledger')">
+            Payments
+          </button>
+          <button class="editorial-tab-btn ${reportsViewState.activeReportType === 'outstanding_summary' ? 'active' : ''}" onclick="switchReportType('outstanding_summary')">
+            Aging
+          </button>
+          <button class="editorial-tab-btn ${reportsViewState.activeReportType === 'recovery_ledger' ? 'active' : ''}" onclick="switchReportType('recovery_ledger')">
+            Recovery
+          </button>
+          <button class="editorial-tab-btn ${reportsViewState.activeReportType === 'responsibility_summary' ? 'active' : ''}" onclick="switchReportType('responsibility_summary')">
+            Attribution
+          </button>
+        </div>
 
-          <!-- Filter Controls -->
-          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-            <!-- Date Filter -->
-            <select class="form-select" style="width: 160px; font-size: 12px;" id="reportPeriodSelect" onchange="switchReportDateRange(this.value)" aria-label="Select report date range">
-              <option value="30days" ${reportsViewState.dateRange === '30days' ? 'selected' : ''}>Last 30 Days</option>
-              <option value="quarter" ${reportsViewState.dateRange === 'quarter' ? 'selected' : ''}>This Quarter (Q4)</option>
-              <option value="ytd" ${reportsViewState.dateRange === 'ytd' ? 'selected' : ''}>FY 2025-26 (YTD)</option>
-              <option value="all" ${reportsViewState.dateRange === 'all' ? 'selected' : ''}>All Historical</option>
-            </select>
+        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+          <select class="form-select" style="width: 155px; font-size: 12px; height: 34px;" id="reportPeriodSelect" onchange="switchReportDateRange(this.value)" aria-label="Select report date range">
+            <option value="30days" ${reportsViewState.dateRange === '30days' ? 'selected' : ''}>Last 30 Days</option>
+            <option value="quarter" ${reportsViewState.dateRange === 'quarter' ? 'selected' : ''}>This Quarter (Q4)</option>
+            <option value="ytd" ${reportsViewState.dateRange === 'ytd' ? 'selected' : ''}>FY 2025-26 (YTD)</option>
+            <option value="all" ${reportsViewState.dateRange === 'all' ? 'selected' : ''}>All Historical</option>
+          </select>
 
-            <!-- Secondary Filter (Dynamic per report) -->
-            ${reportData.secondaryFilterHTML}
+          ${reportData.secondaryFilterHTML}
 
-            <!-- Search Filter -->
-            <input type="text" class="form-input form-input--search" placeholder="Search report..." style="width: 180px; font-size: 12px;" value="${reportsViewState.searchQuery}" oninput="handleReportSearch(this.value)">
-          </div>
+          <input type="text" class="form-input form-input--search" placeholder="Search report..." aria-label="Search report records" style="width: 180px; font-size: 12px; height: 34px;" value="${reportsViewState.searchQuery}" oninput="handleReportSearch(this.value)">
         </div>
       </div>
 
-      <!-- Report KPI Summary Cards -->
-      <div class="kpi-grid">
+      <!-- Hairline 4-Column KPI Strip (Zero Boxes-Inside-Boxes) -->
+      <div class="editorial-kpi-strip">
         ${reportData.kpis.map(kpi => `
-          <div class="kpi-card">
-            <span class="kpi-label">${kpi.label}</span>
-            <div class="kpi-value" style="${kpi.color ? `color: ${kpi.color};` : ''}">${kpi.value}</div>
-            <div class="kpi-subtext">${kpi.subtext}</div>
+          <div class="editorial-kpi-cell" style="cursor: default;">
+            <div class="editorial-kpi-label"><span>${kpi.label}</span></div>
+            <div class="editorial-kpi-figure" style="${kpi.color ? `color: ${kpi.color};` : ''}">${kpi.value}</div>
+            <div class="editorial-kpi-sub">${kpi.subtext}</div>
           </div>
         `).join("")}
       </div>
 
-      <!-- Visual Chart Section -->
+      <!-- Clean Hairline Visualization Band -->
       ${reportData.chartHTML}
 
-      <!-- Report Data Table -->
-      <div class="card">
-        <div class="card-header" style="flex-wrap: wrap; gap: var(--space-3);">
+      <!-- Open Architectural Ledger Table -->
+      <div>
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 12px; margin-bottom: 12px;">
           <div>
-            <div class="card-title">${reportData.title}</div>
-            <div class="card-subtitle">${reportData.subtitle}</div>
+            <div style="font-size: 15px; font-weight: 600; color: var(--ink); letter-spacing: -0.015em;">${reportData.title}</div>
+            <div style="font-size: 12px; color: var(--text-3); margin-top: 2px;">${reportData.subtitle}</div>
           </div>
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <span class="badge badge--neutral">${reportData.filteredCount} / ${reportData.totalCount} Records</span>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 12px; color: var(--text-3); font-variant-numeric: tabular-nums;">${reportData.filteredCount} of ${reportData.totalCount} records</span>
             <button class="btn btn--outline btn--sm" onclick="exportCurrentReportCSV()">
               Download CSV
             </button>
           </div>
         </div>
 
-        <div class="card-body" style="padding: 0;">
+        <div style="overflow-x: auto; border-top: 1px solid #EBEBEB;">
           <table class="data-table" style="width: 100%; min-width: 900px;">
             <thead>
               <tr>
@@ -342,46 +334,46 @@ function getActiveReportData() {
     }).join("");
 
     const chartHTML = `
-      <div class="card" style="padding: 14px 18px; border-radius: var(--radius-card); border: 1px solid var(--line); background: var(--surface); margin-bottom: var(--space-3);">
+      <div style="padding: 4px 0 20px; border-bottom: 1px solid #EBEBEB;">
         
         <!-- Compact Header Row -->
-        <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--line); flex-wrap: wrap;">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; flex-wrap: wrap;">
           <div style="display: flex; align-items: center; gap: 8px;">
-            <span style="font-weight: 700; font-size: 13.5px; color: var(--ink); letter-spacing: -0.01em;">
+            <span style="font-weight: 600; font-size: 13.5px; color: var(--ink); letter-spacing: -0.01em;">
               Top Infraction Categories Distribution
             </span>
-            <span class="badge badge--neutral" style="font-size: 10px; padding: 2px 7px; border-radius: 9999px;">
-              ${records.length} Filtered Violations
+            <span style="font-size: 11.5px; color: var(--text-3); font-variant-numeric: tabular-nums;">
+              (${records.length} violations)
             </span>
           </div>
-          <div style="display: flex; align-items: center; gap: 12px; font-size: 11.5px; color: var(--text-2);">
+          <div style="display: flex; align-items: center; gap: 12px; font-size: 12px; color: var(--text-2); font-variant-numeric: tabular-nums;">
             <span>Avg Fine: <strong style="color: var(--ink);">${Utils.formatINR(avgFine)}</strong></span>
-            <span>•</span>
-            <span>Total Exposure: <strong style="color: var(--color-primary);">${Utils.formatINR(totalAmount)}</strong></span>
+            <span style="color: #D4D4D8;">&bull;</span>
+            <span>Total Exposure: <strong style="color: var(--ink);">${Utils.formatINR(totalAmount)}</strong></span>
           </div>
         </div>
 
         <!-- Scalable Donut + Mini Gauges Split View -->
-        <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+        <div style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
           
-          <!-- Left: SVG Mini Donut (92x92px) -->
-          <div style="position: relative; width: 92px; height: 92px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
-            <svg width="92" height="92" viewBox="0 0 100 100" style="transform: rotate(-90deg); transform-origin: 50% 50%;">
-              <circle cx="50" cy="50" r="38" fill="none" stroke="var(--surface-3)" stroke-width="11" />
+          <!-- Left: SVG Mini Donut (88x88px) -->
+          <div style="position: relative; width: 88px; height: 88px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+            <svg width="88" height="88" viewBox="0 0 100 100" style="transform: rotate(-90deg); transform-origin: 50% 50%;" aria-hidden="true">
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#F4F4F2" stroke-width="10" />
               ${donutArcsHTML}
             </svg>
             <div style="position: absolute; text-align: center; pointer-events: none; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-              <span style="font-size: 17px; font-weight: 800; color: var(--ink); line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums;">
+              <span style="font-size: 17px; font-weight: 600; color: var(--ink); line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums;">
                 ${records.length}
               </span>
-              <span style="font-size: 8px; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 2px;">
+              <span style="font-size: 8.5px; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px;">
                 TOTAL
               </span>
             </div>
           </div>
 
           <!-- Right: Compact Scalable Bars -->
-          <div style="flex: 1; min-width: 320px; display: flex; flex-direction: column; gap: 4px;">
+          <div style="flex: 1; min-width: 320px; display: flex; flex-direction: column; gap: 5px;">
             ${rowsHTML}
           </div>
 
@@ -458,22 +450,22 @@ function getActiveReportData() {
     const maxRiskFine = topRiskVehicles.length > 0 && topRiskVehicles[0].outstandingAmount > 0 ? topRiskVehicles[0].outstandingAmount : 1;
 
     const chartHTML = `
-      <div class="card" style="padding: 16px 20px;">
-        <div style="font-weight: 700; font-size: 13px; color: var(--color-text-main); margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+      <div style="padding: 4px 0 20px; border-bottom: 1px solid #EBEBEB;">
+        <div style="font-weight: 600; font-size: 13.5px; color: var(--ink); margin-bottom: 14px; display: flex; align-items: center; gap: 7px;">
           ${Utils.icon('truck', 14)} Highest Fine Exposure Vehicles (Top Risk Assets)
         </div>
-        <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div style="display: flex; flex-direction: column; gap: 10px;">
           ${topRiskVehicles.map(v => {
             const fine = v.outstandingAmount || 0;
             const pct = Math.round((fine / maxRiskFine) * 100);
             return `
               <div>
-                <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 3px;">
-                  <span style="font-weight: 600; color: var(--color-primary);">${v.regNumber} (${v.makeModel})</span>
-                  <strong style="color: #B42318;">${Utils.formatINR(fine)} (${v.openChallans || 0} open fines)</strong>
+                <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px; font-variant-numeric: tabular-nums;">
+                  <span><span class="reg-plate-chip">${v.regNumber}</span> <span style="color: var(--text-2); margin-left: 6px;">${v.makeModel}</span></span>
+                  <strong style="color: var(--status-unassigned);">${Utils.formatINR(fine)} <span style="font-weight: 400; color: var(--text-3);">(${v.openChallans || 0} open)</span></strong>
                 </div>
-                <div style="height: 8px; background: var(--color-border); border-radius: 4px; overflow: hidden;">
-                  <div style="width: ${pct}%; height: 100%; background: #B42318; border-radius: 4px;"></div>
+                <div style="height: 5px; background: #F4F4F2; border-radius: 3px; overflow: hidden;">
+                  <div style="width: ${pct}%; height: 100%; background: var(--status-unassigned); border-radius: 3px;"></div>
                 </div>
               </div>
             `;
@@ -561,16 +553,16 @@ function getActiveReportData() {
     });
 
     const chartHTML = `
-      <div class="card" style="padding: 16px 20px;">
-        <div style="font-weight: 700; font-size: 13px; color: var(--color-text-main); margin-bottom: 12px;">
-          💳 Settlement Rail Volume Breakdown
+      <div style="padding: 4px 0 20px; border-bottom: 1px solid #EBEBEB;">
+        <div style="font-weight: 600; font-size: 13.5px; color: var(--ink); margin-bottom: 12px;">
+          Settlement Rail Volume Breakdown
         </div>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px;">
           ${Object.entries(railCounts).map(([rail, count]) => `
-            <div style="padding: 12px; background: var(--color-bg-app); border-radius: var(--radius-sm); border: 1px solid var(--color-border);">
-              <span class="text-xs text-muted" style="display: block;">${rail}</span>
-              <strong style="font-size: 18px; color: var(--color-primary);">${count} transactions</strong>
-              <div class="text-xs text-muted">${Math.round((count / (records.length || 1)) * 100)}% of total settlements</div>
+            <div style="padding-left: 12px; border-left: 2px solid #E4E4E7;">
+              <span style="font-size: 11.5px; color: var(--text-3); display: block;">${rail}</span>
+              <strong style="font-size: 18px; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums;">${count} transactions</strong>
+              <div style="font-size: 11.5px; color: var(--text-2);">${Math.round((count / (records.length || 1)) * 100)}% of settlements</div>
             </div>
           `).join("")}
         </div>
@@ -649,20 +641,21 @@ function getActiveReportData() {
     const courtStayCount = records.filter(c => c.status === "court").length;
 
     const chartHTML = `
-      <div class="card" style="padding: 16px 20px;">
-        <div style="font-weight: 700; font-size: 13px; color: var(--color-text-main); margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
-          ${Utils.icon('clock', 14)} Outstanding Liability Aging &amp; Impoundment Risk Horizon
+      <div style="padding: 4px 0 20px; border-bottom: 1px solid #EBEBEB;">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+          <div style="font-weight: 600; font-size: 13.5px; color: var(--ink); display: flex; align-items: center; gap: 7px;">
+            ${Utils.icon('clock', 14)} Outstanding Liability Aging Horizon
+          </div>
+          <div style="display: flex; gap: 16px; font-size: 12px; color: var(--text-2); font-variant-numeric: tabular-nums;">
+            <span style="display: inline-flex; align-items: center; gap: 6px;"><span style="width: 7px; height: 7px; border-radius: 50%; background: #B45309;"></span>Urgent &lt;7d (${urgentCount})</span>
+            <span style="display: inline-flex; align-items: center; gap: 6px;"><span style="width: 7px; height: 7px; border-radius: 50%; background: #B91C1C;"></span>Overdue (${overdueCount})</span>
+            <span style="display: inline-flex; align-items: center; gap: 6px;"><span style="width: 7px; height: 7px; border-radius: 50%; background: #52525B;"></span>Court / Standard (${Math.max(0, records.length - urgentCount - overdueCount)})</span>
+          </div>
         </div>
-        <div style="display: flex; gap: 8px; height: 28px; border-radius: 6px; overflow: hidden; background: var(--color-border);">
-          <div style="width: ${Math.max(15, Math.round((urgentCount / (records.length || 1)) * 100))}%; background: #F79009; color: #FFF; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700;" title="Urgent (< 7 Days)">
-            Urgent (${urgentCount})
-          </div>
-          <div style="width: ${Math.max(15, Math.round((overdueCount / (records.length || 1)) * 100))}%; background: #D92D20; color: #FFF; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700;" title="Overdue">
-            Overdue (${overdueCount})
-          </div>
-          <div style="flex: 1; background: #475467; color: #FFF; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700;" title="Court / Future Due">
-            Court Stay / Standard (${records.length - urgentCount - overdueCount})
-          </div>
+        <div style="display: flex; gap: 2px; height: 8px; border-radius: 4px; overflow: hidden; background: #F4F4F2;">
+          <div style="width: ${Math.max(5, Math.round((urgentCount / (records.length || 1)) * 100))}%; background: #B45309;" title="Urgent (< 7 Days)"></div>
+          <div style="width: ${Math.max(5, Math.round((overdueCount / (records.length || 1)) * 100))}%; background: #B91C1C;" title="Overdue"></div>
+          <div style="flex: 1; background: #52525B;" title="Court / Future Due"></div>
         </div>
       </div>
     `;
@@ -752,25 +745,25 @@ function getActiveReportData() {
     const writeOffAmount = records.filter(r => r.recoveryMethod === "Write-off" || r.recoveryStatus === "Written Off").reduce((sum, r) => sum + (r.amount || 0), 0);
 
     const chartHTML = `
-      <div class="card" style="padding: 16px 20px;">
-        <div style="font-weight: 700; font-size: 13px; color: var(--color-text-main); margin-bottom: 12px;">
-          📈 Recovery Channel Allocation Breakdown
+      <div style="padding: 4px 0 20px; border-bottom: 1px solid #EBEBEB;">
+        <div style="font-weight: 600; font-size: 13.5px; color: var(--ink); margin-bottom: 14px;">
+          Recovery Channel Allocation Breakdown
         </div>
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
-          <div style="padding: 12px; background: #FEF8E8; border-radius: 6px; border: 1px solid #FCE4A6;">
-            <span class="text-xs" style="color: #B7791F; font-weight: 600;">Driver Payroll Recovery</span>
-            <div style="font-size: 20px; font-weight: 800; color: #B7791F; margin: 4px 0;">${Utils.formatINR(payrollAmount)}</div>
-            <div class="text-xs text-muted">${Math.round((payrollAmount / (totalRecoverable || 1)) * 100)}% of total recovery</div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+          <div style="padding-left: 14px; border-left: 2px solid var(--status-pending);">
+            <span style="font-size: 11.5px; color: var(--status-pending); font-weight: 600;">Driver Payroll Recovery</span>
+            <div style="font-size: 20px; font-weight: 600; color: var(--ink); margin: 3px 0; font-variant-numeric: tabular-nums;">${Utils.formatINR(payrollAmount)}</div>
+            <div style="font-size: 11.5px; color: var(--text-3);">${Math.round((payrollAmount / (totalRecoverable || 1)) * 100)}% of total recovery</div>
           </div>
-          <div style="padding: 12px; background: #EEF4FF; border-radius: 6px; border: 1px solid #D0E1FD;">
-            <span class="text-xs" style="color: var(--color-primary); font-weight: 600;">Corporate Lessee Invoicing</span>
-            <div style="font-size: 20px; font-weight: 800; color: var(--color-primary); margin: 4px 0;">${Utils.formatINR(invoiceAmount)}</div>
-            <div class="text-xs text-muted">${Math.round((invoiceAmount / (totalRecoverable || 1)) * 100)}% of total recovery</div>
+          <div style="padding-left: 14px; border-left: 2px solid var(--color-primary);">
+            <span style="font-size: 11.5px; color: var(--color-primary); font-weight: 600;">Corporate Lessee Invoicing</span>
+            <div style="font-size: 20px; font-weight: 600; color: var(--ink); margin: 3px 0; font-variant-numeric: tabular-nums;">${Utils.formatINR(invoiceAmount)}</div>
+            <div style="font-size: 11.5px; color: var(--text-3);">${Math.round((invoiceAmount / (totalRecoverable || 1)) * 100)}% of total recovery</div>
           </div>
-          <div style="padding: 12px; background: var(--color-bg-app); border-radius: 6px; border: 1px solid var(--color-border);">
-            <span class="text-xs text-muted font-medium">Fleet Absorbed / Written-off</span>
-            <div style="font-size: 20px; font-weight: 800; color: var(--color-text-main); margin: 4px 0;">${Utils.formatINR(writeOffAmount)}</div>
-            <div class="text-xs text-muted">${Math.round((writeOffAmount / (totalRecoverable || 1)) * 100)}% non-recoverable</div>
+          <div style="padding-left: 14px; border-left: 2px solid #A1A1AA;">
+            <span style="font-size: 11.5px; color: var(--text-2); font-weight: 600;">Fleet Absorbed / Written-off</span>
+            <div style="font-size: 20px; font-weight: 600; color: var(--ink); margin: 3px 0; font-variant-numeric: tabular-nums;">${Utils.formatINR(writeOffAmount)}</div>
+            <div style="font-size: 11.5px; color: var(--text-3);">${Math.round((writeOffAmount / (totalRecoverable || 1)) * 100)}% non-recoverable</div>
           </div>
         </div>
       </div>
@@ -843,23 +836,23 @@ function getActiveReportData() {
   const unassignedCount = records.filter(c => !c.responsibleParty || c.responsibleParty === "Unassigned").length;
 
   const chartHTML = `
-    <div class="card" style="padding: 16px 20px;">
-      <div style="font-weight: 700; font-size: 13px; color: var(--color-text-main); margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
-        ${Utils.icon('scale', 14)} 5-Tier Responsibility Engine Attribution Distribution
+    <div style="padding: 4px 0 20px; border-bottom: 1px solid #EBEBEB;">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+        <div style="font-weight: 600; font-size: 13.5px; color: var(--ink); display: flex; align-items: center; gap: 7px;">
+          ${Utils.icon('scale', 14)} 5-Tier Responsibility Engine Attribution Distribution
+        </div>
+        <div style="display: flex; gap: 16px; font-size: 12px; color: var(--text-2); font-variant-numeric: tabular-nums; flex-wrap: wrap;">
+          <span style="display: inline-flex; align-items: center; gap: 6px;"><span style="width: 7px; height: 7px; border-radius: 50%; background: var(--color-primary);"></span>Driver (${driverCount})</span>
+          <span style="display: inline-flex; align-items: center; gap: 6px;"><span style="width: 7px; height: 7px; border-radius: 50%; background: #0284C7;"></span>Lessee (${lesseeCount})</span>
+          <span style="display: inline-flex; align-items: center; gap: 6px;"><span style="width: 7px; height: 7px; border-radius: 50%; background: #52525B;"></span>Fleet (${fleetCount})</span>
+          <span style="display: inline-flex; align-items: center; gap: 6px;"><span style="width: 7px; height: 7px; border-radius: 50%; background: #B91C1C;"></span>Unassigned (${unassignedCount})</span>
+        </div>
       </div>
-      <div style="display: flex; gap: 8px; height: 28px; border-radius: 6px; overflow: hidden; background: var(--color-border);">
-        <div style="width: ${Math.max(10, Math.round((driverCount / (records.length || 1)) * 100))}%; background: var(--color-primary); color: #FFF; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700;">
-          Driver (${driverCount})
-        </div>
-        <div style="width: ${Math.max(10, Math.round((lesseeCount / (records.length || 1)) * 100))}%; background: #7452C8; color: #FFF; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700;">
-          Lessee (${lesseeCount})
-        </div>
-        <div style="width: ${Math.max(10, Math.round((fleetCount / (records.length || 1)) * 100))}%; background: #475467; color: #FFF; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700;">
-          Fleet (${fleetCount})
-        </div>
-        <div style="flex: 1; background: #D92D20; color: #FFF; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700;">
-          Unassigned (${unassignedCount})
-        </div>
+      <div style="display: flex; gap: 2px; height: 8px; border-radius: 4px; overflow: hidden; background: #F4F4F2;">
+        <div style="width: ${Math.max(5, Math.round((driverCount / (records.length || 1)) * 100))}%; background: var(--color-primary);"></div>
+        <div style="width: ${Math.max(5, Math.round((lesseeCount / (records.length || 1)) * 100))}%; background: #0284C7;"></div>
+        <div style="width: ${Math.max(5, Math.round((fleetCount / (records.length || 1)) * 100))}%; background: #52525B;"></div>
+        <div style="flex: 1; background: #B91C1C;"></div>
       </div>
     </div>
   `;
