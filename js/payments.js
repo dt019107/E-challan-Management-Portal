@@ -53,67 +53,61 @@ function renderPaymentsView(container, actions) {
     </button>
   `;
 
-  // 1. KPI Metric Cards
+  // 1. Hairline 4-Column Financial KPI Strip (Zero Boxed Card Stacking)
   const kpiHTML = `
-    <div class="kpi-grid">
-      <div class="kpi-card" onclick="switchPaymentsTab('settlements')">
-        <div class="kpi-card-top">
-          <span class="kpi-label">Settled YTD</span>
-          <div class="kpi-icon-wrapper" style="background: var(--status-paid-bg); color: var(--status-paid);">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-          </div>
-        </div>
-        <div class="kpi-value">${Utils.formatINR(totalSettledAmount)}</div>
-        <div class="kpi-subtext">${paidChallans.length} direct Parivahan settlements</div>
+    <div class="editorial-kpi-strip" style="margin-bottom: 24px;">
+      <div class="editorial-kpi-cell" onclick="switchPaymentsTab('settlements')">
+        <div class="editorial-kpi-label"><span>Settled YTD</span></div>
+        <div class="editorial-kpi-figure">${Utils.formatINR(totalSettledAmount)}</div>
+        <div class="editorial-kpi-sub">${paidChallans.length} direct Parivahan settlements</div>
       </div>
 
-      <div class="kpi-card" onclick="switchPaymentsTab('recovery')">
-        <div class="kpi-card-top">
-          <span class="kpi-label">Pending Driver Recovery</span>
-          <div class="kpi-icon-wrapper" style="background: var(--status-pending-bg); color: var(--status-pending);">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-          </div>
-        </div>
-        <div class="kpi-value" style="color: var(--status-pending);">${Utils.formatINR(pendingPayrollAmount)}</div>
-        <div class="kpi-subtext">Queued for salary deduction</div>
+      <div class="editorial-kpi-cell" onclick="switchPaymentsTab('recovery')">
+        <div class="editorial-kpi-label"><span>Pending Driver Recovery</span></div>
+        <div class="editorial-kpi-figure" style="color: var(--status-pending);">${Utils.formatINR(pendingPayrollAmount)}</div>
+        <div class="editorial-kpi-sub">Queued for salary deduction</div>
       </div>
 
-      <div class="kpi-card" onclick="switchPaymentsTab('recovery')">
-        <div class="kpi-card-top">
-          <span class="kpi-label">Corporate Invoiced</span>
-          <div class="kpi-icon-wrapper" style="background: var(--status-assigned-bg); color: var(--status-assigned);">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
-          </div>
-        </div>
-        <div class="kpi-value" style="color: var(--status-assigned);">${Utils.formatINR(invoicedLesseeAmount)}</div>
-        <div class="kpi-subtext">Monthly corporate billing cycle</div>
+      <div class="editorial-kpi-cell" onclick="switchPaymentsTab('recovery')">
+        <div class="editorial-kpi-label"><span>Corporate Invoiced</span></div>
+        <div class="editorial-kpi-figure" style="color: var(--status-assigned);">${Utils.formatINR(invoicedLesseeAmount)}</div>
+        <div class="editorial-kpi-sub">Monthly corporate billing cycle</div>
       </div>
 
-      <div class="kpi-card" onclick="switchPaymentsTab('recovery')">
-        <div class="kpi-card-top">
-          <span class="kpi-label">Absorbed / Written Off</span>
-          <div class="kpi-icon-wrapper" style="background: var(--color-bg-app); color: var(--color-text-muted);">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-          </div>
-        </div>
-        <div class="kpi-value">${Utils.formatINR(writtenOffAmount)}</div>
-        <div class="kpi-subtext">Operating paperwork waivers</div>
+      <div class="editorial-kpi-cell" onclick="switchPaymentsTab('recovery')">
+        <div class="editorial-kpi-label"><span>Absorbed / Written Off</span></div>
+        <div class="editorial-kpi-figure">${Utils.formatINR(writtenOffAmount)}</div>
+        <div class="editorial-kpi-sub">Operating paperwork waivers</div>
       </div>
     </div>
   `;
 
-  // 2. Tab Navigation
+  // 2. Segmented Tabs + Search Toolbar Row
   const tabsHTML = `
-    <div class="nav-tabs" style="margin-top: var(--space-6);">
-      <button class="nav-tab ${paymentsViewState.activeTab === 'settlements' ? 'active' : ''}" onclick="switchPaymentsTab('settlements')">
-        Settlement Receipts (${paidChallans.length})
-      </button>
-      <button class="nav-tab ${paymentsViewState.activeTab === 'recovery' ? 'active' : ''}" onclick="switchPaymentsTab('recovery')">
-        Recovery Ledger (${recoveries.length})
-      </button>
-      <button class="nav-tab ${paymentsViewState.activeTab === 'pending' ? 'active' : ''}" onclick="switchPaymentsTab('pending')">
-        Pending Confirmation (${pendingChallans.length})
-      </button>
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 14px;">
+      <div class="editorial-tabs" role="tablist" aria-label="Payments Views">
+        <button class="editorial-tab-btn ${paymentsViewState.activeTab === 'settlements' ? 'active' : ''}" onclick="switchPaymentsTab('settlements')">
+          Receipts <span class="editorial-tab-count">${paidChallans.length}</span>
+        </button>
+        <button class="editorial-tab-btn ${paymentsViewState.activeTab === 'recovery' ? 'active' : ''}" onclick="switchPaymentsTab('recovery')">
+          Recovery Ledger <span class="editorial-tab-count">${recoveries.length}</span>
+        </button>
+        <button class="editorial-tab-btn ${paymentsViewState.activeTab === 'pending' ? 'active' : ''}" onclick="switchPaymentsTab('pending')">
+          In-Flight <span class="editorial-tab-count">${pendingChallans.length}</span>
+        </button>
+      </div>
+
+      <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+        ${paymentsViewState.activeTab === 'recovery' ? `
+          <select class="form-select" style="width: 195px; height: 34px; font-size: 12px;" onchange="handlePaymentsRecoveryFilter(this.value)" aria-label="Filter recovery channel">
+            <option value="all" ${paymentsViewState.recoveryFilter === 'all' ? 'selected' : ''}>All Recovery Channels</option>
+            <option value="Payroll deduction" ${paymentsViewState.recoveryFilter === 'Payroll deduction' ? 'selected' : ''}>Payroll Deduction (Driver)</option>
+            <option value="Invoice" ${paymentsViewState.recoveryFilter === 'Invoice' ? 'selected' : ''}>Corporate Invoice (Lessee)</option>
+            <option value="Write-off" ${paymentsViewState.recoveryFilter === 'Write-off' ? 'selected' : ''}>Write-off (Fleet Absorbed)</option>
+          </select>
+        ` : ''}
+        <input type="text" class="form-input form-input--search" placeholder="Search receipt, challan, vehicle..." aria-label="Search payments" style="width: 240px; height: 34px; font-size: 12px;" value="${paymentsViewState.searchQuery}" oninput="handlePaymentsSearch(this.value)">
+      </div>
     </div>
   `;
 
@@ -127,7 +121,7 @@ function renderPaymentsView(container, actions) {
     contentHTML = renderPendingConfirmationTabHTML(pendingChallans);
   }
 
-  container.innerHTML = kpiHTML + tabsHTML + contentHTML;
+  container.innerHTML = `<div class="view-enter">${kpiHTML}${tabsHTML}${contentHTML}</div>`;
 }
 
 /**
@@ -155,18 +149,8 @@ function renderSettlementsTabHTML(paidChallans) {
   }
 
   return `
-    <div class="card" style="margin-top: var(--space-4);">
-      <div class="card-header" style="flex-wrap: wrap; gap: var(--space-3);">
-        <div>
-          <div class="card-title">Settlement Vouchers & Direct Receipts</div>
-          <div class="card-subtitle">Official verified Parivahan settlement records with printable audit receipts</div>
-        </div>
-
-        <input type="text" class="form-input form-input--search" placeholder="Search receipt, challan, vehicle, txn..." style="width: 280px;" oninput="handlePaymentsSearch(this.value)">
-      </div>
-
-      <div class="card-body" style="padding: 0;">
-        <table class="data-table" style="width: 100%; min-width: 960px;">
+    <div style="overflow-x: auto; border-top: 1px solid #EBEBEB;">
+      <table class="data-table" style="width: 100%; min-width: 960px;">
           <thead>
             <tr>
               <th>Receipt & Voucher</th>
@@ -238,7 +222,6 @@ function renderSettlementsTabHTML(paidChallans) {
           </tbody>
         </table>
       </div>
-    </div>
   `;
 }
 
@@ -261,30 +244,12 @@ function renderRecoveryLedgerTabHTML(recoveries) {
   }
 
   return `
-    <div class="card" style="margin-top: var(--space-4);">
-      <div class="card-header" style="flex-wrap: wrap; gap: var(--space-3);">
-        <div>
-          <div class="card-title">Financial Recovery Ledger</div>
-          <div class="card-subtitle">Enforces strict separation of Payer (Apex Fleet) from Recovery Target (Driver / Lessee)</div>
-        </div>
-
-        <div style="display: flex; gap: var(--space-2); align-items: center;">
-          <input type="text" class="form-input form-input--search" placeholder="Search target, reg, ref..." style="width: 220px;" oninput="handlePaymentsSearch(this.value)">
-          <select class="form-select" style="width: 190px;" onchange="handlePaymentsRecoveryFilter(this.value)">
-            <option value="all" ${paymentsViewState.recoveryFilter === 'all' ? 'selected' : ''}>All Recovery Channels</option>
-            <option value="Payroll deduction" ${paymentsViewState.recoveryFilter === 'Payroll deduction' ? 'selected' : ''}>Payroll Deduction (Driver)</option>
-            <option value="Invoice" ${paymentsViewState.recoveryFilter === 'Invoice' ? 'selected' : ''}>Corporate Invoice (Lessee)</option>
-            <option value="Write-off" ${paymentsViewState.recoveryFilter === 'Write-off' ? 'selected' : ''}>Write-off (Fleet Absorbed)</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="card-body" style="padding: 0;">
-        <table class="data-table" style="width: 100%; min-width: 960px;">
-          <thead>
-            <tr>
-              <th>Recovery Ref</th>
-              <th>Challan & Vehicle</th>
+    <div style="overflow-x: auto; border-top: 1px solid #EBEBEB;">
+      <table class="data-table" style="width: 100%; min-width: 960px;">
+        <thead>
+          <tr>
+            <th>Recovery Ref</th>
+            <th>Challan & Vehicle</th>
               <th>Payer → Target</th>
               <th>Channel & Cycle</th>
               <th>Recoverable Amount</th>
@@ -373,7 +338,6 @@ function renderRecoveryLedgerTabHTML(recoveries) {
           </tbody>
         </table>
       </div>
-    </div>
   `;
 }
 
@@ -382,16 +346,8 @@ function renderRecoveryLedgerTabHTML(recoveries) {
  */
 function renderPendingConfirmationTabHTML(pendingChallans) {
   return `
-    <div class="card" style="margin-top: var(--space-4);">
-      <div class="card-header">
-        <div>
-          <div class="card-title">In-Flight Transactions Awaiting Webhook Confirmation</div>
-          <div class="card-subtitle">Payments initiated but pending asynchronous bank or Parivahan gateway reconciliation</div>
-        </div>
-      </div>
-
-      <div class="card-body" style="padding: 0;">
-        <table class="data-table" style="width: 100%; min-width: 960px;">
+    <div style="overflow-x: auto; border-top: 1px solid #EBEBEB;">
+      <table class="data-table" style="width: 100%; min-width: 960px;">
           <thead>
             <tr>
               <th>Pending Txn Ref</th>
@@ -450,7 +406,6 @@ function renderPendingConfirmationTabHTML(pendingChallans) {
           </tbody>
         </table>
       </div>
-    </div>
   `;
 }
 

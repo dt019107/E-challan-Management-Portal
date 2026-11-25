@@ -42,67 +42,51 @@ function renderDisputesView(container, actions) {
     </button>
   `;
 
-  // 1. Legal & Court KPIs
+  // 1. Hairline 4-Column Legal KPI Strip
   const kpiHTML = `
-    <div class="kpi-grid">
-      <div class="kpi-card" onclick="switchDisputeTab('disputes')">
-        <div class="kpi-card-top">
-          <span class="kpi-label">Administrative Grievances</span>
-          <div class="kpi-icon-wrapper" style="background: var(--status-disputed-bg); color: var(--status-disputed);">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
-          </div>
-        </div>
-        <div class="kpi-value" style="color: var(--status-disputed);">${disputed.length}</div>
-        <div class="kpi-subtext">Parivahan portal grievances</div>
+    <div class="editorial-kpi-strip" style="margin-bottom: 24px;">
+      <div class="editorial-kpi-cell" onclick="switchDisputeTab('disputes')">
+        <div class="editorial-kpi-label"><span>Administrative Grievances</span></div>
+        <div class="editorial-kpi-figure" style="color: var(--status-disputed);">${disputed.length}</div>
+        <div class="editorial-kpi-sub">Parivahan portal grievances</div>
       </div>
 
-      <div class="kpi-card" onclick="switchDisputeTab('court')">
-        <div class="kpi-card-top">
-          <span class="kpi-label">Virtual Court Dockets</span>
-          <div class="kpi-icon-wrapper" style="background: var(--status-court-bg); color: var(--status-court);">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-          </div>
-        </div>
-        <div class="kpi-value" style="color: var(--status-court);">${courtCases.length}</div>
-        <div class="kpi-subtext">Sub-judice stay lock active</div>
+      <div class="editorial-kpi-cell" onclick="switchDisputeTab('court')">
+        <div class="editorial-kpi-label"><span>Virtual Court Dockets</span></div>
+        <div class="editorial-kpi-figure" style="color: var(--status-court);">${courtCases.length}</div>
+        <div class="editorial-kpi-sub">Sub-judice stay lock active</div>
       </div>
 
-      <div class="kpi-card">
-        <div class="kpi-card-top">
-          <span class="kpi-label">Contested Value</span>
-          <div class="kpi-icon-wrapper" style="background: #FEF3F2; color: #B42318;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-          </div>
-        </div>
-        <div class="kpi-value">${Utils.formatINR(totalAmountUnderContest)}</div>
-        <div class="kpi-subtext">Penalties under formal legal dispute</div>
+      <div class="editorial-kpi-cell" style="cursor: default;">
+        <div class="editorial-kpi-label"><span>Contested Value</span></div>
+        <div class="editorial-kpi-figure">${Utils.formatINR(totalAmountUnderContest)}</div>
+        <div class="editorial-kpi-sub">Penalties under legal dispute</div>
       </div>
 
-      <div class="kpi-card">
-        <div class="kpi-card-top">
-          <span class="kpi-label">Compounded / Waived</span>
-          <div class="kpi-icon-wrapper" style="background: var(--status-paid-bg); color: var(--status-paid);">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-          </div>
-        </div>
-        <div class="kpi-value" style="color: var(--status-paid);">₹68,500</div>
-        <div class="kpi-subtext">Recovered through judicial orders</div>
+      <div class="editorial-kpi-cell" style="cursor: default;">
+        <div class="editorial-kpi-label"><span>Compounded / Waived</span></div>
+        <div class="editorial-kpi-figure" style="color: var(--status-paid);">₹68,500</div>
+        <div class="editorial-kpi-sub">Mitigated via judicial decrees</div>
       </div>
     </div>
   `;
 
-  // 2. Tab Navigation
+  // 2. Segmented Tabs + Search Toolbar Row
   const tabsHTML = `
-    <div class="nav-tabs" style="margin-top: var(--space-6);">
-      <button class="nav-tab ${disputesViewState.activeTab === 'all' ? 'active' : ''}" onclick="switchDisputeTab('all')">
-        All Contested Matters (${totalContested})
-      </button>
-      <button class="nav-tab ${disputesViewState.activeTab === 'disputes' ? 'active' : ''}" onclick="switchDisputeTab('disputes')">
-        Administrative Grievances (${disputed.length})
-      </button>
-      <button class="nav-tab ${disputesViewState.activeTab === 'court' ? 'active' : ''}" onclick="switchDisputeTab('court')">
-        Virtual Court Dockets (${courtCases.length})
-      </button>
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 14px;">
+      <div class="editorial-tabs" role="tablist" aria-label="Disputes and Court Filter">
+        <button class="editorial-tab-btn ${disputesViewState.activeTab === 'all' ? 'active' : ''}" onclick="switchDisputeTab('all')">
+          All Contested <span class="editorial-tab-count">${totalContested}</span>
+        </button>
+        <button class="editorial-tab-btn ${disputesViewState.activeTab === 'disputes' ? 'active' : ''}" onclick="switchDisputeTab('disputes')">
+          Grievances <span class="editorial-tab-count">${disputed.length}</span>
+        </button>
+        <button class="editorial-tab-btn ${disputesViewState.activeTab === 'court' ? 'active' : ''}" onclick="switchDisputeTab('court')">
+          Virtual Court <span class="editorial-tab-count">${courtCases.length}</span>
+        </button>
+      </div>
+
+      <input type="text" class="form-input form-input--search" placeholder="Search challan, reg, case no..." aria-label="Search legal dockets" style="width: 240px; height: 34px; font-size: 12px;" value="${disputesViewState.searchQuery}" oninput="handleDisputesSearch(this.value)">
     </div>
   `;
 
@@ -124,44 +108,33 @@ function renderDisputesView(container, actions) {
 
   const tableHTML = `
     <!-- Judicial Stay Notice -->
-    <div style="background: rgba(180, 83, 9, 0.06); border: 1px solid rgba(180, 83, 9, 0.22); border-radius: var(--radius-md); padding: 12px 16px; display: flex; align-items: center; gap: 12px; margin-top: var(--space-4);">
-      <span style="color: var(--status-pending); display: flex; align-items: center;">${Utils.icon('scale', 18)}</span>
-      <div style="font-size: 12.5px; color: var(--ink); line-height: 1.45;">
+    <div style="background: rgba(180, 83, 9, 0.05); border: 1px solid rgba(180, 83, 9, 0.2); border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+      <span style="color: var(--status-pending); display: flex; align-items: center;">${Utils.icon('scale', 16)}</span>
+      <div style="font-size: 12px; color: var(--ink); line-height: 1.45;">
         <strong>Sub-Judice Statutory Stay Guard Active:</strong> Contested notices under Special Metropolitan Magistrate review maintain active legal stay. Direct Parivahan settlement is locked to prevent contempt of court or double payment.
       </div>
     </div>
 
-    <div class="card" style="margin-top: var(--space-3);">
-      <div class="card-header" style="flex-wrap: wrap; gap: var(--space-3);">
-        <div>
-          <div class="card-title">Legal Dockets & Administrative Contests</div>
-          <div class="card-subtitle">Track Parivahan grievance responses, evidence dossiers, and Virtual Court compounding hearings</div>
-        </div>
-
-        <input type="text" class="form-input form-input--search" placeholder="Search challan, reg, case no..." style="width: 260px;" oninput="handleDisputesSearch(this.value)">
-      </div>
-
-      <div class="card-body" style="padding: 0;">
-        <table class="data-table" style="width: 100%; min-width: 960px;">
-          <thead>
-            <tr>
-              <th>Challan & Case Ref</th>
-              <th>Vehicle Asset</th>
-              <th>Contestation Ground / Court</th>
-              <th>Penalty Amount</th>
-              <th>Deadline / Hearing</th>
-              <th style="text-align: right; min-width: 140px; padding-right: 20px;">Status & Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${renderDisputeTableRows(visibleRecords)}
-          </tbody>
-        </table>
-      </div>
+    <div style="overflow-x: auto; border-top: 1px solid #EBEBEB;">
+      <table class="data-table" style="width: 100%; min-width: 960px;">
+        <thead>
+          <tr>
+            <th>Challan & Case Ref</th>
+            <th>Vehicle Asset</th>
+            <th>Contestation Ground / Court</th>
+            <th>Penalty Amount</th>
+            <th>Deadline / Hearing</th>
+            <th style="text-align: right; min-width: 140px; padding-right: 20px;">Status & Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${renderDisputeTableRows(visibleRecords)}
+        </tbody>
+      </table>
     </div>
   `;
 
-  container.innerHTML = kpiHTML + tabsHTML + tableHTML;
+  container.innerHTML = `<div class="view-enter">${kpiHTML}${tabsHTML}${tableHTML}</div>`;
 }
 
 /**

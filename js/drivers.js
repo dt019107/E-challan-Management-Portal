@@ -52,65 +52,50 @@ function renderDriversView(container, actions) {
   ];
 
   container.innerHTML = `
-    <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+    <div class="view-enter" style="display: flex; flex-direction: column; gap: 22px;">
       
-      <!-- 1. Driver KPIs -->
-      <div class="kpi-grid">
-        <div class="kpi-card" onclick="switchDriverTab('all')" style="cursor: pointer;">
-          <div class="kpi-card-top">
-            <span class="kpi-label">Active Commercial Drivers</span>
-            <div class="kpi-icon-wrapper" style="background: var(--status-assigned-bg); color: var(--status-assigned);">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-            </div>
-          </div>
-          <div class="kpi-value">${allDrivers.length}</div>
-          <div class="kpi-subtext">Verified transport licenses (HMV/LMV)</div>
+      <!-- 1. Hairline Driver KPI Strip -->
+      <div class="editorial-kpi-strip" style="grid-template-columns: repeat(3, minmax(0, 1fr));">
+        <div class="editorial-kpi-cell" onclick="switchDriverTab('all')">
+          <div class="editorial-kpi-label"><span>Active Commercial Drivers</span></div>
+          <div class="editorial-kpi-figure">${allDrivers.length}</div>
+          <div class="editorial-kpi-sub">Verified transport licenses (HMV/LMV)</div>
         </div>
 
-        <div class="kpi-card" onclick="switchDriverTab('pendingRecovery')" style="cursor: pointer;">
-          <div class="kpi-card-top">
-            <span class="kpi-label">Pending Payroll Escrow</span>
-            <div class="kpi-icon-wrapper" style="background: var(--status-pending-bg); color: var(--status-pending);">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-            </div>
-          </div>
-          <div class="kpi-value" style="color: var(--status-pending); font-variant-numeric: tabular-nums;">${Utils.formatINR(totalRecovery)}</div>
-          <div class="kpi-subtext">${withRecoveryCount} drivers queued for salary deduction</div>
+        <div class="editorial-kpi-cell" onclick="switchDriverTab('pendingRecovery')">
+          <div class="editorial-kpi-label"><span>Pending Payroll Escrow</span></div>
+          <div class="editorial-kpi-figure" style="color: var(--status-pending);">${Utils.formatINR(totalRecovery)}</div>
+          <div class="editorial-kpi-sub">${withRecoveryCount} drivers queued for salary deduction</div>
         </div>
 
-        <div class="kpi-card">
-          <div class="kpi-card-top">
-            <span class="kpi-label">Fleet Safety Score</span>
-            <div class="kpi-icon-wrapper" style="background: var(--status-paid-bg); color: var(--status-paid);">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            </div>
-          </div>
-          <div class="kpi-value" style="color: var(--status-paid);">92 / 100</div>
-          <div class="kpi-subtext">0.4 Infractions per 10,000 km</div>
+        <div class="editorial-kpi-cell" style="cursor: default;">
+          <div class="editorial-kpi-label"><span>Fleet Safety Score</span></div>
+          <div class="editorial-kpi-figure" style="color: var(--status-paid);">92 / 100</div>
+          <div class="editorial-kpi-sub">0.4 infractions per 10,000 km</div>
         </div>
       </div>
 
-      <!-- 2. Segmented Pill Tab Bar & Search Toolbar -->
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 4px;">
-        <div class="nav-tabs" id="driverTabs" style="margin-bottom: 0;">
+      <!-- 2. Segmented Tabs & Search Toolbar -->
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+        <div class="editorial-tabs" id="driverTabs">
           ${tabs.map(t => `
-            <button class="nav-tab ${driverTableState.activeTab === t.key ? 'active' : ''}" onclick="switchDriverTab('${t.key}')">
-              ${t.label} <span class="nav-tab-badge" style="${t.alert ? 'background: rgba(239, 68, 68, 0.14); color: var(--status-unassigned); font-weight: 700;' : ''}">${t.count}</span>
+            <button class="editorial-tab-btn ${driverTableState.activeTab === t.key ? 'active' : ''}" onclick="switchDriverTab('${t.key}')">
+              ${t.label} <span class="editorial-tab-count">${t.count}</span>
             </button>
           `).join("")}
         </div>
 
-        <div style="position: relative; width: 320px;">
+        <div style="position: relative; width: 280px;">
           <svg class="search-icon-prefix" viewBox="0 0 20 20" fill="currentColor" style="left: 10px;">
             <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
           </svg>
-          <input type="text" class="form-input" id="driverSearchInput" style="padding-left: 34px; height: 36px; font-size: 13px;"
-            placeholder="Search operator, phone, DL, vehicle..." value="${driverTableState.searchQuery}" oninput="handleDriverSearch(this.value)">
+          <input type="text" class="form-input" id="driverSearchInput" style="padding-left: 34px; height: 34px; font-size: 12px;"
+            placeholder="Search operator, phone, DL, vehicle..." aria-label="Search drivers" value="${driverTableState.searchQuery}" oninput="handleDriverSearch(this.value)">
         </div>
       </div>
 
-      <!-- 3. Commercial Driver Roster Table -->
-      <div class="card" style="padding: 0; overflow: hidden; border-radius: 18px;">
+      <!-- 3. Open Architectural Driver Roster Table -->
+      <div style="overflow-x: auto; border-top: 1px solid #EBEBEB;">
         <table class="data-table" style="width: 100%; min-width: 800px; margin: 0;">
           <thead>
             <tr>
