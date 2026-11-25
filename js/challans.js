@@ -98,14 +98,14 @@ function renderChallansView(container, actions, params = {}) {
     <!-- Unified View Tabs -->
     <div class="nav-tabs" id="challanStatusTabs">
       ${tabs.map(t => {
-        const isActive = (t.type === "status" && challanTableState.activeStatusTab === t.key && challanTableState.savedView === "all") ||
-                         (t.type === "savedView" && challanTableState.savedView === t.key);
-        return `
+    const isActive = (t.type === "status" && challanTableState.activeStatusTab === t.key && challanTableState.savedView === "all") ||
+      (t.type === "savedView" && challanTableState.savedView === t.key);
+    return `
           <button class="nav-tab ${isActive ? 'active' : ''}" data-type="${t.type}" data-key="${t.key}">
             ${t.label} <span class="nav-tab-badge" style="${t.alert ? 'background: rgba(194, 65, 65, 0.14); color: var(--status-unassigned); font-weight: 700;' : ''}">${t.count}</span>
           </button>
         `;
-      }).join("")}
+  }).join("")}
     </div>
 
     <!-- Unified Command & Filter Toolbar -->
@@ -482,11 +482,11 @@ function renderChallansTableAndPagination() {
     tableContainer.innerHTML = `
       <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 16px; padding: 20px; background: var(--canvas);">
         ${paginatedRows.map(c => {
-          const daysLeft = Utils.getDaysRemaining(c.dueDate);
-          const isOverdue = daysLeft < 0 && c.status !== "paid";
-          const veh = StorageManager.getVehicleById(c.vehicleId);
+      const daysLeft = Utils.getDaysRemaining(c.dueDate);
+      const isOverdue = daysLeft < 0 && c.status !== "paid";
+      const veh = StorageManager.getVehicleById(c.vehicleId);
 
-          return `
+      return `
             <div class="card" style="padding: 18px; border-radius: 16px; border: 1px solid var(--surface-1); box-shadow: var(--shadow-soft); cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;" onclick="handleChallanRowClick(event, '${c.id}')">
               <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
                 <div>
@@ -534,7 +534,7 @@ function renderChallansTableAndPagination() {
               </div>
             </div>
           `;
-        }).join('')}
+    }).join('')}
       </div>
     `;
   } else {
@@ -562,12 +562,12 @@ function renderChallansTableAndPagination() {
         </thead>
         <tbody>
           ${paginatedRows.map(c => {
-            const isChecked = challanTableState.selectedChallanIds.has(c.id);
-            const daysLeft = Utils.getDaysRemaining(c.dueDate);
-            const isOverdue = daysLeft < 0 && c.status !== "paid";
-            const veh = StorageManager.getVehicleById(c.vehicleId);
+      const isChecked = challanTableState.selectedChallanIds.has(c.id);
+      const daysLeft = Utils.getDaysRemaining(c.dueDate);
+      const isOverdue = daysLeft < 0 && c.status !== "paid";
+      const veh = StorageManager.getVehicleById(c.vehicleId);
 
-            return `
+      return `
               <tr class="${isChecked ? 'row-selected' : ''} row-interactive ${isOverdue ? 'row-urgent-risk' : ''}" onclick="handleChallanRowClick(event, '${c.id}')" title="Click to view full notice details">
                 <td style="text-align: center; padding-left: 18px;" onclick="event.stopPropagation()">
                   <input type="checkbox" class="custom-checkbox" aria-label="Select infraction ${c.challanNumber}" ${isChecked ? 'checked' : ''} onchange="toggleChallanRowSelection('${c.id}', this.checked)">
@@ -629,7 +629,7 @@ function renderChallansTableAndPagination() {
                 </td>
               </tr>
             `;
-          }).join("")}
+    }).join("")}
         </tbody>
       </table>
     `;
@@ -1229,11 +1229,11 @@ function renderChallanDetailsView(container, actions, challanId) {
 
           <div class="audit-timeline">
             ${(challan.activityLog || []).map(act => {
-              let nodeMod = "";
-              if (act.action.includes("Paid")) nodeMod = "action-paid";
-              else if (act.action.includes("Dispute")) nodeMod = "action-dispute";
+    let nodeMod = "";
+    if (act.action.includes("Paid")) nodeMod = "action-paid";
+    else if (act.action.includes("Dispute")) nodeMod = "action-dispute";
 
-              return `
+    return `
                 <div class="audit-event-node ${nodeMod}">
                   <div class="audit-event-title">
                     <span>${act.action}</span>
@@ -1243,7 +1243,7 @@ function renderChallanDetailsView(container, actions, challanId) {
                   <div class="audit-event-meta">${Utils.formatDate(act.timestamp, true)}</div>
                 </div>
               `;
-            }).join("")}
+  }).join("")}
           </div>
         </div>
 

@@ -29,18 +29,18 @@
   /* --------------------------------------------------------------------------
      2. Warm Alabaster Canvas & Slate Ink Scale (WCAG AA/AAA)
      -------------------------------------------------------------------------- */
-  --ink: #111827;                 /* Gray 900 - Headings & Monetary Figures */
-  --ink-soft: #1F2937;            /* Gray 800 */
-  --ink-body: #374151;            /* Gray 700 - Body Copy */
-  --ink-muted: #4B5563;           /* Gray 600 - Secondary Metadata */
-  --ink-faint: #52525B;           /* Zinc 600 - 6.8:1 WCAG AA on Alabaster */
-  --canvas: #F7F7F5;              /* Warm Alabaster Paper Canvas */
-  --surface-1: #E4E4E7;           /* Crisp 1px structural hairline */
-  --surface-2: #F4F4F2;           /* Sunken utility surface */
-  --surface-3: #ECECE8;           /* Hover surface */
+  --ink: #111111;                 /* Deep Editorial Ink */
+  --ink-soft: #1F2937;
+  --ink-body: #374151;
+  --ink-muted: #4B5563;
+  --ink-faint: #52525B;
+  --canvas: #F9F8F6;              /* Warm Gallery Paper */
+  --surface-1: #E5E4E0;           /* Warm 1px structural hairline */
+  --surface-2: #F2F0EC;           /* Sunken warm stone */
+  --surface-3: #E8E6E1;           /* Hover tone */
 
-  --hairline: #E4E4E7;
-  --hairline-medium: #D4D4D8;
+  --hairline: #E5E4E0;
+  --hairline-medium: #D4D2CC;
   --shadow: rgba(17, 24, 39, 0.05);
 
   /* Aliased Semantic Tokens */
@@ -155,7 +155,8 @@
      5. Typography: Inter & Geist Mono (Tabular Figures)
      -------------------------------------------------------------------------- */
   --font-family-base: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-  --font-family-display: "Inter", "Source Sans 3", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-family-serif: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --font-family-display: "Instrument Serif", "Inter", Georgia, serif;
   --font-family-mono: "Geist Mono", "SF Mono", ui-monospace, Menlo, Monaco, Consolas, monospace;
 
   --font-display-xl: 36px;
