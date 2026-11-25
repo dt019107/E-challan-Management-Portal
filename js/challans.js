@@ -545,7 +545,7 @@ function renderChallansTableAndPagination() {
         <thead>
           <tr>
             <th style="width: 52px; text-align: center; padding-left: 18px;">
-              <input type="checkbox" class="custom-checkbox" id="selectAllChallansCheckbox" ${isAllSelected ? 'checked' : ''} onchange="toggleSelectAllChallans(this.checked)">
+              <input type="checkbox" class="custom-checkbox" id="selectAllChallansCheckbox" aria-label="Select all traffic notices" ${isAllSelected ? 'checked' : ''} onchange="toggleSelectAllChallans(this.checked)">
             </th>
             <th onclick="sortChallansBy('challanNumber')" style="width: 28%; cursor: pointer;">
               Notice & Violation ${getChallanSortIcon('challanNumber')}
@@ -570,7 +570,7 @@ function renderChallansTableAndPagination() {
             return `
               <tr class="${isChecked ? 'row-selected' : ''} row-interactive ${isOverdue ? 'row-urgent-risk' : ''}" onclick="handleChallanRowClick(event, '${c.id}')" title="Click to view full notice details">
                 <td style="text-align: center; padding-left: 18px;" onclick="event.stopPropagation()">
-                  <input type="checkbox" class="custom-checkbox" ${isChecked ? 'checked' : ''} onchange="toggleChallanRowSelection('${c.id}', this.checked)">
+                  <input type="checkbox" class="custom-checkbox" aria-label="Select infraction ${c.challanNumber}" ${isChecked ? 'checked' : ''} onchange="toggleChallanRowSelection('${c.id}', this.checked)">
                 </td>
                 <td>
                   <div style="display: flex; align-items: center; gap: 6px;">

@@ -19,7 +19,7 @@
 // --------------------------------------------------------------------------
 const ROUTES = {
   dashboard: {
-    title: "Operational Dashboard",
+    title: "Fleet Dashboard",
     subtitle: "Real-time compliance KPIs, triage queue & liability breakdown",
     breadcrumb: ["Hisaab", "Dashboard"],
     render: renderDashboardView

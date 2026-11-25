@@ -301,7 +301,7 @@ function renderVehiclesTableAndPagination() {
         <thead>
           <tr>
             <th style="width: 52px; text-align: center; padding-left: 18px;">
-              <input type="checkbox" class="custom-checkbox" id="selectAllVehiclesCheckbox" ${isAllSelected ? 'checked' : ''} onchange="toggleSelectAllVehicles(this.checked)">
+              <input type="checkbox" class="custom-checkbox" id="selectAllVehiclesCheckbox" aria-label="Select all fleet vehicles" ${isAllSelected ? 'checked' : ''} onchange="toggleSelectAllVehicles(this.checked)">
             </th>
             <th onclick="sortVehiclesBy('regNumber')" style="width: 28%; cursor: pointer;">
               Vehicle Asset ${getSortIcon('regNumber')}
@@ -324,7 +324,7 @@ function renderVehiclesTableAndPagination() {
       return `
               <tr class="${isChecked ? 'row-selected' : ''} row-interactive" onclick="handleVehicleRowClick(event, '${v.id}')" title="Click to view vehicle profile">
                 <td style="text-align: center; padding-left: 18px;" onclick="event.stopPropagation()">
-                  <input type="checkbox" class="custom-checkbox" ${isChecked ? 'checked' : ''} onchange="toggleVehicleRowSelection('${v.id}', this.checked)">
+                  <input type="checkbox" class="custom-checkbox" aria-label="Select vehicle ${v.regNumber}" ${isChecked ? 'checked' : ''} onchange="toggleVehicleRowSelection('${v.id}', this.checked)">
                 </td>
                 <td style="min-width: 190px;">
                   <div style="display: flex; align-items: center; gap: 12px;">

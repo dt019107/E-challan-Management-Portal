@@ -80,9 +80,9 @@
   --status-unassigned-bg: rgba(239, 68, 68, 0.10);
   --status-unassigned-border: rgba(185, 28, 28, 0.28);
 
-  --status-assigned: #1E60FF;       /* Royal Blue: 5.03:1 Contrast on White */
-  --status-assigned-bg: rgba(30, 96, 255, 0.08);
-  --status-assigned-border: rgba(30, 96, 255, 0.22);
+  --status-assigned: #1E40AF;       /* Deep Cobalt 800: 8.5:1 Contrast on Light Tints */
+  --status-assigned-bg: rgba(29, 78, 216, 0.08);
+  --status-assigned-border: rgba(29, 78, 216, 0.24);
 
   --status-pending: #92400E;        /* Amber 800: 4.72:1 Contrast on White */
   --status-pending-bg: rgba(245, 158, 11, 0.12);

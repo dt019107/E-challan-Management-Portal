@@ -201,7 +201,7 @@ function renderDashboardView(container, actions) {
           <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
             <div class="editorial-tabs" id="dashboardQueuePills">
               <button class="editorial-tab-btn calm-tab-btn active" data-queue="all">
-                All <span class="editorial-tab-count">${challans.filter(c => c.status !== 'paid').length}</span>
+                All Notices <span class="editorial-tab-count">${challans.filter(c => c.status !== 'paid').length}</span>
               </button>
               <button class="editorial-tab-btn calm-tab-btn" data-queue="unassigned">
                 Unassigned <span class="editorial-tab-count">${challans.filter(c => c.status === 'unassigned').length}</span>
@@ -229,7 +229,7 @@ function renderDashboardView(container, actions) {
           <table class="data-table" style="width: 100%; min-width: 960px;">
             <thead>
               <tr>
-                <th style="width: 44px; text-align: center;"><input type="checkbox" id="selectAllAttentionCheckbox" title="Select all items"></th>
+                <th style="width: 44px; text-align: center;"><input type="checkbox" id="selectAllAttentionCheckbox" aria-label="Select all notices in queue" title="Select all notices"></th>
                 <th style="width: 160px;">Notice ID</th>
                 <th style="width: 150px;">Vehicle Plate</th>
                 <th>Violation / Offence</th>
@@ -563,7 +563,7 @@ function renderAttentionItems(items) {
       <tr class="row-interactive ${isUrgent ? 'row-urgent-risk' : ''}" onclick="if(!event.target.closest('input') && !event.target.closest('button')) openQuickInspectorDrawer('${c.id}')" title="Click anywhere to inspect notice in drawer">
         <!-- Checkbox -->
         <td style="width: 36px;">
-          <input type="checkbox" value="${c.id}" class="custom-checkbox">
+          <input type="checkbox" value="${c.id}" class="custom-checkbox" aria-label="Select infraction ${c.challanNumber}">
         </td>
 
         <!-- Notice ID -->
@@ -595,11 +595,11 @@ function renderAttentionItems(items) {
         </td>
 
         <!-- Amount (Right-Aligned Tabular Figures) -->
-        <td class="text-right">
-          <div style="font-weight: 500; font-size: 13.5px; color: var(--text); font-variant-numeric: tabular-nums;">
+        <td class="text-right" style="text-align: right;">
+          <div style="font-weight: 500; font-size: 13.5px; color: var(--text); font-variant-numeric: tabular-nums; text-align: right;">
             ${Utils.formatINR(c.amount)}
           </div>
-          ${c.lateFee ? `<div style="font-size: 10px; color: var(--status-unassigned);">+${Utils.formatINR(c.lateFee)} fee</div>` : ''}
+          ${c.lateFee ? `<div style="font-size: 10.5px; color: var(--status-unassigned); text-align: right; font-variant-numeric: tabular-nums;">+${Utils.formatINR(c.lateFee)} fee</div>` : ''}
         </td>
 
         <!-- Status Badge (22px high, 12% tint, 5px dot, 11px text) -->
