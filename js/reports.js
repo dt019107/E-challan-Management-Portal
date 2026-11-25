@@ -257,24 +257,24 @@ function getActiveReportData() {
     function getCategoryVisualMeta(name) {
       const lower = name.toLowerCase();
       if (lower.includes("speed")) {
-        return { icon: "⚡", color: "#0071E3", bg: "rgba(0, 113, 227, 0.08)", label: "Speed Compliance" };
+        return { icon: Utils.icon('sliders', 13), color: "#1D4ED8", bg: "rgba(29, 78, 216, 0.08)", label: "Speed Compliance" };
       }
       if (lower.includes("dangerous") || lower.includes("red light") || lower.includes("signal")) {
-        return { icon: "🚨", color: "#D92D20", bg: "rgba(217, 45, 32, 0.08)", label: "Critical Safety" };
+        return { icon: Utils.icon('alert', 13), color: "#B91C1C", bg: "rgba(185, 28, 28, 0.08)", label: "Critical Safety" };
       }
       if (lower.includes("seat") || lower.includes("belt") || lower.includes("helmet")) {
-        return { icon: "💺", color: "#AF52DE", bg: "rgba(175, 82, 222, 0.08)", label: "Occupant Safety" };
+        return { icon: Utils.icon('shield', 13), color: "#6D28D9", bg: "rgba(109, 40, 217, 0.08)", label: "Occupant Safety" };
       }
       if (lower.includes("weight") || lower.includes("overload") || lower.includes("axle")) {
-        return { icon: "⚖️", color: "#F59E0B", bg: "rgba(245, 158, 11, 0.08)", label: "Payload Limit" };
+        return { icon: Utils.icon('scale', 13), color: "#B45309", bg: "rgba(180, 83, 9, 0.08)", label: "Payload Limit" };
       }
       if (lower.includes("parking") || lower.includes("obstruct")) {
-        return { icon: "🅿️", color: "#0066CC", bg: "rgba(0, 102, 204, 0.08)", label: "Parking & Transit" };
+        return { icon: Utils.icon('truck', 13), color: "#0369A1", bg: "rgba(3, 105, 161, 0.08)", label: "Parking & Transit" };
       }
       if (lower.includes("puc") || lower.includes("pollution") || lower.includes("smoke")) {
-        return { icon: "🌿", color: "#34C759", bg: "rgba(52, 199, 89, 0.08)", label: "Emissions" };
+        return { icon: Utils.icon('check', 13), color: "#15803D", bg: "rgba(21, 128, 61, 0.08)", label: "Emissions" };
       }
-      return { icon: "📋", color: "#6E6E73", bg: "rgba(110, 110, 115, 0.08)", label: "Regulatory" };
+      return { icon: Utils.icon('shield', 13), color: "#52525B", bg: "rgba(82, 82, 91, 0.08)", label: "Regulatory" };
     }
 
     // Circumference for r=38 circle: 2 * pi * 38 = 238.761
@@ -459,8 +459,8 @@ function getActiveReportData() {
 
     const chartHTML = `
       <div class="card" style="padding: 16px 20px;">
-        <div style="font-weight: 700; font-size: 13px; color: var(--color-text-main); margin-bottom: 12px;">
-          🚗 Highest Fine Exposure Vehicles (Top Risk Assets)
+        <div style="font-weight: 700; font-size: 13px; color: var(--color-text-main); margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+          ${Utils.icon('truck', 14)} Highest Fine Exposure Vehicles (Top Risk Assets)
         </div>
         <div style="display: flex; flex-direction: column; gap: 8px;">
           ${topRiskVehicles.map(v => {
@@ -650,8 +650,8 @@ function getActiveReportData() {
 
     const chartHTML = `
       <div class="card" style="padding: 16px 20px;">
-        <div style="font-weight: 700; font-size: 13px; color: var(--color-text-main); margin-bottom: 12px;">
-          ⏱️ Outstanding Liability Aging & Impoundment Risk Horizon
+        <div style="font-weight: 700; font-size: 13px; color: var(--color-text-main); margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+          ${Utils.icon('clock', 14)} Outstanding Liability Aging &amp; Impoundment Risk Horizon
         </div>
         <div style="display: flex; gap: 8px; height: 28px; border-radius: 6px; overflow: hidden; background: var(--color-border);">
           <div style="width: ${Math.max(15, Math.round((urgentCount / (records.length || 1)) * 100))}%; background: #F79009; color: #FFF; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700;" title="Urgent (< 7 Days)">
@@ -844,8 +844,8 @@ function getActiveReportData() {
 
   const chartHTML = `
     <div class="card" style="padding: 16px 20px;">
-      <div style="font-weight: 700; font-size: 13px; color: var(--color-text-main); margin-bottom: 12px;">
-        ⚖️ 5-Tier Responsibility Engine Attribution Distribution
+      <div style="font-weight: 700; font-size: 13px; color: var(--color-text-main); margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+        ${Utils.icon('scale', 14)} 5-Tier Responsibility Engine Attribution Distribution
       </div>
       <div style="display: flex; gap: 8px; height: 28px; border-radius: 6px; overflow: hidden; background: var(--color-border);">
         <div style="width: ${Math.max(10, Math.round((driverCount / (records.length || 1)) * 100))}%; background: var(--color-primary); color: #FFF; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700;">

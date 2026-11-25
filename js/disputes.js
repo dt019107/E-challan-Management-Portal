@@ -35,7 +35,7 @@ function renderDisputesView(container, actions) {
       Export Legal Docket
     </button>
     <button class="btn btn--outline btn--sm" onclick="openEscalateCourtModal()">
-      ⚖️ Escalate to Court
+      ${Utils.icon('scale', 14)} Escalate to Court
     </button>
     <button class="btn btn--primary btn--sm" onclick="openFileDisputeModal()">
       + Contest New Challan
@@ -124,9 +124,9 @@ function renderDisputesView(container, actions) {
 
   const tableHTML = `
     <!-- Judicial Stay Notice -->
-    <div style="background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 12px; padding: 12px 18px; display: flex; align-items: center; gap: 12px; margin-top: var(--space-4);">
-      <span style="font-size: 18px;">⚖️</span>
-      <div style="font-size: 12.5px; color: var(--ink); line-height: 1.4;">
+    <div style="background: rgba(180, 83, 9, 0.06); border: 1px solid rgba(180, 83, 9, 0.22); border-radius: var(--radius-md); padding: 12px 16px; display: flex; align-items: center; gap: 12px; margin-top: var(--space-4);">
+      <span style="color: var(--status-pending); display: flex; align-items: center;">${Utils.icon('scale', 18)}</span>
+      <div style="font-size: 12.5px; color: var(--ink); line-height: 1.45;">
         <strong>Sub-Judice Statutory Stay Guard Active:</strong> Contested notices under Special Metropolitan Magistrate review maintain active legal stay. Direct Parivahan settlement is locked to prevent contempt of court or double payment.
       </div>
     </div>
@@ -228,8 +228,8 @@ function renderDisputeTableRows(records) {
         <td style="text-align: right; padding-right: 20px;">
           <div style="display: inline-flex; align-items: center; gap: 8px;">
             ${isCourt ? `
-              <span class="badge badge--court" title="Settlement locked pending judicial compounding decree">
-                🔒 Court Stay
+              <span class="badge badge--court" title="Settlement locked pending judicial compounding decree" style="display: inline-flex; align-items: center; gap: 5px;">
+                ${Utils.icon('lock', 12)} Court Stay
               </span>
               <button class="btn btn--outline btn--sm" style="height: 32px; padding: 0 14px; font-size: 12px; font-weight: 600;" onclick="openCourtCaseModal('${c.id}')" title="Record court compounding judgment outcome">
                 Order
@@ -434,14 +434,14 @@ function updateCompoundingCalculation() {
   if (!savingsText || !savingsPill) return;
 
   if (outcome === "DISMISSED") {
-    savingsText.textContent = "⚖️ Case Dismissed / Quashed: 100% fine waived by judicial decree";
+    savingsText.textContent = "Case Dismissed / Quashed: 100% fine waived by judicial decree";
     savingsPill.textContent = `Full Waiver (${Utils.formatINR(originalFine)})`;
     savingsPill.className = "badge badge--paid";
     return;
   }
 
   if (outcome === "UPHELD") {
-    savingsText.textContent = "⚖️ Statutory Fine Upheld: No compounding reduction applied";
+    savingsText.textContent = "Statutory Fine Upheld: No compounding reduction applied";
     savingsPill.textContent = "₹0 Saved";
     savingsPill.className = "badge badge--unassigned";
     return;
@@ -452,7 +452,7 @@ function updateCompoundingCalculation() {
   const savings = Math.max(0, originalFine - decreedAmount);
   const percentage = originalFine > 0 ? Math.round((savings / originalFine) * 100) : 0;
 
-  savingsText.innerHTML = `⚖️ Compounding Savings: <strong>${Utils.formatINR(savings)}</strong> (${Utils.formatINR(originalFine)} → ${Utils.formatINR(decreedAmount)})`;
+  savingsText.innerHTML = `Compounding Savings: <strong>${Utils.formatINR(savings)}</strong> (${Utils.formatINR(originalFine)} &rarr; ${Utils.formatINR(decreedAmount)})`;
   savingsPill.textContent = `${percentage}% Compounded`;
   savingsPill.className = percentage > 0 ? "badge badge--paid" : "badge badge--unassigned";
 }

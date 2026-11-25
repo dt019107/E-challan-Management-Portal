@@ -109,11 +109,11 @@ function renderVehiclesView(container, actions, params = {}) {
         <!-- Class Filter Select -->
         <select class="form-select" id="vehicleTypeSelect" style="width: 190px; font-size: 12px; padding: 6px 10px;" onchange="setVehicleTypeFilter(this.value)">
           <option value="all" ${vehicleTableState.vehicleTypeFilter === 'all' ? 'selected' : ''}>All Vehicle Classes (${typeCounts.all})</option>
-          <option value="truck" ${vehicleTableState.vehicleTypeFilter === 'truck' ? 'selected' : ''}>🚛 Heavy Trucks (${typeCounts.truck})</option>
-          <option value="bus" ${vehicleTableState.vehicleTypeFilter === 'bus' ? 'selected' : ''}>🚌 Commercial Buses (${typeCounts.bus})</option>
-          <option value="bike" ${vehicleTableState.vehicleTypeFilter === 'bike' ? 'selected' : ''}>🏍️ 2-Wheelers (${typeCounts.bike})</option>
-          <option value="car" ${vehicleTableState.vehicleTypeFilter === 'car' ? 'selected' : ''}>🚗 Cabs / Sedans (${typeCounts.car})</option>
-          <option value="van" ${vehicleTableState.vehicleTypeFilter === 'van' ? 'selected' : ''}>🚐 Vans & Pickups (${typeCounts.van})</option>
+          <option value="truck" ${vehicleTableState.vehicleTypeFilter === 'truck' ? 'selected' : ''}>Heavy Trucks (${typeCounts.truck})</option>
+          <option value="bus" ${vehicleTableState.vehicleTypeFilter === 'bus' ? 'selected' : ''}>Commercial Buses (${typeCounts.bus})</option>
+          <option value="bike" ${vehicleTableState.vehicleTypeFilter === 'bike' ? 'selected' : ''}>2-Wheelers (${typeCounts.bike})</option>
+          <option value="car" ${vehicleTableState.vehicleTypeFilter === 'car' ? 'selected' : ''}>Cabs / Sedans (${typeCounts.car})</option>
+          <option value="van" ${vehicleTableState.vehicleTypeFilter === 'van' ? 'selected' : ''}>Vans &amp; Pickups (${typeCounts.van})</option>
         </select>
 
         ${(vehicleTableState.searchQuery || vehicleTableState.vehicleTypeFilter !== 'all') ? `
@@ -354,7 +354,7 @@ function renderVehiclesTableAndPagination() {
                     FASTag: <strong>${Utils.formatINR(v.fastagBalance || 0)}</strong>
                   </div>
                   <div style="font-size: 12px; margin-top: 3px; color: ${v.syncStatus === 'Failed' ? 'var(--status-unassigned)' : (v.syncStatus === 'Partial' ? 'var(--status-pending)' : 'var(--color-text-muted)')}; font-weight: 500;">
-                    ${v.syncStatus === 'Failed' ? '⚠ Parivahan Sync Failed' : (v.syncStatus === 'Partial' ? '⏳ Sync Delayed' : '✓ Gateway Synced')}
+                    ${v.syncStatus === 'Failed' ? 'Parivahan Sync Failed' : (v.syncStatus === 'Partial' ? 'Sync Delayed' : 'Gateway Synced')}
                   </div>
                 </td>
                 <td style="text-align: right;">

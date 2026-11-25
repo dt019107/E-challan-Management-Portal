@@ -136,14 +136,15 @@ function renderDriversView(container, actions) {
                 <tr class="row-interactive">
                   <td style="padding-left: 20px;">
                     <div style="display: flex; align-items: center; gap: 12px;">
-                      <div style="width: 38px; height: 38px; border-radius: 50%; background: #1E60FF; color: #FFFFFF; font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(30, 96, 255, 0.28); flex-shrink: 0;" aria-hidden="true">
+                      <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--color-primary, #1D4ED8); color: #FFFFFF; font-weight: 700; font-size: 12.5px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;" aria-hidden="true">
                         ${initials}
                       </div>
                       <div>
                         <strong style="color: var(--ink); font-size: 13.5px;">${d.name}</strong>
                         <div style="font-size: 12px; margin-top: 2px;">
-                          <a href="tel:${d.phone || '+91 98765 43210'}" aria-label="Call Driver ${d.name} at ${d.phone || '+91 98765 43210'}" style="color: var(--text-3); text-decoration: none;">
-                            📞 ${d.phone || '+91 98765 43210'}
+                          <a href="tel:${d.phone || '+91 98765 43210'}" aria-label="Call Driver ${d.name} at ${d.phone || '+91 98765 43210'}" style="color: var(--text-3); text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">
+                            ${Utils.icon('phone', 12)}
+                            <span>${d.phone || '+91 98765 43210'}</span>
                           </a>
                         </div>
                       </div>

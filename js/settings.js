@@ -456,26 +456,26 @@ function renderActiveSettingsTab(company, currentUser, currentRole) {
       <div style="margin-top: var(--space-6); border-top: 1px solid var(--color-border); padding-top: var(--space-6);">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
           <div>
-            <h4 class="text-sm font-semibold" style="color: var(--color-primary);">📲 Simulated Notification Dispatch Playground</h4>
-            <p class="text-xs text-muted">Test message generation (Simulated — no external network transmission occurs)</p>
+            <h4 class="text-sm font-semibold" style="color: var(--color-primary);">Notification Dispatch Sandbox</h4>
+            <p class="text-xs text-muted">Preview message payloads (in-browser sandbox; no external network dispatch)</p>
           </div>
-          <span class="badge badge--neutral">SIMULATION ONLY</span>
+          <span class="badge badge--neutral">SANDBOX</span>
         </div>
 
         <!-- Explicit Disclaimer Alert -->
-        <div style="background: #FEF8E8; border: 1px solid #FCE4A6; border-radius: var(--radius-md); padding: 10px 14px; font-size: 12px; color: #B7791F; margin-bottom: 14px;">
-          <strong>Notice:</strong> This is an in-browser notification sandbox for prototype verification. No real emails or SMS/WhatsApp messages are sent to external recipients.
+        <div style="background: var(--status-pending-bg); border: 1px solid var(--status-pending-border); border-radius: var(--radius-md); padding: 10px 14px; font-size: 12px; color: var(--status-pending); margin-bottom: 14px;">
+          <strong>Notice:</strong> This is an in-browser notification sandbox for verification. No external emails or SMS/WhatsApp messages are dispatched.
         </div>
 
         <div style="display: flex; gap: var(--space-3); flex-wrap: wrap;">
           <button class="btn btn--outline btn--sm" onclick="triggerSimulatedNotification('whatsapp')">
-            💬 Test Driver WhatsApp Dispatch (Simulated)
+            ${Utils.icon('message', 13)} Test Driver WhatsApp
           </button>
           <button class="btn btn--outline btn--sm" onclick="triggerSimulatedNotification('email')">
-            ✉️ Test Lessee Email Digest (Simulated)
+            ${Utils.icon('mail', 13)} Test Lessee Email Digest
           </button>
           <button class="btn btn--outline btn--sm" onclick="triggerSimulatedNotification('urgent')">
-            🚨 Test Impoundment Urgent Alert (Simulated)
+            ${Utils.icon('alert', 13)} Test Impoundment Alert
           </button>
         </div>
       </div>

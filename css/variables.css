@@ -1,77 +1,77 @@
 /* ==========================================================================
-   ChallanOS Design Tokens
-   Cobalt Blue #1E60FF, Ice-Slate #F4F7FC, 18px Card Radii, and Slate Typography
+   ChallanOS Design Tokens — Swiss Editorial Ledger Architecture
+   Alabaster #F7F7F5, Crisp 1px Hairlines #E4E4E7, Cobalt #1D4ED8, Tabular Ink
    ========================================================================== */
 
 :root {
   /* --------------------------------------------------------------------------
-     1. Brand Colors (Cobalt & Ice-Slate Architecture)
+     1. Brand Colors (Restrained Editorial Cobalt & Semantic Ink)
      -------------------------------------------------------------------------- */
-  --brand-blue: #1E60FF;          /* Signature Cobalt / Royal Blue */
-  --brand-blue-hover: #1550E0;
-  --brand-sky: #38BDF8;           /* Accent Sky for Gauge Accents */
-  --brand-indigo: #6366F1;        /* Accent Indigo for Legal / Deep Analytics */
-  --brand-red: #EF4444;           /* Alert Red */
-  --brand-amber: #F59E0B;         /* Attention Amber */
-  --brand-emerald: #10B981;       /* Compliant Emerald */
+  --brand-blue: #1D4ED8;          /* Editorial Royal Cobalt */
+  --brand-blue-hover: #1E40AF;
+  --brand-sky: #0284C7;
+  --brand-indigo: #4338CA;
+  --brand-red: #B91C1C;
+  --brand-amber: #B45309;
+  --brand-emerald: #15803D;
 
-  --color-primary: #1E60FF;       /* Electric Royal Blue */
-  --color-primary-dark: #1550E0;  /* Royal Blue Dark / Hover */
-  --color-primary-hover: #1550E0;
-  --color-primary-light: rgba(30, 96, 255, 0.08);
-  --color-primary-border: rgba(30, 96, 255, 0.20);
+  --color-primary: #1D4ED8;
+  --color-primary-dark: #1E40AF;
+  --color-primary-hover: #1E40AF;
+  --color-primary-light: rgba(29, 78, 216, 0.07);
+  --color-primary-border: rgba(29, 78, 216, 0.22);
 
-  --accent: #1E60FF;
-  --accent-hover: #1550E0;
-  --accent-muted: rgba(30, 96, 255, 0.08);
-  --accent-border: rgba(30, 96, 255, 0.20);
+  --accent: #1D4ED8;
+  --accent-hover: #1E40AF;
+  --accent-muted: rgba(29, 78, 216, 0.07);
+  --accent-border: rgba(29, 78, 216, 0.22);
 
   /* --------------------------------------------------------------------------
-     2. Slate & Ink Scale (High Legibility & Visual Contrast)
+     2. Warm Alabaster Canvas & Slate Ink Scale (WCAG AA/AAA)
      -------------------------------------------------------------------------- */
-  --ink: #0F172A;                 /* Slate 900 - Headings & Hero KPIs */
-  --ink-soft: #1E293B;            /* Slate 800 */
-  --ink-body: #334155;            /* Slate 700 - Body Copy */
-  --ink-muted: #475569;           /* Slate 600 - Secondary Metadata */
-  --ink-faint: #526078;           /* Slate - 5.92:1 WCAG AA on Canvas */
-  --canvas: #F4F7FC;              /* Ice-Tinted Slate Canvas */
-  --surface-1: #E2E8F0;           /* Subtle border & hairline */
-  --surface-2: #F8FAFC;           /* Sunken utility & card secondary */
-  --surface-3: #EDF2F7;           /* Hover tone */
+  --ink: #111827;                 /* Gray 900 - Headings & Monetary Figures */
+  --ink-soft: #1F2937;            /* Gray 800 */
+  --ink-body: #374151;            /* Gray 700 - Body Copy */
+  --ink-muted: #4B5563;           /* Gray 600 - Secondary Metadata */
+  --ink-faint: #52525B;           /* Zinc 600 - 6.8:1 WCAG AA on Alabaster */
+  --canvas: #F7F7F5;              /* Warm Alabaster Paper Canvas */
+  --surface-1: #E4E4E7;           /* Crisp 1px structural hairline */
+  --surface-2: #F4F4F2;           /* Sunken utility surface */
+  --surface-3: #ECECE8;           /* Hover surface */
 
-  --hairline: #E2E8F0;            /* 1px clean slate divider */
-  --hairline-medium: #CBD5E1;     /* Input border default */
-  --shadow: rgba(15, 23, 42, 0.08);
+  --hairline: #E4E4E7;
+  --hairline-medium: #D4D4D8;
+  --shadow: rgba(17, 24, 39, 0.05);
 
   /* Aliased Semantic Tokens */
-  --bg: #F4F7FC;
-  --bg-app: #F4F7FC;
-  --bg-sunken: #EEF2F6;
+  --bg: #F7F7F5;
+  --bg-app: #F7F7F5;
+  --bg-sunken: #EFEFED;
   --surface: #FFFFFF;
   --surface-panel: #FFFFFF;
-  --line: #E2E8F0;
-  --line-strong: #CBD5E1;
+  --line: #E4E4E7;
+  --line-strong: #D4D4D8;
 
-  --color-bg-app: #F4F7FC;
-  --color-bg-app-secondary: #F8FAFC;
-  --color-bg-muted: #F1F5F9;
+  --color-bg-app: #F7F7F5;
+  --color-bg-app-secondary: #F4F4F2;
+  --color-bg-muted: #F4F4F2;
   --color-bg-surface: #FFFFFF;
-  --color-bg-surface-secondary: #F8FAFC;
-  --color-bg-surface-subtle: #F8FAFC;
-  --color-bg-surface-hover: #F1F5F9;
+  --color-bg-surface-secondary: #F9F9F8;
+  --color-bg-surface-subtle: #F4F4F2;
+  --color-bg-surface-hover: #F4F4F2;
 
-  --color-text-main: #0F172A;
-  --color-text-secondary: #475569;
-  --color-text-muted: #64748B;
-  --color-text-subtle: #64748B;
+  --color-text-main: #111827;
+  --color-text-secondary: #4B5563;
+  --color-text-muted: #52525B;
+  --color-text-subtle: #52525B;
   --color-text-inverse: #FFFFFF;
-  --text: #0F172A;
-  --text-2: #475569;
-  --text-3: #526078;
+  --text: #111827;
+  --text-2: #4B5563;
+  --text-3: #52525B;
 
-  --color-border: #E2E8F0;
-  --color-border-subtle: #EDF2F7;
-  --color-border-dark: #CBD5E1;
+  --color-border: #E4E4E7;
+  --color-border-subtle: #EEEEEC;
+  --color-border-dark: #D4D4D8;
 
   /* --------------------------------------------------------------------------
      3. Semantic Status Tokens (WCAG 2.1 AA Compliant Contrast)
@@ -116,46 +116,46 @@
   --color-info-bg: rgba(30, 96, 255, 0.08);
 
   /* --------------------------------------------------------------------------
-     4. Geometry & Radius Scale (18px Card, 20px Modal, 10px Control, 9999px Pill)
+     4. Architectural Geometry & Zero-Glow Elevation
      -------------------------------------------------------------------------- */
   --radius-none: 0px;
   --radius-xs: 4px;
-  --radius-sm: 8px;     /* Chip / small badge */
-  --radius-md: 14px;    /* Secondary container radius */
-  --radius-lg: 18px;    /* Unified 18px Modern Card & Panel Radius */
-  --radius-xl: 20px;    /* 20px Modal / Container Radius */
-  --radius-2xl: 24px;
-  --radius-pill: 9999px;/* Rounded Pills & Search Docks */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 10px;    /* Architectural Card Radius */
+  --radius-xl: 12px;    /* Clean Modal Radius */
+  --radius-2xl: 16px;
+  --radius-pill: 9999px;
   --radius-full: 9999px;
 
-  --radius-panel: 18px;
-  --radius-card: 18px;
-  --radius-control: 10px;
-  --radius-input: 10px;
+  --radius-panel: 10px;
+  --radius-card: 10px;
+  --radius-control: 6px;
+  --radius-input: 6px;
   --radius-chip: 9999px;
 
-  /* Ambient SaaS Drop Shadows (Subtle, Diffuse & Natural) */
-  --shadow-soft: 0 1px 3px rgba(15, 23, 42, 0.04), 0 6px 16px -4px rgba(15, 23, 42, 0.03);
-  --calm-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 6px 16px -4px rgba(15, 23, 42, 0.03);
+  /* Crisp Neutral Shadows (Zero Blue/Purple AI Glow) */
+  --shadow-soft: 0 1px 2px rgba(17, 24, 39, 0.04);
+  --calm-shadow: 0 1px 2px rgba(17, 24, 39, 0.04);
   --calm-border: 1px solid var(--surface-1);
-  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.03);
-  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.04), 0 2px 4px rgba(15, 23, 42, 0.02);
-  --shadow-md: 0 8px 24px -4px rgba(15, 23, 42, 0.06), 0 2px 6px rgba(15, 23, 42, 0.03);
-  --shadow-lg: 0 16px 36px -6px rgba(15, 23, 42, 0.08), 0 4px 12px rgba(15, 23, 42, 0.04);
-  --shadow-xl: 0 24px 60px -8px rgba(15, 23, 42, 0.12);
-  --shadow-card: 0 1px 3px rgba(15, 23, 42, 0.04), 0 6px 16px -4px rgba(15, 23, 42, 0.03);
-  --shadow-card-hover: 0 8px 24px -4px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
-  --shadow-focus: 0 0 0 3px rgba(30, 96, 255, 0.16);
-  --shadow-dropdown: 0 12px 32px rgba(15, 23, 42, 0.08), 0 0 0 1px var(--hairline);
-  --shadow-modal: 0 24px 64px -8px rgba(15, 23, 42, 0.16), 0 4px 16px -2px rgba(15, 23, 42, 0.06);
+  --shadow-xs: 0 1px 2px rgba(17, 24, 39, 0.03);
+  --shadow-sm: 0 1px 3px rgba(17, 24, 39, 0.05);
+  --shadow-md: 0 4px 12px rgba(17, 24, 39, 0.06);
+  --shadow-lg: 0 10px 24px -4px rgba(17, 24, 39, 0.08);
+  --shadow-xl: 0 20px 44px -8px rgba(17, 24, 39, 0.12);
+  --shadow-card: 0 1px 2px rgba(17, 24, 39, 0.04);
+  --shadow-card-hover: 0 2px 6px rgba(17, 24, 39, 0.06);
+  --shadow-focus: 0 0 0 3px rgba(29, 78, 216, 0.16);
+  --shadow-dropdown: 0 8px 24px rgba(17, 24, 39, 0.08), 0 0 0 1px var(--hairline);
+  --shadow-modal: 0 20px 48px -8px rgba(17, 24, 39, 0.16), 0 0 0 1px var(--hairline);
 
   --bg-grain: none;
 
   /* --------------------------------------------------------------------------
-     5. Typography: Market Sans / Inter / Source Sans 3 (Weight 700 Display & Prices)
+     5. Typography: Inter & Geist Mono (Tabular Figures)
      -------------------------------------------------------------------------- */
-  --font-family-base: "Market Sans", "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-  --font-family-display: "Market Sans", "Source Sans 3", Arial, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-family-base: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  --font-family-display: "Inter", "Source Sans 3", -apple-system, BlinkMacSystemFont, sans-serif;
   --font-family-mono: "Geist Mono", "SF Mono", ui-monospace, Menlo, Monaco, Consolas, monospace;
 
   --font-display-xl: 36px;

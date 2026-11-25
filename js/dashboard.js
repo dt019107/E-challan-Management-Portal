@@ -75,68 +75,98 @@ function renderDashboardView(container, actions) {
         </div>
       </div>
 
-      <!-- 2. SPEEDOMETER ARC GAUGES & HEALTH HUB (Matches Screens 1, 3, & 7 from Reference) -->
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; align-items: stretch;">
-        
-        <!-- Arc Gauge 1: Fleet Compliance Index -->
-        <div class="card" style="padding: 22px 20px; display: flex; flex-direction: column; justify-content: space-between; align-items: center; text-align: center; border-radius: 18px; min-height: 230px;">
-          <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 6px;">
-            <span style="font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-2);">Fleet Compliance</span>
-            <span class="badge badge--paid" style="font-size: 10.5px;">Active SLA</span>
-          </div>
-          ${Utils.renderArcGauge(totalResolutionRate || 88, "Compliance Health", `${clearedChallansCount}/${challans.length} Notices Cleared`, { startColor: "#1E60FF", endColor: "#38BDF8" })}
-        </div>
+      <!-- 2. EXECUTIVE LIABILITY & COMPLIANCE STRIP (100% Live Data, Swiss Editorial) -->
+      <div class="kpi-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
 
-        <!-- Arc Gauge 2: Resolution Velocity -->
-        <div class="card" style="padding: 22px 20px; display: flex; flex-direction: column; justify-content: space-between; align-items: center; text-align: center; border-radius: 18px; min-height: 230px;">
-          <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 6px;">
-            <span style="font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-2);">Resolution Velocity</span>
-            <span class="badge badge--paid" style="font-size: 10.5px;">On Track</span>
-          </div>
-          ${Utils.renderArcGauge(92, "Resolution SLA", "Avg 4.2d Clearance Window", { startColor: "#10B981", endColor: "#34D399" })}
-        </div>
-
-        <!-- Arc Gauge 3: Asset Safety Index -->
-        <div class="card" style="padding: 22px 20px; display: flex; flex-direction: column; justify-content: space-between; align-items: center; text-align: center; border-radius: 18px; min-height: 230px;">
-          <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 6px;">
-            <span style="font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-2);">Asset Safety Score</span>
-            <span class="badge badge--assigned" style="font-size: 10.5px;">Optimal</span>
-          </div>
-          ${Utils.renderArcGauge(96, "Fleet Safety Index", "Zero Blacklist Impoundments", { startColor: "#6366F1", endColor: "#8B5CF6" })}
-        </div>
-
-        <!-- Card 4: Primary Liability Action Hub -->
-        <div class="card" style="padding: 22px 20px; display: flex; flex-direction: column; justify-content: space-between; border-radius: 18px; min-height: 230px; background: #FFFFFF; border: 1px solid var(--surface-1); box-shadow: var(--shadow-card);">
+        <!-- Card 1: Unsettled Exposure & Triage CTA -->
+        <div class="kpi-card" style="cursor: default;">
           <div>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-              <span style="font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-2);">Total Unsettled Liability</span>
-              <span class="badge badge--unassigned" style="font-size: 10.5px;">Action Required</span>
+            <div class="kpi-card-top" style="margin-bottom: 8px;">
+              <span class="kpi-label" style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-3);">Unsettled Liability</span>
+              <span class="badge ${unassignedChallans.length > 0 ? 'badge--unassigned' : 'badge--paid'}" style="font-size: 10.5px;">${unassignedChallans.length} Unassigned</span>
             </div>
-            <div style="font-size: 32px; font-weight: 800; color: var(--ink); margin: 4px 0 6px; letter-spacing: -0.02em; font-variant-numeric: tabular-nums;">
+            <div class="kpi-value" style="font-size: 28px; font-weight: 800; color: var(--ink); font-variant-numeric: tabular-nums; letter-spacing: -0.025em;">
               ${Utils.formatINR(stats.outstandingAmount)}
             </div>
-            <div style="font-size: 12.5px; color: var(--text-2); line-height: 1.45;">
-              32 active compliance notices across Delhi NCR, Mumbai & Bengaluru transport hubs.
+            <div class="kpi-subtext" style="font-size: 12px; color: var(--text-2); margin-top: 4px;">
+              Across ${challans.filter(c => c.status !== 'paid').length} open notices &amp; ${vehicles.length} vehicles
             </div>
           </div>
+          <div style="display: flex; gap: 8px; margin-top: 12px;">
+            <button class="btn btn--primary btn--sm" style="flex: 1;" onclick="navigateTo('challans', true, { status: 'unassigned' })">
+              Assign (${unassignedChallans.length})
+            </button>
+            <button class="btn btn--outline btn--sm" onclick="navigateTo('payments')">
+              Settle
+            </button>
+          </div>
+        </div>
 
-          <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 16px;">
-            <button class="btn btn--primary btn--sm" style="flex: 1; height: 36px;" onclick="navigateTo('challans', true, { status: 'unassigned' })">
-              <span>Assign Liability</span>
-              <span style="background: rgba(255, 255, 255, 0.25); color: #FFFFFF; font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 9999px; margin-left: 4px;">2 Due</span>
-            </button>
-            <button class="btn btn--outline btn--sm" style="height: 36px;" onclick="navigateTo('payments')">
-              Settle Fines
-            </button>
+        <!-- Card 2: Compounding Overdue & RC Risk -->
+        <div class="kpi-card" onclick="navigateTo('challans', true, { filter: 'overdue' })">
+          <div>
+            <div class="kpi-card-top" style="margin-bottom: 8px;">
+              <span class="kpi-label" style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-3);">Overdue / RC Risk</span>
+              <span class="badge badge--unassigned" style="font-size: 10.5px;">${overdueChallans.length} Critical</span>
+            </div>
+            <div class="kpi-value" style="font-size: 28px; font-weight: 800; color: ${overdueChallans.length > 0 ? 'var(--status-unassigned)' : 'var(--ink)'}; font-variant-numeric: tabular-nums; letter-spacing: -0.025em;">
+              ${Utils.formatINR(overdueAmount)}
+            </div>
+            <div class="kpi-subtext" style="font-size: 12px; color: var(--text-2); margin-top: 4px;">
+              Past statutory due date; late fee exposure
+            </div>
+          </div>
+          <div style="font-size: 11.5px; font-weight: 600; color: var(--color-primary); margin-top: 12px;">
+            Review overdue queue &rarr;
+          </div>
+        </div>
+
+        <!-- Card 3: Virtual Court & Disputes -->
+        <div class="kpi-card" onclick="navigateTo('disputes')">
+          <div>
+            <div class="kpi-card-top" style="margin-bottom: 8px;">
+              <span class="kpi-label" style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-3);">Court &amp; Disputes</span>
+              <span class="badge badge--court" style="font-size: 10.5px;">Sub-Judice</span>
+            </div>
+            <div class="kpi-value" style="font-size: 28px; font-weight: 800; color: var(--ink); font-variant-numeric: tabular-nums; letter-spacing: -0.025em;">
+              ${Utils.formatINR(disputedAmount)}
+            </div>
+            <div class="kpi-subtext" style="font-size: 12px; color: var(--text-2); margin-top: 4px;">
+              ${disputedChallans.length} cases under judicial or portal stay
+            </div>
+          </div>
+          <div style="font-size: 11.5px; font-weight: 600; color: var(--color-primary); margin-top: 12px;">
+            Open legal dockets &rarr;
+          </div>
+        </div>
+
+        <!-- Card 4: Live Clearance & Compliance Rate -->
+        <div class="kpi-card" onclick="navigateTo('reports')">
+          <div>
+            <div class="kpi-card-top" style="margin-bottom: 8px;">
+              <span class="kpi-label" style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-3);">Clearance Rate</span>
+              <span class="badge badge--paid" style="font-size: 10.5px;">Live Ledger</span>
+            </div>
+            <div class="kpi-value" style="font-size: 28px; font-weight: 800; color: var(--ink); font-variant-numeric: tabular-nums; letter-spacing: -0.025em;">
+              ${totalResolutionRate}%
+            </div>
+            <div class="kpi-subtext" style="font-size: 12px; color: var(--text-2); margin-top: 4px;">
+              ${clearedChallansCount} of ${challans.length} notices settled or cleared
+            </div>
+          </div>
+          <div style="margin-top: 12px;">
+            <div role="meter" aria-valuenow="${totalResolutionRate}" aria-valuemin="0" aria-valuemax="100" aria-label="Fleet Clearance Rate: ${totalResolutionRate} percent" style="width: 100%; height: 6px; background: var(--surface-2); border-radius: 3px; overflow: hidden; border: 1px solid var(--hairline);">
+              <div style="width: ${totalResolutionRate}%; height: 100%; background: var(--status-paid); transition: width 400ms ease;"></div>
+            </div>
           </div>
         </div>
 
       </div>
 
       <!-- 3. INTERACTIVE INFRACTION LIFECYCLE PIPELINE STEPPER -->
-      <div class="card" style="padding: 18px 24px; border-radius: 18px;">
+      <div class="card" style="padding: 16px 22px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-          <span style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-2);">Infraction Lifecycle Pipeline</span>
+          <span style="font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-2);">Infraction Lifecycle Pipeline</span>
           <span class="badge badge--assigned" style="font-size: 11px;">Stage 2 of 4 Active</span>
         </div>
         ${Utils.renderProgressStepper([
@@ -147,60 +177,11 @@ function renderDashboardView(container, actions) {
         ], 1)}
       </div>
 
-      <!-- 4. OPERATIONAL WORK METRIC TILES -->
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px;">
-        
-        <div class="card" style="padding: 16px 18px; border-radius: 16px; cursor: pointer;" onclick="navigateTo('challans', true, { filter: 'overdue' })">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-            <span style="font-size: 12px; color: var(--text-2); font-weight: 600;">Compounding Overdue</span>
-            <span class="badge badge--unassigned" style="font-size: 10px;">${overdueChallans.length} Critical</span>
-          </div>
-          <div style="font-size: 22px; font-weight: 800; color: var(--status-unassigned); font-variant-numeric: tabular-nums;">
-            ${Utils.formatINR(overdueAmount)}
-          </div>
-          <div style="font-size: 11.5px; color: var(--text-3); margin-top: 4px;">Past due date • late fee risk</div>
-        </div>
-
-        <div class="card" style="padding: 16px 18px; border-radius: 16px; cursor: pointer;" onclick="navigateTo('challans', true, { status: 'unassigned' })">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-            <span style="font-size: 12px; color: var(--text-2); font-weight: 600;">Unassigned Notices</span>
-            <span class="badge badge--unassigned" style="font-size: 10px;">Needs Owner</span>
-          </div>
-          <div style="font-size: 22px; font-weight: 800; color: var(--ink);">
-            ${unassignedChallans.length} Citations
-          </div>
-          <div style="font-size: 11.5px; color: var(--text-3); margin-top: 4px;">Requires driver/lessee attribution</div>
-        </div>
-
-        <div class="card" style="padding: 16px 18px; border-radius: 16px; cursor: pointer;" onclick="navigateTo('disputes')">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-            <span style="font-size: 12px; color: var(--text-2); font-weight: 600;">Virtual Court / Disputes</span>
-            <span class="badge badge--pending" style="font-size: 10px;">Sub-Judice</span>
-          </div>
-          <div style="font-size: 22px; font-weight: 800; color: var(--ink); font-variant-numeric: tabular-nums;">
-            ${Utils.formatINR(disputedAmount)}
-          </div>
-          <div style="font-size: 11.5px; color: var(--text-3); margin-top: 4px;">${disputedChallans.length} cases under legal contest</div>
-        </div>
-
-        <div class="card" style="padding: 16px 18px; border-radius: 16px; cursor: pointer;" onclick="navigateTo('vehicles')">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-            <span style="font-size: 12px; color: var(--text-2); font-weight: 600;">Commercial Fleet</span>
-            <span class="badge badge--paid" style="font-size: 10px;">100% Active</span>
-          </div>
-          <div style="font-size: 22px; font-weight: 800; color: var(--ink);">
-            ${vehicles.length} Assets
-          </div>
-          <div style="font-size: 11.5px; color: var(--text-3); margin-top: 4px;">Tracked across national corridors</div>
-        </div>
-
-      </div>
-
-      <!-- 5. MIDDLE ROW: MODERN 2-COLUMN ANALYTICS (Matches Screen 4 from Reference) -->
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 18px;">
+      <!-- 4. MIDDLE ROW: 2-COLUMN ANALYTICS -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 16px;">
         
         <!-- Left: Custom Bar Chart (Volume & Velocity) -->
-        <div class="card" style="padding: 22px 24px; border-radius: 18px;">
+        <div class="card" style="padding: 20px 22px;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
             <div>
               <div style="font-size: 15px; font-weight: 700; color: var(--ink);">Notice &amp; Settlement Velocity</div>

@@ -710,20 +710,43 @@ const Utils = {
 
           return `
             <div style="display: flex; flex-direction: column; align-items: center; position: relative; z-index: 2; flex: 1;">
-              <div style="width: 28px; height: 28px; border-radius: 50%; background: ${dotBg}; color: ${dotColor}; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; box-shadow: ${isCurrent ? '0 0 0 4px rgba(30, 96, 255, 0.2)' : 'none'}; transition: all 0.2s ease;">
-                ${isCompleted ? '✓' : idx + 1}
+              <div style="width: 28px; height: 28px; border-radius: 50%; background: ${dotBg}; color: ${dotColor}; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; box-shadow: ${isCurrent ? '0 0 0 3px rgba(29, 78, 216, 0.16)' : 'none'}; transition: all 0.2s ease;">
+                ${isCompleted ? Utils.icon('check', 13) : idx + 1}
               </div>
               <div style="font-size: 11.5px; font-weight: ${labelWeight}; color: ${labelColor}; margin-top: 6px; text-align: center; white-space: nowrap;">
                 ${step.title || step}
               </div>
             </div>
             ${idx < steps.length - 1 ? `
-              <div style="flex: 1; height: 3px; background: ${idx < activeIndex ? '#10B981' : '#E2E8F0'}; margin: 0 -4px; margin-top: -18px; z-index: 1; transition: background 0.3s ease;"></div>
+              <div style="flex: 1; height: 3px; background: ${idx < activeIndex ? '#15803D' : '#E4E4E7'}; margin: 0 -4px; margin-top: -18px; z-index: 1; transition: background 0.3s ease;"></div>
             ` : ''}
           `;
         }).join('')}
       </div>
     `;
+  },
+
+  /**
+   * Unified 1.75px-Stroke Monochrome SVG Icon Library (Zero Emoji Chrome)
+   */
+  icon(name, size = 14) {
+    const s = `width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; display: inline-block; vertical-align: -0.15em;"`;
+    const icons = {
+      lock: `<svg ${s}><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>`,
+      scale: `<svg ${s}><line x1="12" y1="3" x2="12" y2="21"></line><path d="M5 7h14"></path><path d="M3 14l2-7 2 7a2 2 0 0 1-4 0z"></path><path d="M17 14l2-7 2 7a2 2 0 0 1-4 0z"></path><line x1="8" y1="21" x2="16" y2="21"></line></svg>`,
+      check: `<svg ${s}><polyline points="20 6 9 17 4 12"></polyline></svg>`,
+      clock: `<svg ${s}><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>`,
+      phone: `<svg ${s}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>`,
+      alert: `<svg ${s}><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>`,
+      refresh: `<svg ${s}><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>`,
+      sliders: `<svg ${s}><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>`,
+      x: `<svg ${s}><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`,
+      truck: `<svg ${s}><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>`,
+      mail: `<svg ${s}><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>`,
+      message: `<svg ${s}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>`,
+      shield: `<svg ${s}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>`
+    };
+    return icons[name] || '';
   }
 };
 

@@ -122,12 +122,12 @@ function renderChallansView(container, actions, params = {}) {
         <!-- Vehicle Class Filter -->
         <select class="form-select" id="filterVehicleTypeSelect" style="width: 155px; font-size: 12px; padding: 6px 10px;">
           <option value="">All Vehicle Classes</option>
-          <option value="truck" ${challanTableState.filterVehicleType === 'truck' ? 'selected' : ''}>🚛 Heavy Trucks</option>
-          <option value="bus" ${challanTableState.filterVehicleType === 'bus' ? 'selected' : ''}>🚌 Buses & Coaches</option>
-          <option value="bike" ${challanTableState.filterVehicleType === 'bike' ? 'selected' : ''}>🏍️ 2-Wheelers</option>
-          <option value="car" ${challanTableState.filterVehicleType === 'car' ? 'selected' : ''}>🚗 Cabs & Sedans</option>
-          <option value="pickup" ${challanTableState.filterVehicleType === 'pickup' ? 'selected' : ''}>🛻 Pickups</option>
-          <option value="van" ${challanTableState.filterVehicleType === 'van' ? 'selected' : ''}>🚐 Vans & LCVs</option>
+          <option value="truck" ${challanTableState.filterVehicleType === 'truck' ? 'selected' : ''}>Heavy Trucks</option>
+          <option value="bus" ${challanTableState.filterVehicleType === 'bus' ? 'selected' : ''}>Buses &amp; Coaches</option>
+          <option value="bike" ${challanTableState.filterVehicleType === 'bike' ? 'selected' : ''}>2-Wheelers</option>
+          <option value="car" ${challanTableState.filterVehicleType === 'car' ? 'selected' : ''}>Cabs &amp; Sedans</option>
+          <option value="pickup" ${challanTableState.filterVehicleType === 'pickup' ? 'selected' : ''}>Pickups</option>
+          <option value="van" ${challanTableState.filterVehicleType === 'van' ? 'selected' : ''}>Vans &amp; LCVs</option>
         </select>
 
         <!-- Offence Filter -->
@@ -203,7 +203,7 @@ function renderChallansView(container, actions, params = {}) {
           Export CSV
         </button>
         <button class="btn btn--ghost btn--sm" style="color: rgba(255,255,255,0.7); height: 32px;" onclick="deselectAllChallans()">
-          ✕ Cancel
+          ${Utils.icon('x', 13)} Cancel
         </button>
       </div>
     </div>
@@ -891,8 +891,8 @@ function renderChallanDetailsView(container, actions, challanId) {
       Download Official Notice PDF
     </button>
     ${challan.paymentStatus === 'Pending Confirmation' ? `
-      <button class="btn btn--outline btn--sm" style="color: #B7791F; border-color: #B7791F;" onclick="reconcileSpecificChallan('${challan.id}')">
-        ⏳ Reconcile Pending Payment
+      <button class="btn btn--outline btn--sm" style="color: #B45309; border-color: #B45309;" onclick="reconcileSpecificChallan('${challan.id}')">
+        ${Utils.icon('clock', 13)} Reconcile Pending Payment
       </button>
     ` : ''}
     ${challan.status === 'paid' ? `
@@ -904,8 +904,8 @@ function renderChallanDetailsView(container, actions, challanId) {
         Pay Fine Now (${Utils.formatINR(challan.totalPayable || (challan.amount + (challan.lateFee || 0) + (challan.convenienceFee || 25)))})
       </button>
     ` : `
-      <button class="btn btn--outline btn--sm" style="border-color: #B42318; color: #B42318;" onclick="openCourtCaseModal('${challan.id}')" title="Direct payment locked. Click to view or record court compounding order.">
-        🔒 Payment Locked: Court Stay Awaiting Order
+      <button class="btn btn--outline btn--sm" style="border-color: #B91C1C; color: #B91C1C;" onclick="openCourtCaseModal('${challan.id}')" title="Direct payment locked. Click to view or record court compounding order.">
+        ${Utils.icon('lock', 13)} Payment Locked: Court Stay Awaiting Order
       </button>
     `)}
   `;

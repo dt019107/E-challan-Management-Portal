@@ -3,101 +3,86 @@
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   1. Buttons
+   1. Buttons (Architectural 6px Controls, Zero Glow)
    -------------------------------------------------------------------------- */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 0 18px;
-  height: 40px;
-  font-size: 13.5px;
-  font-weight: 500;
+  gap: 7px;
+  padding: 0 14px;
+  height: 36px;
+  font-size: 13px;
+  font-weight: 600;
   font-family: var(--font-family-base);
-  border-radius: 10px;
+  border-radius: var(--radius-control, 6px);
   border: 1px solid transparent;
   cursor: pointer;
   white-space: nowrap;
-  transition: all var(--duration-quick) cubic-bezier(0.16, 1, 0.3, 1);
+  transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease;
   user-select: none;
   line-height: 1;
   position: relative;
-  letter-spacing: 0;
-}
-
-.btn:hover {
-  transform: translateY(-1px);
+  letter-spacing: -0.005em;
 }
 
 .btn:active {
-  transform: scale(0.98);
+  transform: translateY(0.5px);
 }
 
 .btn:disabled {
   opacity: 0.45;
   cursor: not-allowed;
   pointer-events: none;
-  transform: none !important;
 }
 
-/* Modern Cobalt Primary Button */
+/* Primary Editorial Cobalt Action */
 .btn--primary {
-  background: var(--color-primary, #1E60FF);
+  background: var(--color-primary, #1D4ED8);
   color: #FFFFFF;
   font-weight: 600;
-  height: 40px;
-  padding: 0 18px;
-  border-radius: 10px;
-  border: none;
-  box-shadow: 0 2px 8px rgba(30, 96, 255, 0.20);
+  height: 36px;
+  padding: 0 15px;
+  border-radius: var(--radius-control, 6px);
+  border: 1px solid var(--color-primary-dark, #1E40AF);
+  box-shadow: 0 1px 2px rgba(17, 24, 39, 0.08);
   cursor: pointer;
-  transition: all 180ms ease;
 }
 
 .btn--primary:hover {
-  background: var(--color-primary-dark, #1550E0);
-  box-shadow: 0 4px 14px rgba(30, 96, 255, 0.30);
-  transform: translateY(-1px);
+  background: var(--color-primary-dark, #1E40AF);
 }
 
-.btn--primary:active {
-  transform: scale(0.98);
-}
-
-/* Modern Clean SaaS Secondary Button */
+/* Clean Neutral Secondary Button */
 .btn--secondary {
   background: #FFFFFF;
-  color: var(--ink, #0F172A);
-  border: 1px solid var(--surface-1, #E2E8F0);
-  height: 40px;
-  padding: 0 18px;
-  border-radius: 10px;
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  color: var(--ink, #111827);
+  border: 1px solid var(--hairline-medium, #D4D4D8);
+  height: 36px;
+  padding: 0 14px;
+  border-radius: var(--radius-control, 6px);
+  box-shadow: 0 1px 2px rgba(17, 24, 39, 0.03);
   font-weight: 600;
-  font-size: 13.5px;
-  transition: all 150ms ease;
+  font-size: 13px;
 }
 
 .btn--secondary:hover {
-  background: var(--surface-2, #F8FAFC);
-  border-color: var(--line-strong, #CBD5E1);
-  color: var(--ink, #0F172A);
-  box-shadow: 0 2px 5px rgba(15, 23, 42, 0.06);
-  transform: translateY(-1px);
+  background: var(--surface-2, #F4F4F2);
+  border-color: #A1A1AA;
+  color: var(--ink, #111827);
 }
 
-/* Modern Outline Button */
+/* Outline Button */
 .btn--outline {
-  background: transparent;
-  border: 1px solid var(--surface-1, #E2E8F0);
-  color: var(--ink, #0F172A);
-  height: 40px;
-  padding: 0 18px;
-  border-radius: 10px;
+  background: #FFFFFF;
+  border: 1px solid var(--hairline, #E4E4E7);
+  color: var(--ink, #111827);
+  height: 36px;
+  padding: 0 14px;
+  border-radius: var(--radius-control, 6px);
   box-shadow: none;
-  font-weight: 600;
-  font-size: 13.5px;
+  font-weight: 500;
+  font-size: 13px;
   transition: all 150ms ease;
 }
 
@@ -336,22 +321,22 @@
 }
 
 /* --------------------------------------------------------------------------
-   3. Cards & Containers (Modern Clean SaaS 18px Radius)
+   3. Cards & Containers (Swiss Editorial 10px Architectural Hairlines)
    -------------------------------------------------------------------------- */
 .card {
   background-color: #FFFFFF;
-  border: 1px solid var(--surface-1, #E2E8F0);
-  border-radius: 18px;
-  box-shadow: 0 10px 30px -4px rgba(15, 23, 42, 0.04), 0 2px 8px rgba(15, 23, 42, 0.02);
+  border: 1px solid var(--hairline, #E4E4E7);
+  border-radius: var(--radius-card, 10px);
+  box-shadow: var(--shadow-card, 0 1px 2px rgba(17, 24, 39, 0.04));
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
 }
 
 .card:hover {
-  border-color: rgba(30, 96, 255, 0.25);
-  box-shadow: 0 16px 36px -4px rgba(30, 96, 255, 0.08), 0 4px 14px rgba(15, 23, 42, 0.03);
+  border-color: var(--hairline-medium, #D4D4D8);
+  box-shadow: var(--shadow-card-hover, 0 2px 6px rgba(17, 24, 39, 0.06));
 }
 
 .card-header {
@@ -404,25 +389,24 @@
 
 .kpi-card {
   background-color: #FFFFFF;
-  border: 1px solid var(--surface-1, #E2E8F0);
-  border-radius: 18px;
-  padding: 20px 22px;
-  box-shadow: 0 8px 24px -4px rgba(15, 23, 42, 0.04), 0 2px 6px rgba(15, 23, 42, 0.02);
+  border: 1px solid var(--hairline, #E4E4E7);
+  border-radius: var(--radius-card, 10px);
+  padding: 18px 20px;
+  box-shadow: var(--shadow-card, 0 1px 2px rgba(17, 24, 39, 0.04));
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 8px;
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+  gap: 6px;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  min-height: 116px;
+  min-height: 112px;
 }
 
 .kpi-card:hover {
-  border-color: rgba(30, 96, 255, 0.25);
-  box-shadow: 0 14px 32px -4px rgba(30, 96, 255, 0.08), 0 4px 12px rgba(15, 23, 42, 0.03);
-  transform: translateY(-1px);
+  border-color: var(--hairline-medium, #D4D4D8);
+  box-shadow: var(--shadow-card-hover, 0 2px 6px rgba(17, 24, 39, 0.06));
 }
 
 .kpi-card-top {

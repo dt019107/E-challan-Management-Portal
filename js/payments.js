@@ -436,13 +436,13 @@ function renderPendingConfirmationTabHTML(pendingChallans) {
                   <span class="text-xs">${Utils.formatDate(c.pendingPaymentDetails?.initiatedAt || new Date().toISOString(), true)}</span>
                 </td>
                 <td>
-                  <span class="badge badge--pending" style="background: #FEF8E8; color: #B7791F;">
-                    ⏳ Awaiting Webhook
+                  <span class="badge badge--pending" style="display: inline-flex; align-items: center; gap: 5px;">
+                    ${Utils.icon('clock', 12)} Awaiting Webhook
                   </span>
                 </td>
                 <td>
                   <button class="btn btn--outline btn--sm" onclick="reconcileSpecificChallan('${c.id}')" title="Simulate bank inquiry & mark paid">
-                    ✓ Reconcile Now
+                    ${Utils.icon('check', 12)} Reconcile Now
                   </button>
                 </td>
               </tr>

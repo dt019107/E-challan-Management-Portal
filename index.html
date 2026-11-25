@@ -389,10 +389,10 @@
         <input type="hidden" id="payModalChallanId">
 
         <!-- Court Stay Lock Alert (Dynamically toggled) -->
-        <div id="payCourtLockAlert" style="display: none; padding: 12px 14px; background: #FEF3F2; border: 1px solid #FECDCA; border-radius: var(--radius-md); color: #B42318; font-size: 13px;">
+        <div id="payCourtLockAlert" style="display: none; padding: 12px 14px; background: var(--status-unassigned-bg); border: 1px solid var(--status-unassigned-border); border-radius: var(--radius-md); color: var(--status-unassigned); font-size: 13px;">
           <div style="font-weight: 700; display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-            🔒 Direct Payment Locked: Judicial Court Stay
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            Direct Payment Locked: Judicial Court Stay
           </div>
           <div id="payCourtLockMessage">This challan has been referred to Virtual Traffic Court. Direct Parivahan payment is locked pending court compounding or judicial order.</div>
         </div>
@@ -561,23 +561,26 @@
           </div>
         </div>
 
-        <!-- Simulation Outcome Control Panel -->
-        <div style="border: 1px dashed #3155D9; background: #EDF1FF; border-radius: var(--radius-md); padding: 12px;">
-          <div style="font-weight: 700; font-size: 11px; text-transform: uppercase; color: #2442B5; margin-bottom: 6px;">
-            🛠️ Simulation Control: Select Test Outcome
+        <!-- Gateway Outcome Test Control -->
+        <div style="border: 1px solid var(--hairline); background: var(--surface-2); border-radius: var(--radius-md); padding: 12px;">
+          <div style="font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-2); margin-bottom: 8px;">
+            Gateway Response Mode
           </div>
-          <div style="display: flex; gap: var(--space-4); font-size: 12px;">
-            <label style="display: flex; align-items: center; gap: 4px; cursor: pointer;">
+          <div style="display: flex; gap: var(--space-4); font-size: 12.5px; flex-wrap: wrap;">
+            <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
               <input type="radio" name="paySimOutcome" value="SUCCESS" checked>
-              <strong>🟢 Success</strong> (Paid & Receipt)
+              <span class="badge-dot" style="background: var(--status-paid);"></span>
+              <strong>Success</strong> <span class="text-muted">(Paid &amp; Receipt)</span>
             </label>
-            <label style="display: flex; align-items: center; gap: 4px; cursor: pointer;">
+            <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
               <input type="radio" name="paySimOutcome" value="FAILURE">
-              <strong>🔴 Failure</strong> (Remains Unpaid)
+              <span class="badge-dot" style="background: var(--status-unassigned);"></span>
+              <strong>Failure</strong> <span class="text-muted">(Remains Unpaid)</span>
             </label>
-            <label style="display: flex; align-items: center; gap: 4px; cursor: pointer;">
+            <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
               <input type="radio" name="paySimOutcome" value="PENDING">
-              <strong>🟡 Pending</strong> (Awaiting Webhook)
+              <span class="badge-dot" style="background: var(--status-pending);"></span>
+              <strong>Pending</strong> <span class="text-muted">(Awaiting Webhook)</span>
             </label>
           </div>
         </div>
@@ -588,10 +591,10 @@
         <button class="btn btn--outline" type="button" onclick="Utils.closeModal('paymentModal')">Cancel</button>
         <div style="display: flex; gap: var(--space-2);">
           <button class="btn btn--outline" type="button" id="payRetryBtn" style="display: none;" onclick="retryPaymentSimulation()">
-            🔄 Retry Payment
+            Retry Payment
           </button>
           <button class="btn btn--outline" type="button" id="payReconcileBtn" style="display: none;" onclick="reconcilePaymentSimulation()">
-            ✓ Reconcile / Check Bank Status
+            Reconcile / Check Bank Status
           </button>
           <button class="btn btn--primary" type="button" id="confirmPayBtn" onclick="executePaymentSimulation()">
             Authorize Payment Simulation →
@@ -1209,8 +1212,8 @@
         <input type="hidden" id="courtModalChallanId">
 
         <!-- Court Stay Explanatory Banner -->
-        <div style="background: #FEF3F2; border: 1px solid #FECDCA; border-radius: var(--radius-md); padding: 12px; color: #B42318; font-size: 12px; line-height: 1.5;">
-          <strong>🔒 Sub-Judice Stay Notice:</strong> This infraction has been escalated to judicial proceedings. Online Parivahan settlement is locked to prevent contempt of court or double payment until a judicial decree or compounding order is entered below.
+        <div style="background: var(--status-unassigned-bg); border: 1px solid var(--status-unassigned-border); border-radius: var(--radius-md); padding: 12px; color: var(--status-unassigned); font-size: 12px; line-height: 1.5;">
+          <strong>Sub-Judice Stay Notice:</strong> This infraction has been escalated to judicial proceedings. Online Parivahan settlement is locked to prevent contempt of court or double payment until a judicial decree or compounding order is entered below.
         </div>
 
         <!-- Case Overview Matrix -->
@@ -1238,9 +1241,9 @@
         </div>
 
         <!-- Judicial Action / Order Simulation Form -->
-        <div style="border: 1px dashed var(--color-border); border-radius: var(--radius-md); padding: 12px; background: #FFF;">
-          <div style="font-weight: 700; font-size: 12px; color: var(--color-text-main); margin-bottom: 8px;">
-            ⚖️ Record Court Decree / Compounding Order
+        <div style="border: 1px solid var(--hairline); border-radius: var(--radius-md); padding: 14px; background: #FFF;">
+          <div style="font-weight: 700; font-size: 12px; color: var(--color-text-main); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.04em;">
+            Record Court Decree / Compounding Order
           </div>
 
           <div class="form-group">
@@ -1264,7 +1267,7 @@
             </div>
             <!-- Live Compounding Savings Saliency Badge -->
             <div id="courtCompoundingSavingsBadge" style="grid-column: 1 / -1; padding: 10px 14px; background: #ECFDF5; border: 1px solid #A7F3D0; border-radius: var(--radius-sm); color: #065F46; font-size: 12.5px; font-weight: 600; display: flex; align-items: center; justify-content: space-between;">
-              <span id="courtCompoundingSavingsText">⚖️ Compounding Savings: Calculating...</span>
+              <span id="courtCompoundingSavingsText">Compounding Savings: Calculating...</span>
               <span id="courtCompoundingReductionPill" class="badge badge--paid" style="font-size: 11px;">0% Compounded</span>
             </div>
           </div>
