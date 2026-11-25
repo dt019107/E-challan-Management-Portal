@@ -2,24 +2,23 @@
    ChallanOS Application Shell Layout
    ========================================================================== */
 
-/* Overall App Shell with Calm Editorial Background and 2.5% Grain */
+/* Architectural App Shell: Continuous White Workspace + Recessed #FAFAFA Sidebar */
 .app-shell {
   display: flex;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background-color: var(--color-bg-app);
-  background-image: var(--bg-grain);
+  background-color: #FFFFFF;
 }
 
 /* --------------------------------------------------------------------------
-   1. Left Sidebar (Restyled #FBFAF7 with Hairline Right Border & Ink Text)
+   1. Left Sidebar (#FAFAFA Recessed Surface + 1px #EBEBEB Hairline)
    -------------------------------------------------------------------------- */
 .app-sidebar {
   width: var(--sidebar-width);
   height: 100%;
-  background-color: var(--surface);
-  border-right: 1px solid var(--line);
+  background-color: #FAFAFA;
+  border-right: 1px solid #EBEBEB;
   box-shadow: none;
   display: flex;
   flex-direction: column;
@@ -151,12 +150,12 @@
   color: var(--ink);
 }
 
-/* Active item = Clean SaaS active state with soft tinted pill */
+/* Active item = Linear/Mercury quiet architectural pill */
 .nav-item.active {
-  background: var(--color-primary-light, rgba(30, 96, 255, 0.08));
-  color: var(--color-primary, #1E60FF);
+  background: #EFEFED;
+  color: var(--ink, #111827);
   font-weight: 600;
-  border-radius: 10px;
+  border-radius: 6px;
   padding-left: 12px;
 }
 
@@ -165,7 +164,7 @@
 }
 
 .nav-item.active .nav-icon {
-  color: var(--color-primary, #1E60FF);
+  color: var(--ink, #111827);
 }
 
 .nav-icon {
@@ -218,7 +217,7 @@
 /* Sidebar Footer (Collapse Toggle) */
 .sidebar-footer {
   padding: 12px 10px;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid #EBEBEB;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -232,20 +231,20 @@
   gap: 8px;
   width: 100%;
   padding: 8px 10px;
-  border-radius: 8px;
-  color: #64748B;
-  font-size: 11.5px;
+  border-radius: 6px;
+  color: #52525B;
+  font-size: 12px;
   font-weight: 500;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: transparent;
+  border: 1px solid #E4E4E7;
   cursor: pointer;
-  transition: all 160ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: background-color 140ms ease, color 140ms ease, border-color 140ms ease;
 }
 
 .sidebar-collapse-btn:hover {
-  background: rgba(255, 255, 255, 0.05);
-  color: #F1F5F9;
-  border-color: rgba(255, 255, 255, 0.1);
+  background: #EFEFED;
+  color: #111827;
+  border-color: #D4D4D8;
 }
 
 /* Collapsed Sidebar State */

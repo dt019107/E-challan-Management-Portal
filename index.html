@@ -1448,6 +1448,39 @@
   <!-- Global Toast Notification Container -->
   <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="true"></div>
 
+  <!-- Cmd+K Command Palette Spotlight -->
+  <div class="cmd-palette-backdrop" id="commandPaletteBackdrop" role="dialog" aria-modal="true" aria-label="Command Palette" onclick="if(event.target === this) CommandPalette.close()">
+    <div class="cmd-palette-dialog">
+      <div class="cmd-palette-input-wrap">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#71717A" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" id="commandPaletteInput" class="cmd-palette-input" placeholder="Jump to notice ID, vehicle plate, or section..." autocomplete="off">
+        <kbd style="font-size: 10px; height: 20px;">ESC</kbd>
+      </div>
+      <div class="cmd-palette-results" id="commandPaletteResults"></div>
+      <div class="cmd-palette-footer">
+        <span>Navigate with &uarr; &darr; &bull; Open with Enter</span>
+        <span>Hisaab Command</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide-Over Quick Inspector Drawer -->
+  <div class="quick-drawer-backdrop" id="quickInspectorDrawer" role="dialog" aria-modal="true" aria-labelledby="quickDrawerTitle" onclick="if(event.target === this) closeQuickInspectorDrawer()">
+    <div class="quick-drawer-panel">
+      <div style="padding: 18px 22px; border-bottom: 1px solid #EBEBEB; display: flex; align-items: center; justify-content: space-between;">
+        <div>
+          <h3 id="quickDrawerTitle" style="font-size: 15px; font-weight: 600; color: var(--ink); font-family: var(--font-family-mono); margin: 0;">DL-884120</h3>
+          <div id="quickDrawerSubtitle" style="font-size: 12px; color: var(--text-3); margin-top: 2px;">Vehicle</div>
+        </div>
+        <button type="button" class="btn btn--ghost btn--icon btn--sm" onclick="closeQuickInspectorDrawer()" aria-label="Close Inspector">
+          <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+        </button>
+      </div>
+      <div id="quickDrawerBody" style="padding: 22px; flex: 1; overflow-y: auto;"></div>
+      <div id="quickDrawerFooter" style="padding: 14px 22px; border-top: 1px solid #EBEBEB; background: #FAFAFA; display: flex; align-items: center; justify-content: space-between;"></div>
+    </div>
+  </div>
+
   <!-- GSAP Motion Library (GreenSock Animation Platform) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
@@ -1457,6 +1490,7 @@
   <script src="js/utils.js"></script>
   <script src="js/validators.js"></script>
   <script src="js/keyboard-nav.js"></script>
+  <script src="js/command-palette.js"></script>
   <script src="js/responsibility.js"></script>
   <script src="js/dashboard.js"></script>
   <script src="js/vehicles.js"></script>

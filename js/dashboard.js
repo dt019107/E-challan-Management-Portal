@@ -43,241 +43,183 @@ function renderDashboardView(container, actions) {
   const clearedChallansCount = challans.filter(c => c.status === 'paid').length;
   const totalResolutionRate = challans.length > 0 ? Math.round((clearedChallansCount / challans.length) * 100) : 100;
 
-  const today = new Date();
-  const formattedTodayDate = today.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  // Live Attribution Breakdown (100% computed from StorageManager, zero static figures)
+  const driverChallans = challans.filter(c => c.responsibleParty === 'Driver');
+  const lesseeChallans = challans.filter(c => c.responsibleParty === 'Lessee');
+  const fleetChallans = challans.filter(c => c.responsibleParty !== 'Driver' && c.responsibleParty !== 'Lessee');
+  const driverAmt = driverChallans.reduce((s, c) => s + (c.totalPayable || c.amount || 0), 0);
+  const lesseeAmt = lesseeChallans.reduce((s, c) => s + (c.totalPayable || c.amount || 0), 0);
+  const fleetAmt = fleetChallans.reduce((s, c) => s + (c.totalPayable || c.amount || 0), 0);
+  const totalAttrAmt = Math.max(1, driverAmt + lesseeAmt + fleetAmt);
+  const driverPct = Math.round((driverAmt / totalAttrAmt) * 100);
+  const lesseePct = Math.round((lesseeAmt / totalAttrAmt) * 100);
+  const fleetPct = Math.max(0, 100 - driverPct - lesseePct);
 
   container.innerHTML = `
-    <div class="calm-dashboard-container" style="display: flex; flex-direction: column; gap: 20px;">
+    <div class="view-enter" style="display: flex; flex-direction: column; gap: 28px;">
       
-      <!-- 1. GREETING & ACTION HEADER -->
-      <div class="calm-dashboard-header framer-animate-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
-        <div class="calm-header-left">
-          <div class="calm-header-date" style="display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--text-2); font-weight: 500; flex-wrap: wrap;">
-            <span style="display: flex; align-items: center; gap: 6px;">
-              <span class="dot framer-live-dot" style="width: 7px; height: 7px; border-radius: 50%; background: var(--color-success); display: inline-block;"></span>
-              <span>MoRTH Parivahan Gateway Live</span>
-            </span>
+      <!-- 1. ARCHITECTURAL HEADER & COMMAND TRIGGER -->
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-3); font-weight: 500;">
+            <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--color-success); display: inline-block;"></span>
+            <span>MoRTH Parivahan Gateway Live</span>
+            <span style="color: #D4D4D8;">&bull;</span>
+            <span>${vehicles.length} Active Fleet Assets</span>
           </div>
-          <h1 class="calm-header-greeting" style="font-size: var(--font-h1, 28px); font-weight: 800; color: var(--ink); letter-spacing: -0.025em; margin: 4px 0 0;">
-            Operational Fleet Dashboard
+          <h1 style="font-size: 24px; font-weight: 600; color: var(--ink); letter-spacing: -0.03em; margin: 4px 0 0;">
+            Fleet Liability Overview
           </h1>
         </div>
 
-        <div class="calm-header-actions" style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+          <button type="button" class="btn btn--outline btn--sm" onclick="openCommandPalette()" title="Open Command Palette (Cmd+K)" style="color: var(--text-2); gap: 10px;">
+            <span>Quick Jump</span>
+            <kbd style="height: 20px; min-width: 20px; font-size: 10px; box-shadow: none;">⌘K</kbd>
+          </button>
           <button class="btn btn--outline btn--sm" onclick="Utils.exportToCSV(StorageManager.getChallans(), 'fleet-liability-audit.csv')">
-            <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-            <span>Download CSV</span>
+            Export CSV
           </button>
           <button class="btn btn--primary btn--sm" id="parivahanSyncBtn" onclick="triggerParivahanSyncAnimation(this)">
-            <svg class="sync-icon" width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/></svg>
-            <span>Parivahan Sync</span>
+            ${Utils.icon('refresh', 13)}
+            <span>Sync Parivahan</span>
           </button>
         </div>
       </div>
 
-      <!-- 2. EXECUTIVE LIABILITY & COMPLIANCE STRIP (100% Live Data, Swiss Editorial) -->
-      <div class="kpi-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
-
-        <!-- Card 1: Unsettled Exposure & Triage CTA -->
-        <div class="kpi-card" style="cursor: default;">
-          <div>
-            <div class="kpi-card-top" style="margin-bottom: 8px;">
-              <span class="kpi-label" style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-3);">Unsettled Liability</span>
-              <span class="badge ${unassignedChallans.length > 0 ? 'badge--unassigned' : 'badge--paid'}" style="font-size: 10.5px;">${unassignedChallans.length} Unassigned</span>
-            </div>
-            <div class="kpi-value" style="font-size: 28px; font-weight: 800; color: var(--ink); font-variant-numeric: tabular-nums; letter-spacing: -0.025em;">
-              ${Utils.formatINR(stats.outstandingAmount)}
-            </div>
-            <div class="kpi-subtext" style="font-size: 12px; color: var(--text-2); margin-top: 4px;">
-              Across ${challans.filter(c => c.status !== 'paid').length} open notices &amp; ${vehicles.length} vehicles
-            </div>
+      <!-- 2. HAIRLINE 4-METRIC STRIP (Mercury / Linear Architecture — Zero Boxes-Inside-Boxes) -->
+      <div class="editorial-kpi-strip">
+        <div class="editorial-kpi-cell" onclick="navigateTo('challans', true, { status: 'unassigned' })">
+          <div class="editorial-kpi-label">
+            <span>Unsettled Liability</span>
+            <span style="color: ${unassignedChallans.length > 0 ? 'var(--status-unassigned)' : 'var(--status-paid)'}; font-weight: 600;">${unassignedChallans.length} unassigned</span>
           </div>
-          <div style="display: flex; gap: 8px; margin-top: 12px;">
-            <button class="btn btn--primary btn--sm" style="flex: 1;" onclick="navigateTo('challans', true, { status: 'unassigned' })">
-              Assign (${unassignedChallans.length})
-            </button>
-            <button class="btn btn--outline btn--sm" onclick="navigateTo('payments')">
-              Settle
-            </button>
-          </div>
+          <div class="editorial-kpi-figure">${Utils.formatINR(stats.outstandingAmount)}</div>
+          <div class="editorial-kpi-sub">${challans.filter(c => c.status !== 'paid').length} open citations</div>
         </div>
 
-        <!-- Card 2: Compounding Overdue & RC Risk -->
-        <div class="kpi-card" onclick="navigateTo('challans', true, { filter: 'overdue' })">
-          <div>
-            <div class="kpi-card-top" style="margin-bottom: 8px;">
-              <span class="kpi-label" style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-3);">Overdue / RC Risk</span>
-              <span class="badge badge--unassigned" style="font-size: 10.5px;">${overdueChallans.length} Critical</span>
-            </div>
-            <div class="kpi-value" style="font-size: 28px; font-weight: 800; color: ${overdueChallans.length > 0 ? 'var(--status-unassigned)' : 'var(--ink)'}; font-variant-numeric: tabular-nums; letter-spacing: -0.025em;">
-              ${Utils.formatINR(overdueAmount)}
-            </div>
-            <div class="kpi-subtext" style="font-size: 12px; color: var(--text-2); margin-top: 4px;">
-              Past statutory due date; late fee exposure
-            </div>
+        <div class="editorial-kpi-cell" onclick="navigateTo('challans', true, { filter: 'overdue' })">
+          <div class="editorial-kpi-label">
+            <span>Overdue / RC Risk</span>
+            <span style="color: var(--status-unassigned); font-weight: 600;">${overdueChallans.length} critical</span>
           </div>
-          <div style="font-size: 11.5px; font-weight: 600; color: var(--color-primary); margin-top: 12px;">
-            Review overdue queue &rarr;
-          </div>
+          <div class="editorial-kpi-figure ${overdueChallans.length > 0 ? 'danger' : ''}">${Utils.formatINR(overdueAmount)}</div>
+          <div class="editorial-kpi-sub">Past statutory due date</div>
         </div>
 
-        <!-- Card 3: Virtual Court & Disputes -->
-        <div class="kpi-card" onclick="navigateTo('disputes')">
-          <div>
-            <div class="kpi-card-top" style="margin-bottom: 8px;">
-              <span class="kpi-label" style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-3);">Court &amp; Disputes</span>
-              <span class="badge badge--court" style="font-size: 10.5px;">Sub-Judice</span>
-            </div>
-            <div class="kpi-value" style="font-size: 28px; font-weight: 800; color: var(--ink); font-variant-numeric: tabular-nums; letter-spacing: -0.025em;">
-              ${Utils.formatINR(disputedAmount)}
-            </div>
-            <div class="kpi-subtext" style="font-size: 12px; color: var(--text-2); margin-top: 4px;">
-              ${disputedChallans.length} cases under judicial or portal stay
-            </div>
+        <div class="editorial-kpi-cell" onclick="navigateTo('disputes')">
+          <div class="editorial-kpi-label">
+            <span>Sub-Judice &amp; Disputes</span>
+            <span style="color: var(--status-court); font-weight: 600;">${disputedChallans.length} stayed</span>
           </div>
-          <div style="font-size: 11.5px; font-weight: 600; color: var(--color-primary); margin-top: 12px;">
-            Open legal dockets &rarr;
-          </div>
+          <div class="editorial-kpi-figure">${Utils.formatINR(disputedAmount)}</div>
+          <div class="editorial-kpi-sub">Locked pending court decree</div>
         </div>
 
-        <!-- Card 4: Live Clearance & Compliance Rate -->
-        <div class="kpi-card" onclick="navigateTo('reports')">
-          <div>
-            <div class="kpi-card-top" style="margin-bottom: 8px;">
-              <span class="kpi-label" style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-3);">Clearance Rate</span>
-              <span class="badge badge--paid" style="font-size: 10.5px;">Live Ledger</span>
-            </div>
-            <div class="kpi-value" style="font-size: 28px; font-weight: 800; color: var(--ink); font-variant-numeric: tabular-nums; letter-spacing: -0.025em;">
-              ${totalResolutionRate}%
-            </div>
-            <div class="kpi-subtext" style="font-size: 12px; color: var(--text-2); margin-top: 4px;">
-              ${clearedChallansCount} of ${challans.length} notices settled or cleared
-            </div>
+        <div class="editorial-kpi-cell" onclick="navigateTo('reports')">
+          <div class="editorial-kpi-label">
+            <span>Clearance Rate</span>
+            <span style="color: var(--status-paid); font-weight: 600;">Live ledger</span>
           </div>
-          <div style="margin-top: 12px;">
-            <div role="meter" aria-valuenow="${totalResolutionRate}" aria-valuemin="0" aria-valuemax="100" aria-label="Fleet Clearance Rate: ${totalResolutionRate} percent" style="width: 100%; height: 6px; background: var(--surface-2); border-radius: 3px; overflow: hidden; border: 1px solid var(--hairline);">
-              <div style="width: ${totalResolutionRate}%; height: 100%; background: var(--status-paid); transition: width 400ms ease;"></div>
+          <div class="editorial-kpi-figure">${totalResolutionRate}%</div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <div role="meter" aria-valuenow="${totalResolutionRate}" aria-valuemin="0" aria-valuemax="100" aria-label="Fleet Clearance Rate: ${totalResolutionRate} percent" style="flex: 1; height: 4px; background: #EBEBEB; border-radius: 2px; overflow: hidden;">
+              <div style="width: ${totalResolutionRate}%; height: 100%; background: var(--status-paid);"></div>
             </div>
+            <span class="editorial-kpi-sub" style="font-variant-numeric: tabular-nums;">${clearedChallansCount}/${challans.length}</span>
           </div>
         </div>
-
       </div>
 
-      <!-- 3. INTERACTIVE INFRACTION LIFECYCLE PIPELINE STEPPER -->
-      <div class="card" style="padding: 16px 22px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-          <span style="font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-2);">Infraction Lifecycle Pipeline</span>
-          <span class="badge badge--assigned" style="font-size: 11px;">Stage 2 of 4 Active</span>
-        </div>
-        ${Utils.renderProgressStepper([
-          { title: "1. Notice Logged (MoRTH)" },
-          { title: "2. Attributed Custody" },
-          { title: "3. Settle / Escrow" },
-          { title: "4. Court / Dismissed" }
-        ], 1)}
-      </div>
-
-      <!-- 4. MIDDLE ROW: 2-COLUMN ANALYTICS -->
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 16px;">
+      <!-- 3. ARCHITECTURAL ANALYTICS BAND (Flat Hairline Split, 100% Live Data) -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 32px; padding-bottom: 24px; border-bottom: 1px solid #EBEBEB;">
         
-        <!-- Left: Custom Bar Chart (Volume & Velocity) -->
-        <div class="card" style="padding: 20px 22px;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+        <!-- Left: Notice & Settlement Velocity -->
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px;">
             <div>
-              <div style="font-size: 15px; font-weight: 700; color: var(--ink);">Notice &amp; Settlement Velocity</div>
-              <div style="font-size: 12px; color: var(--text-2); margin-top: 2px;">Monthly trend across national fleet operations</div>
+              <div style="font-size: 13.5px; font-weight: 600; color: var(--ink); letter-spacing: -0.01em;">Notice &amp; Settlement Velocity</div>
+              <div style="font-size: 12px; color: var(--text-3); margin-top: 2px;">8-month trajectory across fleet corridors</div>
             </div>
-            <div style="display: flex; align-items: center; gap: 12px; font-size: 11.5px;">
-              <div style="display: flex; align-items: center; gap: 6px;">
-                <span style="width: 8px; height: 8px; border-radius: 2px; background: var(--surface-1); display: inline-block;"></span>
-                <span style="color: var(--text-3);">Past Months</span>
-              </div>
-              <div style="display: flex; align-items: center; gap: 6px;">
-                <span style="width: 8px; height: 8px; border-radius: 2px; background: var(--color-primary); display: inline-block;"></span>
-                <span style="color: var(--ink); font-weight: 600;">Current Month</span>
-              </div>
+            <div style="display: flex; align-items: center; gap: 12px; font-size: 11px; color: var(--text-3);">
+              <span style="display: inline-flex; align-items: center; gap: 5px;"><span style="width: 7px; height: 7px; border-radius: 2px; background: #E4E4E7;"></span>Past</span>
+              <span style="display: inline-flex; align-items: center; gap: 5px; color: var(--ink); font-weight: 600;"><span style="width: 7px; height: 7px; border-radius: 2px; background: var(--color-primary);"></span>Current</span>
             </div>
           </div>
-
-          <div style="margin-top: 8px;">
-            ${renderFinexyDualBarChart(challans)}
-          </div>
+          ${renderFinexyDualBarChart(challans)}
         </div>
 
-        <!-- Right: Liability Attribution Breakdown -->
-        <div class="card" style="padding: 22px 24px; border-radius: 18px;">
-          <div style="margin-bottom: 12px;">
-            <div style="font-size: 15px; font-weight: 700; color: var(--ink);">Liability Attribution Breakdown</div>
-            <div style="font-size: 12px; color: var(--text-2); margin-top: 2px;">Adjudicated legal responsibility distribution</div>
+        <!-- Right: Live Liability Attribution Breakdown -->
+        <div>
+          <div style="margin-bottom: 14px;">
+            <div style="font-size: 13.5px; font-weight: 600; color: var(--ink); letter-spacing: -0.01em;">Liability Attribution Breakdown</div>
+            <div style="font-size: 12px; color: var(--text-3); margin-top: 2px;">Live split computed from ${challans.length} recorded notices</div>
           </div>
 
-          <div class="calm-donut-container" style="display: flex; align-items: center; justify-content: space-around; flex-wrap: wrap; gap: 16px;">
-            <!-- SVG Donut -->
-            ${renderLiabilityDonutChart(challans)}
+          <!-- Clean Stacked Attribution Hairline Bar -->
+          <div style="display: flex; height: 8px; border-radius: 4px; overflow: hidden; gap: 2px; margin-bottom: 16px;">
+            <div style="width: ${driverPct}%; background: var(--color-primary);" title="Driver Trips: ${driverPct}%"></div>
+            <div style="width: ${lesseePct}%; background: #0284C7;" title="Lessee Contracts: ${lesseePct}%"></div>
+            <div style="width: ${fleetPct}%; background: #D4D4D8;" title="Fleet & Unassigned: ${fleetPct}%"></div>
+          </div>
 
-            <!-- Category Breakdown List -->
-            <div class="calm-donut-list" style="display: flex; flex-direction: column; gap: 10px; flex: 1; min-width: 180px;">
-              <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; background: var(--surface-2); border-radius: 8px; font-size: 12.5px;">
-                <div style="display: flex; align-items: center; gap: 8px;">
-                  <span style="width: 8px; height: 8px; border-radius: 50%; background: #1E60FF;"></span>
-                  <span style="color: var(--ink); font-weight: 500;">Driver Trips</span>
-                </div>
-                <div style="font-weight: 700; color: var(--ink);">42% (₹54,600)</div>
-              </div>
-
-              <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; background: var(--surface-2); border-radius: 8px; font-size: 12.5px;">
-                <div style="display: flex; align-items: center; gap: 8px;">
-                  <span style="width: 8px; height: 8px; border-radius: 50%; background: #38BDF8;"></span>
-                  <span style="color: var(--ink); font-weight: 500;">Lessee Contracts</span>
-                </div>
-                <div style="font-weight: 700; color: var(--ink);">38% (₹49,400)</div>
-              </div>
-
-              <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; background: var(--surface-2); border-radius: 8px; font-size: 12.5px;">
-                <div style="display: flex; align-items: center; gap: 8px;">
-                  <span style="width: 8px; height: 8px; border-radius: 50%; background: #94A3B8;"></span>
-                  <span style="color: var(--ink); font-weight: 500;">Fleet Default</span>
-                </div>
-                <div style="font-weight: 700; color: var(--ink);">20% (₹26,010)</div>
-              </div>
+          <div style="display: flex; flex-direction: column;">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid #F4F4F2; font-size: 12.5px;">
+              <span style="display: inline-flex; align-items: center; gap: 8px; color: var(--ink);">
+                <span style="width: 7px; height: 7px; border-radius: 50%; background: var(--color-primary);"></span>
+                Driver Trips (${driverChallans.length})
+              </span>
+              <span style="font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums;">${driverPct}% &middot; ${Utils.formatINR(driverAmt)}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid #F4F4F2; font-size: 12.5px;">
+              <span style="display: inline-flex; align-items: center; gap: 8px; color: var(--ink);">
+                <span style="width: 7px; height: 7px; border-radius: 50%; background: #0284C7;"></span>
+                Lessee Contracts (${lesseeChallans.length})
+              </span>
+              <span style="font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums;">${lesseePct}% &middot; ${Utils.formatINR(lesseeAmt)}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 9px 0; font-size: 12.5px;">
+              <span style="display: inline-flex; align-items: center; gap: 8px; color: var(--ink);">
+                <span style="width: 7px; height: 7px; border-radius: 50%; background: #A1A1AA;"></span>
+                Fleet &amp; Unassigned (${fleetChallans.length})
+              </span>
+              <span style="font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums;">${fleetPct}% &middot; ${Utils.formatINR(fleetAmt)}</span>
             </div>
           </div>
         </div>
 
       </div>
 
-      <!-- 6. BOTTOM ROW: ACTION QUEUE & RECENT INFRACTIONS LEDGER (Matches Screen 6 from Reference) -->
-      <div class="card" style="padding: 22px 24px; border-radius: 18px;">
-        
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; margin-bottom: 16px;">
+      <!-- 4. PRIORITY TRIAGE QUEUE (Clean Open Architectural Table) -->
+      <div>
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; margin-bottom: 14px;">
           <div>
-            <div style="font-size: 16px; font-weight: 800; color: var(--ink); letter-spacing: -0.01em;">Action Queue &amp; Recent Infractions</div>
-            <div style="font-size: 12.5px; color: var(--text-2); margin-top: 2px;">Live compliance triage requiring financial or legal adjudication</div>
+            <div style="font-size: 14.5px; font-weight: 600; color: var(--ink); letter-spacing: -0.01em;">Priority Triage Queue</div>
+            <div style="font-size: 12px; color: var(--text-3); margin-top: 2px;">Click any citation to inspect in the slide-over drawer</div>
           </div>
 
-          <!-- Queue Filter Tabs & Search Control -->
-          <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-            <div class="calm-queue-tabs" id="dashboardQueuePills">
-              <button class="calm-tab-btn active" data-queue="all">
-                All Action Items <span class="calm-tab-badge">${challans.filter(c => c.status !== 'paid').length}</span>
+          <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <div class="editorial-tabs" id="dashboardQueuePills">
+              <button class="editorial-tab-btn calm-tab-btn active" data-queue="all">
+                All <span class="editorial-tab-count">${challans.filter(c => c.status !== 'paid').length}</span>
               </button>
-              <button class="calm-tab-btn" data-queue="unassigned">
-                Unassigned <span class="calm-tab-badge">${challans.filter(c => c.status === 'unassigned').length}</span>
+              <button class="editorial-tab-btn calm-tab-btn" data-queue="unassigned">
+                Unassigned <span class="editorial-tab-count">${challans.filter(c => c.status === 'unassigned').length}</span>
               </button>
-              <button class="calm-tab-btn" data-queue="overdue">
-                Overdue <span class="calm-tab-badge">${challans.filter(c => Utils.getDaysRemaining(c.dueDate) < 0 && c.status !== 'paid').length}</span>
+              <button class="editorial-tab-btn calm-tab-btn" data-queue="overdue">
+                Overdue <span class="editorial-tab-count">${challans.filter(c => Utils.getDaysRemaining(c.dueDate) < 0 && c.status !== 'paid').length}</span>
               </button>
-              <button class="calm-tab-btn" data-queue="dueSoon">
-                Due in 7 Days <span class="calm-tab-badge">${challans.filter(c => Utils.getDaysRemaining(c.dueDate) >= 0 && Utils.getDaysRemaining(c.dueDate) <= 7 && c.status !== 'paid').length}</span>
+              <button class="editorial-tab-btn calm-tab-btn" data-queue="dueSoon">
+                7d Due <span class="editorial-tab-count">${challans.filter(c => Utils.getDaysRemaining(c.dueDate) >= 0 && Utils.getDaysRemaining(c.dueDate) <= 7 && c.status !== 'paid').length}</span>
               </button>
-              <button class="calm-tab-btn" data-queue="dispute">
-                Disputed / Court <span class="calm-tab-badge">${challans.filter(c => c.status === 'disputed' || c.status === 'court').length}</span>
+              <button class="editorial-tab-btn calm-tab-btn" data-queue="dispute">
+                Court <span class="editorial-tab-count">${challans.filter(c => c.status === 'disputed' || c.status === 'court').length}</span>
               </button>
             </div>
 
             <div style="position: relative;">
-              <svg style="position: absolute; left: 10px; top: 10px; pointer-events: none;" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-              <input type="text" id="dashboardTableSearchInput" class="calm-search-input" placeholder="Search notices, plates...">
+              <svg style="position: absolute; left: 10px; top: 9px; pointer-events: none;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="text" id="dashboardTableSearchInput" class="form-input" style="height: 32px; padding-left: 30px; font-size: 12px; width: 210px;" placeholder="Filter notices, plates...">
             </div>
           </div>
         </div>
@@ -618,7 +560,7 @@ function renderAttentionItems(items) {
     }
 
     return `
-      <tr class="row-interactive ${isUrgent ? 'row-urgent-risk' : ''}" onclick="if(!event.target.closest('input') && !event.target.closest('button')) navigateTo('challans', true, { id: '${c.id}' })" title="Click anywhere to inspect notice details">
+      <tr class="row-interactive ${isUrgent ? 'row-urgent-risk' : ''}" onclick="if(!event.target.closest('input') && !event.target.closest('button')) openQuickInspectorDrawer('${c.id}')" title="Click anywhere to inspect notice in drawer">
         <!-- Checkbox -->
         <td style="width: 36px;">
           <input type="checkbox" value="${c.id}" class="custom-checkbox">
@@ -626,7 +568,7 @@ function renderAttentionItems(items) {
 
         <!-- Notice ID -->
         <td>
-          <span style="font-family: var(--font-family-mono); font-weight: 500; font-size: 12px; color: var(--text); cursor: pointer; letter-spacing: 0;" onclick="navigateTo('challans', true, { id: '${c.id}' })">
+          <span style="font-family: var(--font-family-mono); font-weight: 500; font-size: 12px; color: var(--text); cursor: pointer; letter-spacing: 0;" onclick="openQuickInspectorDrawer('${c.id}')">
             ${c.challanNumber}
           </span>
         </td>
