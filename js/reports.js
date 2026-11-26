@@ -74,7 +74,7 @@ function renderReportsView(container, actions) {
 
           ${reportData.secondaryFilterHTML}
 
-          <input type="text" class="form-input form-input--search" placeholder="Search report..." aria-label="Search report records" style="width: 180px; font-size: 12px; height: 34px;" value="${reportsViewState.searchQuery}" oninput="handleReportSearch(this.value)">
+          <input type="text" class="form-input form-input--search" placeholder="Search" aria-label="Search report records" style="width: 180px; font-size: 12px; height: 34px;" value="${reportsViewState.searchQuery}" oninput="handleReportSearch(this.value)">
         </div>
       </div>
 
@@ -366,8 +366,8 @@ function getActiveReportData() {
               <span style="font-size: 17px; font-weight: 600; color: var(--ink); line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums;">
                 ${records.length}
               </span>
-              <span style="font-size: 8.5px; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px;">
-                TOTAL
+              <span style="font-size: 11px; font-weight: 500; color: var(--text-3); margin-top: 2px;">
+                Total
               </span>
             </div>
           </div>

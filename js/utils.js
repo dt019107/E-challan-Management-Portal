@@ -622,14 +622,11 @@ const Utils = {
               <stop offset="0%" stop-color="${startColor}" />
               <stop offset="100%" stop-color="${endColor}" />
             </linearGradient>
-            <filter id="gaugeShadow" x="-20%" y="-20%" width="140%" height="140%">
-              <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12" flood-color="#1E60FF"/>
-            </filter>
           </defs>
           <!-- Background Track -->
           <path d="M 30 95 A 70 70 0 0 1 170 95" fill="none" stroke="#E2E8F0" stroke-width="12" stroke-linecap="round" />
-          <!-- Active Foreground Arc with Spring Animation -->
-          <path class="gauge-arc-path" data-target-offset="${dashOffset}" data-arc-length="${arcLength}" d="M 30 95 A 70 70 0 0 1 170 95" fill="none" stroke="url(#${gradientId})" stroke-width="12" stroke-linecap="round" stroke-dasharray="${arcLength}" stroke-dashoffset="${dashOffset}" filter="url(#gaugeShadow)" />
+          <!-- Active Foreground Arc -->
+          <path class="gauge-arc-path" data-target-offset="${dashOffset}" data-arc-length="${arcLength}" d="M 30 95 A 70 70 0 0 1 170 95" fill="none" stroke="url(#${gradientId})" stroke-width="12" stroke-linecap="round" stroke-dasharray="${arcLength}" stroke-dashoffset="${dashOffset}" />
           <!-- Central Score Display with Rolling Counter -->
           <text class="gauge-counter-val" data-target-value="${p}" x="100" y="80" text-anchor="middle" font-size="28" font-weight="800" fill="var(--ink)" font-family="var(--font-family-base)" letter-spacing="-0.02em">${p}%</text>
           <text x="100" y="98" text-anchor="middle" font-size="11" font-weight="600" fill="var(--text-2)" font-family="var(--font-family-base)">${label}</text>

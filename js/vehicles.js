@@ -326,10 +326,8 @@ function renderVehiclesTableAndPagination() {
                 <td style="text-align: center; padding-left: 18px;" onclick="event.stopPropagation()">
                   <input type="checkbox" class="custom-checkbox" aria-label="Select vehicle ${v.regNumber}" ${isChecked ? 'checked' : ''} onchange="toggleVehicleRowSelection('${v.id}', this.checked)">
                 </td>
-                <td style="min-width: 190px;">
-                  <div style="display: flex; align-items: center; gap: 12px;">
-                    <img src="${vMeta.image}" alt="${vMeta.shortLabel}" style="width: 44px; height: 44px; border-radius: 10px; object-fit: cover; border: 1px solid var(--surface-1); box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); flex-shrink: 0;" onerror="this.src='assets/images/heavy-truck.jpg'">
-                    <div>
+                <td style="min-width: 170px;">
+                  <div>
                       <div>
                         <a href="#vehicles?id=${v.id}" class="plate-chip font-mono font-bold" style="font-size: 12.5px;" title="View vehicle profile">
                           ${v.regNumber}
@@ -339,7 +337,6 @@ function renderVehiclesTableAndPagination() {
                         ${v.makeModel} <span style="color: var(--color-text-muted); font-size: 11px;">(${v.year || 2024})</span>
                       </div>
                     </div>
-                  </div>
                 </td>
                 <td>
                   <div style="font-size: 13.5px; font-weight: 600; color: var(--color-text-main); max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">

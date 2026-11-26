@@ -132,7 +132,7 @@ function renderDashboardView(container, actions) {
       </div>
 
       <!-- 3. ARCHITECTURAL ANALYTICS BAND (Flat Hairline Split, 100% Live Data) -->
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 32px; padding-bottom: 24px; border-bottom: 1px solid #EBEBEB;">
+      <div style="display: grid; grid-template-columns: 1.55fr 1fr; gap: 32px; padding-bottom: 24px; border-bottom: 1px solid #EBEBEB;">
         
         <!-- Left: Notice & Settlement Velocity -->
         <div>
@@ -219,7 +219,7 @@ function renderDashboardView(container, actions) {
 
             <div style="position: relative;">
               <svg style="position: absolute; left: 10px; top: 9px; pointer-events: none;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-              <input type="text" id="dashboardTableSearchInput" class="form-input" style="height: 32px; padding-left: 30px; font-size: 12px; width: 210px;" placeholder="Filter notices, plates...">
+              <input type="text" id="dashboardTableSearchInput" class="form-input" style="height: 32px; padding-left: 30px; font-size: 12px; width: 210px;" placeholder="Search">
             </div>
           </div>
         </div>
@@ -322,50 +322,68 @@ function toggleQueuePillsVisibility() {
 /**
  * Signature Element: Custom Bar Chart (Not pills!)
  * 14px-wide bars, 6px radius tops, --surface-2 (#ECEAE4) for past months,
- * --accent (#2B3A67) for current month, thin hairline gridlines, 11px axis labels.
- * Current month dynamically computed from new Date().
+ * Live 8-month exposure bar chart computed from challans ledger.
+ * Cobalt (#1D4ED8) for current month, #E4E4E7 for prior months, hairline gridlines.
  */
 function renderFinexyDualBarChart(challans) {
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const now = new Date();
   const curMonthIndex = now.getMonth();
-  
-  // Generate 8 months ending on the current month from new Date()
-  const basePastValues = [34, 42, 38, 46, 51, 44, 39];
+
   const months = [];
+  const monthMap = {};
   for (let i = 7; i >= 0; i--) {
     const d = new Date(now.getFullYear(), curMonthIndex - i, 1);
-    const isCurrent = (i === 0);
-    months.push({
+    const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+    const bucket = {
+      key,
       label: monthNames[d.getMonth()],
-      val: isCurrent ? 58 : basePastValues[7 - i],
-      isCurrent: isCurrent,
-      notices: isCurrent ? 33 : undefined,
-      amount: isCurrent ? "₹48.2k" : undefined
-    });
+      totalAmt: 0,
+      notices: 0,
+      val: 0,
+      isCurrent: (i === 0)
+    };
+    months.push(bucket);
+    monthMap[key] = bucket;
   }
 
-  const chartHeight = 84;
-  const chartWidth = 460;
-  const barWidth = 12; // Refined compact bar width
-  const startX = 34;
-  const gap = (chartWidth - startX - (months.length * barWidth)) / (months.length - 1);
-  const maxVal = 65;
+  (challans || []).forEach(c => {
+    const rawDate = c.offenceDate || c.date || c.dueDate;
+    if (!rawDate) return;
+    const dt = new Date(rawDate);
+    if (isNaN(dt.getTime())) return;
+    const k = `${dt.getFullYear()}-${String(dt.getMonth() + 1).padStart(2, '0')}`;
+    if (monthMap[k]) {
+      monthMap[k].totalAmt += Number(c.amount) || 0;
+      monthMap[k].notices += 1;
+    }
+  });
 
-  // Y-axis guidelines: 60k, 40k, 20k, 0
+  months.forEach(m => {
+    m.val = m.totalAmt / 1000;
+  });
+
+  const chartHeight = 96;
+  const chartWidth = 460;
+  const barWidth = 14;
+  const startX = 36;
+  const gap = (chartWidth - startX - (months.length * barWidth)) / (months.length - 1);
+  const maxRaw = Math.max(...months.map(m => m.val), 10);
+  const maxVal = Math.max(20, Math.ceil(maxRaw / 20) * 20);
+
   const yTicks = [
-    { label: "60k", val: 60 },
-    { label: "40k", val: 40 },
-    { label: "20k", val: 20 },
-    { label: "00", val: 0 }
+    { label: `${maxVal}k`, val: maxVal },
+    { label: `${Math.round(maxVal * 0.67)}k`, val: Math.round(maxVal * 0.67) },
+    { label: `${Math.round(maxVal * 0.33)}k`, val: Math.round(maxVal * 0.33) },
+    { label: "0", val: 0 }
   ];
 
   let gridLines = "";
   yTicks.forEach(tick => {
-    const yPos = chartHeight - (tick.val / maxVal) * (chartHeight - 20);
+    const yPos = chartHeight - (tick.val / maxVal) * (chartHeight - 24);
     gridLines += `
-      <text x="0" y="${yPos + 3}" fill="#86868B" font-size="9" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif" font-weight="400">${tick.label}</text>
-      <line x1="24" y1="${yPos}" x2="${chartWidth}" y2="${yPos}" stroke="#E5E7EB" stroke-width="1" stroke-dasharray="3 3" />
+      <text x="0" y="${yPos + 3}" fill="#71717A" font-size="10" font-family="var(--font-family-mono)" font-weight="400">${tick.label}</text>
+      <line x1="28" y1="${yPos}" x2="${chartWidth}" y2="${yPos}" stroke="#E4E4E7" stroke-width="1" stroke-dasharray="3 3" />
     `;
   });
 
@@ -374,39 +392,37 @@ function renderFinexyDualBarChart(challans) {
 
   months.forEach((m, idx) => {
     const xPos = startX + idx * (barWidth + gap);
-    const bHeight = (m.val / maxVal) * (chartHeight - 20);
+    const bHeight = Math.max(m.val > 0 ? 4 : 2, (m.val / maxVal) * (chartHeight - 24));
     const yPos = chartHeight - bHeight;
 
     if (m.isCurrent) {
-      // Apple Primary Blue current month bar with 4px top radius and animation
       barsHTML += `
-        <rect class="framer-bar-rect" style="--bar-delay: ${idx * 0.045}s;" x="${xPos}" y="${yPos}" width="${barWidth}" height="${bHeight}" rx="4" ry="4" fill="#0071E3" />
-        <text x="${xPos + barWidth / 2}" y="${chartHeight + 14}" text-anchor="middle" fill="#1D1D1F" font-size="9.5" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif">${m.label}</text>
+        <rect class="framer-bar-rect" style="--bar-delay: ${idx * 0.045}s;" x="${xPos}" y="${yPos}" width="${barWidth}" height="${bHeight}" rx="3" ry="3" fill="#1D4ED8" />
+        <text x="${xPos + barWidth / 2}" y="${chartHeight + 14}" text-anchor="middle" fill="#111827" font-size="10" font-weight="600" font-family="var(--font-family-base)">${m.label}</text>
       `;
 
-      // Floating tooltip on #FFFFFF with 1px border and soft shadow
-      const ttX = xPos - 36;
-      const ttY = yPos - 30;
+      const ttW = 92;
+      const ttX = Math.max(28, Math.min(chartWidth - ttW, xPos - ttW / 2 + barWidth / 2));
+      const ttY = Math.max(0, yPos - 28);
+      const amountLabel = Utils.formatINR(Math.round(m.totalAmt));
       tooltipHTML = `
-        <g class="calm-chart-tooltip" filter="drop-shadow(0 2px 8px rgba(0, 0, 0, 0.08))">
-          <rect x="${ttX}" y="${ttY}" width="78" height="22" rx="4" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1" />
-          <polygon points="${xPos + barWidth/2 - 3},${ttY + 22} ${xPos + barWidth/2 + 3},${ttY + 22} ${xPos + barWidth/2},${ttY + 26}" fill="#FFFFFF" />
-          <text x="${ttX + 39}" y="${ttY + 15}" text-anchor="middle" fill="#1D1D1F" font-size="9.5" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif">
-            ${m.amount} (${m.notices})
+        <g class="calm-chart-tooltip">
+          <rect x="${ttX}" y="${ttY}" width="${ttW}" height="22" rx="4" fill="#FFFFFF" stroke="#E4E4E7" stroke-width="1" />
+          <text x="${ttX + ttW / 2}" y="${ttY + 14}" text-anchor="middle" fill="#111827" font-size="10" font-weight="600" font-family="var(--font-family-mono)">
+            ${amountLabel} (${m.notices})
           </text>
         </g>
       `;
     } else {
-      // Clean neutral Apple border tint #E5E7EB past months bars
       barsHTML += `
-        <rect class="framer-bar-rect" style="--bar-delay: ${idx * 0.045}s;" x="${xPos}" y="${yPos}" width="${barWidth}" height="${bHeight}" rx="4" ry="4" fill="#E5E7EB" />
-        <text x="${xPos + barWidth / 2}" y="${chartHeight + 14}" text-anchor="middle" fill="#6E6E73" font-size="9.5" font-weight="400" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif">${m.label}</text>
+        <rect class="framer-bar-rect" style="--bar-delay: ${idx * 0.045}s;" x="${xPos}" y="${yPos}" width="${barWidth}" height="${bHeight}" rx="3" ry="3" fill="#E4E4E7" />
+        <text x="${xPos + barWidth / 2}" y="${chartHeight + 14}" text-anchor="middle" fill="#71717A" font-size="10" font-weight="400" font-family="var(--font-family-base)">${m.label}</text>
       `;
     }
   });
 
   return `
-    <svg viewBox="0 0 ${chartWidth} ${chartHeight + 18}" style="width: 100%; height: auto; display: block; overflow: visible;">
+    <svg viewBox="0 0 ${chartWidth} ${chartHeight + 20}" style="width: 100%; height: auto; display: block; overflow: visible;">
       ${gridLines}
       ${barsHTML}
       ${tooltipHTML}
@@ -463,8 +479,8 @@ function renderLiabilityDonutChart(challans) {
       </svg>
       <!-- Center Counter in SF Pro Display -->
       <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none;">
-        <span style="font-family: var(--font-family-display); font-size: 22px; font-weight: 700; color: var(--ink); line-height: 1; letter-spacing: -0.02em;">32</span>
-        <span style="font-size: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-top: 2px;">NOTICES</span>
+        <span style="font-family: var(--font-family-display); font-size: 22px; font-weight: 600; color: var(--ink); line-height: 1; letter-spacing: -0.02em;">32</span>
+        <span style="font-size: 11px; font-weight: 500; color: var(--text-3); margin-top: 2px;">Notices</span>
       </div>
     </div>
   `;
@@ -573,14 +589,11 @@ function renderAttentionItems(items) {
           </span>
         </td>
 
-        <!-- Monospace Registration Plate Chip with Fleet Thumbnail -->
-        <td style="min-width: 175px;">
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <img src="${vehicleMeta.image}" alt="${vehicleMeta.shortLabel}" style="width: 38px; height: 38px; border-radius: 8px; object-fit: cover; border: 1px solid var(--surface-1); box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); flex-shrink: 0;" onerror="this.src='assets/images/heavy-truck.jpg'">
-            <div>
-              <span class="reg-plate-chip" style="font-size: 11.5px; font-weight: 700;">${c.vehicleReg}</span>
-              <div style="font-size: 11px; color: var(--text-3); margin-top: 2px; white-space: nowrap;">${vehicleMeta.shortLabel}</div>
-            </div>
+        <!-- Monospace Registration Plate Chip -->
+        <td style="min-width: 155px;">
+          <div>
+            <span class="reg-plate-chip" style="font-size: 11.5px; font-weight: 600;">${c.vehicleReg}</span>
+            <div style="font-size: 11px; color: var(--text-3); margin-top: 2px; white-space: nowrap;">${vehicleMeta.shortLabel}</div>
           </div>
         </td>
 

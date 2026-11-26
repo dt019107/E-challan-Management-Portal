@@ -175,14 +175,14 @@
 .nav-item {
   display: flex;
   align-items: center;
-  gap: 9px;
-  padding: 6.5px 10px;
+  gap: 8px;
+  padding: 8px 10px;
   border-radius: 6px;
   color: #4B5563;
   font-size: 13px;
-  line-height: 19px;
+  line-height: 20px;
   font-weight: 500;
-  transition: background-color 120ms ease, color 120ms ease;
+  transition: background-color 140ms ease, color 140ms ease;
   position: relative;
   text-decoration: none;
   cursor: pointer;

@@ -544,7 +544,7 @@
 }
 
 .framer-live-dot {
-  animation: framerPulseDot 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  animation: none;
 }
 
 /* 1. Calm Editorial Header */
@@ -1526,15 +1526,12 @@
   box-shadow: var(--shadow-sm);
 }
 
-/* Top-Left Atmospheric Blue Highlight Card */
+/* Solid Architectural Primary Card (No Gradients or Diagonal Stripes) */
 .finexy-metric-card.hero-green {
-  background: linear-gradient(145deg, #1766AD 0%, #123B65 100%);
-  background-image: 
-    linear-gradient(145deg, #1766AD 0%, #123B65 100%),
-    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.04) 4px, transparent 4px, transparent 8px);
+  background: #141413;
   color: #FFFFFF;
-  border: 1px solid rgba(67, 216, 197, 0.3);
-  box-shadow: 0 8px 24px -4px rgba(23, 102, 173, 0.35);
+  border: 1px solid #27272A;
+  box-shadow: 0 1px 2px rgba(17, 24, 39, 0.08);
   position: relative;
   overflow: hidden;
 }
@@ -1700,7 +1697,7 @@
 
 .finexy-progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #242329 0%, #123B65 100%);
+  background: var(--color-primary, #1D4ED8);
   border-radius: 9999px;
 }
 
@@ -1766,18 +1763,15 @@
 }
 
 .finexy-physical-card.black-card {
-  background: linear-gradient(135deg, #242329 0%, #17161B 100%);
+  background: #18181B;
   color: #FFFFFF;
   border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .finexy-physical-card.green-card {
-  background: linear-gradient(135deg, #1766AD 0%, #123B65 100%);
-  background-image: 
-    linear-gradient(135deg, #1766AD 0%, #123B65 100%),
-    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.04) 4px, transparent 4px, transparent 8px);
+  background: #1E3A8A;
   color: #FFFFFF;
-  border: 1px solid rgba(67, 216, 197, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.16);
 }
 
 .finexy-card-top-status {
@@ -3886,20 +3880,12 @@ td a[href*="#challans?id="]:hover,
 
 .urgent-pulse-dot {
   display: inline-block;
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background-color: var(--status-unassigned);
-  margin-right: 5px;
+  margin-right: 4px;
   vertical-align: middle;
-  box-shadow: 0 0 0 0 rgba(217, 45, 32, 0.7);
-  animation: urgentPulse 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
-}
-
-@keyframes urgentPulse {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(217, 45, 32, 0.6); }
-  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(217, 45, 32, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(217, 45, 32, 0); }
 }
 
 /* --------------------------------------------------------------------------
