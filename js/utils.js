@@ -643,7 +643,8 @@ const Utils = {
    * GSAP Physics Animation Engine for Arc Gauges & Number Odometers
    */
   animateGauges(container = document) {
-    if (typeof gsap === "undefined") {
+    const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (typeof gsap === "undefined" || prefersReduced) {
       container.querySelectorAll(".gauge-arc-path").forEach(path => {
         path.style.strokeDashoffset = path.dataset.targetOffset || "0";
       });

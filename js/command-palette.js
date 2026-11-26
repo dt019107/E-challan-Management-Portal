@@ -16,12 +16,20 @@ const CommandPalette = {
     input.value = "";
     this.selectedIndex = 0;
     this.renderResults("");
-    setTimeout(() => input.focus(), 20);
+    if (typeof KeyboardNav !== "undefined" && KeyboardNav.trapModalFocus) {
+      KeyboardNav.trapModalFocus(backdrop);
+    }
+    setTimeout(() => input.focus(), 60);
   },
 
   close() {
     const backdrop = document.getElementById("commandPaletteBackdrop");
-    if (backdrop) backdrop.classList.remove("show");
+    if (backdrop && backdrop.classList.contains("show")) {
+      backdrop.classList.remove("show");
+      if (typeof KeyboardNav !== "undefined" && KeyboardNav.releaseModalFocus) {
+        KeyboardNav.releaseModalFocus();
+      }
+    }
   },
 
   buildItems(query = "") {
@@ -227,11 +235,19 @@ function openQuickInspectorDrawer(challanId) {
   `;
 
   backdrop.classList.add("show");
+  if (typeof KeyboardNav !== "undefined" && KeyboardNav.trapModalFocus) {
+    KeyboardNav.trapModalFocus(backdrop);
+  }
 }
 
 function closeQuickInspectorDrawer() {
   const backdrop = document.getElementById("quickInspectorDrawer");
-  if (backdrop) backdrop.classList.remove("show");
+  if (backdrop && backdrop.classList.contains("show")) {
+    backdrop.classList.remove("show");
+    if (typeof KeyboardNav !== "undefined" && KeyboardNav.releaseModalFocus) {
+      KeyboardNav.releaseModalFocus();
+    }
+  }
 }
 
 window.openQuickInspectorDrawer = openQuickInspectorDrawer;

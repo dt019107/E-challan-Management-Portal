@@ -276,14 +276,14 @@
        ========================================================================= -->
 
   <!-- 1. Responsibility Assignment Modal -->
-  <div class="modal-backdrop" id="assignmentModal">
+  <div class="modal-backdrop" id="assignmentModal" role="dialog" aria-modal="true" aria-labelledby="assignModalTitle">
     <div class="modal-dialog">
       <div class="modal-header">
         <div>
           <h3 class="modal-title" id="assignModalTitle">Assign Responsibility</h3>
           <p class="text-xs text-muted" id="assignModalSubtitle">Allocate traffic fine liability with mandatory audit trail</p>
         </div>
-        <button class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('assignmentModal')" title="Close">
+        <button type="button" class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('assignmentModal')" title="Close" aria-label="Close">
           <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
         </button>
       </div>
@@ -384,17 +384,17 @@
   </div>
 
   <!-- 2. Payment & Resolution Modal -->
-  <div class="modal-backdrop" id="paymentModal">
+  <div class="modal-backdrop" id="paymentModal" role="dialog" aria-modal="true" aria-labelledby="paymentModalTitle">
     <div class="modal-dialog" style="max-width: 620px;">
       <div class="modal-header">
         <div>
           <div style="display: flex; align-items: center; gap: 8px;">
-            <h3 class="modal-title">Settle Traffic Challan</h3>
+            <h3 class="modal-title" id="paymentModalTitle">Settle Traffic Challan</h3>
             <span class="badge badge--neutral" style="font-size: 11px;">Simulated gateway</span>
           </div>
           <p class="text-xs text-muted">Direct gateway settlement & recovery classification (Demo Rail)</p>
         </div>
-        <button class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('paymentModal')" title="Close">
+        <button type="button" class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('paymentModal')" title="Close" aria-label="Close">
           <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
         </button>
       </div>
@@ -619,14 +619,14 @@
   </div>
 
   <!-- 3. Add / Edit Vehicle Modal (Step 5.3) -->
-  <div class="modal-backdrop" id="addVehicleModal">
+  <div class="modal-backdrop" id="addVehicleModal" role="dialog" aria-modal="true" aria-labelledby="addVehModalTitle">
     <div class="modal-dialog" style="max-width: 680px;">
       <div class="modal-header">
         <div>
           <h3 class="modal-title" id="addVehModalTitle">Add Vehicle to Fleet</h3>
           <p class="text-xs text-muted" id="addVehModalSubtitle">Register a new commercial asset into Apex Fleet compliance roster</p>
         </div>
-        <button class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('addVehicleModal')" title="Close">
+        <button type="button" class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('addVehicleModal')" title="Close" aria-label="Close">
           <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
         </button>
       </div>
@@ -734,14 +734,14 @@
   </div>
 
   <!-- 4. Excel / CSV 7-Step Import Wizard Modal (Step 5.4) -->
-  <div class="modal-backdrop" id="importVehiclesModal">
+  <div class="modal-backdrop" id="importVehiclesModal" role="dialog" aria-modal="true" aria-label="Batch Vehicle Import Wizard">
     <div class="modal-dialog" style="max-width: 760px;">
       <div class="modal-header">
         <div>
           <h3 class="modal-title">Batch Vehicle Import Wizard</h3>
           <p class="text-xs text-muted" id="importWizardStepSubtitle">Step 1 of 4: Select and parse CSV file</p>
         </div>
-        <button class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('importVehiclesModal')" title="Close">
+        <button type="button" class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('importVehiclesModal')" title="Close" aria-label="Close">
           <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
         </button>
       </div>
@@ -841,14 +841,14 @@
   </div>
 
   <!-- 5. Add Custody Period Modal for Timeline (Step 5.5) -->
-  <div class="modal-backdrop" id="addCustodyPeriodModal">
+  <div class="modal-backdrop" id="addCustodyPeriodModal" role="dialog" aria-modal="true" aria-label="Add Custody or Responsibility Period">
     <div class="modal-dialog">
       <div class="modal-header">
         <div>
           <h3 class="modal-title">Add Custody / Responsibility Period</h3>
           <p class="text-xs text-muted">Record vehicle custody handover for compliance attribution</p>
         </div>
-        <button class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('addCustodyPeriodModal')" title="Close">
+        <button type="button" class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('addCustodyPeriodModal')" title="Close" aria-label="Close">
           <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
         </button>
       </div>
@@ -890,14 +890,14 @@
   </div>
 
   <!-- 6. Bulk Assignment Modal (Step 6.4) -->
-  <div class="modal-backdrop" id="bulkAssignModal">
+  <div class="modal-backdrop" id="bulkAssignModal" role="dialog" aria-modal="true" aria-label="Bulk Assign Responsibility">
     <div class="modal-dialog">
       <div class="modal-header">
         <div>
           <h3 class="modal-title">Bulk Assign Responsibility</h3>
           <p class="text-xs text-muted" id="bulkAssignSubtitle">Batch allocate liability for selected infractions</p>
         </div>
-        <button class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('bulkAssignModal')" title="Close">
+        <button type="button" class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('bulkAssignModal')" title="Close" aria-label="Close">
           <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
         </button>
       </div>
@@ -927,14 +927,14 @@
   </div>
 
   <!-- 7. Bulk Dispute Modal (Step 6.4) -->
-  <div class="modal-backdrop" id="bulkDisputeModal">
+  <div class="modal-backdrop" id="bulkDisputeModal" role="dialog" aria-modal="true" aria-label="Bulk Mark as Disputed">
     <div class="modal-dialog">
       <div class="modal-header">
         <div>
           <h3 class="modal-title">Bulk Mark as Disputed</h3>
           <p class="text-xs text-muted" id="bulkDisputeSubtitle">Initiate contestation for selected violations</p>
         </div>
-        <button class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('bulkDisputeModal')" title="Close">
+        <button type="button" class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('bulkDisputeModal')" title="Close" aria-label="Close">
           <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
         </button>
       </div>
@@ -962,7 +962,7 @@
   </div>
 
   <!-- 8. Payment Settlement Receipt Voucher Modal (Printable / Downloadable) -->
-  <div class="modal-backdrop" id="receiptModal">
+  <div class="modal-backdrop" id="receiptModal" role="dialog" aria-modal="true" aria-label="Parivahan Settlement Receipt Voucher">
     <div class="modal-dialog receipt-modal-dialog">
       <!-- Real Physical Paper Receipt Slip -->
       <div class="receipt-slip" id="printableReceiptSlip">
@@ -1144,7 +1144,7 @@
   </div>
 
   <!-- 9. File Dispute Modal -->
-  <div class="modal-backdrop" id="fileDisputeModal">
+  <div class="modal-backdrop" id="fileDisputeModal" role="dialog" aria-modal="true" aria-label="Contest Traffic Challan">
     <div class="modal-dialog" style="max-width: 580px;">
       <div class="modal-header">
         <div>
@@ -1154,7 +1154,7 @@
           </div>
           <p class="text-xs text-muted">File administrative contest on Parivahan grievance cell (Demo)</p>
         </div>
-        <button class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('fileDisputeModal')" title="Close">
+        <button type="button" class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('fileDisputeModal')" title="Close" aria-label="Close">
           <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
         </button>
       </div>
@@ -1209,7 +1209,7 @@
   </div>
 
   <!-- 10. Virtual Traffic Court Case & Compounding Modal -->
-  <div class="modal-backdrop" id="courtModal">
+  <div class="modal-backdrop" id="courtModal" role="dialog" aria-modal="true" aria-label="Judicial Docket and Compounding">
     <div class="modal-dialog" style="max-width: 600px;">
       <div class="modal-header" style="background: var(--status-court-bg); border-bottom: 1px solid #E6E9F0;">
         <div>
@@ -1217,7 +1217,7 @@
           <h3 class="modal-title" style="color: var(--status-court);">Judicial Docket & Compounding</h3>
           <p class="text-xs text-muted" id="courtModalCaseRef">DLCT01-002931-2026</p>
         </div>
-        <button class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('courtModal')" title="Close">
+        <button type="button" class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('courtModal')" title="Close" aria-label="Close">
           <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
         </button>
       </div>
@@ -1303,14 +1303,14 @@
   </div>
 
   <!-- 10. Edit Challan Information Modal -->
-  <div class="modal-backdrop" id="editChallanModal">
+  <div class="modal-backdrop" id="editChallanModal" role="dialog" aria-modal="true" aria-labelledby="editChallanModalTitle">
     <div class="modal-dialog" style="max-width: 580px;">
       <div class="modal-header">
         <div>
           <h3 class="modal-title" id="editChallanModalTitle">Edit Challan Information</h3>
           <p class="text-xs text-muted" id="editChallanModalSubtitle">Update location, due date, accumulated late fees, or internal notes</p>
         </div>
-        <button class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('editChallanModal')" title="Close">
+        <button type="button" class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('editChallanModal')" title="Close" aria-label="Close">
           <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
         </button>
       </div>
@@ -1370,7 +1370,7 @@
   </div>
 
   <!-- 11. Keyboard Shortcuts Help Modal (Accessibility Engineer Skill) -->
-  <div class="modal-backdrop" id="keyboardShortcutsModal">
+  <div class="modal-backdrop" id="keyboardShortcutsModal" role="dialog" aria-modal="true" aria-label="Keyboard Navigation Shortcuts">
     <div class="modal-dialog" style="max-width: 500px;">
       <div class="modal-header">
         <div>
@@ -1380,7 +1380,7 @@
           </h3>
           <p class="text-xs text-muted">High-speed operator ergonomics for fleet triage</p>
         </div>
-        <button class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('keyboardShortcutsModal')" title="Close">
+        <button type="button" class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('keyboardShortcutsModal')" title="Close" aria-label="Close">
           <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
         </button>
       </div>
@@ -1435,7 +1435,7 @@
           </div>
           <p class="text-xs text-muted">Defensive safeguard against accidental operational data loss</p>
         </div>
-        <button class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('resetDemoDataModal')" title="Close">
+        <button type="button" class="btn btn--ghost btn--icon btn--sm" onclick="Utils.closeModal('resetDemoDataModal')" title="Close" aria-label="Close">
           <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
         </button>
       </div>
