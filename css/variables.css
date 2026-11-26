@@ -112,8 +112,8 @@
   --color-danger-bg: rgba(239, 68, 68, 0.10);
   --color-purple: #6D28D9;
   --color-purple-bg: rgba(139, 92, 246, 0.09);
-  --color-info: #1E60FF;
-  --color-info-bg: rgba(30, 96, 255, 0.08);
+  --color-info: #1D4ED8;
+  --color-info-bg: rgba(29, 78, 216, 0.07);
 
   /* --------------------------------------------------------------------------
      4. Architectural Geometry & Zero-Glow Elevation
@@ -145,7 +145,7 @@
   --shadow-xl: 0 20px 44px -8px rgba(17, 24, 39, 0.12);
   --shadow-card: 0 1px 2px rgba(17, 24, 39, 0.04);
   --shadow-card-hover: 0 2px 6px rgba(17, 24, 39, 0.06);
-  --shadow-focus: 0 0 0 3px rgba(29, 78, 216, 0.16);
+  --shadow-focus: 0 0 0 2px rgba(29, 78, 216, 0.14);
   --shadow-dropdown: 0 8px 24px rgba(17, 24, 39, 0.08), 0 0 0 1px var(--hairline);
   --shadow-modal: 0 20px 48px -8px rgba(17, 24, 39, 0.16), 0 0 0 1px var(--hairline);
 
@@ -225,7 +225,7 @@
   --spacing-3xl: 64px;
 
   --space-page: clamp(16px, 2.5vw, 32px);
-  --space-gap: clamp(14px, 2vw, 24px);
+  --space-gap: clamp(16px, 2vw, 24px);
   --space-section: clamp(32px, 4vw, 56px);
 
   --font-h1: clamp(24px, 2.2vw + 14px, 36px);
@@ -238,7 +238,7 @@
   --touch-target-min: 44px;
 
   /* Layout Dimensions */
-  --sidebar-width: 250px;
+  --sidebar-width: 248px;
   --sidebar-collapsed-width: 72px;
   --topbar-height: 64px;
   --content-max-width: 1360px;

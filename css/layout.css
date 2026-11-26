@@ -164,12 +164,10 @@
 }
 
 .nav-section-label {
-  font-size: 10.5px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-weight: 600;
-  color: var(--text-3);
-  padding: 12px 10px 5px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-faint);
+  padding: 20px 12px 8px;
 }
 
 .nav-item {
@@ -262,8 +260,8 @@
 
 /* Sidebar Footer (Status Meta + Compact Collapse Toggle) */
 .sidebar-footer {
-  padding: 10px 12px;
-  border-top: 1px solid #EBEBEB;
+  padding: 12px;
+  border-top: 1px solid var(--hairline);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -273,10 +271,10 @@
 .sidebar-footer-meta {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 11px;
+  gap: 8px;
+  font-size: 12px;
   font-weight: 500;
-  color: #52525B;
+  color: var(--ink-faint);
 }
 
 .sidebar-footer-dot {
@@ -426,7 +424,7 @@
 .global-search-input:focus {
   background-color: #FFFFFF;
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(30, 96, 255, 0.16);
+  box-shadow: var(--shadow-focus);
   outline: none;
 }
 
@@ -505,12 +503,10 @@
 }
 
 .search-result-group-title {
-  padding: 8px 14px 4px;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-weight: 700;
-  color: var(--text-3);
+  padding: 8px 16px 4px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-faint);
 }
 
 .search-result-item {
@@ -582,29 +578,29 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 3px 12px 3px 4px;
-  height: 38px;
-  min-height: 38px;
+  padding: 4px 12px 4px 4px;
+  height: 36px;
+  min-height: 36px;
   border-radius: var(--radius-pill);
-  border: 1px solid var(--surface-1);
+  border: 1px solid var(--hairline);
   background: #FFFFFF;
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
-  transition: all 180ms ease;
+  box-shadow: none;
+  transition: border-color 140ms ease, background-color 140ms ease;
   cursor: pointer;
 }
 
 .user-profile-btn:hover {
   background-color: var(--surface-2);
-  border-color: rgba(30, 96, 255, 0.3);
+  border-color: var(--hairline-medium);
 }
 
 .user-avatar {
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   background: var(--surface-2);
   color: var(--ink);
-  font-weight: 700;
+  font-weight: 600;
   font-size: 12px;
   letter-spacing: 0;
   display: flex;
@@ -840,9 +836,7 @@
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(11, 12, 14, 0.75);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(17, 24, 39, 0.45);
   z-index: var(--z-backdrop);
   display: none !important;
   align-items: center;
