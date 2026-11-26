@@ -106,7 +106,7 @@ function renderPaymentsView(container, actions) {
             <option value="Write-off" ${paymentsViewState.recoveryFilter === 'Write-off' ? 'selected' : ''}>Write-off (Fleet Absorbed)</option>
           </select>
         ` : ''}
-        <input type="text" class="form-input form-input--search" placeholder="Search receipt, challan, vehicle..." aria-label="Search payments" style="width: 240px; height: 34px; font-size: 12px;" value="${paymentsViewState.searchQuery}" oninput="handlePaymentsSearch(this.value)">
+        <input type="text" class="form-input form-input--search" placeholder="Search" aria-label="Search payments" style="width: 240px; height: 36px; font-size: 12px;" value="${paymentsViewState.searchQuery}" oninput="handlePaymentsSearch(this.value)">
       </div>
     </div>
   `;
@@ -198,13 +198,13 @@ function renderSettlementsTabHTML(paidChallans) {
                     <div style="font-size: 12px; font-weight: 500;">${c.payerType || 'Apex Fleet'}</div>
                     <div class="text-xs text-muted" style="margin-top: 2px;">
                       Target: <strong>${c.recoveryParty || c.responsiblePartyName || 'Rahul Sharma'}</strong> 
-                      <span class="badge ${c.responsibleParty === 'Driver' ? 'badge--assigned' : 'badge--pending'}" style="font-size: 9px; padding: 0 4px; margin-left: 2px;">
+                      <span class="badge ${c.responsibleParty === 'Driver' ? 'badge--assigned' : 'badge--pending'}" style="font-size: 11px; padding: 0 6px; margin-left: 4px;">
                         ${c.recoveryMethod || (c.responsibleParty === 'Driver' ? 'Payroll' : 'Invoice')}
                       </span>
                     </div>
                   </td>
                   <td>
-                    <span class="badge badge--paid">✓ Settled</span>
+                    <span class="badge badge--paid"><span class="badge-dot"></span>Settled</span>
                   </td>
                   <td style="text-align: right;">
                     <div style="display: inline-flex; gap: 4px;">
@@ -272,11 +272,11 @@ function renderRecoveryLedgerTabHTML(recoveries) {
               const isInvoice = r.recoveryMethod === "Invoice";
               const isWriteOff = r.recoveryMethod === "Write-off";
 
-              let statusBadge = `<span class="badge badge--pending">Queued</span>`;
+              let statusBadge = `<span class="badge badge--pending"><span class="badge-dot"></span>Queued</span>`;
               if (r.recoveryStatus === "Deducted" || r.recoveryStatus === "Settled") {
-                statusBadge = `<span class="badge badge--paid">✓ Deducted</span>`;
+                statusBadge = `<span class="badge badge--paid"><span class="badge-dot"></span>Deducted</span>`;
               } else if (r.recoveryStatus === "Invoiced") {
-                statusBadge = `<span class="badge badge--assigned">✓ Invoiced</span>`;
+                statusBadge = `<span class="badge badge--assigned"><span class="badge-dot"></span>Invoiced</span>`;
               } else if (r.recoveryStatus === "Written Off") {
                 statusBadge = `<span class="badge badge--neutral">Written Off</span>`;
               }
@@ -297,7 +297,7 @@ function renderRecoveryLedgerTabHTML(recoveries) {
                     <div style="font-size: 12px; font-weight: 500;">${r.payer || 'Apex Fleet'}</div>
                     <div class="text-xs text-muted" style="margin-top: 2px;">
                       → <strong>${r.responsiblePartyName}</strong>
-                      <span class="badge ${r.responsibleParty === 'Driver' ? 'badge--assigned' : 'badge--neutral'}" style="font-size: 9px; padding: 0 4px; margin-left: 2px;">${r.responsibleParty}</span>
+                      <span class="badge ${r.responsibleParty === 'Driver' ? 'badge--assigned' : 'badge--neutral'}" style="font-size: 11px; padding: 0 6px; margin-left: 4px;">${r.responsibleParty}</span>
                     </div>
                   </td>
                   <td>

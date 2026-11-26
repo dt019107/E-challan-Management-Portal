@@ -168,10 +168,10 @@ function openQuickInspectorDrawer(challanId) {
 
   body.innerHTML = `
     <div style="display: flex; flex-direction: column; gap: 20px;">
-      <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 14px; border-bottom: 1px solid #EBEBEB;">
+      <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 16px; border-bottom: 1px solid #EBEBEB;">
         <div>
-          <div style="font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Statutory Penalty</div>
-          <div style="font-size: 28px; font-weight: 500; color: var(--ink); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; margin-top: 2px;">
+          <div style="font-size: 12px; color: var(--text-3); font-weight: 500;">Statutory penalty</div>
+          <div style="font-size: 28px; font-weight: 500; color: var(--ink); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; margin-top: 4px;">
             ${Utils.formatINR(totalPayable)}
           </div>
         </div>
@@ -183,7 +183,7 @@ function openQuickInspectorDrawer(challanId) {
         </div>
       </div>
 
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; font-size: 12.5px;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; font-size: 12.5px;">
         <div>
           <div style="color: var(--text-3); font-size: 11px; margin-bottom: 2px;">Infraction</div>
           <div style="color: var(--ink); font-weight: 500;">${challan.offence}</div>

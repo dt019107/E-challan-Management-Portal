@@ -491,7 +491,7 @@ const Utils = {
         type: 'van',
         label: 'Commercial Vehicle',
         shortLabel: 'LCV',
-        icon: '🚐',
+        icon: 'van',
         iconSvg: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="15" height="12" rx="1"></rect><polygon points="16 7 20 7 23 10 23 16 16 16"></polygon><circle cx="5" cy="18" r="2"></circle><circle cx="18" cy="18" r="2"></circle></svg>',
         image: 'assets/images/tata-ace.jpg',
         badgeClass: 'badge--van',
@@ -508,7 +508,7 @@ const Utils = {
         type: 'bus',
         label: 'Commercial Bus',
         shortLabel: 'Bus',
-        icon: '🚌',
+        icon: 'bus',
         iconSvg: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="15" rx="3"></rect><path d="M3 10h18M7 14h.01M17 14h.01M6 18v2M18 18v2"></svg>',
         image: 'assets/images/bus-coach.jpg',
         badgeClass: 'badge--bus',
@@ -522,7 +522,7 @@ const Utils = {
         type: 'bike',
         label: '2-Wheeler Courier',
         shortLabel: '2-Wheeler',
-        icon: '🏍️',
+        icon: 'bike',
         iconSvg: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5" cy="16" r="3"></circle><circle cx="19" cy="16" r="3"></circle><path d="M12 16h2l2-6H9l1 3M17 7l-3 3M9 10l2-4h3"></svg>',
         image: 'assets/images/delivery-bike.jpg',
         badgeClass: 'badge--bike',
@@ -537,7 +537,7 @@ const Utils = {
         type: 'truck',
         label: 'Heavy Freight Truck',
         shortLabel: 'Heavy Truck',
-        icon: '🚛',
+        icon: 'truck',
         iconSvg: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>',
         image: truckImg,
         badgeClass: 'badge--truck',
@@ -707,7 +707,7 @@ const Utils = {
 
           return `
             <div style="display: flex; flex-direction: column; align-items: center; position: relative; z-index: 2; flex: 1;">
-              <div style="width: 28px; height: 28px; border-radius: 50%; background: ${dotBg}; color: ${dotColor}; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; box-shadow: ${isCurrent ? '0 0 0 3px rgba(29, 78, 216, 0.16)' : 'none'}; transition: all 0.2s ease;">
+              <div style="width: 28px; height: 28px; border-radius: 50%; background: ${dotBg}; color: ${dotColor}; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; box-shadow: ${isCurrent ? '0 0 0 2px rgba(29, 78, 216, 0.14)' : 'none'}; transition: all 0.2s ease;">
                 ${isCompleted ? Utils.icon('check', 13) : idx + 1}
               </div>
               <div style="font-size: 11.5px; font-weight: ${labelWeight}; color: ${labelColor}; margin-top: 6px; text-align: center; white-space: nowrap;">

@@ -89,8 +89,8 @@ function renderDriversView(container, actions) {
           <svg class="search-icon-prefix" viewBox="0 0 20 20" fill="currentColor" style="left: 10px;">
             <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
           </svg>
-          <input type="text" class="form-input" id="driverSearchInput" style="padding-left: 34px; height: 34px; font-size: 12px;"
-            placeholder="Search operator, phone, DL, vehicle..." aria-label="Search drivers" value="${driverTableState.searchQuery}" oninput="handleDriverSearch(this.value)">
+          <input type="text" class="form-input" id="driverSearchInput" style="padding-left: 36px; height: 36px; font-size: 12px;"
+            placeholder="Search" aria-label="Search drivers" value="${driverTableState.searchQuery}" oninput="handleDriverSearch(this.value)">
         </div>
       </div>
 
@@ -121,13 +121,13 @@ function renderDriversView(container, actions) {
                 <tr class="row-interactive">
                   <td style="padding-left: 20px;">
                     <div style="display: flex; align-items: center; gap: 12px;">
-                      <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--color-primary, #1D4ED8); color: #FFFFFF; font-weight: 700; font-size: 12.5px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;" aria-hidden="true">
+                      <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--color-primary, #1D4ED8); color: #FFFFFF; font-weight: 600; font-size: 12.5px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;" aria-hidden="true">
                         ${initials}
                       </div>
                       <div>
                         <strong style="color: var(--ink); font-size: 13.5px;">${d.name}</strong>
                         <div style="font-size: 12px; margin-top: 2px;">
-                          <a href="tel:${d.phone || '+91 98765 43210'}" aria-label="Call Driver ${d.name} at ${d.phone || '+91 98765 43210'}" style="color: var(--text-3); text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">
+                          <a href="tel:${d.phone || '+91 98765 43210'}" aria-label="Call Driver ${d.name} at ${d.phone || '+91 98765 43210'}" style="color: var(--text-3); text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
                             ${Utils.icon('phone', 12)}
                             <span>${d.phone || '+91 98765 43210'}</span>
                           </a>
@@ -137,7 +137,7 @@ function renderDriversView(container, actions) {
                   </td>
                   <td>
                     <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                      <span class="reg-plate-chip" role="button" tabindex="0" style="cursor: pointer; font-size: 12px; font-weight: 700;" onclick="navigateTo('vehicles', true, { search: '${d.assignedVehicleReg}' })" onkeydown="if(event.key==='Enter') navigateTo('vehicles', true, { search: '${d.assignedVehicleReg}' })" aria-label="Filter fleet vehicles by ${d.assignedVehicleReg}" title="Filter vehicles by ${d.assignedVehicleReg}">
+                      <span class="reg-plate-chip" role="button" tabindex="0" style="cursor: pointer; font-size: 12px; font-weight: 600;" onclick="navigateTo('vehicles', true, { search: '${d.assignedVehicleReg}' })" onkeydown="if(event.key==='Enter') navigateTo('vehicles', true, { search: '${d.assignedVehicleReg}' })" aria-label="Filter fleet vehicles by ${d.assignedVehicleReg}" title="Filter vehicles by ${d.assignedVehicleReg}">
                         ${d.assignedVehicleReg}
                       </span>
                       <span style="font-family: var(--font-family-mono); font-size: 11.5px; color: var(--text-2); background: rgba(15, 23, 42, 0.05); padding: 2px 7px; border-radius: 4px;">
@@ -148,7 +148,7 @@ function renderDriversView(container, actions) {
                   <td class="text-right">
                     ${hasRecovery ? `
                       <a href="#payments" onclick="if(window.switchPaymentsTab) switchPaymentsTab('recovery');" class="recovery-chip" aria-label="View payroll recovery ledger for ${d.name}" style="cursor: pointer; text-decoration: none; display: inline-flex; flex-direction: column; align-items: flex-end;">
-                        <strong style="font-size: 14px; font-variant-numeric: tabular-nums; color: var(--status-unassigned); font-weight: 700;">
+                        <strong style="font-size: 14px; font-variant-numeric: tabular-nums; color: var(--status-unassigned); font-weight: 600;">
                           ${Utils.formatINR(d.pendingRecovery)}
                         </strong>
                         <div style="font-size: 11px; color: var(--status-unassigned); margin-top: 2px; font-weight: 600; text-decoration: underline;">
@@ -156,7 +156,7 @@ function renderDriversView(container, actions) {
                         </div>
                       </a>
                     ` : `
-                      <strong style="font-size: 14px; font-variant-numeric: tabular-nums; color: var(--text-3); font-weight: 700;">₹0</strong>
+                      <strong style="font-size: 14px; font-variant-numeric: tabular-nums; color: var(--text-3); font-weight: 600;">₹0</strong>
                       <div style="font-size: 11px; color: var(--text-3); margin-top: 2px;">Zero Liability</div>
                     `}
                   </td>

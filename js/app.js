@@ -676,7 +676,7 @@ function renderComponentPreviewView(container, actions) {
             <label class="form-label">Search Input with Icon</label>
             <div class="search-input-wrapper">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-              <input class="search-input" type="search" placeholder="Search violations or vehicles...">
+              <input class="search-input" type="search" placeholder="Search">
             </div>
           </div>
           <div class="form-group">

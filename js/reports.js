@@ -303,29 +303,29 @@ function getActiveReportData() {
       const meta = getCategoryVisualMeta(cat.name);
       const truePct = Math.round((cat.count / totalSetCount) * 100);
       return `
-        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 3px 0; font-size: 12px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 4px 0; font-size: 12px;">
           <!-- Category Icon + Full Name + Section Tag -->
-          <div style="display: flex; align-items: center; gap: 7px; width: 220px; flex-shrink: 0; min-width: 0;">
+          <div style="display: flex; align-items: center; gap: 8px; width: 220px; flex-shrink: 0; min-width: 0;">
             <span style="font-size: 13px; line-height: 1; flex-shrink: 0;">${meta.icon}</span>
             <span style="font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 12px;" title="${cat.name}">
               ${cat.name}
             </span>
-            <span class="badge badge--neutral" style="font-size: 9.5px; padding: 1px 5px; font-family: var(--font-family-mono); flex-shrink: 0; line-height: 1.2;">
+            <span class="badge badge--neutral" style="font-size: 11px; padding: 2px 6px; font-family: var(--font-family-mono); flex-shrink: 0; line-height: 1.2;">
               ${cat.section}
             </span>
           </div>
 
           <!-- Scalable Proportional Bar -->
-          <div style="flex: 1; height: 5px; background: var(--surface-3); border-radius: 9999px; overflow: hidden; min-width: 50px;">
+          <div style="flex: 1; height: 4px; background: var(--surface-3); border-radius: 9999px; overflow: hidden; min-width: 48px;">
             <div style="width: ${truePct}%; height: 100%; background: ${meta.color}; border-radius: 9999px;"></div>
           </div>
 
           <!-- Counts & Amount -->
           <div style="display: flex; align-items: center; gap: 8px; width: 145px; justify-content: flex-end; flex-shrink: 0; font-variant-numeric: tabular-nums;">
             <span style="font-size: 11.5px; color: var(--text-2); font-weight: 500;">
-              ${cat.count} <span style="font-size: 10px; color: var(--text-3);">${cat.count === 1 ? 'ticket' : 'tickets'}</span> <strong style="color: var(--ink);">(${truePct}%)</strong>
+              ${cat.count} <span style="font-size: 11px; color: var(--text-3);">${cat.count === 1 ? 'ticket' : 'tickets'}</span> <strong style="color: var(--ink);">(${truePct}%)</strong>
             </span>
-            <span style="font-size: 11.5px; font-weight: 700; color: var(--ink); min-width: 50px; text-align: right;">
+            <span style="font-size: 12px; font-weight: 600; color: var(--ink); min-width: 52px; text-align: right;">
               ${Utils.formatINR(cat.totalAmount)}
             </span>
           </div>
@@ -905,7 +905,6 @@ function exportCurrentReportCSV(btn) {
   if (triggerBtn) {
     triggerBtn.disabled = true;
     triggerBtn.innerHTML = `
-      <svg class="sync-icon" width="14" height="14" viewBox="0 0 20 20" fill="currentColor" style="animation: spin 1s linear infinite;"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/></svg>
       <span>Generating CSV...</span>
     `;
   }

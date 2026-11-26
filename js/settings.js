@@ -246,17 +246,17 @@ function renderActiveSettingsTab(company, currentUser, currentRole) {
 
         <!-- Role Simulator Switcher -->
         <div style="padding: 16px; background: var(--color-primary-subtle); border: 1px solid var(--color-primary-light); border-radius: var(--radius-md); margin-bottom: var(--space-6);">
-          <div style="font-size: 13px; font-weight: 700; color: var(--color-primary); margin-bottom: 8px;">
+          <div style="font-size: 13px; font-weight: 600; color: var(--color-primary); margin-bottom: 8px;">
             Simulate Active User Role:
           </div>
           <div style="display: flex; gap: 8px; flex-wrap: wrap;">
             ${rolesList.map(role => `
               <button class="btn ${currentRole === role ? 'btn--primary' : 'btn--outline'} btn--sm" onclick="switchUserRole('${role}')">
-                ${currentRole === role ? '✓ ' : ''}${role}
+                ${currentRole === role ? Utils.icon('check', 13) + ' ' : ''}${role}
               </button>
             `).join("")}
           </div>
-          <div style="font-size: 12px; color: var(--color-text-secondary); margin-top: 10px;">
+          <div style="font-size: 12px; color: var(--color-text-secondary); margin-top: 12px;">
             Currently acting as: <strong>${currentUser.name || 'Deepak Tiwari'}</strong> • Active Role: <strong style="color: var(--color-primary);">${currentRole}</strong>
           </div>
         </div>
@@ -278,59 +278,59 @@ function renderActiveSettingsTab(company, currentUser, currentRole) {
             <tbody>
               <tr>
                 <td><strong>Direct Fine Settlement (Pay)</strong></td>
-                <td><span class="badge badge--paid">✓ Allowed</span></td>
-                <td><span class="badge badge--paid">✓ Allowed</span></td>
-                <td><span class="badge badge--unassigned">✕ Blocked</span></td>
-                <td><span class="badge badge--unassigned">✕ Blocked</span></td>
-                <td><span class="badge badge--unassigned">✕ Blocked</span></td>
+                <td><span class="badge badge--paid"><span class="badge-dot"></span>Allowed</span></td>
+                <td><span class="badge badge--paid"><span class="badge-dot"></span>Allowed</span></td>
+                <td><span class="badge badge--unassigned"><span class="badge-dot"></span>Blocked</span></td>
+                <td><span class="badge badge--unassigned"><span class="badge-dot"></span>Blocked</span></td>
+                <td><span class="badge badge--unassigned"><span class="badge-dot"></span>Blocked</span></td>
               </tr>
               <tr>
                 <td><strong>Liability Assignment & Overrides</strong></td>
-                <td><span class="badge badge--paid">✓ Allowed</span></td>
-                <td><span class="badge badge--unassigned">✕ Blocked</span></td>
-                <td><span class="badge badge--paid">✓ Allowed</span></td>
-                <td><span class="badge badge--unassigned">✕ Blocked</span></td>
-                <td><span class="badge badge--unassigned">✕ Blocked</span></td>
+                <td><span class="badge badge--paid"><span class="badge-dot"></span>Allowed</span></td>
+                <td><span class="badge badge--unassigned"><span class="badge-dot"></span>Blocked</span></td>
+                <td><span class="badge badge--paid"><span class="badge-dot"></span>Allowed</span></td>
+                <td><span class="badge badge--unassigned"><span class="badge-dot"></span>Blocked</span></td>
+                <td><span class="badge badge--unassigned"><span class="badge-dot"></span>Blocked</span></td>
               </tr>
               <tr>
                 <td><strong>Dispute Filing & Contests</strong></td>
-                <td><span class="badge badge--paid">✓ Allowed</span></td>
-                <td><span class="badge badge--unassigned">✕ Blocked</span></td>
-                <td><span class="badge badge--unassigned">✕ Blocked</span></td>
-                <td><span class="badge badge--paid">✓ Allowed</span></td>
-                <td><span class="badge badge--unassigned">✕ Blocked</span></td>
+                <td><span class="badge badge--paid"><span class="badge-dot"></span>Allowed</span></td>
+                <td><span class="badge badge--unassigned"><span class="badge-dot"></span>Blocked</span></td>
+                <td><span class="badge badge--unassigned"><span class="badge-dot"></span>Blocked</span></td>
+                <td><span class="badge badge--paid"><span class="badge-dot"></span>Allowed</span></td>
+                <td><span class="badge badge--unassigned"><span class="badge-dot"></span>Blocked</span></td>
               </tr>
               <tr>
                 <td><strong>Virtual Court Compounding Orders</strong></td>
-                <td><span class="badge badge--paid">✓ Allowed</span></td>
-                <td><span class="badge badge--unassigned">✕ Blocked</span></td>
-                <td><span class="badge badge--unassigned">✕ Blocked</span></td>
-                <td><span class="badge badge--paid">✓ Allowed</span></td>
-                <td><span class="badge badge--unassigned">✕ Blocked</span></td>
+                <td><span class="badge badge--paid"><span class="badge-dot"></span>Allowed</span></td>
+                <td><span class="badge badge--unassigned"><span class="badge-dot"></span>Blocked</span></td>
+                <td><span class="badge badge--unassigned"><span class="badge-dot"></span>Blocked</span></td>
+                <td><span class="badge badge--paid"><span class="badge-dot"></span>Allowed</span></td>
+                <td><span class="badge badge--unassigned"><span class="badge-dot"></span>Blocked</span></td>
               </tr>
               <tr>
                 <td><strong>Vehicle Asset Management (Add/Edit)</strong></td>
-                <td><span class="badge badge--paid">✓ Allowed</span></td>
-                <td><span class="badge badge--unassigned">✕ Blocked</span></td>
-                <td><span class="badge badge--paid">✓ Allowed</span></td>
-                <td><span class="badge badge--unassigned">✕ Blocked</span></td>
-                <td><span class="badge badge--unassigned">✕ Blocked</span></td>
+                <td><span class="badge badge--paid"><span class="badge-dot"></span>Allowed</span></td>
+                <td><span class="badge badge--unassigned"><span class="badge-dot"></span>Blocked</span></td>
+                <td><span class="badge badge--paid"><span class="badge-dot"></span>Allowed</span></td>
+                <td><span class="badge badge--unassigned"><span class="badge-dot"></span>Blocked</span></td>
+                <td><span class="badge badge--unassigned"><span class="badge-dot"></span>Blocked</span></td>
               </tr>
               <tr>
                 <td><strong>Fine Write-Off Approval</strong></td>
-                <td><span class="badge badge--paid">✓ Allowed</span></td>
-                <td><span class="badge badge--paid">✓ Allowed</span></td>
-                <td><span class="badge badge--unassigned">✕ Blocked</span></td>
-                <td><span class="badge badge--unassigned">✕ Blocked</span></td>
-                <td><span class="badge badge--unassigned">✕ Blocked</span></td>
+                <td><span class="badge badge--paid"><span class="badge-dot"></span>Allowed</span></td>
+                <td><span class="badge badge--paid"><span class="badge-dot"></span>Allowed</span></td>
+                <td><span class="badge badge--unassigned"><span class="badge-dot"></span>Blocked</span></td>
+                <td><span class="badge badge--unassigned"><span class="badge-dot"></span>Blocked</span></td>
+                <td><span class="badge badge--unassigned"><span class="badge-dot"></span>Blocked</span></td>
               </tr>
               <tr>
                 <td><strong>View Analytics, Dashboards & Export CSV</strong></td>
-                <td><span class="badge badge--paid">✓ Allowed</span></td>
-                <td><span class="badge badge--paid">✓ Allowed</span></td>
-                <td><span class="badge badge--paid">✓ Allowed</span></td>
-                <td><span class="badge badge--paid">✓ Allowed</span></td>
-                <td><span class="badge badge--paid">✓ Allowed</span></td>
+                <td><span class="badge badge--paid"><span class="badge-dot"></span>Allowed</span></td>
+                <td><span class="badge badge--paid"><span class="badge-dot"></span>Allowed</span></td>
+                <td><span class="badge badge--paid"><span class="badge-dot"></span>Allowed</span></td>
+                <td><span class="badge badge--paid"><span class="badge-dot"></span>Allowed</span></td>
+                <td><span class="badge badge--paid"><span class="badge-dot"></span>Allowed</span></td>
               </tr>
             </tbody>
           </table>

@@ -160,14 +160,14 @@ const Validators = {
         inputEl.classList.remove("input--invalid");
         if (feedbackEl) {
           feedbackEl.className = "input-feedback-text input-feedback--success text-xs";
-          feedbackEl.innerHTML = `<span style="color: var(--brand-emerald); font-weight: 600;">✓</span> ${res.message}`;
+          feedbackEl.innerHTML = `<span style="color: var(--brand-emerald); display: inline-flex; vertical-align: middle;">${Utils.icon('check', 13)}</span> ${res.message}`;
         }
       } else {
         inputEl.classList.add("input--invalid");
         inputEl.classList.remove("input--valid");
         if (feedbackEl) {
           feedbackEl.className = "input-feedback-text input-feedback--error text-xs";
-          feedbackEl.innerHTML = `<span style="color: var(--brand-red); font-weight: 600;">⚠</span> ${res.message}`;
+          feedbackEl.innerHTML = `<span style="color: var(--brand-red); display: inline-flex; vertical-align: middle;">${Utils.icon('alert', 13)}</span> ${res.message}`;
         }
       }
     };

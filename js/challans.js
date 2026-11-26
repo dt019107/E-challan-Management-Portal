@@ -115,8 +115,8 @@ function renderChallansView(container, actions, params = {}) {
           <svg class="search-icon-prefix" viewBox="0 0 20 20" fill="currentColor" style="left: 10px;">
             <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
           </svg>
-          <input type="text" class="form-input" id="challanSearchInput" style="padding-left: 34px;"
-            placeholder="Search notice no, vehicle reg, driver..." value="${challanTableState.searchQuery}">
+          <input type="text" class="form-input" id="challanSearchInput" style="padding-left: 36px;"
+            placeholder="Search" value="${challanTableState.searchQuery}">
         </div>
 
         <!-- Vehicle Class Filter -->
@@ -597,15 +597,15 @@ function renderChallansTableAndPagination() {
                   <div style="font-size: 13.5px; font-weight: 600; color: var(--color-text-main); max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                     ${c.responsiblePartyName || c.responsibleParty}
                   </div>
-                  <div style="font-size: 12px; color: var(--color-text-muted); margin-top: 3px;">
-                    ${c.responsibleParty === 'Unassigned' ? '<span style="color: var(--status-unassigned); font-weight: 700;">Needs Attribution</span>' : c.responsibleParty}
+                  <div style="font-size: 12px; color: var(--color-text-muted); margin-top: 4px;">
+                    ${c.responsibleParty === 'Unassigned' ? '<span style="color: var(--status-unassigned); font-weight: 600;">Needs Attribution</span>' : c.responsibleParty}
                   </div>
                 </td>
                 <td style="text-align: right;">
-                  <strong class="amount-cell" style="font-size: 16px; font-weight: 700; color: var(--ink); white-space: nowrap; font-variant-numeric: tabular-nums;">
+                  <strong class="amount-cell" style="font-size: 16px; font-weight: 600; color: var(--ink); white-space: nowrap; font-variant-numeric: tabular-nums;">
                     ${Utils.formatINR(c.amount)}
                   </strong>
-                  <div style="font-size: 12px; color: ${isOverdue ? 'var(--status-unassigned)' : 'var(--color-text-muted)'}; margin-top: 3px; font-weight: ${isOverdue ? '700' : '400'};">
+                  <div style="font-size: 12px; color: ${isOverdue ? 'var(--status-unassigned)' : 'var(--color-text-muted)'}; margin-top: 4px; font-weight: ${isOverdue ? '600' : '400'};">
                     ${isOverdue ? `Overdue (${Utils.formatDate(c.dueDate)})` : `Due ${Utils.formatDate(c.dueDate)}`}
                   </div>
                 </td>
@@ -613,7 +613,7 @@ function renderChallansTableAndPagination() {
                   <div style="display: inline-flex; align-items: center; justify-content: flex-end; gap: 8px;">
                     ${Utils.getStatusBadgeHTML(c.status)}
                     ${c.status === 'unassigned' ? `
-                      <button class="btn btn--primary btn--sm" style="height: 32px; padding: 0 14px; font-size: 12px; font-weight: 700;" onclick="openAssignmentModal('${c.id}')" title="Assign Liability">
+                      <button class="btn btn--primary btn--sm" style="height: 32px; padding: 0 12px; font-size: 12px; font-weight: 500;" onclick="openAssignmentModal('${c.id}')" title="Assign Liability">
                         Assign
                       </button>
                     ` : (c.status !== 'paid' && c.status !== 'court' ? `
@@ -923,38 +923,38 @@ function renderChallanDetailsView(container, actions, challanId) {
           <div style="position: relative; width: 100%; height: 220px; background: #0F172A; display: flex; align-items: center; justify-content: center; overflow: hidden;">
             <img src="${challan.evidenceImage || 'assets/images/speed-camera-radar.jpg'}" alt="Traffic Infraction Evidence" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='assets/images/speed-camera-radar.jpg'">
             
-            <div style="position: absolute; bottom: 12px; left: 14px; display: flex; align-items: center; gap: 8px;">
-              <span class="plate-chip plate-chip--commercial" style="box-shadow: 0 4px 12px rgba(0,0,0,0.4); font-size: 11px;">
+            <div style="position: absolute; bottom: 12px; left: 16px; display: flex; align-items: center; gap: 8px;">
+              <span class="plate-chip plate-chip--commercial" style="font-size: 11px;">
                 ${challan.vehicleReg}
               </span>
-              <span class="badge badge--neutral" style="background: rgba(0,0,0,0.65); color: #FFF; backdrop-filter: blur(8px); border: none; font-size: 10.5px;">
+              <span class="badge badge--neutral" style="background: rgba(17, 24, 39, 0.85); color: #FFF; border: none; font-size: 11px;">
                 ANPR Camera Evidence
               </span>
             </div>
             
-            <div style="position: absolute; top: 12px; right: 14px;">
-              <span class="badge badge--neutral" style="background: rgba(0,0,0,0.65); color: #FFF; backdrop-filter: blur(8px); border: none; font-size: 10px;">
+            <div style="position: absolute; top: 12px; right: 16px;">
+              <span class="badge badge--neutral" style="background: rgba(17, 24, 39, 0.85); color: #FFF; border: none; font-size: 11px;">
                 ${challan.source || 'Traffic Police'}
               </span>
             </div>
           </div>
-          <div style="padding: 10px 16px; font-size: 11.5px; color: var(--text-2); background: var(--surface); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--line);">
+          <div style="padding: 12px 16px; font-size: 12px; color: var(--text-2); background: var(--surface); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--line);">
             <span>Infraction Location: <strong style="color: var(--ink);">${challan.location || 'Public Thoroughfare'}</strong></span>
             <span>${Utils.formatDate(challan.offenceDate, true)}</span>
           </div>
         </div>
 
         <!-- Factual Specifications Card -->
-        <div class="card" style="padding: 18px 20px; border-radius: var(--radius-card); border: 1px solid var(--line); background: var(--surface);">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--line);">
+        <div class="card" style="padding: 20px; border-radius: var(--radius-card); border: 1px solid var(--line); background: var(--surface);">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--line);">
             <div>
-              <div style="font-size: 11px; font-family: var(--font-family-mono); color: var(--text-3); letter-spacing: 0.04em;">
+              <div style="font-size: 11px; font-family: var(--font-family-mono); color: var(--text-3);">
                 ${challan.challanNumber}
               </div>
-              <h2 style="font-size: 18px; font-weight: 700; color: var(--ink); margin-top: 3px; line-height: 1.3;">
+              <h2 style="font-size: 18px; font-weight: 600; color: var(--ink); margin-top: 4px; line-height: 1.3;">
                 ${challan.offence}
               </h2>
-              <div style="font-size: 12px; font-weight: 600; color: var(--color-primary); margin-top: 2px;">
+              <div style="font-size: 12px; font-weight: 600; color: var(--color-primary); margin-top: 4px;">
                 ${challan.mvActSection}
               </div>
             </div>
@@ -963,14 +963,14 @@ function renderChallanDetailsView(container, actions, challanId) {
             </div>
           </div>
 
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px 18px; font-size: 12px;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; font-size: 12px;">
             <div>
               <span style="color: var(--text-3); font-size: 11px; display: block;">Vehicle Asset</span>
-              <div style="display: flex; align-items: center; gap: 6px; margin-top: 2px;">
-                <a href="#vehicles?id=${challan.vehicleId}" class="plate-chip plate-chip--commercial" style="font-size: 10.5px; padding: 2px 6px;">
+              <div style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">
+                <a href="#vehicles?id=${challan.vehicleId}" class="plate-chip plate-chip--commercial" style="font-size: 11px; padding: 2px 8px;">
                   ${challan.vehicleReg}
                 </a>
-                <span class="badge ${vMeta.badgeClass}" style="${vMeta.badgeStyle}; font-size: 9.5px; padding: 1px 5px;">${vMeta.label}</span>
+                <span class="badge ${vMeta.badgeClass}" style="${vMeta.badgeStyle}; font-size: 11px; padding: 2px 6px;">${vMeta.label}</span>
               </div>
             </div>
 
@@ -1063,27 +1063,27 @@ function renderChallanDetailsView(container, actions, challanId) {
         <!-- Responsibility History Card -->
         <div class="card" style="padding: var(--space-4);">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-            <h4 class="text-xs font-semibold text-muted" style="text-transform: uppercase;">Responsibility History</h4>
-            <span class="badge badge--neutral" style="font-size: 10px;">Attribution Ledger</span>
+            <h4 class="text-xs font-semibold text-muted">Responsibility history</h4>
+            <span class="badge badge--neutral" style="font-size: 11px;">Attribution Ledger</span>
           </div>
-          <div style="font-size: 12px; display: flex; flex-direction: column; gap: 6px;">
+          <div style="font-size: 12px; display: flex; flex-direction: column; gap: 8px;">
             ${challan.previousResponsibleParty ? `
-              <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 8px; background: var(--color-bg-app); border-radius: var(--radius-sm); border-left: 2px solid var(--color-text-muted);">
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; background: var(--color-bg-app); border-radius: var(--radius-sm); border-left: 2px solid var(--color-text-muted);">
                 <div>
                   <span class="text-muted">Prior Attribution:</span> 
                   <strong>${challan.previousResponsiblePartyName || challan.previousResponsibleParty}</strong>
-                  <span class="badge badge--neutral" style="font-size: 10px; margin-left: 4px;">${challan.previousResponsibleParty}</span>
+                  <span class="badge badge--neutral" style="font-size: 11px; margin-left: 4px;">${challan.previousResponsibleParty}</span>
                 </div>
                 <span class="text-xs text-muted">Superseded</span>
               </div>
             ` : ''}
-            <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 8px; background: var(--color-bg-app); border-radius: var(--radius-sm); border-left: 2px solid var(--color-primary);">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; background: var(--color-bg-app); border-radius: var(--radius-sm); border-left: 2px solid var(--color-primary);">
               <div>
                 <span class="text-muted">Current Attribution:</span> 
                 <strong>${challan.responsiblePartyName || challan.responsibleParty}</strong>
-                <span class="badge badge--assigned" style="font-size: 10px; margin-left: 4px;">${challan.responsibleParty}</span>
+                <span class="badge badge--assigned" style="font-size: 11px; margin-left: 4px;">${challan.responsibleParty}</span>
               </div>
-              <span class="badge badge--paid" style="font-size: 10px;">Active</span>
+              <span class="badge badge--paid" style="font-size: 11px;">Active</span>
             </div>
             ${challan.manualOverrideReason ? `
               <div class="text-xs text-secondary" style="margin-top: 4px; padding: 6px 8px; background: var(--color-bg-app); border: 1px dashed var(--color-border); border-radius: var(--radius-sm);">
@@ -1174,33 +1174,33 @@ function renderChallanDetailsView(container, actions, challanId) {
               </div>
 
               <!-- Split Liability Percentage Controls (Step 7.4) -->
-              <div class="split-liability-box" id="detailsSplitBox" style="display: none; padding: 14px; background: var(--color-bg-app); border: 1px solid var(--color-border); border-radius: var(--radius-md);">
-                <div style="font-size: 12px; font-weight: 700; color: var(--color-text-main); margin-bottom: 8px;">
+              <div class="split-liability-box" id="detailsSplitBox" style="display: none; padding: 16px; background: var(--color-bg-app); border: 1px solid var(--color-border); border-radius: var(--radius-md);">
+                <div style="font-size: 12px; font-weight: 600; color: var(--color-text-main); margin-bottom: 8px;">
                   Proportional Split Allocation (Must equal exactly 100%)
                 </div>
                 <div class="split-row" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                   <span class="text-xs font-medium">Party 1 (Driver / Primary Operator):</span>
                   <div style="display: flex; align-items: center; gap: 4px;">
-                    <input type="number" class="form-input split-input" id="splitDriverPct" value="60" min="0" max="100" style="width: 70px; text-align: right;" oninput="validateSplitTotal(${challan.totalPayable || challan.amount || 2000})">
+                    <input type="number" class="form-input split-input" id="splitDriverPct" value="60" min="0" max="100" style="width: 72px; text-align: right;" oninput="validateSplitTotal(${challan.totalPayable || challan.amount || 2000})">
                     <span class="text-xs font-semibold">%</span>
                   </div>
                 </div>
                 <div class="split-row" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                   <span class="text-xs font-medium">Party 2 (Lessee / Fleet Operator):</span>
                   <div style="display: flex; align-items: center; gap: 4px;">
-                    <input type="number" class="form-input split-input" id="splitLesseePct" value="40" min="0" max="100" style="width: 70px; text-align: right;" oninput="validateSplitTotal(${challan.totalPayable || challan.amount || 2000})">
+                    <input type="number" class="form-input split-input" id="splitLesseePct" value="40" min="0" max="100" style="width: 72px; text-align: right;" oninput="validateSplitTotal(${challan.totalPayable || challan.amount || 2000})">
                     <span class="text-xs font-semibold">%</span>
                   </div>
                 </div>
-                <div style="font-size: 11px; font-weight: 600; margin-top: 6px;" id="splitValidationFeedback" style="color: var(--status-paid);">
-                  ✓ Total: 100% (Driver Share: 60% = ₹${((challan.amount || 2000) * 0.6).toFixed(0)}, Lessee Share: 40% = ₹${((challan.amount || 2000) * 0.4).toFixed(0)})
+                <div style="font-size: 11px; font-weight: 600; margin-top: 8px;" id="splitValidationFeedback" style="color: var(--status-paid);">
+                  Total: 100% (Driver Share: 60% = ₹${((challan.amount || 2000) * 0.6).toFixed(0)}, Lessee Share: 40% = ₹${((challan.amount || 2000) * 0.4).toFixed(0)})
                 </div>
               </div>
 
               <!-- Mandatory Audit Notes / Reassignment Reason (Step 7.3) -->
               <div class="form-group">
                 <label class="form-label">Mandatory Audit Justification / Reason *</label>
-                <textarea class="form-textarea" id="detailsAuditNotes" rows="3" required placeholder="State exact operational justification, telematics roster match, or reason for manual override..."></textarea>
+                <textarea class="form-textarea" id="detailsAuditNotes" rows="3" required placeholder="Enter operational justification or override rationale"></textarea>
                 <span class="text-xs text-muted">Immutable note recorded permanently in the audit trail.</span>
               </div>
 
@@ -1313,11 +1313,11 @@ function validateSplitTotal(challanAmount = 2000) {
   if (feedback) {
     if (total === 100) {
       feedback.style.color = "var(--status-paid)";
-      feedback.innerHTML = `✓ Total: 100% (Party 1 Share: ${driverPct}% = ${Utils.formatINR(driverAmt)}, Party 2 Share: ${lesseePct}% = ${Utils.formatINR(lesseeAmt)})`;
+      feedback.innerHTML = `${Utils.icon('check', 13)} Total: 100% (Party 1 Share: ${driverPct}% = ${Utils.formatINR(driverAmt)}, Party 2 Share: ${lesseePct}% = ${Utils.formatINR(lesseeAmt)})`;
       if (submitBtn) submitBtn.disabled = false;
     } else {
       feedback.style.color = "var(--status-unassigned)";
-      feedback.innerHTML = `⚠ Total equals ${total}%. Split allocation must equal exactly 100% (Discrepancy: ${100 - total}%).`;
+      feedback.innerHTML = `${Utils.icon('alert', 13)} Total equals ${total}%. Split allocation must equal exactly 100% (Discrepancy: ${100 - total}%).`;
       if (submitBtn) submitBtn.disabled = true;
     }
   }
@@ -1560,11 +1560,11 @@ function validateModalSplitTotal() {
   if (feedback) {
     if (total === 100) {
       feedback.style.color = "var(--status-paid)";
-      feedback.textContent = `✓ Total: 100% (Driver Share: ${dPct}%, Lessee Share: ${lPct}%)`;
+      feedback.textContent = `Total: 100% (Driver Share: ${dPct}%, Lessee Share: ${lPct}%)`;
       if (confirmBtn) confirmBtn.disabled = false;
     } else {
       feedback.style.color = "var(--status-unassigned)";
-      feedback.textContent = `⚠ Total is ${total}%. Split allocation must equal exactly 100%.`;
+      feedback.textContent = `Total is ${total}%. Split allocation must equal exactly 100%.`;
       if (confirmBtn) confirmBtn.disabled = true;
     }
   }

@@ -86,7 +86,7 @@ function renderDisputesView(container, actions) {
         </button>
       </div>
 
-      <input type="text" class="form-input form-input--search" placeholder="Search challan, reg, case no..." aria-label="Search legal dockets" style="width: 240px; height: 34px; font-size: 12px;" value="${disputesViewState.searchQuery}" oninput="handleDisputesSearch(this.value)">
+      <input type="text" class="form-input form-input--search" placeholder="Search" aria-label="Search legal dockets" style="width: 240px; height: 36px; font-size: 12px;" value="${disputesViewState.searchQuery}" oninput="handleDisputesSearch(this.value)">
     </div>
   `;
 
@@ -190,7 +190,7 @@ function renderDisputeTableRows(records) {
           </div>
         </td>
         <td>
-          <strong class="amount-cell" style="font-size: 16px; font-weight: 700; color: var(--ink); white-space: nowrap; font-variant-numeric: tabular-nums;">${Utils.formatINR(c.amount)}</strong>
+          <strong class="amount-cell" style="font-size: 16px; font-weight: 600; color: var(--ink); white-space: nowrap; font-variant-numeric: tabular-nums;">${Utils.formatINR(c.amount)}</strong>
         </td>
         <td>
           <div style="font-size: 13px; font-weight: 500;">${Utils.formatDate(deadlineStr)}</div>

@@ -75,7 +75,7 @@ function renderDashboardView(container, actions) {
         <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
           <button type="button" class="btn btn--outline btn--sm" onclick="openCommandPalette()" title="Open Command Palette (Cmd+K)" style="color: var(--text-2); gap: 10px;">
             <span>Quick Jump</span>
-            <kbd style="height: 20px; min-width: 20px; font-size: 10px; box-shadow: none;">⌘K</kbd>
+            <kbd style="height: 20px; min-width: 20px; font-size: 11px; box-shadow: none;">⌘K</kbd>
           </button>
           <button class="btn btn--outline btn--sm" onclick="Utils.exportToCSV(StorageManager.getChallans(), 'fleet-liability-audit.csv')">
             Export CSV

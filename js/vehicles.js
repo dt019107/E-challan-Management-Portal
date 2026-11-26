@@ -541,7 +541,7 @@ function renderVehicleDetailsView(container, actions, vehicleId) {
             <span class="badge badge--paid">${vehicle.syncStatus || 'Synced'}</span>
             <span class="badge ${vehicle.fastagStatus === 'Active' ? 'badge--paid' : 'badge--unassigned'}">FASTag: ${vehicle.fastagStatus || 'Active'}</span>
           </div>
-          <h2 style="font-size: 22px; font-weight: 700; color: var(--color-text-main); margin-top: 6px; letter-spacing: var(--letter-spacing-tight); font-family: var(--font-display, var(--font-heading));">
+          <h2 style="font-size: 22px; font-weight: 600; color: var(--color-text-main); margin-top: 8px; letter-spacing: var(--letter-spacing-tight); font-family: var(--font-display, var(--font-heading));">
             ${vehicle.makeModel} (${vehicle.year})
           </h2>
           <div class="text-xs text-muted" style="margin-top: 4px;">
@@ -554,8 +554,8 @@ function renderVehicleDetailsView(container, actions, vehicleId) {
       </div>
 
       <div style="display: flex; gap: var(--space-4); align-items: center;">
-        <div style="text-align: right; background: var(--color-bg-surface); padding: 10px 18px; border-radius: var(--radius-md); border: 1px solid var(--color-border);">
-          <div style="font-size: 22px; font-weight: 700; color: ${(vehicle.outstandingAmount || 0) > 0 ? 'var(--status-unassigned)' : 'var(--color-text-main)'}; font-family: var(--font-display, inherit);">
+        <div style="text-align: right; background: var(--color-bg-surface); padding: 12px 16px; border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+          <div style="font-size: 22px; font-weight: 600; color: ${(vehicle.outstandingAmount || 0) > 0 ? 'var(--status-unassigned)' : 'var(--color-text-main)'}; font-family: var(--font-display, inherit);">
             ${Utils.formatINR(vehicle.outstandingAmount || 0)}
           </div>
           <div class="text-xs text-muted" style="font-weight: 500;">${vehicle.openChallans || 0} Open Compliance Notices</div>
@@ -567,16 +567,16 @@ function renderVehicleDetailsView(container, actions, vehicleId) {
     <div class="compliance-badge-grid">
       <div class="compliance-item">
         <div>
-          <div class="text-xs text-muted" style="text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600;">RC Validity</div>
-          <strong class="text-sm" style="display: block; margin-top: 3px;">${Utils.formatDate(vehicle.rcValidity)}</strong>
+          <div class="text-xs text-muted" style="font-weight: 500;">RC validity</div>
+          <strong class="text-sm" style="display: block; margin-top: 4px;">${Utils.formatDate(vehicle.rcValidity)}</strong>
         </div>
         <span class="badge badge--paid">Valid</span>
       </div>
 
       <div class="compliance-item ${isInsuranceExpiring ? 'alert-expired' : ''}">
         <div>
-          <div class="text-xs text-muted" style="text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600;">Insurance Expiry</div>
-          <strong class="text-sm" style="display: block; margin-top: 3px;">${Utils.formatDate(vehicle.insuranceExpiry)}</strong>
+          <div class="text-xs text-muted" style="font-weight: 500;">Insurance expiry</div>
+          <strong class="text-sm" style="display: block; margin-top: 4px;">${Utils.formatDate(vehicle.insuranceExpiry)}</strong>
         </div>
         <span class="badge ${isInsuranceExpiring ? 'badge--pending' : 'badge--paid'}">
           ${isInsuranceExpiring ? 'Renew Soon' : 'Covered'}
@@ -585,18 +585,18 @@ function renderVehicleDetailsView(container, actions, vehicleId) {
 
       <div class="compliance-item ${isPUCExpired ? 'alert-expired' : ''}">
         <div>
-          <div class="text-xs text-muted" style="text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600;">PUC Certificate</div>
-          <strong class="text-sm" style="display: block; margin-top: 3px;">${Utils.formatDate(vehicle.pucExpiry)}</strong>
+          <div class="text-xs text-muted" style="font-weight: 500;">PUC certificate</div>
+          <strong class="text-sm" style="display: block; margin-top: 4px;">${Utils.formatDate(vehicle.pucExpiry)}</strong>
         </div>
         <span class="badge ${isPUCExpired ? 'badge--unassigned' : 'badge--paid'}">
-          ${isPUCExpired ? 'Expired!' : 'Valid'}
+          ${isPUCExpired ? 'Expired' : 'Valid'}
         </span>
       </div>
 
       <div class="compliance-item">
         <div>
-          <div class="text-xs text-muted" style="text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600;">FASTag Wallet</div>
-          <strong class="text-sm" style="display: block; margin-top: 3px;">${Utils.formatINR(vehicle.fastagBalance || 0)}</strong>
+          <div class="text-xs text-muted" style="font-weight: 500;">FASTag wallet</div>
+          <strong class="text-sm" style="display: block; margin-top: 4px;">${Utils.formatINR(vehicle.fastagBalance || 0)}</strong>
         </div>
         <span class="badge badge--paid">NHAI Active</span>
       </div>
@@ -606,24 +606,24 @@ function renderVehicleDetailsView(container, actions, vehicleId) {
     <div class="card" style="margin-top: var(--space-4); padding: var(--space-4);">
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4);">
         <div>
-          <div class="text-xs text-muted" style="text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600;">Vehicle Owner</div>
-          <strong class="text-sm text-main" style="display: block; margin-top: 3px;">${vehicle.ownerName || 'Apex Fleet Pvt Ltd'}</strong>
+          <div class="text-xs text-muted" style="font-weight: 500;">Vehicle owner</div>
+          <strong class="text-sm text-main" style="display: block; margin-top: 4px;">${vehicle.ownerName || 'Apex Fleet Pvt Ltd'}</strong>
           <div class="text-xs text-muted" style="margin-top: 2px;">Title Holder / Asset Owner</div>
         </div>
         <div>
-          <div class="text-xs text-muted" style="text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600;">Corporate Lessee</div>
-          <strong class="text-sm text-main" style="display: block; margin-top: 3px;">${lessee ? lessee.name : 'Direct Fleet Operations'}</strong>
+          <div class="text-xs text-muted" style="font-weight: 500;">Corporate lessee</div>
+          <strong class="text-sm text-main" style="display: block; margin-top: 4px;">${lessee ? lessee.name : 'Direct Fleet Operations'}</strong>
           <div class="text-xs text-muted" style="margin-top: 2px;">${lessee ? `Code: ${lessee.code || 'CORP'} • Tier 1` : 'In-House Asset'}</div>
         </div>
         <div>
-          <div class="text-xs text-muted" style="text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600;">Assigned Duty Driver</div>
-          <strong class="text-sm text-main" style="display: block; margin-top: 3px;">${driver ? driver.name : 'Unassigned (Duty Pool)'}</strong>
+          <div class="text-xs text-muted" style="font-weight: 500;">Assigned duty driver</div>
+          <strong class="text-sm text-main" style="display: block; margin-top: 4px;">${driver ? driver.name : 'Unassigned (Duty Pool)'}</strong>
           <div class="text-xs text-muted" style="margin-top: 2px;">${driver ? `DL: ${driver.dlNumber || driver.licenseNumber || 'Verified DL'} • ${driver.phone}` : 'Active Fleet Pool'}</div>
         </div>
         <div>
-          <div class="text-xs text-muted" style="text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600;">Lease Contract Period</div>
-          <strong class="text-sm text-main" style="display: block; margin-top: 3px;">${vehicle.contractStart ? Utils.formatDate(vehicle.contractStart) : '01 Jan 2025'} — ${vehicle.contractEnd ? Utils.formatDate(vehicle.contractEnd) : '31 Dec 2027'}</strong>
-          <div class="text-xs text-muted" style="margin-top: 2px;"><span class="badge badge--paid" style="font-size: 10px;">Active Master Agreement</span></div>
+          <div class="text-xs text-muted" style="font-weight: 500;">Lease contract period</div>
+          <strong class="text-sm text-main" style="display: block; margin-top: 4px;">${vehicle.contractStart ? Utils.formatDate(vehicle.contractStart) : '01 Jan 2025'} — ${vehicle.contractEnd ? Utils.formatDate(vehicle.contractEnd) : '31 Dec 2027'}</strong>
+          <div class="text-xs text-muted" style="margin-top: 4px;"><span class="badge badge--paid" style="font-size: 11px;">Active Master Agreement</span></div>
         </div>
       </div>
     </div>
@@ -1346,7 +1346,7 @@ function showImportWizardStep(step) {
     if (subtitle) subtitle.textContent = "Step 4 of 4: Commit assets to local database";
     if (nextBtn) {
       nextBtn.disabled = false;
-      nextBtn.textContent = "Complete Import & Finish ✓";
+      nextBtn.textContent = "Complete Import & Finish";
     }
     const commitText = document.getElementById("importCommitSummaryText");
     if (commitText) {
@@ -1533,12 +1533,12 @@ function executeImportValidation() {
   const summaryContainer = document.getElementById("importValidationSummary");
   if (summaryContainer) {
     summaryContainer.innerHTML = `
-      <span class="badge badge--paid" style="font-size: 12px; padding: 4px 10px;">
-        ✓ ${importWizardState.validatedRecords.length} Valid Rows Ready
+      <span class="badge badge--paid" style="font-size: 12px; padding: 4px 12px;">
+        ${Utils.icon('check', 13)} ${importWizardState.validatedRecords.length} Valid Rows Ready
       </span>
       ${importWizardState.invalidRecords.length > 0 ? `
-        <span class="badge badge--unassigned" style="font-size: 12px; padding: 4px 10px;">
-          ⚠ ${importWizardState.invalidRecords.length} Rows with Errors
+        <span class="badge badge--unassigned" style="font-size: 12px; padding: 4px 12px;">
+          ${Utils.icon('alert', 13)} ${importWizardState.invalidRecords.length} Rows with Errors
         </span>
       ` : ''}
     `;

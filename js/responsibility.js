@@ -486,7 +486,7 @@ const ResponsibilityEngine = {
                 ${suggestion.conflictMessage || suggestion.reason}
               </p>
               <span class="text-xs text-muted" style="display: block; margin-top: 4px;">
-                ⚠ Automated assignment was halted. Compliance officer must manually adjudicate liability with mandatory justification notes below.
+                Automated assignment was halted. Compliance officer must manually adjudicate liability with mandatory justification notes below.
               </span>
             </div>
           </div>
@@ -496,7 +496,7 @@ const ResponsibilityEngine = {
       <div class="suggestion-banner">
         <div class="suggestion-badge-row">
           <div style="display: flex; align-items: center; gap: 8px;">
-            <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--accent); letter-spacing: 0.05em;">
+            <span style="font-size: 12px; font-weight: 600; color: var(--accent);">
               Suggested responsibility (${suggestion.rule || 'Auto Engine'})
             </span>
             <span class="badge ${confClass}">
@@ -514,7 +514,7 @@ const ResponsibilityEngine = {
         <!-- Signature Responsibility Chain: Driver → Lessee → Fleet → Owner -->
         ${this.renderChainHTML(suggestion.partyType, isConflict)}
 
-        <div style="font-size: 16px; font-weight: 700; color: var(--ink); margin-top: 4px;">
+        <div style="font-size: 16px; font-weight: 600; color: var(--ink); margin-top: 4px;">
           ${suggestion.partyName || 'Unassigned'} <span style="font-size: 13px; font-weight: 500; color: var(--text-2);">(${suggestion.partyType})</span>
         </div>
 
@@ -522,8 +522,8 @@ const ResponsibilityEngine = {
           <strong>Why this suggestion?</strong><br>
           ${suggestion.reason}
           ${suggestion.evidenceUsed && suggestion.evidenceUsed.length > 0 ? `
-            <div style="margin-top: 8px; border-top: 1px dashed var(--line); padding-top: 6px;">
-              <span class="text-xs font-semibold text-muted" style="text-transform: uppercase;">Evidence Considered:</span>
+            <div style="margin-top: 8px; border-top: 1px dashed var(--line); padding-top: 8px;">
+              <span class="text-xs font-semibold text-muted">Evidence considered:</span>
               <ul style="margin: 4px 0 0 16px; padding: 0; font-size: 11px; color: var(--text-2); line-height: 1.5;">
                 ${suggestion.evidenceUsed.map(ev => `<li>${ev}</li>`).join("")}
               </ul>
